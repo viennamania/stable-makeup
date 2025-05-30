@@ -3476,8 +3476,6 @@ const fetchBuyOrders = async () => {
                         </div>
                       </th>
 
-
-
                       <th className="
                         hidden xl:table-cell
                         p-2">
