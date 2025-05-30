@@ -4,7 +4,6 @@ import { useState, useEffect, use } from "react";
 
 import Image from "next/image";
 
-import thirdwebIcon from "@public/thirdweb.svg";
 
 
 import { client } from "../../client";
@@ -2451,7 +2450,7 @@ function ArticleCard(props: {
 
       <div className="flex justify-center">
         <Image
-          src={props.avatar || thirdwebIcon}
+          src={props.avatar || "/icon-thirdweb.png"} // Default avatar if none provided
           alt="avatar"
           width={38}
           height={38}
