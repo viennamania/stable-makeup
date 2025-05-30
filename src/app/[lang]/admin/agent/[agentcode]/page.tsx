@@ -1334,7 +1334,7 @@ export default function Index({ params }: any) {
       fetchTotalSummary();
     } , 10000);
     return () => clearInterval(interval);
-  } , [address]);
+  } , [address, params.agentcode]);
 
 
 

@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
   } = body;
 
 
-  console.log("getTotalSummary body", body);
+  //console.log("getTotalSummaryForAgent body", body);
 
 
 
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
   });
 
 
-  //console.log("stores", stores);
+  ///console.log("stores", stores);
 
   const totalNumberOfStores = stores?.totalCount || 0;
   const latestStores = stores?.stores || [];

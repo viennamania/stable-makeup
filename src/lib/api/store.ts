@@ -709,6 +709,8 @@ export async function getAllStoresForAgent(
   const totalCount = await collection.countDocuments(query);
 
   try {
+    
+    
     const stores = await collection.aggregate([
       { $match: query },
       {
@@ -742,10 +744,63 @@ export async function getAllStoresForAgent(
       { $limit: limit },
     ]).toArray();
 
+    
+    // totalBuyerCount,
+    // totalTradeCount, totalKrwAmount, totalUsdtAmount,
+    // totalSettlementAmountKRW, totalSettlementAmount
+    // totalAgentFeeAmountKRW, totalAgentFeeAmount
+    // for each store
+
+
+    for (const store of stores) {
+      const storecode = store.storecode;
+
+      // get totalBuyerCount
+      const totalBuyerCount = await collection.countDocuments({ storecode: storecode, totalBuyerCount: { $gt: 0 } });
+
+      // get totalTradeCount
+      const totalTradeCount = await collection.countDocuments({ storecode: storecode, totalTradeCount: { $gt: 0 } });
+
+      // get totalKrwAmount
+      const totalKrwAmount = await collection.aggregate([
+        { $match: { storecode: storecode } },
+        { $group: { _id: null, totalKrwAmount: { $sum: '$totalKrwAmount' } } }
+      ]).toArray();
+      store.totalKrwAmount = totalKrwAmount[0]?.totalKrwAmount || 0;
+
+      // get totalUsdtAmount
+      const totalUsdtAmount = await collection.aggregate([
+        { $match: { storecode: storecode } },
+        { $group: { _id: null, totalUsdtAmount: { $sum: '$totalUsdtAmount' } } }
+      ]).toArray();
+      store.totalUsdtAmount = totalUsdtAmount[0]?.totalUsdtAmount || 0;
+
+      // get totalSettlementAmountKRW
+      const totalSettlementAmountKRW = await collection.aggregate([
+        { $match: { storecode: storecode } },
+        { $group: { _id: null, totalSettlementAmountKRW: { $sum: '$totalSettlementAmountKRW' } } }
+      ]).toArray();
+      store.totalSettlementAmountKRW = totalSettlementAmountKRW[0]?.totalSettlementAmountKRW || 0;
+
+      // get totalSettlementAmount
+      const totalSettlementAmount = await collection.aggregate([
+        { $match: { storecode: storecode } },
+        { $group: { _id: null, totalSettlementAmount: { $sum: '$totalSettlementAmount' } } }
+      ]).toArray();
+      store.totalSettlementAmount = totalSettlementAmount[0]?.totalSettlementAmount || 0;
+
+    }
+
+ 
+    
+    
     return {
       totalCount,
       stores,
+
+
     };
+
 
   } catch (error) {
     console.error('Error fetching stores for agent:', error);
