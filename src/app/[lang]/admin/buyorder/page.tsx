@@ -3385,9 +3385,17 @@ const fetchBuyOrders = async () => {
                               alt="Auto Matching"
                               width={20}
                               height={20}
+
+                              /*
                               className="
                               bg-zinc-100 rounded-full
                               w-5 h-5 animate-spin"
+                              */
+                              // if buyOrders.filter((item) => item.status === 'ordered').length > 0, then animate spin
+                              className={`
+                                w-5 h-5
+                                ${buyOrders.filter((item) => item.status === 'ordered').length > 0 ? 'animate-spin' : ''}
+                              `}
                             />
 
                             {/* the count of status is ordered */}
@@ -3429,7 +3437,12 @@ const fetchBuyOrders = async () => {
                               alt="Bank Auto"
                               width={20}
                               height={20}
-                              className="w-5 h-5 animate-spin"
+
+                              //className="w-5 h-5 animate-spin"
+                              className={`
+                                w-5 h-5
+                                ${buyOrders.filter((item) => item.status === 'paymentRequested').length > 0 ? 'animate-spin' : ''}
+                              `}
                             />
                             <span className="text-sm text-zinc-50 font-semibold">
                               {
@@ -3483,7 +3496,11 @@ const fetchBuyOrders = async () => {
                               alt="Settlement"
                               width={20}
                               height={20}
-                              className="w-5 h-5 animate-spin"
+                              ///className="w-5 h-5 animate-spin"
+                              className={`
+                                w-5 h-5
+                                ${buyOrders.filter((item) => item.status === 'paymentConfirmed' && item?.settlement?.status !== "paymentSettled").length > 0 ? 'animate-spin' : ''}
+                              `}
                             />
 
                             <span className="text-sm text-zinc-50 font-semibold">
