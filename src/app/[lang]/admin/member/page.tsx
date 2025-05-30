@@ -1815,7 +1815,7 @@ export default function Index({ params }: any) {
                   </button>
 
                   <button
-                      onClick={() => router.push('/' + params.lang + '/admin/clear-history')}
+                      onClick={() => router.push('/' + params.lang + '/admin/clearance-history')}
                       className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
                       hover:bg-[#3167b4]/80
                       hover:cursor-pointer
