@@ -1355,6 +1355,10 @@ export default function Index({ params }: any) {
 
 
 
+
+
+
+
   // if loadinAgent is true, show loading
   if (fetchingAgent) {
     return (
@@ -1498,13 +1502,23 @@ export default function Index({ params }: any) {
             }`}>
                 
               <div className="w-full flex flex-row items-center justify-start gap-2">
-                <Image
-                  src={agent?.agentLogo || "/logo.png"}
-                  alt="logo"
-                  width={35}
-                  height={35}
-                  className="rounded-lg w-6 h-6"
-                />
+                <div className="flex flex-row items-center justify-start gap-2">
+                  <Image
+                    src={agent?.agentLogo || "/logo.png"}
+                    alt="logo"
+                    width={50}
+                    height={50}
+                    className="rounded-lg w-12 h-12"
+                  />
+                  <div className="flex flex-col items-start justify-start">
+                    <span className="text-sm text-[#3167b4] font-bold">
+                      {agent?.agentName || "에이전트 이름"}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      {agent?.agentcode || "에이전트 코드"}
+                    </span>
+                  </div>
+                </div>
                 {address && address === agentAdminWalletAddress && (
                   <div className="text-sm text-[#3167b4] font-bold">
                     {agent?.agentName + " (" + agent?.agentcode + ") 에이전트"}
@@ -1719,87 +1733,113 @@ export default function Index({ params }: any) {
 
   ) {
     return (
+      <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-2xl mx-auto">
 
-      <div className={`w-full flex flex-row items-center justify-start gap-2
-        p-2 rounded-lg mb-4
-        ${agent?.backgroundColor ?
-          "bg-[#"+agent?.backgroundColor+"]" :
-          "bg-black/10"
-        }`}>
+        <div className="py-0 w-full">
 
-
- 
-
-
-        <div className="flex flex-row items-center justify-center gap-2">
-          <Image
-            src={agent?.agentLogo || "/logo.png"}
-            alt="logo"
-            width={35}
-            height={35}
-            className="rounded-lg w-6 h-6"
-          />
-          <div className="text-sm text-[#3167b4] font-bold">
-            {agent?.agentName + " (" + agent?.agentcode + ") 에이전트 관리자가 아닙니다."}
-          </div>
-        </div>
+          <div className={`w-full flex flex-col xl:flex-row items-center justify-start gap-2
+            p-2 rounded-lg mb-4
+            ${agent?.backgroundColor ?
+              "bg-[#"+agent?.backgroundColor+"]" :
+              "bg-black/10"
+            }`}>
 
 
- 
-          {/* 회원가입한후 에이전트 관리자 등록신청을 하세요 */}
-          <div className="text-sm text-[#3167b4] font-bold">
-            회원가입한후 센터에 문의하세요.
-          </div>
-          {/* 회원가입하러 가기 */}
-          <div className="flex flex-row items-center justify-center gap-2">
-            <button
-              onClick={() => {
-                router.push('/' + params.lang + '/admin/agent/' + params.agentcode + '/profile-settings');
-                //router.push('/' + params.lang + '/' + params.agentcode + '/profile-settings');
-              }}
-              className="flex bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
-            >
-              회원가입하러 가기
-            </button>
-          </div>
+    
+
+
+            <div className="w-full flex flex-row items-center justify-start gap-2">
+              <Image
+                src={agent?.agentLogo || "/logo.png"}
+                alt="logo"
+                width={50}
+                height={50}
+                className="rounded-lg w-12 h-12"
+              />
+              <div className="flex flex-col items-start justify-start">
+                <span className="text-sm text-[#3167b4] font-bold">
+                  {agent?.agentName || "에이전트 이름"}
+                </span>
+                <span className="text-xs text-gray-500">
+                  {agent?.agentcode || "에이전트 코드"}
+                </span>
+              </div>
+            </div>
+              
+
 
         
 
+            {/* 로그아웃 버튼 */}
+            <div className="w-full flex flex-row items-center justify-end gap-2">
+              <button
+                onClick={() => {
+                  confirm("로그아웃 하시겠습니까?") && activeWallet?.disconnect()
+                  .then(() => {
+
+                      toast.success('로그아웃 되었습니다');
+
+                      //router.push(
+                      //    "/admin/" + params.agentcode
+                      //);
+                  });
+                } }
+
+                className="flex items-center justify-center gap-2
+                  bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
+              >
+                <Image
+                  src="/icon-logout.webp"
+                  alt="Logout"
+                  width={20}
+                  height={20}
+                  className="rounded-lg w-5 h-5"
+                />
+                <span className="text-sm">
+                  로그아웃
+                </span>
+              </button>
+            </div>
 
 
-        {/* 로그아웃 버튼 */}
-        <button
-          onClick={() => {
-            confirm("로그아웃 하시겠습니까?") && activeWallet?.disconnect()
-            .then(() => {
 
-                toast.success('로그아웃 되었습니다');
 
-                //router.push(
-                //    "/admin/" + params.agentcode
-                //);
-            });
-          } }
-
-          className="flex items-center justify-center gap-2
-            bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
-        >
-          <Image
-            src="/icon-logout.webp"
-            alt="Logout"
-            width={20}
-            height={20}
-            className="rounded-lg w-5 h-5"
-          />
-          <span className="text-sm">
-            로그아웃
-          </span>
-        </button>
+          </div>
 
 
 
+          {/* 에이전트 관리자가 아닙니다. 회원가입한후 센터에 문의하세요. */}
+          <div className="w-full flex flex-col items-center justify-center gap-4 mt-8">
+            <Image
+              src="/banner-404.gif"
+              alt="Error"
+              width={100}
+              height={100}
+              className="rounded-lg w-20 h-20"
+            />
+            <span className="text-lg text-gray-500 ml-2">
+              에이전트 관리자가 아닙니다. 회원가입한후 센터에 문의하세요.
+            </span>
 
-      </div>
+
+            {/* 회원가입하러 가기 */}
+            <div className="flex flex-row items-center justify-center gap-2">
+              <button
+                onClick={() => {
+                  router.push('/' + params.lang + '/admin/agent/' + params.agentcode + '/profile-settings');
+                  //router.push('/' + params.lang + '/' + params.agentcode + '/profile-settings');
+                }}
+                className="flex bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
+              >
+                회원가입하러 가기
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
     );
 
   }
