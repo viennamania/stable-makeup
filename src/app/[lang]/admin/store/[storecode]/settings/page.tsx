@@ -805,7 +805,7 @@ export default function SettingsPage({ params }: any) {
         },
         body: JSON.stringify(
             {
-                walletAddress: address,
+                ////walletAddress: address,
                 storecode: params.storecode,
             }
         ),
@@ -816,7 +816,7 @@ export default function SettingsPage({ params }: any) {
         }
         const data = await response.json();
         
-        console.log('getOneStore data', data);
+        ///console.log('getOneStore data', data);
 
         setStore(data.result);
 
@@ -827,9 +827,12 @@ export default function SettingsPage({ params }: any) {
     }
 
     useEffect(() => {
-
+        if (!params.storecode) {
+            setStore(null)
+            return;
+        }
         fetchStore();
-    } , [address && params.storecode]);
+    } , [params.storecode])
 
 
 
@@ -880,12 +883,12 @@ export default function SettingsPage({ params }: any) {
     }
 
     useEffect(() => {
-        if (!address) {
+        if (!params.storecode) {
         setAllAdminSellers([]);
         return;
         }
         fetchAllAdminSeller();
-    } , [address, params.storecode]);
+    } , [params.storecode]);
 
 
 
@@ -930,12 +933,12 @@ export default function SettingsPage({ params }: any) {
     }
 
     useEffect(() => {
-        if (!address) {
+        if (!params.storecode) {
             setAllStoreSellers([]);
             return;
         }
         fetchAllStoreSellers();
-    } , [address, params.storecode]);
+    } , [params.storecode]);
 
 
 
@@ -1538,10 +1541,7 @@ export default function SettingsPage({ params }: any) {
 
 
 
-
-
-
-
+      
 
 
     return (
@@ -1587,23 +1587,22 @@ export default function SettingsPage({ params }: any) {
 
                         // button color is dark skyblue convert (49, 103, 180) to hex
                         connectButton={{
-                        style: {
-                            backgroundColor: "#3167b4", // dark skyblue
-                            // font color is gray-300
-                            color: "#f3f4f6", // gray-300
-                            padding: "10px 10px",
-                            borderRadius: "10px",
-                            fontSize: "16px",
-                            // w-full
-                            //width: "100%",
-                        },
-                        label: "로그인",
+                            style: {
+                                backgroundColor: "#3167b4", // dark skyblue
+                                color: "#f3f4f6", // gray-300
+                                padding: "2px 10px",
+                                borderRadius: "10px",
+                                fontSize: "14px",
+                                width: "60x",
+                                height: "38px",
+                            },
+                            label: "원클릭 로그인",
                         }}
 
                         connectModal={{
                         size: "wide", 
                         //size: "compact",
-                        titleIcon: "https://cryptopay.beauty/logo.png",                           
+                        titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
                         showThirdwebBranding: false,
                         }}
 
@@ -1661,13 +1660,13 @@ export default function SettingsPage({ params }: any) {
                         <div className="w-full flex flex-row gap-5 items-center justify-center">
 
                                 <button
-                                  onClick={() => {
+                                    onClick={() => {
                                     router.push(
-                                      '/' + params.lang + '/admin/store/' + params.storecode + '/memo'
+                                        '/' + params.lang + '/admin/store/' + params.storecode + '/memo'
                                     );
-                                  }}
-                                  className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
-                                  hover:bg-[#3167b4]/80 flex flex-row items-center gap-2"
+                                    }}
+                                    className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                    hover:bg-[#3167b4]/80 flex flex-row items-center gap-2"
                                 >
                                     <Image
                                         src="/icon-memo.png"
@@ -1686,14 +1685,14 @@ export default function SettingsPage({ params }: any) {
 
                                 {/*
                                 <button
-                                  onClick={() => {
+                                    onClick={() => {
                                     router.push(
-                                      '/' + params.lang + '/admin/store/' + params.storecode + '/clearance'
+                                        '/' + params.lang + '/admin/store/' + params.storecode + '/clearance'
                                     );
-                                  }
-                                  }
-                                  className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
-                                  hover:bg-[#3167b4]/80 flex flex-row items-center gap-2"
+                                    }
+                                    }
+                                    className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                    hover:bg-[#3167b4]/80 flex flex-row items-center gap-2"
                                 >
                                     <Image
                                         src="/icon-clearance.png"
@@ -1715,7 +1714,7 @@ export default function SettingsPage({ params }: any) {
 
 
                         </div>
-  
+
 
                         <div className='w-full flex flex-col items-start justify-center gap-2
                             border border-gray-400 rounded-lg p-4'>
@@ -1863,7 +1862,7 @@ export default function SettingsPage({ params }: any) {
                                     storecode={params.storecode as string}
                                 />
                             </div>
-     
+        
 
                         </div>
 
@@ -1888,13 +1887,20 @@ export default function SettingsPage({ params }: any) {
                             <div className='w-full flex flex-col xl:flex-row items-center justify-between gap-2'>
 
                                 <div className="flex flex-row items-center gap-2">
-                              
+                                
                                     <div className='w-2 h-2 bg-green-500 rounded-full'></div>
                                     <span className="text-lg">
-                                        에이전트
+                                        에이전트 이름
                                     </span>
                                     <span className="text-xl text-blue-500 font-semibold">
                                         {store?.agentName || "없음"}
+                                    </span>
+                                </div>
+                                <div className="flex flex-row items-center gap-2">
+                                
+                                    <div className='w-2 h-2 bg-green-500 rounded-full'></div>
+                                    <span className="text-lg">
+                                        에이전트 코드
                                     </span>
                                     <span className="text-xl text-blue-500 font-semibold">
                                         {store?.agentcode || "없음"}
@@ -2845,7 +2851,7 @@ export default function SettingsPage({ params }: any) {
                                         <option value="ff7f00">연한 주황색</option>
 
                                     </select>
-    
+
 
                                     <button
                                         disabled={!address || !backgroundColor || updatingBackgroundColor}

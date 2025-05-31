@@ -1884,7 +1884,7 @@ export default function Index({ params }: any) {
                         "storeUrl": "https://test.com",
                         "storeDescription": "설명입니다.",
                         "storeLogo": "https://vzrcy5vcsuuocnf3.public.blob.vercel-storage.com/5M8446y-TT1KF2HDXnBNi0ESO5gFaWcbjJAQHi.png",
-                        "storeBanner": "https://cryptopay.beauty/logo.png"
+                        "storeBanner": "https://www.stable.makeup/logo-oneclick.png"
                     }
                 }
             },
@@ -2146,23 +2146,22 @@ const fetchBuyOrders = async () => {
   
                   // button color is dark skyblue convert (49, 103, 180) to hex
                   connectButton={{
-                    style: {
-                      backgroundColor: "#3167b4", // dark skyblue
-                      // font color is gray-300
-                      color: "#f3f4f6", // gray-300
-                      padding: "10px 10px",
-                      borderRadius: "10px",
-                      fontSize: "16px",
-                      // w-full
-                      //width: "100%",
-                    },
-                    label: "로그인",
+                      style: {
+                          backgroundColor: "#3167b4", // dark skyblue
+                          color: "#f3f4f6", // gray-300
+                          padding: "2px 10px",
+                          borderRadius: "10px",
+                          fontSize: "14px",
+                          width: "60x",
+                          height: "38px",
+                      },
+                      label: "원클릭 로그인",
                   }}
   
                   connectModal={{
                     size: "wide", 
                     //size: "compact",
-                    titleIcon: "https://cryptopay.beauty/logo.png",                           
+                    titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
                     showThirdwebBranding: false,
                   }}
   

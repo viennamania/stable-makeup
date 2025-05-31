@@ -2395,13 +2395,13 @@ const fetchBuyOrders = async () => {
                     //width: "40px",
                     height: "38px",
                   },
-                  label: "로그인",
+                  label: "원클릭 로그인",
                 }}
 
                 connectModal={{
                   size: "wide", 
                   //size: "compact",
-                  titleIcon: "https://cryptopay.beauty/logo.png",                           
+                  titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
                   showThirdwebBranding: false,
                 }}
 

@@ -2080,23 +2080,22 @@ const fetchBuyOrders = async () => {
   
                   // button color is dark skyblue convert (49, 103, 180) to hex
                   connectButton={{
-                    style: {
-                      backgroundColor: "#3167b4", // dark skyblue
-                      // font color is gray-300
-                      color: "#f3f4f6", // gray-300
-                      padding: "10px 10px",
-                      borderRadius: "10px",
-                      fontSize: "16px",
-                      // w-full
-                      //width: "100%",
-                    },
-                    label: "로그인",
+                      style: {
+                          backgroundColor: "#3167b4", // dark skyblue
+                          color: "#f3f4f6", // gray-300
+                          padding: "2px 10px",
+                          borderRadius: "10px",
+                          fontSize: "14px",
+                          width: "60x",
+                          height: "38px",
+                      },
+                      label: "원클릭 로그인",
                   }}
   
                   connectModal={{
                     size: "wide", 
                     //size: "compact",
-                    titleIcon: "https://cryptopay.beauty/logo.png",                           
+                    titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
                     showThirdwebBranding: false,
                   }}
   

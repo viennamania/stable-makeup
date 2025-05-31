@@ -1299,8 +1299,8 @@ export default function Index({ params }: any) {
     "storeType": "test",
     "storeUrl": "https://test.com",
     "storeDescription": "설명입니다.",
-    "storeLogo": "https://cryptopay.beauty/logo.png",
-    "storeBanner": "https://cryptopay.beauty/logo.png",
+    "storeLogo": "https://www.stable.makeup/logo-oneclick.png",
+    "storeBanner": "https://www.stable.makeup/logo-oneclick.png",
     "createdAt": "2025-05-06T04:36:44.683Z"
     "adminWalletAddress": "0x2111b6A49CbFf1C8Cc39d13250eF6bd4e1B59cF6",
   }
@@ -1636,23 +1636,22 @@ export default function Index({ params }: any) {
 
                   // button color is dark skyblue convert (49, 103, 180) to hex
                   connectButton={{
-                    style: {
-                      backgroundColor: "#3167b4", // dark skyblue
-                      // font color is gray-300
-                      color: "#f3f4f6", // gray-300
-                      padding: "10px 10px",
-                      borderRadius: "10px",
-                      fontSize: "16px",
-                      // w-full
-                      //width: "100%",
-                    },
-                    label: "로그인",
+                      style: {
+                          backgroundColor: "#3167b4", // dark skyblue
+                          color: "#f3f4f6", // gray-300
+                          padding: "2px 10px",
+                          borderRadius: "10px",
+                          fontSize: "14px",
+                          width: "60x",
+                          height: "38px",
+                      },
+                      label: "원클릭 로그인",
                   }}
 
                   connectModal={{
                     size: "wide", 
                     //size: "compact",
-                    titleIcon: "https://cryptopay.beauty/logo.png",                           
+                    titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
                     showThirdwebBranding: false,
                   }}
 
@@ -1941,25 +1940,22 @@ export default function Index({ params }: any) {
 
                       // button color is dark skyblue convert (49, 103, 180) to hex
                       connectButton={{
-                        style: {
-                          backgroundColor: "#3167b4", // dark skyblue
-                          // font color is gray-300
-                          color: "#f3f4f6", // gray-300
-                          padding: "2px 2px",
-                          borderRadius: "10px",
-                          fontSize: "14px",
-                          // w-full
-                          //width: "100%",
-                          width: "60x",
-                          height: "38px",
-                        },
-                        label: "로그인",
+                          style: {
+                              backgroundColor: "#3167b4", // dark skyblue
+                              color: "#f3f4f6", // gray-300
+                              padding: "2px 10px",
+                              borderRadius: "10px",
+                              fontSize: "14px",
+                              width: "60x",
+                              height: "38px",
+                          },
+                          label: "원클릭 로그인",
                       }}
 
                       connectModal={{
                         size: "wide", 
                         //size: "compact",
-                        titleIcon: "https://cryptopay.beauty/logo.png",                           
+                        titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
                         showThirdwebBranding: false,
                       }}
 

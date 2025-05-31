@@ -1365,8 +1365,8 @@ export default function Index({ params }: any) {
     "storeType": "test",
     "storeUrl": "https://test.com",
     "storeDescription": "설명입니다.",
-    "storeLogo": "https://cryptopay.beauty/logo.png",
-    "storeBanner": "https://cryptopay.beauty/logo.png",
+    "storeLogo": "https://www.stable.makeup/logo-oneclick.png",
+    "storeBanner": "https://www.stable.makeup/logo-oneclick.png",
     "createdAt": "2025-05-06T04:36:44.683Z"
     "adminWalletAddress": "0x2111b6A49CbFf1C8Cc39d13250eF6bd4e1B59cF6",
   }
@@ -1700,13 +1700,13 @@ export default function Index({ params }: any) {
                   //width: "40px",
                   height: "38px",
                 },
-                label: "로그인",
+                label: "원클릭 로그인",
               }}
 
               connectModal={{
                 size: "wide", 
                 //size: "compact",
-                titleIcon: "https://cryptopay.beauty/logo.png",                           
+                titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
                 showThirdwebBranding: false,
               }}
 
