@@ -1608,7 +1608,7 @@ export default function Index({ params }: any) {
                                   width={50}
                                   height={50}
                                   className="
-                                    rounded-full w-10 h-10"
+                                    rounded-lg w-12 h-12"
                                 />
                                 <div className="flex flex-col items-start justify-center">
                                   <span className="text-lg font-semibold">
@@ -1648,7 +1648,9 @@ export default function Index({ params }: any) {
                                   className={`${
                                     !isAdmin ? 'opacity-50 cursor-not-allowed' : ''
                                   } bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
-                                  hover:bg-[#3167b4]/80`}
+                                  hover:bg-[#3167b4]/80
+                                  w-full
+                                  `}
                                     
                                   //className="w-full bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
                                   //hover:bg-[#3167b4]/80"
