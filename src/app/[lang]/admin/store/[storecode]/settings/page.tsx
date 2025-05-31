@@ -1870,6 +1870,7 @@ export default function SettingsPage({ params }: any) {
                         {/* agent code */}
                         <div className='w-full flex flex-col items-start justify-center gap-2
                             border border-gray-400 rounded-lg p-4'>
+                            
                             <div className='w-full flex flex-row items-center justify-start gap-2
                                     border-b border-gray-300 pb-2'>
                                 <Image
@@ -1884,7 +1885,7 @@ export default function SettingsPage({ params }: any) {
                                 </span>
                             </div>
                             
-                            <div className='w-full flex flex-col xl:flex-row items-center justify-between gap-2'>
+                            <div className='w-full flex flex-col items-start justify-center gap-2'>
 
                                 <div className="flex flex-row items-center gap-2">
                                 
@@ -2037,12 +2038,7 @@ export default function SettingsPage({ params }: any) {
                                     </button>
                                 </div>
                             </div>
-                            
-                            
-                            
-
-
-
+         
 
                         </div>
 
@@ -2273,7 +2269,7 @@ export default function SettingsPage({ params }: any) {
                                     height={20}
                                     className="w-5 h-5"
                                     />
-                                    <span className="text-lg text-red-500">
+                                    <span className="text-sm text-red-500">
                                     {store && store.storeName}의 가맹점 정산용 USDT통장이 설정되지 않았습니다.
                                     </span>
                                 </div>
