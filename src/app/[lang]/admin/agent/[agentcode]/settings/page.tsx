@@ -555,6 +555,13 @@ export default function SettingsPage({ params }: any) {
             setNickname(editedNickname);
             setNicknameEdit(false);
             setEditedNickname('');
+
+            setAgent({
+                ...agent,
+                agentName: editedNickname,
+            });
+
+
         } else {
             toast.error('에이전트 이름 설정에 실패하였습니다');
         }
@@ -597,6 +604,11 @@ export default function SettingsPage({ params }: any) {
         if (data.result) {
             toast.success('에이전트 설명이 설정되었습니다');
             setAgentDescription(agentDescription);
+
+            setAgent({
+                ...agent,
+                agentDescription: agentDescription,
+            });
         } else {
             toast.error('에이전트 설명 설정에 실패하였습니다');
         }
@@ -1111,23 +1123,8 @@ export default function SettingsPage({ params }: any) {
 
 
 
-                <div className="mt-5 flex flex-col items-start justify-center space-y-4">
+                <div className="mt-5 flex flex-col items-start justify-center gap-5">
 
-                    <div className='flex flex-row items-center space-x-4'>
-                        <Image
-                            src={agent?.agentLogo || "/icon-agent.png"}
-                            alt="Agent Logo"
-                            width={35}
-                            height={35}
-                            className="w-10 h-10 rounded-full"
-                        />
-
-                        <div className="text-xl font-semibold">
-                        에이전트{' '}{
-                            agent && agent.agentName + " (" + agent.agentcode + ")"
-                        }{' '}관리
-                        </div>
-                    </div>
 
 
                 
@@ -1140,7 +1137,39 @@ export default function SettingsPage({ params }: any) {
                             <div className='w-full flex flex-col items-start justify-center gap-2
                                 border border-gray-300 p-4 rounded-lg'>
 
-                                <div className='w-full flex flex-row items-center justify-between gap-2'>
+                                
+
+                                <div className='flex flex-row items-center justify-center gap-2 mb-4'>
+                                    <Image
+                                        src={agent?.agentLogo || "/icon-agent.png"}
+                                        alt="Agent Logo"
+                                        width={35}
+                                        height={35}
+                                        className="w-6 h-6 rounded-full object-cover"
+                                    />
+
+                                    <div className="text-lg font-semibold">
+                                    에이전트 기본 정보
+                                    </div>
+                                </div>                                
+                                
+                                <div className='w-full flex flex-row items-center justify-between gap-2
+                                    border-t border-gray-300 pt-4'>
+
+                                    <div className="flex flex-row items-center gap-2">
+                                        {/* dot */}
+                                        <div className='w-2 h-2 bg-green-500 rounded-full'></div>
+                                        <span className="text-lg">
+                                            에이전트 코드
+                                        </span>
+                                        <span className="text-xl text-blue-500 font-semibold">
+                                            {agent?.agentcode}
+                                        </span>
+                                    </div>
+                                </div>                                
+                                
+                                <div className='w-full flex flex-row items-center justify-between gap-2
+                                    border-t border-gray-300 pt-4'>
 
 
                                     <div className="flex flex-row items-center gap-2">
@@ -1186,7 +1215,8 @@ export default function SettingsPage({ params }: any) {
 
 
                                 { (address && (nicknameEdit || !userCode)) && (
-                                    <div className='w-full flex flex-col gap-2 items-start justify-start'>
+                                    <div className='w-full flex flex-col gap-2 items-start justify-start
+                                        border-t border-gray-300 pt-4'>
 
 
                                         <div className="flex flex-row items-center gap-2">
@@ -1196,10 +1226,14 @@ export default function SettingsPage({ params }: any) {
                                                 {nicknameEdit ? "에이전트 이름 수정" : "에이전트 이름 설정"}
                                             </span>
                                         </div>
-
-
                                         <div className='flex flex-row gap-2 items-center justify-between'>
-                                            <div className='flex flex-col gap-2'>
+                                            <span className='text-sm font-semibold'>
+                                                {nicknameEdit ? "에이전트 이름을 수정하세요" : "에이전트 이름을 설정하세요"}
+                                            </span>
+                                        </div>
+
+                                        <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                            <div className='w-full flex flex-col gap-2'>
                                                 <input
                                                     disabled={!address}
                                                     className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-xl font-semibold"
@@ -1220,16 +1254,12 @@ export default function SettingsPage({ params }: any) {
 
 
                                                 />
-                                                <div className='flex flex-row gap-2 items-center justify-between'>
-                                                    <span className='text-sm font-semibold'>
-                                                        {nicknameEdit ? "에이전트 이름을 수정하세요" : "에이전트 이름을 설정하세요"}
-                                                    </span>
-                                                </div>
+
                                             </div>
 
                                             <button
                                                 disabled={!address || !editedNickname}
-                                                className={`bg-[#3167b4] text-zinc-100 rounded-lg p-2 ${!editedNickname ? "opacity-50" : ""}`}
+                                                className={`bg-[#3167b4] text-zinc-100 rounded-lg p-2 w-full ${!editedNickname ? "opacity-50" : ""}`}
                                                 onClick={() => {
                                                     if (!editedNickname) {
                                                         toast.error("에이전트 이름을 입력하세요");
@@ -1250,13 +1280,12 @@ export default function SettingsPage({ params }: any) {
                                     </div>
                                 )}
 
-                            </div>
 
-                            {/* agentDescription */}
-                            <div className='w-full flex flex-col items-start justify-center gap-2
-                                border border-gray-300 p-4 rounded-lg'>
 
-                                <div className='w-full flex flex-row items-center justify-between gap-2'>
+                                <div className='w-full flex flex-col xl:flex-row items-center justify-between gap-2
+                                    border-t border-gray-300 pt-4'>
+
+
                                     <div className="w-full flex flex-row items-center justify-start gap-2">
                                         {/* dot */}
                                         <div className='w-2 h-2 bg-green-500 rounded-full'></div>
@@ -1264,9 +1293,11 @@ export default function SettingsPage({ params }: any) {
                                             에이전트 설명
                                         </span>
                                     </div>
+
+                                    {/*
                                     <input
                                         disabled={!address}
-                                        className="bg-[#1f2937] text-zinc-100 rounded-lg p-2 w-full text-sm"
+                                        className="bg-[#1f2937] text-zinc-100 rounded-lg p-2 text-sm w-full"
                                         placeholder="에이전트 설명을 입력하세요"
                                         value={agentDescription}
                                         type='text'
@@ -1274,9 +1305,20 @@ export default function SettingsPage({ params }: any) {
                                             setAgentDescription(e.target.value);
                                         } }
                                     />
+                                    */}
+
+                                    <textarea
+                                        disabled={!address}
+                                        className="bg-zinc-100 text-zinc-800 rounded-lg p-2 text-sm w-full h-24 resize-none"
+                                        placeholder="에이전트 설명을 입력하세요"
+                                        value={agentDescription}
+                                        onChange={(e) => {
+                                            setAgentDescription(e.target.value);
+                                        } }
+                                    />
                                     <button
                                         disabled={!address || !agentDescription}
-                                        className={`bg-[#3167b4] text-zinc-100 rounded-lg p-2 ${!agentDescription ? "opacity-50" : ""}`}
+                                        className={`bg-[#3167b4] text-zinc-100 rounded-lg p-2 w-full ${!agentDescription ? "opacity-50" : ""}`}
                                         onClick={() => {
                                             if (!agentDescription) {
                                                 toast.error("에이전트 설명을 입력하세요");
@@ -1288,89 +1330,187 @@ export default function SettingsPage({ params }: any) {
                                         {Save}
                                     </button>
                                 </div>
+
+
+                                <div className='w-full flex flex-col xl:flex-row items-center justify-between gap-2
+                                    border-t border-gray-300 pt-4'>
                             
+                                    <div className="w-full flex flex-row items-center gap-2">
+                                        {/* dot */}
+                                        <div className='w-2 h-2 bg-green-500 rounded-full'></div>
+                                        <span className="text-lg">
+                                            에이전트 로고
+                                        </span>
+                                    </div>
+
+                                    <div className="w-full
+                                    flex flex-col items-center justify-center gap-2
+                                    p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
+                                        <Uploader
+                                            lang={params.lang}
+                                            agentcode={params.agentcode as string}
+
+                                        />
+                                    </div>
+
+                                </div>
+
                             </div>
 
 
-    
-                            <div className='w-full flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
 
-                                <div className="flex flex-row items-center gap-2">
-                                    {/* dot */}
-                                    <div className='w-2 h-2 bg-green-500 rounded-full'></div>
-                                    <span className="text-lg">
-                                        에이전트 로고
+
+
+
+
+
+
+                            {/* agent adminWalletAddress */}
+                            
+                            <div className="w-full flex flex-col gap-5 items-center justify-between border border-gray-300 p-4 rounded-lg">
+                                
+
+                                <div className='w-full flex flex-row items-center justify-start gap-2'>
+                                    <Image
+                                        src="/icon-manager.png"
+                                        alt="Manager"
+                                        width={20}
+                                        height={20}
+                                        className="w-5 h-5"
+                                    />
+                                    <span className="text-lg text-zinc-500 font-semibold">
+                                        에이전트 관리자 설정
                                     </span>
                                 </div>
 
-                                <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                    <Uploader
-                                        lang={params.lang}
-                                        agentcode={params.agentcode as string}
-                                    />
-                                </div>
+                                <div className='w-full flex flex-col items-center justify-between gap-2
+                                    border-t border-gray-300 pt-4'>
 
-                            </div>
+                                    {/* agent admin page */}
+
+                                    <div className='w-full flex flex-row items-center justify-start gap-2'>
+                                        <div className='w-2 h-2 bg-green-500 rounded-full'></div>
+                                        <span className="text-lg">
+                                            에이전트 관리자 홈페이지
+                                        </span>
+                                    </div>
+
+                                    {/* new window button for agnet admin page */}
+                                    <button
+                                        onClick={() => {
+                                            window.open(
+                                                `/${params.lang}/admin/agent/${params.agentcode}`,
+                                                '_blank'
+                                            );
+                                        }}
+                                        className="bg-[#3167b4] text-sm text-white px-4 py-2 rounded-lg"
+                                    >
+                                        에이전트 관리자 홈페이지 열기
+                                    </button>   
+                                </div> 
 
 
+                                <div className='w-full flex flex-col items-center justify-between gap-2
+                                    border-t border-gray-300 pt-4'>
 
+                                    {/* agent adminWalletAddress */}
 
-
-
-
-
-
-                        {/* agent adminWalletAddress */}
+                    
+                                    <div className='w-full flex flex-row items-center justify-start gap-2'>
+                                        <div className='w-2 h-2 bg-green-500 rounded-full'></div>
+                                        <span className="text-lg">
+                                            에이전트 관리자 지갑주소
+                                        </span>
+                                    </div>
                         
-                        <div className="w-full flex flex-col gap-5 items-center justify-between border border-gray-300 p-4 rounded-lg">
+
+                                    <div className="flex flex-col items-center justify-center gap-2">
                             
 
-                            <div className='w-full flex flex-row items-start gap-2'>
-                                <Image
-                                    src="/icon-manager.png"
-                                    alt="Manager"
-                                    width={20}
-                                    height={20}
-                                    className="w-5 h-5"
-                                />
-                                <span className="text-lg text-zinc-500">
-                                    에이전트 관리자 설정
-                                </span>
-                            </div>
+
+                                        {!fetchingAgent && agent && agent.adminWalletAddress ? (
+                                        <button
+                                            onClick={() => {
+                                            navigator.clipboard.writeText(agent.adminWalletAddress);
+                                            toast.success(Copied_Wallet_Address);
+                                            } }
+                                            className="text-lg text-zinc-500 underline font-semibold"
+                                        >
+                                            {agent && agent.adminWalletAddress.substring(0, 6)}...{agent && agent.adminWalletAddress.substring(agent.adminWalletAddress.length - 4)}
+                                        </button>
+                                        ) : (
+                                            <div className='flex flex-col items-center justify-center gap-2'>
+                                                <div className="flex flex-row items-center justify-start gap-2">
+                                                    <Image
+                                                    src="/icon-warning.png"
+                                                    alt="Warning"
+                                                    width={20}
+                                                    height={20}
+                                                    className="w-5 h-5"
+                                                    />
+                                                    <span className="text-sm text-red-500">
+                                                    {agent && agent.agentName}의 에이전트 관리자 설정이 되어 있지 않습니다.
+                                                    </span>
+                                                </div>
 
 
+                                            </div>
+                                        )}
 
-                            {/* new window button for agnet admin page */}
-                            <button
-                                onClick={() => {
-                                    window.open(
-                                        `/${params.lang}/admin/agent/${params.agentcode}`,
-                                        '_blank'
-                                    );
-                                }}
-                                className="bg-[#3167b4] text-sm text-white px-4 py-2 rounded-lg"
-                            >
-                                에이전트 관리자 홈페이지 열기
-                            </button>
+                                        {fetchingAgent && (
+                                        <Image
+                                            src="/loading.png"
+                                            alt="Loading"
+                                            width={20}
+                                            height={20}
+                                            className="animate-spin"
+                                        />
+                                        )}
 
+                                        {!fetchingAllAgentSellers && allAgentSellers && allAgentSellers.length > 0 ? (
+                                        
+                                        <div className="w-full flex flex-row items-center justify-center gap-2">
+                                            <select
+                                            value={selectedAdminWalletAddress}
+                                            onChange={(e) => setSelectedAdminWalletAddress(e.target.value)}
+                                            className="p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500
+                                                bg-white text-zinc-500 text-sm"
+                                            disabled={updatingAdminWalletAddress}
+                                            >
+                                            <option value="">에이전트 관리자 변경</option>
+                                            {allAgentSellers.map((user) => (
+                                                <option key={user._id} value={user.walletAddress}>
+                                                {user.nickname}
+                                                {' '}
+                                                ({user.walletAddress.substring(0, 6)}...{user.walletAddress.substring(user.walletAddress.length - 4)})
+                                                </option>
+                                            ))}
+                                            </select>
+                                            <button
+                                            onClick={() => {
+                                                if (!selectedAdminWalletAddress) {
+                                                toast.error('에이전트 관리자를 선택하세요.');
+                                                return;
+                                                }
+                                                if (selectedAdminWalletAddress === agent?.adminWalletAddress) {
+                                                toast.error('현재 에이전트 관리자와 동일합니다.');
+                                                return;
+                                                }
 
-                            <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
-                    
-
-
-                                {!fetchingAgent && agent && agent.adminWalletAddress ? (
-                                <button
-                                    onClick={() => {
-                                    navigator.clipboard.writeText(agent.adminWalletAddress);
-                                    toast.success(Copied_Wallet_Address);
-                                    } }
-                                    className="text-lg text-zinc-500 underline"
-                                >
-                                    {agent && agent.adminWalletAddress.substring(0, 6)}...{agent && agent.adminWalletAddress.substring(agent.adminWalletAddress.length - 4)}
-                                </button>
-                                ) : (
-                                    <div className='flex flex-col items-center justify-center gap-2'>
-                                        <div className="flex flex-row items-center justify-start gap-2">
+                                                confirm(
+                                                `정말 ${selectedAdminWalletAddress}로 에이전트 관리자를 변경하시겠습니까?`
+                                                ) && updateAdminWalletAddress();
+                                            }}
+                                            className={`bg-[#3167b4] text-sm text-white px-4 py-2 rounded-lg
+                                                ${
+                                                !selectedAdminWalletAddress ||
+                                                updatingAdminWalletAddress ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                            >
+                                            {updatingAdminWalletAddress ? '변경 중...' : '변경'}
+                                            </button> 
+                                        </div>
+                                        ) : (
+                                        <div className="flex flex-row items-center justify-center gap-2">
                                             <Image
                                             src="/icon-warning.png"
                                             alt="Warning"
@@ -1379,149 +1519,85 @@ export default function SettingsPage({ params }: any) {
                                             className="w-5 h-5"
                                             />
                                             <span className="text-sm text-red-500">
-                                            {agent && agent.agentName}의 에이전트 관리자 설정이 되어 있지 않습니다.
+                                            {agent && agent.agentName}의 회원이 없습니다.
+                                            <br />
+                                            에이전트 홈페이지에서 회원가입 후 에이전트 관리자를 설정하세요.
+                                            </span>
+                                        </div>
+                                        )}
+
+
+                                    </div>
+                                </div>
+
+
+                                <div className='w-full flex flex-col items-center justify-between gap-2
+                                    border-t border-gray-300 pt-4'>
+
+
+        
+                                    <div className="w-full flex flex-col items-center justify-start gap-2">
+                                        
+                                        <div className='w-full flex flex-row items-center justify-start gap-2'>
+                                            <div className='w-2 h-2 bg-green-500 rounded-full'></div>
+                                            <span className="text-lg">
+                                                에이전트 수수료 수납용 USDT통장
                                             </span>
                                         </div>
 
 
+                                        <span className="text-lg text-blue-500 font-semibold">
+                                            {agent?.agentFeeWalletAddress 
+                                                ? (
+                                                    <button
+                                                        onClick={() => {
+                                                            navigator.clipboard.writeText(agent.agentFeeWalletAddress);
+                                                            toast.success(Copied_Wallet_Address);
+                                                        } }
+                                                        className="text-lg text-zinc-500 underline"
+                                                    >
+                                                        {agent.agentFeeWalletAddress.substring(0, 6)}...{agent.agentFeeWalletAddress.substring(agent.agentFeeWalletAddress.length - 4)}
+                                                    </button>
+                                                )
+                                                : "에이전 수수료 수납용 USDT통장이 설정되지 않았습니다."
+                                            }
+
+                                        </span>
                                     </div>
-                                )}
 
-                                {fetchingAgent && (
-                                <Image
-                                    src="/loading.png"
-                                    alt="Loading"
-                                    width={20}
-                                    height={20}
-                                    className="animate-spin"
-                                />
-                                )}
+                                    <div className='flex flex-col xl:flex-row gap-2 items-center justify-between'>
+                                        <select
+                                            disabled={!address || updatingAgentWFeeWalletAddress}
+                                            className="bg-white text-zinc-500 rounded-lg p-2 text-sm"
+                                            value={selectedAgentFeeWalletAddress}
+                                            onChange={(e) => {
+                                                setSelectedAgentWFeeWalletAddress(e.target.value);
+                                            }}
+                                        >
+                                            <option value="">에이전트 수수료 지갑 선택</option>
+                                            {allAgentSellers.map((user) => (
+                                                <option key={user._id} value={user.walletAddress}>
+                                                    {user.nickname} ({user.walletAddress.substring(0, 6)}...{user.walletAddress.substring(user.walletAddress.length - 4)})
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <button
+                                            disabled={!address || !selectedAgentFeeWalletAddress || updatingAgentWFeeWalletAddress}
+                                            className={`bg-[#3167b4] text-zinc-100 text-sm rounded-lg p-2 px-4 py-2
+                                                ${!selectedAgentFeeWalletAddress || updatingAgentWFeeWalletAddress ? "opacity-50" : ""}`}
+                                            onClick={() => {
+                                                confirm(
+                                                    `정말 ${selectedAgentFeeWalletAddress}으로 에이전트 수수료 지갑을 변경하시겠습니까?`
+                                                ) && updateAgentFeeWalletAddress();
+                                            }}
+                                        >
+                                            {updatingAgentWFeeWalletAddress ? "변경 중..." : "변경"}
+                                        </button>
+                                    </div>
 
-                                {!fetchingAllAgentSellers && allAgentSellers && allAgentSellers.length > 0 ? (
-                                
-                                <div className="w-full flex flex-row items-center justify-center gap-2">
-                                    <select
-                                    value={selectedAdminWalletAddress}
-                                    onChange={(e) => setSelectedAdminWalletAddress(e.target.value)}
-                                    className="w-36 p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500
-                                        bg-white text-zinc-500 text-sm"
-                                    disabled={updatingAdminWalletAddress}
-                                    >
-                                    <option value="">에이전트 관리자 변경</option>
-                                    {allAgentSellers.map((user) => (
-                                        <option key={user._id} value={user.walletAddress}>
-                                        {user.nickname}
-                                        {' '}
-                                        ({user.walletAddress.substring(0, 6)}...{user.walletAddress.substring(user.walletAddress.length - 4)})
-                                        </option>
-                                    ))}
-                                    </select>
-                                    <button
-                                    onClick={() => {
-                                        if (!selectedAdminWalletAddress) {
-                                        toast.error('에이전트 관리자를 선택하세요.');
-                                        return;
-                                        }
-                                        if (selectedAdminWalletAddress === agent?.adminWalletAddress) {
-                                        toast.error('현재 에이전트 관리자와 동일합니다.');
-                                        return;
-                                        }
-
-                                        confirm(
-                                        `정말 ${selectedAdminWalletAddress}로 에이전트 관리자를 변경하시겠습니까?`
-                                        ) && updateAdminWalletAddress();
-                                    }}
-                                    className={`bg-[#3167b4] text-sm text-white px-4 py-2 rounded-lg
-                                        ${updatingAdminWalletAddress ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                    >
-                                    {updatingAdminWalletAddress ? '변경 중...' : '변경'}
-                                    </button> 
-                                </div>
-                                ) : (
-                                <div className="flex flex-row items-center justify-center gap-2">
-                                    <Image
-                                    src="/icon-warning.png"
-                                    alt="Warning"
-                                    width={20}
-                                    height={20}
-                                    className="w-5 h-5"
-                                    />
-                                    <span className="text-sm text-red-500">
-                                    {agent && agent.agentName}의 회원이 없습니다.
-                                    <br />
-                                    에이전트 홈페이지에서 회원가입 후 에이전트 관리자를 설정하세요.
-                                    </span>
-                                </div>
-                                )}
-
-
-                            </div>
-
-                        </div>
-                        
-
-
-                        <div className="w-full flex flex-col gap-5 items-center justify-between border border-gray-300 p-4 rounded-lg">
-                            <div className="w-full flex flex-col items-center justify-start gap-2">
-                                
-                                <div className='w-full flex flex-row items-center justify-start gap-2'>
-                                    <div className='w-2 h-2 bg-green-500 rounded-full'></div>
-                                    <span className="text-lg">
-                                        에이전트 수수료 수납용 USDT통장
-                                    </span>
                                 </div>
 
-
-                                <span className="text-lg text-blue-500 font-semibold">
-                                    {agent?.agentFeeWalletAddress 
-                                        ? (
-                                            <button
-                                                onClick={() => {
-                                                    navigator.clipboard.writeText(agent.agentFeeWalletAddress);
-                                                    toast.success(Copied_Wallet_Address);
-                                                } }
-                                                className="text-lg text-zinc-500 underline"
-                                            >
-                                                {agent.agentFeeWalletAddress.substring(0, 6)}...{agent.agentFeeWalletAddress.substring(agent.agentFeeWalletAddress.length - 4)}
-                                            </button>
-                                        )
-                                        : "에이전 수수료 수납용 USDT통장이 설정되지 않았습니다."
-                                    }
-
-                                </span>
                             </div>
-
-                            <div className='flex flex-col xl:flex-row gap-2 items-center justify-between'>
-                                <select
-                                    disabled={!address || updatingAgentWFeeWalletAddress}
-                                    className="bg-white text-zinc-500 rounded-lg p-2 text-sm"
-                                    value={selectedAgentFeeWalletAddress}
-                                    onChange={(e) => {
-                                        setSelectedAgentWFeeWalletAddress(e.target.value);
-                                    }}
-                                >
-                                    <option value="">에이전트 수수료 지갑 선택</option>
-                                    {allAgentSellers.map((user) => (
-                                        <option key={user._id} value={user.walletAddress}>
-                                            {user.nickname} ({user.walletAddress.substring(0, 6)}...{user.walletAddress.substring(user.walletAddress.length - 4)})
-                                        </option>
-                                    ))}
-                                </select>
-                                <button
-                                    disabled={!address || !selectedAgentFeeWalletAddress || updatingAgentWFeeWalletAddress}
-                                    className={`bg-[#3167b4] text-zinc-100 rounded-lg p-2
-                                        ${!selectedAgentFeeWalletAddress || updatingAgentWFeeWalletAddress ? "opacity-50" : ""}`}
-                                    onClick={() => {
-                                        confirm(
-                                            `정말 ${selectedAgentFeeWalletAddress}으로 에이전트 수수료 지갑을 변경하시겠습니까?`
-                                        ) && updateAgentFeeWalletAddress();
-                                    }}
-                                >
-                                    {updatingAgentWFeeWalletAddress ? "수정 중..." : "수정"}
-                                </button>
-                            </div>
-
-                        </div>
 
 
 

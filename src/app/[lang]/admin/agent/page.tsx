@@ -1605,10 +1605,12 @@ export default function Index({ params }: any) {
                                 <Image
                                   src={item.agentLogo || '/icon-agent.png'}
                                   alt="Agent Logo"
-                                  width={50}
-                                  height={50}
+                                  width={100}
+                                  height={100}
                                   className="
-                                    rounded-lg w-12 h-12"
+                                    rounded-lg w-16 h-16
+                                    object-cover
+                                  "
                                 />
                                 <div className="flex flex-col items-start justify-center">
                                   <span className="text-lg font-semibold">
