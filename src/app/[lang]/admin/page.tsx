@@ -1887,50 +1887,23 @@ export default function Index({ params }: any) {
                     );
 
                   }}
-                  className=" w-full flex bg-[#3167b4] text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                  className=" w-full flex bg-[#3167b4]
+                  text-white px-4 py-2 rounded-lg hover:bg-blue-600"
                 >
                   <Image
-                    src="/icon-mobile-money-transfer.png"
-                    alt="Buy"
+                    src="/icon-share.png"
+                    alt="Withdraw USDT"
                     width={20}
                     height={20}
                     className="mr-2"
                   />
-                  {Withdraw_USDT}
-
+                  <span className="text-sm text-white font-semibold">
+                    USDT 출금하기
+                  </span>
 
                 </button>
 
-                  
-                <button
-                  
-                  //disabled={!address}
 
-                  onClick={() => {
-                    // pay USDT
-                    //console.log("pay USDT");
-
-                    if (!address) {
-                      toast.error(Please_connect_your_wallet_first);
-                      return;
-                    }
-
-
-                    // redirect to send USDT page
-                    //router.push("/send-usdt-favorite");
-
-                    // comming soon
-
-                    toast.success(Coming_Soon);
-
-                    //router.push('/' + params.lang + '/' + storecode + '/sell-usdt');
-
-
-                  }}
-                  className=" w-full flex bg-[#3167b4] text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-                >
-                  {Pay_USDT}
-                </button>
                 
               </div>
 
