@@ -1037,6 +1037,7 @@ export default function Index({ params }: any) {
     setSearchCount(data.result.searchCount);
 
 
+    /*
     for (let i = 0; i < data.result.stores.length; i++) {
    
         const usdtBalance = await balanceOf({
@@ -1056,10 +1057,7 @@ export default function Index({ params }: any) {
         });
 
     }
-
-
-
-
+    */
 
 
 
@@ -1078,6 +1076,11 @@ export default function Index({ params }: any) {
     }
     fetchAllStore();
   } , [address, limitValue, pageValue, paramAgentcode]);
+
+
+
+
+
 
 
 
@@ -1348,45 +1351,81 @@ export default function Index({ params }: any) {
     } , [address, searchMyOrders, params.storecode,]);
 
 
-    /*
-    const [loadingWalletBalance, setLoadingWalletBalance] = useState(false);
-    //const [walletBalanceArray, setWalletBalanceArray] = useState([] as any[]);
+    
+
+
+
+    //const [loadingWalletBalance, setLoadingWalletBalance] = useState(false);
+    const [walletBalanceArray, setWalletBalanceArray] = useState([] as any[]);
+    // initialize walletBalanceArray with allStore
+    useEffect(() => {
+      if (allStore && allStore.length > 0) {
+        const initialBalances = allStore.map(store => ({
+          storecode: store.storecode,
+          walletAddress: store.settlementWalletAddress,
+          balance: 0,
+        }));
+        setWalletBalanceArray(initialBalances);
+      }
+    }, [allStore]);
+
 
     const getWalletBalance = async (
       walletAddress: string,
     ) => {
       
-      setLoadingWalletBalance(true);
-      // balanceOf USDT contract for the store's settlement wallet address
-      const usdtBalance = await balanceOf({
-        contract,
-        address: walletAddress,
-      });
+      if (!walletAddress) {
+        return 0;
+      }
 
-      //console.log('getWalletBalance usdtBalance', usdtBalance);
+      try {
+        const balance = await balanceOf({
+          contract,
+          address: walletAddress,
+        });
 
-      allStore.forEach((store, index) => {
-        if (store.adminWalletAddress === walletAddress) {
-          setAllStore((prev) => {
-            const newStore = [...prev];
-            newStore[index] = {
-              ...newStore[index],
-              usdtBalance: Number(usdtBalance) / 10 ** 6,
-            };
-            return newStore;
-          });
-        }
-      });
-
-
-      setLoadingWalletBalance(false);
-
-      return Number(usdtBalance) / 10 ** 6;
+        return Number(balance) / 10 ** 6; // Convert to USDT
+      } catch (error) {
+        console.error('Error fetching wallet balance:', error);
+        return 0;
+      }
     }
-      */
+
+    const updateWalletBalances = async () => {
+
+        if (!allStore || allStore.length === 0) {
+          console.log('No stores available to fetch balances');
+          return;
+        }
+
+        const updatedBalances = await Promise.all(
+          allStore.map(async (store) => {
+            const balance = await getWalletBalance(store.settlementWalletAddress);
+
+            console.log(`Store: ${store.storecode}, Wallet: ${store.settlementWalletAddress}, Balance: ${balance}`);
+
+            return {
+              storecode: store.storecode,
+              walletAddress: store.settlementWalletAddress,
+              balance,
+            };
+          })
+        );
+
+        setWalletBalanceArray(updatedBalances);
+    };
 
 
-      
+    useEffect(() => {
+      updateWalletBalances();
+      // Fetch wallet balances every 10 seconds
+      const interval = setInterval(() => {
+        updateWalletBalances();
+      }, 10000);
+      return () => clearInterval(interval);
+    }, [allStore]);
+
+    console.log('walletBalanceArray', walletBalanceArray);
 
    
 
@@ -1944,7 +1983,7 @@ export default function Index({ params }: any) {
                   />
                   
                   <button
-                    disabled={!isAdmin || insertingStore}
+                    disabled={!isAdmin || insertingStore || fetchingAllStore}
                     onClick={() => {
 
                       // check if store code already exists
@@ -1967,7 +2006,10 @@ export default function Index({ params }: any) {
                       insertStore();
                     }}
                     className={`bg-[#3167b4] text-white px-4 py-2 rounded-lg w-full
-                      ${!isAdmin || insertingStore ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      ${!isAdmin
+                      || insertingStore
+                      || fetchingAllStore
+                      ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     {insertingStore ? '가맹점 추가 중...' : '가맹점 추가'}
                   </button>
@@ -2068,7 +2110,17 @@ export default function Index({ params }: any) {
                       }}
                     >
                       <tr>
-                        <th className="p-2">가맹점<br/>에이전트</th>
+                        <th className="p-2">
+                          <div className="flex flex-col items-center justify-center gap-2">
+                            <span className="text-center">
+                              가맹점
+                            </span>
+                            <span className="text-center">
+                              에이전트
+                            </span>
+                          </div>
+                        </th>
+
                         {/*
                         <th className="p-2">가맹점타입</th>
                         */}
@@ -2107,9 +2159,16 @@ export default function Index({ params }: any) {
 
                         </th>
 
-                        <th className="p-2">에이전트 수수료(%)<br/>가맹점 수수료(%)</th>
-
-
+                        <th className="p-2">
+                          <div className="flex flex-col items-center justify-center gap-2">
+                            <span className="text-center">
+                              에이전트 수수료(%)
+                            </span>
+                            <span className="text-center">
+                              가맹점 수수료(%)
+                            </span>
+                          </div>
+                        </th>
 
                         <th className="p-2">
                           <div className="flex flex-col items-center justify-center gap-2">
@@ -2159,9 +2218,6 @@ export default function Index({ params }: any) {
                               <span className="text-center">
                                 청산수(건)
                               </span>
-                              <span className="text-center">
-                                USDT통장잔고
-                              </span>
                             </div>                       
                             <div className="flex flex-row items-center justify-center gap-2">
                               
@@ -2179,6 +2235,17 @@ export default function Index({ params }: any) {
 
                           </div>
                         </th>
+
+                        {/* USDT통장 잔고 */}
+                        <th className="p-2">
+                          <div className="flex flex-col items-center justify-center gap-2">
+                            <span className="text-center">
+                              USDT통장 잔고
+                            </span>
+                          </div>
+                        </th>
+
+
 
                       </tr>
                     </thead>
@@ -2199,7 +2266,7 @@ export default function Index({ params }: any) {
                           
 
                             <div className="
-                            w-44 
+                            w-36
                             flex flex-col items-center justify-start gap-2">
 
                               <div className="w-full flex flex-row items-center justify-between gap-2"> 
@@ -2211,10 +2278,10 @@ export default function Index({ params }: any) {
                                     width={50}
                                     height={50}
                                     className="
-                                      rounded-lg w-16 h-16"
+                                      rounded-lg w-12 h-12"
                                   />
                                   <div className="flex flex-col items-start justify-center gap-1">
-                                    <span className="text-lg font-semibold">
+                                    <span className="text-sm font-bold text-gray-700">
                                       {item.storeName.length > 8 ? item.storeName.slice(0, 8) + '...' : item.storeName}
                                     </span>
                                     <button
@@ -2517,7 +2584,9 @@ export default function Index({ params }: any) {
 
 
                           <td className="p-2">
-                            <div className="flex flex-col items-start justify-start gap-2">
+                            <div className="
+                              w-28
+                              flex flex-col items-start justify-start gap-2">
 
                               <div className="flex flex-row items-center gap-2">
 
@@ -2533,7 +2602,7 @@ export default function Index({ params }: any) {
                                   // underline text
                                   className="text-sm text-blue-500 hover:underline"
                                   >
-                                    {item.agentFeeWalletAddress.substring(0, 6) + '...' + item.agentFeeWalletAddress.substring(item.agentFeeWalletAddress.length - 4)
+                                    {item.agentFeeWalletAddress?.substring(0, 6) + '...'
                                     }
                                   </button>
                                 ) : (
@@ -2554,31 +2623,36 @@ export default function Index({ params }: any) {
                               <div className="flex flex-row items-center gap-2">
 
                                 {item.settlementFeeWalletAddress ? (
-                                  <button
-                                    onClick={() => {
-                                      navigator.clipboard.writeText(
-                                        item.settlementFeeWalletAddress
-                                      );
-                                      toast.success('복사되었습니다');
+
+                                  <div className="flex flex-row items-center gap-2">
+                                    <button
+                                      onClick={() => {
+                                        navigator.clipboard.writeText(
+                                          item.settlementFeeWalletAddress
+                                        );
+                                        toast.success('복사되었습니다');
+                                      }
                                     }
-                                  }
-                                  className="text-sm text-blue-500 hover:underline"
-                                  >
-                                    {item.settlementFeeWalletAddress.substring(0, 6) + '...' + item.settlementFeeWalletAddress.substring(item.settlementFeeWalletAddress.length - 4)
-                                    }
-                                  </button>
+                                    className="text-sm text-blue-500 hover:underline"
+                                    >
+                                      {item.settlementFeeWalletAddress.substring(0, 6) + '...'
+                                      }
+                                    </button>
+
+                                    <span className="text-lg text-gray-500">
+                                      {
+                                        item.settlementFeePercent ? item.settlementFeePercent : 0.00
+                                      }%
+                                    </span>
+
+
+                                  </div>
+
                                 ) : (
                                   <span className="text-sm text-red-500">
                                     가맹점 수수료 USDT통장 없음
                                   </span>
                                 )}
-
-                                {' '}
-                                <span className="text-lg text-gray-500">
-                                  {
-                                    item.settlementFeePercent ? item.settlementFeePercent : 0.00
-                                  }%
-                                </span>
                               </div>
 
                               
@@ -2678,7 +2752,7 @@ export default function Index({ params }: any) {
 
                           <td className="p-2">
                             <div className="
-                              w-72
+                              w-64
                               flex flex-col items-between justify-between gap-2">
 
 
@@ -2775,14 +2849,6 @@ export default function Index({ params }: any) {
                                     item.totalPaymentConfirmedClearanceCount ? item.totalPaymentConfirmedClearanceCount : 0
                                   }{' '}건
                                 </span>
-                                  
-                                <span className="w-full text-sm text-green-500 font-bold"
-                                  style={{ fontFamily: 'monospace' }}
-                                >
-                                  {item?.usdtBalance ? item?.usdtBalance.toLocaleString('us-US') : 0}{' '}USDT
-                                </span>
-  
-
                        
                               </div>
 
@@ -2888,6 +2954,16 @@ export default function Index({ params }: any) {
 
                           </td>
 
+                          {/* USDT 잔액 */}
+                          <td className="p-2">
+                            <div className="w-32 flex flex-col items-center justify-center gap-2">
+                              <span className="text-lg text-green-500 font-bold"
+                                style={{ fontFamily: 'monospace' }}
+                              >
+                                {item?.usdtBalance ? item?.usdtBalance.toFixed(2).toLocaleString('us-US') : 0}{' '}USDT
+                              </span>
+                            </div>
+                          </td>
 
 
                         </tr>
