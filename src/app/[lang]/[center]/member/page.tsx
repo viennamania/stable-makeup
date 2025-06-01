@@ -2494,7 +2494,7 @@ export default function Index({ params }: any) {
                         <th className="p-2">회원 통장</th>
                         <th className="p-2">구매건수</th>
                         <th className="p-2">구매금액</th>
-                        <th className="p-2">구매수량</th>
+                        <th className="p-2">구매량</th>
                         <th className="p-2">회원 결제링크</th>
                         <th className="p-2">회원 USDT통장</th>
                       </tr>

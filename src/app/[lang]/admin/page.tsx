@@ -1156,13 +1156,16 @@ export default function Index({ params }: any) {
                   >
                     <tr>
                       <th className="px-4 py-2 text-left">가맹점이름</th>
-                      <th className="px-4 py-2 text-left">
+                      <th className="
+                        hidden xl:block
+                        px-4 py-2 text-left"
+                      >
                           회원수
                           <br/>
                           거래수
                       </th>
                       <th className="px-4 py-2 text-left">거래금액(원)<br/>거래량(USDT)</th>
-                      <th className="px-4 py-2 text-left">정산금액(원)<br/>정산수량(USDT)</th>
+                      <th className="px-4 py-2 text-left">정산금액(원)<br/>정산량(USDT)</th>
 
                       {/*
                       <th className="px-4 py-2 text-left">가입일</th>
@@ -1197,16 +1200,22 @@ export default function Index({ params }: any) {
                               </div>
                           </div>
                         </td>
-                        <td className="px-4 py-2">
+                        
+                        <td className="
+                          hidden xl:block
+                          px-4 py-2"
+                        >
                           {store.totalBuyerCount > 0 ? Number(store.totalBuyerCount)?.toLocaleString() : 0} 명
                           <br/>
                           {store.totalTradeCount > 0 ? Number(store.totalTradeCount)?.toLocaleString() : 0} 건
                         </td>
+
                         <td className="px-4 py-2">{
                           store.totalKrwAmount > 0 ? Number(store.totalKrwAmount)?.toLocaleString() : 0} 원
                           <br/>
                           {store.totalUsdtAmount > 0 ? Number(store.totalUsdtAmount)?.toLocaleString() : 0} USDT
                         </td>
+
                         <td className="px-4 py-2">
                           {store.totalSettlementAmountKRW > 0 ? Number(store.totalSettlementAmountKRW)?.toLocaleString() : 0} 원
                           <br/>
@@ -1622,7 +1631,7 @@ export default function Index({ params }: any) {
                         <th className="px-4 py-2 text-left">
                           가맹점<br/>구매자
                         </th>
-                        <th className="px-4 py-2 text-left">구매금액(원)<br/>구매수량(USDT)</th>
+                        <th className="px-4 py-2 text-left">구매금액(원)<br/>구매량(USDT)</th>
                         <th className="px-4 py-2 text-left">상태</th>
                       </tr>
                     </thead>

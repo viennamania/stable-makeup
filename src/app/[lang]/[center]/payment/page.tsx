@@ -2562,13 +2562,13 @@ export default function Index({ params }: any) {
 
 
                       {/* usdtAmount */}
-                      {/* 구매수량 */}
+                      {/* 구매량 */}
                       <div className="flex flex-row gap-2 items-center justify-center
                         border-b-2 border-zinc-200 border-opacity-50
                         pb-2 mb-2
                         ">
                           <span className="text-sm text-zinc-500">
-                            구매수량
+                            구매량
                           </span>
                           <Image
                             src="/logo-tether.png"

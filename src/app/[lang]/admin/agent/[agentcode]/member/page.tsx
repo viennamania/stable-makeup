@@ -2162,7 +2162,7 @@ export default function Index({ params }: any) {
                           <div className="flex flex-col items-center justify-center gap-2">
                             <span>결제건수(건)</span>
                             <span>결제금액(원)</span>
-                            <span>구매수량(USDT)</span>
+                            <span>구매량(USDT)</span>
                           </div>
                         </th>
 

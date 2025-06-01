@@ -2744,7 +2744,7 @@ export default function Index({ params }: any) {
                         <th className="px-4 py-2 text-left">
                           가맹점<br/>구매자
                         </th>
-                        <th className="px-4 py-2 text-left">구매금액(원)<br/>구매수량(USDT)</th>
+                        <th className="px-4 py-2 text-left">구매금액(원)<br/>구매량(USDT)</th>
                         <th className="px-4 py-2 text-left">상태</th>
                       </tr>
                     </thead>

@@ -2190,10 +2190,10 @@ export default function Index({ params }: any) {
                       </div>
 
                       {/* usdtAmount */}
-                      {/* 구매수량 */}
+                      {/* 구매량 */}
                       <div className="flex flex-row gap-2 items-center justify-center">
                           <span className="text-sm text-zinc-500">
-                            구매수량
+                            구매량
                           </span>
                        
                           <div className="text-2xl font-semibold text-zinc-500">

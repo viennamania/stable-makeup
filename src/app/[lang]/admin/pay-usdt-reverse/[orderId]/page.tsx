@@ -2916,7 +2916,7 @@ export default function Index({ params }: any) {
 
 
                                     <p className="text-lg text-zinc-500">
-                                      구매수량:{' '}{item.usdtAmount}{' '}USDT
+                                      구매량:{' '}{item.usdtAmount}{' '}USDT
                                     </p>
                                     <p className="text-sm text-zinc-500">
                                       환율:{' '}{
