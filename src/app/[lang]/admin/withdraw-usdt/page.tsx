@@ -38,7 +38,10 @@ import {
     sendAndConfirmTransaction,
 } from "thirdweb";
 
-import { balanceOf, transfer } from "thirdweb/extensions/erc20";
+import {
+  balanceOf,
+  transfer,
+} from "thirdweb/extensions/erc20";
  
 
 
@@ -567,11 +570,18 @@ export default function SendUsdt({ params }: any) {
         }
         */
 
+        /*
         const { transactionHash } = await sendTransaction({
           
           account: activeAccount as any,
 
           transaction,
+        });
+        */
+        // sendAndConfirmTransaction
+        const { transactionHash } = await sendAndConfirmTransaction({
+          transaction: transaction,
+          account: activeAccount as any,
         });
 
         

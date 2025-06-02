@@ -948,17 +948,19 @@ export default function SettingsPage({ params }: any) {
                         </span>
                     </div>
 
+                    {/*
                     {!address && (
+
                         <ConnectButton
                         client={client}
                         wallets={wallets}
 
-                        /*
-                        accountAbstraction={{
-                            chain: polygon,
-                            sponsorGas: true
-                        }}
-                        */
+                        
+                        //accountAbstraction={{
+                        //    chain: polygon,
+                        //    sponsorGas: true
+                        //}}
+                        
                         
                         theme={"light"}
 
@@ -987,6 +989,7 @@ export default function SettingsPage({ params }: any) {
                         //locale={"en_US"}
                         />
                     )}
+                    */}
 
                     {address && (
                         <div className="flex items-center justify-center bg-gray-200 rounded-full p-2">
@@ -1177,12 +1180,82 @@ export default function SettingsPage({ params }: any) {
                         )}
 
 
+                    </div>
 
+
+                </div>
+
+
+
+                <div className='hidden w-full flex-col gap-5 mt-4'>
+                    <div className='w-full flex flex-row items-center justify-start gap-2'>
+                        <Image
+                            src={"/icon-gear.png"}
+                            alt="Settings"
+                            width={20}
+                            height={20}
+                            className="rounded-full"
+                        />
+                        <span className='text-xl font-semibold text-zinc-500'>
+                            지갑 관리
+                        </span>
+                    </div>
+
+                    <div className='w-full flex flex-col gap-2
+                    border border-gray-300 p-4 rounded-lg'>
+
+                        <div className='flex flex-row items-center justify-start gap-2 mb-2'>
+                            {/* dot */}
+                            <div className='w-2 h-2 bg-green-500 rounded-full'></div>
+                            <span className='text-lg'>
+                                {Wallet_Settings}
+                            </span>
+                        </div>
+
+
+                        <ConnectButton
+                        client={client}
+                        wallets={wallets}
+
+                        
+                        //accountAbstraction={{
+                        //    chain: polygon,
+                        //    sponsorGas: true
+                        //}}
+                        
+                        
+                        theme={"light"}
+
+                        // button color is dark skyblue convert (49, 103, 180) to hex
+                        connectButton={{
+                            style: {
+                                backgroundColor: "#3167b4", // dark skyblue
+                                color: "#f3f4f6", // gray-300
+                                padding: "2px 10px",
+                                borderRadius: "10px",
+                                fontSize: "14px",
+                                width: "60x",
+                                height: "38px",
+                            },
+                            label: "원클릭 로그인",
+                        }}
+
+                        connectModal={{
+                            size: "wide", 
+                            //size: "compact",
+                            titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
+                            showThirdwebBranding: false,
+                        }}
+
+                        locale={"ko_KR"}
+                        //locale={"en_US"}
+                        />
 
                     </div>
 
 
                 </div>
+
 
             </div>
 
