@@ -1506,6 +1506,46 @@ export default function Index({ params }: any) {
     console.log('allStore', allStore);
     */
   
+
+
+  //  getBalanceOfStoreSettlementWalletAddress
+  const getBalanceOfStoreSettlementWalletAddress = async (storecode: string) => {
+    if (!storecode) {
+      return 0;
+    }
+
+    const store = allStore.find(s => s.storecode === storecode);
+    if (!store || !store.settlementWalletAddress) {
+      return 0;
+    }
+
+    const balance = await balanceOf({
+      contract,
+      address: store.settlementWalletAddress,
+    });
+
+    
+    //return Number(balance) / 10 ** 6; // Convert to USDT
+
+    setAllStore((prev) => {
+      const newStore = [...prev];
+      const index = newStore.findIndex(s => s.storecode === storecode);
+      if (index !== -1) {
+        newStore[index] = {
+          ...newStore[index],
+          usdtBalance: Number(balance) / 10 ** 6,
+        };
+      }
+      return newStore;
+    } );
+
+    return Number(balance) / 10 ** 6; // Convert to USDT
+
+
+
+  };
+
+
       
       
 
@@ -2142,8 +2182,18 @@ export default function Index({ params }: any) {
 
 
                         <th className="p-2">
-                          회원 홈페이지<br/>관리자 홈페이지
+                          <div className="flex flex-col items-center justify-center gap-2">
+                            <span className="text-center">
+                              회원<br />
+                              홈페이지
+                            </span>
+                            <span className="text-center">
+                              관리자<br/>
+                              홈페이지
+                            </span>
+                          </div>
                         </th>
+
 
                         <th className="
                           hidden xl:table-cell
@@ -2240,6 +2290,8 @@ export default function Index({ params }: any) {
                         <th className="p-2">
                           <div className="flex flex-col items-center justify-center gap-2">
                             <span className="text-center">
+                              가맹점<br />
+                              USDT통장<br />
                               USDT통장 잔고
                             </span>
                           </div>
@@ -2413,7 +2465,7 @@ export default function Index({ params }: any) {
                           <td className="p-2">
 
                             <div className="
-                              w-24
+                              w-20
                               flex flex-col items-start justify-start gap-2">
 
                               <div className="flex flex-col xl:flex-row items-center gap-2">
@@ -2439,7 +2491,7 @@ export default function Index({ params }: any) {
                                   rel="noopener noreferrer"
                                   className="text-sm text-blue-500 hover:underline"
                                 >
-                                  회원 홈페이지
+                                  회원
                                 </a>
 
                               </div>
@@ -2468,7 +2520,7 @@ export default function Index({ params }: any) {
                                   rel="noopener noreferrer"
                                   className="text-sm text-blue-500 hover:underline"
                                 >
-                                  관리자 홈페이지
+                                  관리자
                                 </a>
 
                               </div>
@@ -2957,11 +3009,60 @@ export default function Index({ params }: any) {
                           {/* USDT 잔액 */}
                           <td className="p-2">
                             <div className="w-32 flex flex-col items-center justify-center gap-2">
+
+                              {/* settlementWalletAddress */}
+                              <span className="text-sm text-gray-500">
+                                {item.settlementWalletAddress ? (
+                                  <button
+                                    onClick={() => {
+                                      navigator.clipboard.writeText(
+                                        item.settlementWalletAddress
+                                      );
+                                      toast.success('정산 지갑 주소가 복사되었습니다.');
+                                    }}
+                                    className="text-sm text-blue-500 hover:underline"
+                                  >
+                                    { item.settlementWalletAddress.substring(0, 6) + '...' + item.settlementWalletAddress.substring(item.settlementWalletAddress.length - 4)
+                                    }
+                                  </button>
+                                ) : (
+                                  <span className="text-sm text-red-500">
+                                    정산 지갑 주소 없음
+                                  </span>
+                                )}
+                              </span>
+
+                              {/* USDT 잔액 표시 */}
                               <span className="text-lg text-green-500 font-bold"
                                 style={{ fontFamily: 'monospace' }}
                               >
                                 {item?.usdtBalance ? item?.usdtBalance.toFixed(2).toLocaleString('us-US') : 0}{' '}USDT
                               </span>
+
+
+
+                              {/* button to getBalance of USDT */}
+                              <button
+                                //disabled={!isAdmin || insertingStore}
+                                onClick={() => {
+                                  //if (!isAdmin || insertingStore) return;
+                                  //getBalance(item.storecode);
+
+                                  getBalanceOfStoreSettlementWalletAddress(item.storecode);
+          
+
+                                  toast.success('잔액을 가져왔습니다.');
+                                }}
+                                className={`
+                                  ${!isAdmin || insertingStore ? 'opacity-50 cursor-not-allowed' : ''}
+                                  w-full
+                                  bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                  hover:bg-[#3167b4]/80
+                                `}
+                              >
+                                잔액 가져오기
+                              </button>
+
                             </div>
                           </td>
 
