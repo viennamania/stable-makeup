@@ -819,21 +819,32 @@ export default function Index({ params }: any) {
 
   // search form date to date
   const [searchFormDate, setSearchFormDate] = useState("");
-  // from date is not today, but today - 30 days
+  // set today's date in YYYY-MM-DD format
   useEffect(() => {
     const today = new Date();
-    const formattedDate = new Date(today.setDate(today.getDate() - 30)).toISOString().split('T')[0]; // YYYY-MM-DD format
+    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
     setSearchFormDate(formattedDate);
   }, []);
 
 
 
+
   const [searchToDate, setSearchToDate] = useState("");
+
+  // set today's date in YYYY-MM-DD format
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+    setSearchToDate(formattedDate);
+  }, []);
+
+  /*
   useEffect(() => {
     const today = new Date();
     const toDate = new Date(today.setDate(today.getDate() + 1)); // add 1 day to today
     setSearchToDate(toDate.toISOString().split('T')[0]); // YYYY-MM-DD format
   }, []);
+  */
 
 
 
@@ -991,6 +1002,7 @@ export default function Index({ params }: any) {
             playSong();
 
 
+            setFetchingBuyOrders(true);
 
             fetch('/api/order/getAllBuyOrders', {
                 method: 'POST',
@@ -1025,6 +1037,8 @@ export default function Index({ params }: any) {
 
                 setTotalCount(data.result.totalCount);
             })
+
+            setFetchingBuyOrders(false);
 
 
 
@@ -1119,6 +1133,7 @@ export default function Index({ params }: any) {
         playSong();
 
 
+        setFetchingBuyOrders(true);
         await fetch('/api/order/getAllBuyOrders', {
           method: 'POST',
           headers: {
@@ -1152,6 +1167,7 @@ export default function Index({ params }: any) {
             setTotalCount(data.result.totalCount);
           }
         });
+        setFetchingBuyOrders(false);
 
       } else {
         toast.error('Order has been failed');
@@ -1381,8 +1397,7 @@ export default function Index({ params }: any) {
             
 
             
-            //fetchBuyOrders();
-            // fetch Buy Orders
+            setFetchingBuyOrders(true);
             await fetch('/api/order/getAllBuyOrders', {
               method: 'POST',
               headers: {
@@ -1415,6 +1430,7 @@ export default function Index({ params }: any) {
 
                 setTotalCount(data.result.totalCount);
             })
+            setFetchingBuyOrders(false);
 
 
             // refresh balance
@@ -1592,9 +1608,7 @@ export default function Index({ params }: any) {
 
       if (data.result) {
         
-        ///fetchBuyOrders();
-
-        // fetch Buy Orders
+        setFetchingBuyOrders(true);
         await fetch('/api/order/getAllBuyOrders', {
           method: 'POST',
           headers: {
@@ -1628,6 +1642,7 @@ export default function Index({ params }: any) {
 
             setTotalCount(data.result.totalCount);
         })
+        setFetchingBuyOrders(false);
 
 
 
@@ -1758,9 +1773,7 @@ export default function Index({ params }: any) {
         playSong();
 
         
-        ///fetchBuyOrders();
-
-        // fetch Buy Orders
+        setFetchingBuyOrders(true);
         await fetch('/api/order/getAllBuyOrders', {
           method: 'POST',
           headers: {
@@ -1793,6 +1806,7 @@ export default function Index({ params }: any) {
 
             setTotalCount(data.result.totalCount);
         })
+        setFetchingBuyOrders(false);
 
       }
 
@@ -1919,8 +1933,8 @@ export default function Index({ params }: any) {
       }
 
 
+      setFetchingBuyOrders(true);
       
-
       const response = await fetch('/api/order/getAllBuyOrders', {
           method: 'POST',
           headers: {
@@ -1949,6 +1963,8 @@ export default function Index({ params }: any) {
 
         ),
       });
+
+      setFetchingBuyOrders(false);
 
       if (!response.ok) {
         return;
@@ -2049,7 +2065,7 @@ export default function Index({ params }: any) {
 
 
 
-const [fetchingBuyOrders, setFetchingBuyOrders] = useState(false);
+const [fetchingBuyOrders, setFetchingBuyOrders] = useState(true);
 
 const fetchBuyOrders = async () => {
 
@@ -2679,68 +2695,60 @@ const fetchBuyOrders = async () => {
               </div>
 
 
-              <div className="w-full flex flex-col xl:flex-row items-start justify-between gap-3">
+              <div className="w-full flex flex-col xl:flex-row items-center justify-between gap-3">
 
 
                 {/* select storecode */}
                 <div className="flex flex-row items-center gap-2">
-                  {fetchingAllStores ? (
+   
                     <Image
-                      src="/loading.png"
-                      alt="Loading"
+                      src="/icon-store.png"
+                      alt="Store"
                       width={20}
                       height={20}
-                      className="animate-spin"
+                      className="rounded-lg w-5 h-5"
                     />
-                  ) : (
-                    <div className="flex flex-row items-center gap-2">
 
+                    <span className="
+                      w-32
+                      text-sm font-semibold">
+                      가맹점선택
+                    </span>
+
+
+                    <select
+                      value={searchStorecode}
                       
-                      <Image
-                        src="/icon-store.png"
-                        alt="Store"
-                        width={20}
-                        height={20}
-                        className="rounded-lg w-5 h-5"
-                      />
+                      //onChange={(e) => setSearchStorecode(e.target.value)}
 
-                      <span className="
-                        w-32
-                        text-sm font-semibold">
-                        가맹점선택
-                      </span>
-
-
-                      <select
-                        value={searchStorecode}
-                        
-                        //onChange={(e) => setSearchStorecode(e.target.value)}
-
-                        // storecode parameter is passed to fetchBuyOrders
-                        onChange={(e) => {
-                          router.push('/' + params.lang + '/admin/trade-history?storecode=' + e.target.value);
-                        }}
+                      // storecode parameter is passed to fetchBuyOrders
+                      onChange={(e) => {
+                        router.push('/' + params.lang + '/admin/trade-history?storecode=' + e.target.value);
+                      }}
 
 
 
-                        className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
-                      >
-                        <option value="">전체</option>
-                        {allStores && allStores.map((item, index) => (
-                          <option key={index} value={item.storecode}
-                            className="flex flex-row items-center justify-start gap-2"
-                          >
-                            
-                            {item.storeName}{' '}({item.storecode})
+                      className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                    >
+                      <option value="">전체</option>
 
-                          </option>
-                        ))}
-                      </select>
+                      {fetchingAllStores && (
+                        <option value="" disabled>
+                          가맹점 검색중...
+                        </option>
+                      )}
 
+                      {!fetchingAllStores && allStores && allStores.map((item, index) => (
+                        <option key={index} value={item.storecode}
+                          className="flex flex-row items-center justify-start gap-2"
+                        >
+                          
+                          {item.storeName}{' '}({item.storecode})
 
-                    </div>
-
-                  )}
+                        </option>
+                      ))}
+                    </select>
+                
                 </div>
 
 
@@ -2823,39 +2831,54 @@ const fetchBuyOrders = async () => {
 
 
 
+                  
+
+
+                    {/* 검색 버튼 */}
+                    <div className="
+                      w-28  
+                      flex flex-row items-center gap-2">
+                      <button
+                        onClick={() => {
+                          setPageValue(1);
+                          
+                          fetchBuyOrders();
+
+                          getTradeSummary();
+                        }}
+                        //className="bg-[#3167b4] text-white px-4 py-2 rounded-lg w-full"
+                        className={`${
+                          fetchingBuyOrders ? 'bg-gray-400' : 'bg-[#3167b4]'
+                        }
+                        text-white px-4 py-2 rounded-lg w-full
+                        hover:bg-[#3167b4]/80
+                        hover:cursor-pointer
+                        hover:scale-105
+                        transition-transform duration-200 ease-in-out`}
+                        title="검색"
+
+                        disabled={fetchingBuyOrders}
+                      >
+                        <div className="flex flex-row items-center justify-between gap-2">
+                          <Image
+                            src="/icon-search.png"
+                            alt="Search"
+                            width={20}
+                            height={20}
+                            className="rounded-lg w-5 h-5"
+                          />
+                          <span className="text-sm">
+                            {fetchingBuyOrders ? '검색중...' : '검색'}
+                          </span>
+                        </div>
+
+                      </button>
+                    </div>
+
                   </div>
 
 
-                  {/* 검색 버튼 */}
-                  <div className="
-                  w-32
-                  flex flex-row items-center gap-2">
-                    <button
-                      onClick={() => {
-                        setPageValue(1);
-                        
-                        fetchBuyOrders();
 
-                        getTradeSummary();
-                      }}
-                      className="bg-[#3167b4] text-white px-4 py-2 rounded-lg w-full"
-                      disabled={fetchingBuyOrders}
-                    >
-                      <div className="flex flex-row items-center justify-between gap-2">
-                        <Image
-                          src="/icon-search.png"
-                          alt="Search"
-                          width={20}
-                          height={20}
-                          className="rounded-lg w-5 h-5"
-                        />
-                        <span className="text-sm">
-                          {fetchingBuyOrders ? '검색중...' : '검색'}
-                        </span>
-                      </div>
-
-                    </button>
-                  </div>
                 </div>
 
 
@@ -2876,25 +2899,69 @@ const fetchBuyOrders = async () => {
                     <table className=" w-full table-auto border-collapse border border-zinc-800 rounded-md">
 
                       <thead
-                        className="bg-zinc-800 text-white text-sm font-semibold"
+                        className="bg-zinc-800 text-white text-sm"
                         style={{
                           backgroundColor: 'rgba(0, 0, 0, 0.5)',
                         }}
                       >
                         <tr>
                           <th className="p-2">
-                            {TID} / 구매신청시간
+                            <div className="flex flex-col gap-2 items-center justify-center">
+                              <span className="text-sm text-white">
+                                구매신청시간
+                              </span>
+                              <span className="text-sm text-white">
+                                {TID}
+                              </span>
+                            </div>
                           </th>
+
                           <th className="p-2">가맹점</th>
-                          <th className="p-2">{Buyer}</th>
+
+                          <th className="p-2">
+                            <div className="flex flex-col gap-2 items-center justify-center">
+                              <span className="text-sm text-white">
+                                구매자 아이디
+                              </span>
+                              <span className="text-sm text-white">
+                                구매자 USDT통장
+                              </span>
+                            </div>
+                          </th>
+
                           <th className="p-2">입금자</th>
 
-                          <th className="p-2">{Price} / {Buy_Amount} / {Rate}</th>
-                          <th className="p-2">입금통장</th>
+                          <th className="p-2">
+                            <div className="flex flex-col gap-2 items-center justify-center">
+                              <span className="text-sm text-white">
+                                {Price}
+                              </span>
+                              <span className="text-sm text-white">
+                                {Buy_Amount}
+                              </span>
+                              <span className="text-sm text-white">
+                                {Rate}
+                              </span>
+                            </div>
+                          </th>
+
+
+                          <th className="p-2">
+                            <div className="flex flex-col gap-2 items-center justify-center">
+                              <span className="text-sm text-white">
+                                판매자 아이디
+                              </span>
+                              <span className="text-sm text-white">
+                                판매자 USDT통장
+                              </span>
+                            </div>
+                          </th>
+
+                          <th className="p-2">판매자 입금통장</th>
+
                           <th className="p-2">자동입금처리</th>
                           <th className="p-2">{Status}</th>
-                          {/*<th className="p-2">{Trades}</th>*/}
-                          <th className="p-2">판매자</th>
+
                           <th className="p-2">자동결제 및 정산</th>
 
                         </tr>
@@ -2903,648 +2970,671 @@ const fetchBuyOrders = async () => {
                       {/* if my trading, then tr has differenc color */}
                       <tbody>
 
-                        {buyOrders.map((item, index) => (
-
-                          
-                          <tr key={index} className={`
-                            ${
-                              index % 2 === 0 ? 'bg-zinc-100' : 'bg-zinc-200'
-
-
-                              //item.walletAddress === address ?
-                              
-   
-                            }
-                          `}>
-                          
-
-                            <td className="p-2">
-
-                              <div className="flex flex-col gap-2 items-center justify-center">
-
-                                <button
-                                  onClick={() => {
-                                    // copy tradeId to clipboard
-                                    navigator.clipboard.writeText(item.tradeId);
-                                    toast.success('거래번호가 복사되었습니다.');
-                                  }}
-                                  className="text-sm text-zinc-500 font-semibold
-                                    hover:text-blue-600 cursor-pointer
-                                    hover:underline"
-                                  title="거래번호 복사"
-                                >
-                                  #{item?.tradeId}
-                                </button>
-
-                                <div className="flex flex-col gap-2 items-center justify-center">
-                                  <span className="text-sm text-zinc-500 font-semibold">
-                                    {item?.createdAt && new Date(item.createdAt)?.toLocaleString('ko-KR', {
-                                      year: 'numeric',
-                                      month: '2-digit',
-                                      day: '2-digit',
-                                      hour: '2-digit',
-                                      minute: '2-digit',
-                                      second: '2-digit',
-                                    })}
-                                  </span>
-                                  {/*
-                                  <span className="text-sm text-zinc-500 font-semibold">
-                                    {item?.createdAt && new Date(item.createdAt)?.toLocaleString('en-US', {
-                                      year: 'numeric',
-                                      month: '2-digit',
-                                      day: '2-digit',
-                                      hour: '2-digit',
-                                      minute: '2-digit',
-                                      second: '2-digit',
-                                    })}
-                                  </span>
-                                  */}
-                                </div>
-
-                                <span className="text-sm text-zinc-500 font-semibold">
-                                  {params.lang === 'ko' ? (
-                                    <p>{
-                                      new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 ? (
-                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000) + ' ' + seconds_ago
-                                      ) :
-                                      new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 * 60 ? (
-                                      ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
-                                      ) : (
-                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
-                                      )
-                                    }</p>
-                                  ) : (
-                                    <p>{
-                                      new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 ? (
-                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000) + ' ' + seconds_ago
-                                      ) :
-                                      new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 * 60 ? (
-                                      ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
-                                      ) : (
-                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
-                                      )
-                                    }</p>
-                                  )}
-                                </span>
-
-                              </div>
+                        {!fetchingBuyOrders && buyOrders.length === 0 ? (
+                          <tr>
+                            <td colSpan={10} className="p-4 text-center text-zinc-500">
+                              <span>거래내역이 없습니다.</span>
                             </td>
+                          </tr>
+                        ) : (
+                          <>
 
-                            <td className="text-zinc-500 p-2">
-                              
-
-                              <div className="flex flex-row gap-2 items-center justify-start">
-                                
-                                <Image
-                                  src={item?.store?.storeLogo || "/icon-store.png"}
-                                  alt="Store"
-                                  width={50}
-                                  height={50}
-                                  className="rounded-full w-8 h-8 object-cover"
-                                />
-                                <div className="flex flex-col items-start justify-start">
-                                  <span className="text-sm text-zinc-500 font-bold">
-                                    {
-                                      item?.store?.storeName
-                                    }
-                                  </span>
-                                  <span className="text-sm text-zinc-500">
-                                    {
-                                      item?.agent.agentName
-                                    }
-                                  </span>
-                                </div>
-                              </div>
-
-                            </td>
+                          {buyOrders.map((item, index) => (
 
                             
-                            <td className="p-2">
-                              <div className="flex flex-row items-center gap-2">
-    
-                                
-                                <div className="flex flex-col gap-2 items-center">
+                            <tr key={index} className={`
+                              ${
+                                index % 2 === 0 ? 'bg-zinc-100' : 'bg-zinc-200'
 
-                                  <div className="text-sm text-blue-600 font-semibold">
-                                    {item?.nickname}
+
+                                //item.walletAddress === address ?
+                                
+    
+                              }
+                            `}>
+                            
+
+                              <td className="p-2">
+
+                                <div className="flex flex-col gap-2 items-center justify-center">
+
+
+
+                                  <div className="flex flex-col gap-2 items-center justify-center">
+                                    <span className="text-sm text-zinc-500 font-semibold">
+                                      {item?.createdAt && new Date(item.createdAt)?.toLocaleString('ko-KR', {
+                                        year: 'numeric',
+                                        month: '2-digit',
+                                        day: '2-digit',
+                                        hour: '2-digit',
+                                        minute: '2-digit',
+                                        second: '2-digit',
+                                      })}
+                                    </span>
+                                    {/*
+                                    <span className="text-sm text-zinc-500 font-semibold">
+                                      {item?.createdAt && new Date(item.createdAt)?.toLocaleString('en-US', {
+                                        year: 'numeric',
+                                        month: '2-digit',
+                                        day: '2-digit',
+                                        hour: '2-digit',
+                                        minute: '2-digit',
+                                        second: '2-digit',
+                                      })}
+                                    </span>
+                                    */}
                                   </div>
 
-                                  {/* wallet address */}
+                                  <span className="text-sm text-zinc-500 font-semibold">
+                                    {params.lang === 'ko' ? (
+                                      <p>{
+                                        new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 ? (
+                                          ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000) + ' ' + seconds_ago
+                                        ) :
+                                        new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 * 60 ? (
+                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
+                                        ) : (
+                                          ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
+                                        )
+                                      }</p>
+                                    ) : (
+                                      <p>{
+                                        new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 ? (
+                                          ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000) + ' ' + seconds_ago
+                                        ) :
+                                        new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 * 60 ? (
+                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
+                                        ) : (
+                                          ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
+                                        )
+                                      }</p>
+                                    )}
+                                  </span>
+
                                   <button
                                     onClick={() => {
-                                      navigator.clipboard.writeText(item.walletAddress);
-                                      toast.success('지갑주소가 복사되었습니다.');
+                                      // copy tradeId to clipboard
+                                      navigator.clipboard.writeText(item.tradeId);
+                                      toast.success('거래번호가 복사되었습니다.');
                                     }}
                                     className="text-sm text-zinc-500 font-semibold
-                                    hover:text-blue-600 cursor-pointer
-                                    hover:underline"
-                                    title="지갑주소 복사"
+                                      hover:text-blue-600 cursor-pointer
+                                      hover:underline"
+                                    title="거래번호 복사"
                                   >
-                                    {item.walletAddress.substring(0, 10) + '...'}
+                                    #{item?.tradeId}
                                   </button>
 
 
+
                                 </div>
+                              </td>
 
-                              </div>
-                            </td>
-
-                            
-                            <td className="p-2">
-                              <div className="flex flex-row items-center gap-2">
-  
+                              <td className="text-zinc-500 p-2">
                                 
-                                <div className="flex flex-col gap-2 items-center">
 
-                                  <div className="text-sm text-yellow-600 font-semibold">
-                                    {
-                                      item?.buyer?.depositName
-
-                                    }
+                                <div className="flex flex-row gap-2 items-center justify-start">
+                                  
+                                  <Image
+                                    src={item?.store?.storeLogo || "/icon-store.png"}
+                                    alt="Store"
+                                    width={50}
+                                    height={50}
+                                    className="rounded-full w-8 h-8 object-cover"
+                                  />
+                                  <div className="flex flex-col items-start justify-start">
+                                    <span className="text-sm text-zinc-500 font-bold">
+                                      {
+                                        item?.store?.storeName
+                                      }
+                                    </span>
+                                    <span className="text-sm text-zinc-500">
+                                      {
+                                        item?.agent.agentName
+                                      }
+                                    </span>
                                   </div>
-                                  <div className="text-sm text-zinc-500 font-semibold">
-                                    {
-                                      item?.buyer?.depositBankName
-
-                                    }
-                                  </div>
-
-                                  <div className="text-sm text-zinc-500 font-semibold">
-                                    {
-                                      item?.buyer?.depositBankAccountNumber &&
-                                      item?.buyer?.depositBankAccountNumber.slice(0, 5) + '...'
-                                    }
-                                  </div>
-
-
                                 </div>
 
-                              </div>
-                            </td>
+                              </td>
+
+                              
+                              <td className="p-2">
+                                <div className="flex flex-row items-center gap-2">
+      
+                                  
+                                  <div className="flex flex-col gap-2 items-center">
+
+                                    <div className="text-lg text-blue-600 font-semibold">
+                                      {item?.nickname}
+                                    </div>
+
+                                    {/* wallet address */}
+                                    <button
+                                      onClick={() => {
+                                        navigator.clipboard.writeText(item.walletAddress);
+                                        toast.success('지갑주소가 복사되었습니다.');
+                                      }}
+                                      className="text-sm text-zinc-500 font-semibold
+                                      hover:text-blue-600 cursor-pointer
+                                      hover:underline"
+                                      title="지갑주소 복사"
+                                    >
+                                      {item.walletAddress.substring(0, 10) + '...'}
+                                    </button>
+
+
+                                  </div>
+
+                                </div>
+                              </td>
+
+                              
+                              <td className="p-2">
+                                <div className="flex flex-row items-center gap-2">
+    
+                                  
+                                  <div className="flex flex-col gap-2 items-center">
+
+                                    <div className="text-sm text-yellow-600 font-semibold">
+                                      {
+                                        item?.buyer?.depositName
+
+                                      }
+                                    </div>
+                                    <div className="text-sm text-zinc-500 font-semibold">
+                                      {
+                                        item?.buyer?.depositBankName
+
+                                      }
+                                    </div>
+
+                                    <div className="text-sm text-zinc-500 font-semibold">
+                                      {
+                                        item?.buyer?.depositBankAccountNumber &&
+                                        item?.buyer?.depositBankAccountNumber.slice(0, 5) + '...'
+                                      }
+                                    </div>
+
+
+                                  </div>
+
+                                </div>
+                              </td>
 
 
 
-                            <td className="p-2">
-                              <div className="flex flex-col gap-2 items-center justify-center">
+                              <td className="p-2">
+                                <div className="flex flex-col gap-2 items-center justify-center">
 
-                                <div className="flex flex-col gap-2 items-end justify-center">
-                                  <span className="text-lg text-zinc-500 font-semibold"
-                                    style={{
-                                      fontFamily: 'monospace',
-                                    }}
-                                  >
-                                    {Number(item.krwAmount)?.toLocaleString()}{' '}원
-                                  </span>
-                                  <span className="text-lg text-green-600 font-semibold"
-                                    style={{
-                                      fontFamily: 'monospace',
+                                  <div className="flex flex-col gap-2 items-end justify-center">
+                                    <span className="text-lg text-zinc-500 font-semibold"
+                                      style={{
+                                        fontFamily: 'monospace',
                                       }}
                                     >
-                                    {item.usdtAmount}{' '}USDT
-                                  </span>
-                                </div>
-                                <span className="text-sm text-zinc-500 font-semibold"
-                                  style={{
-                                    fontFamily: 'monospace',
-                                  }}
-                                >
-                                  {
-                                    Number(item.rate).toFixed(2)
-                                    //Number(item.krwAmount / item.usdtAmount).toFixed(2)
-                                  }
-                                </span>
-                              </div>
-                            </td>
-
-
-                            <td className="p-2">
-                              <div className="flex flex-col gap-2 items-center justify-center">
-                                <div className="text-sm font-semibold text-zinc-500">
-                                  {item?.store?.bankInfo?.bankName}
-                                </div>
-
-                                {/* copy account number to clipboard */}
-                                <button
-                                  onClick={() => {
-                                    navigator.clipboard.writeText(item?.store?.bankInfo?.accountNumber);
-                                    toast.success('입금통장번호가 복사되었습니다.');
-                                  }}
-                                  className="text-sm text-zinc-500 font-semibold
-                                    hover:text-blue-600 cursor-pointer
-                                    hover:underline"
-                                  title="입금통장번호 복사"
-                                >
-                                  {item?.store?.bankInfo?.accountNumber}
-                                </button>
-
-                                <div className="text-sm font-semibold text-zinc-500">
-                                  {item?.store?.bankInfo?.accountHolder}
-                                </div>
-                              </div>
-                            </td>
-
-
-                            <td className="p-2">
-                              <div className="flex flex-col mr-2 items-center justify-end gap-2">
-
-                                  {item?.autoConfirmPayment ? (
-                                    <span className="text-sm text-green-500 font-semibold">
-                                      자동입금처리
+                                      {Number(item.krwAmount)?.toLocaleString()}{' '}원
                                     </span>
-                                  ) : (
-                                    <span className="text-sm text-red-500 font-semibold">
-                                      수동입금처리
+                                    <span className="text-lg text-green-600 font-semibold"
+                                      style={{
+                                        fontFamily: 'monospace',
+                                        }}
+                                      >
+                                      {item.usdtAmount}{' '}USDT
                                     </span>
-                                  )}
-                               
-                                  <div className=" text-green-600 text-xl font-semibold"
+                                  </div>
+                                  <span className="text-sm text-zinc-500 font-semibold"
                                     style={{
                                       fontFamily: 'monospace',
                                     }}
                                   >
                                     {
-                                      item?.paymentAmount &&
-                                      item?.paymentAmount?.toLocaleString() + ' 원'
+                                      Number(item.rate).toFixed(2)
+                                      //Number(item.krwAmount / item.usdtAmount).toFixed(2)
                                     }
+                                  </span>
+                                </div>
+                              </td>
 
+
+                              <td className="text-zinc-500 p-2">
+                                <div className="flex flex-col gap-2 items-center justify-center">
+                                  <span className="text-lg font-semibold text-blue-600">
+                                    {
+                                      item.seller?.nickname
+                                    }
+                                  </span>
+                                  {/* seller.walletAddress */}
+                                  <button
+                                    className="text-sm text-zinc-500 font-semibold
+                                      hover:text-blue-500
+                                      hover:underline
+                                      cursor-pointer
+                                      "
+                                    title="지갑주소 복사"
+
+                                    onClick={() => {
+                                      
+                                      // copy to clipboard
+                                      //navigator.clipboard.writeText(item.seller?.walletAddress || '');
+
+                                      navigator.clipboard.writeText(item.store.sellerWalletAddress || '');
+
+                                      toast.success('지갑주소가 복사되었습니다.');
+                                    }}
+                                  >
+                                    {/*item.seller?.walletAddress &&
+                                      item.seller?.walletAddress.substring(0, 10) + '...'*/}
+
+                                    {item.store.sellerWalletAddress &&
+                                      item.store.sellerWalletAddress.substring(0, 10) + '...'
+                                    }
+                                  </button>
+                                </div>
+                              </td>
+
+
+
+                              <td className="p-2">
+                                <div className="flex flex-col gap-2 items-center justify-center">
+                                  <div className="text-sm font-semibold text-zinc-500">
+                                    {item?.store?.bankInfo?.bankName}
                                   </div>
-                              </div>
-                            </td>
 
-                            <td className="p-2">
+                                  {/* copy account number to clipboard */}
+                                  <button
+                                    onClick={() => {
+                                      navigator.clipboard.writeText(item?.store?.bankInfo?.accountNumber);
+                                      toast.success('입금통장번호가 복사되었습니다.');
+                                    }}
+                                    className="text-sm text-zinc-500 font-semibold
+                                      hover:text-blue-600 cursor-pointer
+                                      hover:underline"
+                                    title="입금통장번호 복사"
+                                  >
+                                    {item?.store?.bankInfo?.accountNumber}
+                                  </button>
 
-                              <div className="flex flex-col gap-2 items-center justify-center">
-
-                                <div className="flex flex-row items-center gap-2">
-                                  {/* status */}
-                                  {item.status === 'ordered' && (
-                                    <div className="text-sm text-yellow-500 font-semibold">
-                                      {Buy_Order_Opened}
-                                    </div>
-                                  )}
+                                  <div className="text-sm font-semibold text-zinc-500">
+                                    {item?.store?.bankInfo?.accountHolder}
+                                  </div>
+                                </div>
+                              </td>
 
 
-                                  {item.status === 'accepted' && (
+                              <td className="p-2">
+                                <div className="flex flex-col mr-2 items-center justify-end gap-2">
 
-                                    <div className="flex flex-row gap-2 items-center justify-center">
-                                      <div className="text-sm text-green-500">
-                                        {Trade_Started}
-                                      </div>
-                                      {/*
-                                      <div className="text-sm text-white">
-                                        {item.seller?.nickname}
-                                      </div>
-                                      */}
-                                      <div className="text-sm text-zinc-500">
-
-                                        {params.lang === 'ko' ? (
-                                          <p>{
-                                            new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 ? (
-                                              ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000) + ' ' + seconds_ago
-                                            ) :
-                                            new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 * 60 ? (
-                                            ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
-                                            ) : (
-                                              ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
-                                            )
-                                          }</p>
-                                        ) : (
-                                          <p>{
-                                            new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 ? (
-                                              ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000) + ' ' + seconds_ago
-                                            ) :
-                                            new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 * 60 ? (
-                                            ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
-                                            ) : (
-                                              ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
-                                            )
-                                          }</p>
-                                        )}
-
-                                      </div>
-
+                                    {item?.autoConfirmPayment ? (
+                                      <span className="text-sm text-green-500 font-semibold">
+                                        자동입금처리
+                                      </span>
+                                    ) : (
+                                      <span className="text-sm text-red-500 font-semibold">
+                                        수동입금처리
+                                      </span>
+                                    )}
+                                
+                                    <div className=" text-green-600 text-xl font-semibold"
+                                      style={{
+                                        fontFamily: 'monospace',
+                                      }}
+                                    >
+                                      {
+                                        item?.paymentAmount &&
+                                        item?.paymentAmount?.toLocaleString() + ' 원'
+                                      }
 
                                     </div>
-                                  )}
+                                </div>
+                              </td>
 
-                                  {item.status === 'paymentRequested' && (
-                                    <div className="flex flex-row gap-1 items-start justify-start">
-                                      <div className="text-sm text-green-500">
-                                        {/*Waiting_for_seller_to_deposit*/}
+                              <td className="p-2">
 
-                                        {Escrow_Completed}
+                                <div className="flex flex-col gap-2 items-center justify-center">
 
-
+                                  <div className="flex flex-row items-center gap-2">
+                                    {/* status */}
+                                    {item.status === 'ordered' && (
+                                      <div className="text-sm text-yellow-500 font-semibold">
+                                        {Buy_Order_Opened}
                                       </div>
-
-                                      {/*
-                                      <div className="text-sm text-white">
-                                        {item.seller?.nickname}
-                                      </div>
-                                      */}
-
-                                      <div className="text-sm text-zinc-500">
-                                        {/* from now */}
-                                        {
-                                          new Date().getTime() - new Date(item.paymentRequestedAt).getTime() < 1000 * 60 ? (
-                                            ' ' + Math.floor((new Date().getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000) + ' ' + seconds_ago
-                                          ) : new Date().getTime() - new Date(item.paymentRequestedAt).getTime() < 1000 * 60 * 60 ? (
-                                            ' ' + Math.floor((new Date().getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
-                                          ) : (
-                                            ' ' + Math.floor((new Date().getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
-                                          )
-                                        }
-                                      </div>
+                                    )}
 
 
-                                    </div>
-                                  )}
+                                    {item.status === 'accepted' && (
 
-                                  {item.status === 'cancelled' && (
-                                    <div className="flex flex-row gap-1 items-start justify-start">
-  
-                                        <div className="text-sm text-red-600">
-                                          {
-                                            Cancelled_at
-                                          }
+                                      <div className="flex flex-row gap-2 items-center justify-center">
+                                        <div className="text-sm text-green-500">
+                                          {Trade_Started}
                                         </div>
                                         {/*
-                                        <span className="text-sm text-white">
+                                        <div className="text-sm text-white">
                                           {item.seller?.nickname}
-                                        </span>
+                                        </div>
+                                        */}
+                                        <div className="text-sm text-zinc-500">
+
+                                          {params.lang === 'ko' ? (
+                                            <p>{
+                                              new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 ? (
+                                                ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000) + ' ' + seconds_ago
+                                              ) :
+                                              new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 * 60 ? (
+                                              ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
+                                              ) : (
+                                                ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
+                                              )
+                                            }</p>
+                                          ) : (
+                                            <p>{
+                                              new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 ? (
+                                                ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000) + ' ' + seconds_ago
+                                              ) :
+                                              new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 * 60 ? (
+                                              ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
+                                              ) : (
+                                                ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
+                                              )
+                                            }</p>
+                                          )}
+
+                                        </div>
+
+
+                                      </div>
+                                    )}
+
+                                    {item.status === 'paymentRequested' && (
+                                      <div className="flex flex-row gap-1 items-start justify-start">
+                                        <div className="text-sm text-green-500">
+                                          {/*Waiting_for_seller_to_deposit*/}
+
+                                          {Escrow_Completed}
+
+
+                                        </div>
+
+                                        {/*
+                                        <div className="text-sm text-white">
+                                          {item.seller?.nickname}
+                                        </div>
                                         */}
 
                                         <div className="text-sm text-zinc-500">
+                                          {/* from now */}
                                           {
-                                            // from now
-                                            new Date().getTime() - new Date(item.cancelledAt).getTime() < 1000 * 60 ? (
-                                              ' ' + Math.floor((new Date().getTime() - new Date(item.cancelledAt).getTime()) / 1000) + ' ' + seconds_ago
-                                            ) : new Date().getTime() - new Date(item.cancelledAt).getTime() < 1000 * 60 * 60 ? (
-                                              ' ' + Math.floor((new Date().getTime() - new Date(item.cancelledAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
+                                            new Date().getTime() - new Date(item.paymentRequestedAt).getTime() < 1000 * 60 ? (
+                                              ' ' + Math.floor((new Date().getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000) + ' ' + seconds_ago
+                                            ) : new Date().getTime() - new Date(item.paymentRequestedAt).getTime() < 1000 * 60 * 60 ? (
+                                              ' ' + Math.floor((new Date().getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
                                             ) : (
-                                              ' ' + Math.floor((new Date().getTime() - new Date(item.cancelledAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
+                                              ' ' + Math.floor((new Date().getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
                                             )
                                           }
                                         </div>
 
-                                    </div>
+
+                                      </div>
+                                    )}
+
+                                    {item.status === 'cancelled' && (
+                                      <div className="flex flex-row gap-1 items-start justify-start">
+    
+                                          <div className="text-sm text-red-600">
+                                            {
+                                              Cancelled_at
+                                            }
+                                          </div>
+                                          {/*
+                                          <span className="text-sm text-white">
+                                            {item.seller?.nickname}
+                                          </span>
+                                          */}
+
+                                          <div className="text-sm text-zinc-500">
+                                            {
+                                              // from now
+                                              new Date().getTime() - new Date(item.cancelledAt).getTime() < 1000 * 60 ? (
+                                                ' ' + Math.floor((new Date().getTime() - new Date(item.cancelledAt).getTime()) / 1000) + ' ' + seconds_ago
+                                              ) : new Date().getTime() - new Date(item.cancelledAt).getTime() < 1000 * 60 * 60 ? (
+                                                ' ' + Math.floor((new Date().getTime() - new Date(item.cancelledAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
+                                              ) : (
+                                                ' ' + Math.floor((new Date().getTime() - new Date(item.cancelledAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
+                                              )
+                                            }
+                                          </div>
+
+                                      </div>
+                                    )}
+
+
+                                    {/* if status is accepted, show payment request button */}
+                                    {item.status === 'paymentConfirmed' && (
+                                      <div className="flex flex-col gap-1 items-start justify-start">
+
+                                        {/*
+                                        <span className="text-sm font-semibold text-green-500">
+                                          {Completed}
+                                        </span>
+                                        */}
+                                        <button
+                                          className="text-sm text-green-500 font-semibold
+                                            border border-green-500 rounded-lg p-2
+                                            bg-green-100
+                                            w-full text-center
+                                            hover:bg-green-200
+                                            cursor-pointer
+                                            transition-all duration-200 ease-in-out
+                                            hover:scale-105
+                                            hover:shadow-lg
+                                            hover:shadow-green-500/50
+                                          "
+                                          onClick={() => {
+                                            // new window to complete trade
+                                            // {`https://www.cryptopay.beauty/ko/${item?.storecode}/pay-usdt-reverse/${item?._id}`}
+
+                                            window.open(
+                                              `/${params.lang}/${item?.storecode}/pay-usdt-reverse/${item?._id}`,
+                                              '_blank'
+                                            );
+
+                                          }}
+                                        >
+                                          {Completed}
+                                        </button>
+
+                                        {/*
+                                        <span className="text-sm font-semibold text-white">
+                                          {item.seller?.nickname}
+                                        </span>
+                                        */}
+                                        {/*
+                                        <span
+                                          className="text-sm text-zinc-500"
+                                        >{
+                                          //item.paymentConfirmedAt && new Date(item.paymentConfirmedAt)?.toLocaleString()
+                                          // from now
+                                          new Date().getTime() - new Date(item.paymentConfirmedAt).getTime() < 1000 * 60 ? (
+                                            ' ' + Math.floor((new Date().getTime() - new Date(item.paymentConfirmedAt).getTime()) / 1000) + ' ' + seconds_ago
+                                          ) : new Date().getTime() - new Date(item.paymentConfirmedAt).getTime() < 1000 * 60 * 60 ? (
+                                            ' ' + Math.floor((new Date().getTime() - new Date(item.paymentConfirmedAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
+                                          ) : (
+                                            ' ' + Math.floor((new Date().getTime() - new Date(item.paymentConfirmedAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
+                                          )
+
+                                        }</span>
+                                        */}
+                                      </div>
+                                    )}
+
+
+
+
+
+                                    {item.status === 'completed' && (
+                                      <div className="text-sm text-green-500">
+                                        {Completed_at}
+                                      </div>
+                                    )}
+
+                                  </div>
+
+                                  {/* polygonscan */}
+                                  {item?.transactionHash
+                                  && item?.transactionHash !== '0x'
+                                  && (
+                                    <button
+                                      className="text-sm text-blue-600 font-semibold
+                                        border border-blue-600 rounded-lg p-2
+                                        bg-blue-100
+                                        w-full text-center
+                                        hover:bg-blue-200
+                                        cursor-pointer
+                                        transition-all duration-200 ease-in-out
+                                        hover:scale-105
+                                        hover:shadow-lg
+                                        hover:shadow-blue-500/50
+                                      "
+                                      onClick={() => {
+                                        window.open(
+                                          `https://polygonscan.com/tx/${item.transactionHash}`,
+                                          '_blank'
+                                        );
+                                      }}
+                                    >
+                                      <div className="flex flex-row gap-2 items-center justify-center">
+                                        <Image
+                                          src="/logo-polygon.png"
+                                          alt="Polygon"
+                                          width={20}
+                                          height={20}
+                                          className="w-5 h-5"
+                                        />
+                                        <span className="text-sm">
+                                          USDT 전송내역
+                                        </span>
+                                      </div>
+                                    </button>
                                   )}
 
 
-                                  {/* if status is accepted, show payment request button */}
-                                  {item.status === 'paymentConfirmed' && (
-                                    <div className="flex flex-col gap-1 items-start justify-start">
 
-                                      <span className="text-sm font-semibold text-green-500">
-                                        {Completed}
-                                      </span>
-                                      {/*
-                                      <span className="text-sm font-semibold text-white">
-                                        {item.seller?.nickname}
-                                      </span>
-                                      */}
-
-                                      <span
-                                        className="text-sm text-zinc-500"
-                                      >{
-                                        //item.paymentConfirmedAt && new Date(item.paymentConfirmedAt)?.toLocaleString()
-                                        // from now
-                                        new Date().getTime() - new Date(item.paymentConfirmedAt).getTime() < 1000 * 60 ? (
-                                          ' ' + Math.floor((new Date().getTime() - new Date(item.paymentConfirmedAt).getTime()) / 1000) + ' ' + seconds_ago
-                                        ) : new Date().getTime() - new Date(item.paymentConfirmedAt).getTime() < 1000 * 60 * 60 ? (
-                                          ' ' + Math.floor((new Date().getTime() - new Date(item.paymentConfirmedAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
-                                        ) : (
-                                          ' ' + Math.floor((new Date().getTime() - new Date(item.paymentConfirmedAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
-                                        )
-
-                                      }</span>
-                                    </div>
-                                  )}
-
-
-
-
-
-                                  {item.status === 'completed' && (
-                                    <div className="text-sm text-green-500">
-                                      {Completed_at}
-                                    </div>
-                                  )}
 
                                 </div>
+                              </td>
 
-                                {/* polygonscan */}
-                                {item?.transactionHash
-                                && item?.transactionHash !== '0x'
-                                && (
-                                  <button
-                                    className="text-sm text-blue-600 font-semibold
-                                      border border-blue-600 rounded-lg p-2
-                                      bg-blue-100
-                                      w-full text-center
-                                      hover:bg-blue-200
-                                      cursor-pointer
-                                      transition-all duration-200 ease-in-out
-                                      hover:scale-105
-                                      hover:shadow-lg
-                                      hover:shadow-blue-500/50
-                                    "
-                                    onClick={() => {
-                                      window.open(
-                                        `https://polygonscan.com/tx/${item.transactionHash}`,
-                                        '_blank'
-                                      );
-                                    }}
-                                  >
-                                    <div className="flex flex-row gap-2 items-center justify-center">
-                                      <Image
-                                        src="/logo-polygon.png"
-                                        alt="Polygon"
-                                        width={20}
-                                        height={20}
-                                        className="w-5 h-5"
+                              {/*
+                              <td className="p-2">
+
+                                <div className="flex flex-col gap-2 items-start justify-start">
+
+                                  {item.status === 'accepted' && item.seller && item.seller.walletAddress !== address && (
+                                    <span className="text-sm text-white">
+                                      {item.seller.nickname}
+                                    </span>
+                                  )}
+
+                                  {item.status === 'accepted' && item.seller && item.seller.walletAddress === address && (
+                                    
+                                    <div className="flex flex-row items-center gap-2">
+                                      <input
+                                        type="checkbox"
+                                        checked={agreementForCancelTrade[index]}
+                                        onChange={(e) => {
+                                          setAgreementForCancelTrade(
+                                            agreementForCancelTrade.map((item, idx) => idx === index ? e.target.checked : item)
+                                          );
+                                        }}
                                       />
-                                      <span className="text-sm">
-                                        USDT 전송내역
-                                      </span>
-                                    </div>
-                                  </button>
-                                )}
-
-
-
-
-                              </div>
-                            </td>
-
-                            {/*
-                            <td className="p-2">
-
-                              <div className="flex flex-col gap-2 items-start justify-start">
-
-                                {item.status === 'accepted' && item.seller && item.seller.walletAddress !== address && (
-                                  <span className="text-sm text-white">
-                                    {item.seller.nickname}
-                                  </span>
-                                )}
-
-                                {item.status === 'accepted' && item.seller && item.seller.walletAddress === address && (
-                                  
-                                  <div className="flex flex-row items-center gap-2">
-                                    <input
-                                      type="checkbox"
-                                      checked={agreementForCancelTrade[index]}
-                                      onChange={(e) => {
-                                        setAgreementForCancelTrade(
-                                          agreementForCancelTrade.map((item, idx) => idx === index ? e.target.checked : item)
-                                        );
-                                      }}
-                                    />
-                                    <button
-                                      disabled={cancellings[index] || !agreementForCancelTrade[index]}
-                   
-                                      className={`flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md ${cancellings[index] || !agreementForCancelTrade[index] ? 'bg-gray-500' : 'bg-red-500'}`}
+                                      <button
+                                        disabled={cancellings[index] || !agreementForCancelTrade[index]}
+                    
+                                        className={`flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md ${cancellings[index] || !agreementForCancelTrade[index] ? 'bg-gray-500' : 'bg-red-500'}`}
+                                          
+                                        onClick={() => {
+                                          cancelTrade(item._id, index);
+                                        }}
+                                      >
+                                        {cancellings[index] && (
+                                          <Image
+                                            src="/loading.png"
+                                            alt="Loading"
+                                            width={20}
+                                            height={20}
+                                            className="animate-spin"
+                                          />
+                                        )}
                                         
-                                      onClick={() => {
-                                        cancelTrade(item._id, index);
-                                      }}
-                                    >
-                                      {cancellings[index] && (
-                                        <Image
-                                          src="/loading.png"
-                                          alt="Loading"
-                                          width={20}
-                                          height={20}
-                                          className="animate-spin"
-                                        />
-                                      )}
+                                        <span className="text-sm">{Cancel_My_Trade}</span>
                                       
-                                      <span className="text-sm">{Cancel_My_Trade}</span>
+                                      </button>
+                                    </div>
+
+                                  )}
+
+
+
+
+
+                                  {user && user.seller &&
+                                  item.status === 'ordered' && item.walletAddress !== address && (
                                     
-                                    </button>
-                                  </div>
-
-                                )}
-
-
-
-
-
-                                {user && user.seller &&
-                                item.status === 'ordered' && item.walletAddress !== address && (
-                                  
-                                  <div className="flex flex-row items-center gap-2">
-                                    <input
-                                      type="checkbox"
-                                      checked={agreementForTrade[index]}
-                                      onChange={(e) => {
-                                        setAgreementForTrade(
-                                          agreementForTrade.map((item, idx) => idx === index ? e.target.checked : item)
-                                        );
-                                      }}
-                                    />
-                                    <button
-                                      disabled={acceptingBuyOrder[index] || !agreementForTrade[index]}
-                                      className={`
-                                        flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md
-                                        ${acceptingBuyOrder[index] || !agreementForTrade[index] ?
-                                          'bg-zinc-500 text-white' : 'bg-green-500 text-white '}
-                                      `}
-                                      onClick={() => {
-                                        acceptBuyOrder(index, item._id, smsReceiverMobileNumber);
-                                      }}
-                                    >
-                                      {acceptingBuyOrder[index] && (
-                                        <Image
-                                          src="/loading.png"
-                                          alt="Loading"
-                                          width={20}
-                                          height={20}
-                                          className="animate-spin"
-                                        />
-                                      )}
-                                      <span className="text-sm">{Buy_Order_Accept}</span>
-                                      
-                                    </button>
-                                  </div>
-
-                                )}
-
-
-
-
-
-
-                                
-                                {
-                                  item.seller && item.seller.walletAddress === address &&
-                                  item.status === 'accepted' && (
-                                  <div className="flex flex-row gap-2">
-
-                                    <input
-                                      disabled={escrowing[index] || requestingPayment[index]}
-                                      type="checkbox"
-                                      checked={requestPaymentCheck[index]}
-                                      onChange={(e) => {
-                                        setRequestPaymentCheck(
-                                          requestPaymentCheck.map((item, idx) => {
-                                            if (idx === index) {
-                                              return e.target.checked;
-                                            }
-                                            return item;
-                                          })
-                                        );
-                                      }}
-                                    />
-
-                                    <button
-                                      disabled={escrowing[index] || requestingPayment[index] || !requestPaymentCheck[index]}
-                                      
-                                      className={`flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md ${escrowing[index] || requestingPayment[index] || !requestPaymentCheck[index] ? 'bg-gray-500' : 'bg-green-500'}`}
-                                      onClick={() => {
-
-                                        requestPayment(
-                                          index,
-                                          item._id,
-                                          item.tradeId,
-                                          item.usdtAmount
-                                        );
-                                      }}
-                                    >
-                                      <Image
-                                        src="/loading.png"
-                                        alt="loading"
-                                        width={16}
-                                        height={16}
-                                        className={escrowing[index] || requestingPayment[index] ? 'animate-spin' : 'hidden'}
+                                    <div className="flex flex-row items-center gap-2">
+                                      <input
+                                        type="checkbox"
+                                        checked={agreementForTrade[index]}
+                                        onChange={(e) => {
+                                          setAgreementForTrade(
+                                            agreementForTrade.map((item, idx) => idx === index ? e.target.checked : item)
+                                          );
+                                        }}
                                       />
-                                      <span className="text-sm">
-                                        {Request_Payment}
-                                      </span>
-                                    
-                                    </button>
+                                      <button
+                                        disabled={acceptingBuyOrder[index] || !agreementForTrade[index]}
+                                        className={`
+                                          flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md
+                                          ${acceptingBuyOrder[index] || !agreementForTrade[index] ?
+                                            'bg-zinc-500 text-white' : 'bg-green-500 text-white '}
+                                        `}
+                                        onClick={() => {
+                                          acceptBuyOrder(index, item._id, smsReceiverMobileNumber);
+                                        }}
+                                      >
+                                        {acceptingBuyOrder[index] && (
+                                          <Image
+                                            src="/loading.png"
+                                            alt="Loading"
+                                            width={20}
+                                            height={20}
+                                            className="animate-spin"
+                                          />
+                                        )}
+                                        <span className="text-sm">{Buy_Order_Accept}</span>
+                                        
+                                      </button>
+                                    </div>
 
-                                  </div>
-                                )}
+                                  )}
 
 
 
-                                {item.seller && item.seller.walletAddress === address &&   
-                                item.status === 'paymentRequested' && (
 
-                                  <div className="flex flex-col gap-2">
 
-                               
-                                    
+
+                                  
+                                  {
+                                    item.seller && item.seller.walletAddress === address &&
+                                    item.status === 'accepted' && (
                                     <div className="flex flex-row gap-2">
 
                                       <input
-                                        disabled={confirmingPayment[index]}
+                                        disabled={escrowing[index] || requestingPayment[index]}
                                         type="checkbox"
-                                        checked={confirmPaymentCheck[index]}
+                                        checked={requestPaymentCheck[index]}
                                         onChange={(e) => {
-                                          setConfirmPaymentCheck(
-                                            confirmPaymentCheck.map((item, idx) => {
+                                          setRequestPaymentCheck(
+                                            requestPaymentCheck.map((item, idx) => {
                                               if (idx === index) {
                                                 return e.target.checked;
                                               }
@@ -3555,241 +3645,274 @@ const fetchBuyOrders = async () => {
                                       />
 
                                       <button
-                                        disabled={confirmingPayment[index] || !confirmPaymentCheck[index]}
-                                        className={`flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md ${confirmingPayment[index] || !confirmPaymentCheck[index] ? 'bg-gray-500' : 'bg-green-500'}`}
+                                        disabled={escrowing[index] || requestingPayment[index] || !requestPaymentCheck[index]}
+                                        
+                                        className={`flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md ${escrowing[index] || requestingPayment[index] || !requestPaymentCheck[index] ? 'bg-gray-500' : 'bg-green-500'}`}
                                         onClick={() => {
-                                          confirmPayment(
+
+                                          requestPayment(
                                             index,
                                             item._id,
-                                            paymentAmounts[index],
-                                            paymentAmountsUsdt[index]
+                                            item.tradeId,
+                                            item.usdtAmount
                                           );
                                         }}
-
                                       >
-
                                         <Image
                                           src="/loading.png"
                                           alt="loading"
                                           width={16}
                                           height={16}
-                                          className={confirmingPayment[index] ? 'animate-spin' : 'hidden'}
+                                          className={escrowing[index] || requestingPayment[index] ? 'animate-spin' : 'hidden'}
                                         />
                                         <span className="text-sm">
-                                          {Confirm_Payment}
+                                          {Request_Payment}
                                         </span>
-
+                                      
                                       </button>
 
                                     </div>
+                                  )}
 
 
 
-                                    <div className="flex flex-row gap-2">
+                                  {item.seller && item.seller.walletAddress === address &&   
+                                  item.status === 'paymentRequested' && (
 
-                                      <input
-                                        disabled={rollbackingPayment[index]}
-                                        type="checkbox"
-                                        checked={rollbackPaymentCheck[index]}
-                                        onChange={(e) => {
-                                          setRollbackPaymentCheck(
-                                            rollbackPaymentCheck.map((item, idx) => {
-                                              if (idx === index) {
-                                                return e.target.checked;
-                                              }
-                                              return item;
-                                            })
-                                          );
-                                        }}
-                                      />
+                                    <div className="flex flex-col gap-2">
 
-                                      <button
-                                        disabled={rollbackingPayment[index] || !rollbackPaymentCheck[index]}
-                                        className={`flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md ${rollbackingPayment[index] || !rollbackPaymentCheck[index] ? 'bg-gray-500' : 'bg-red-500'}`}
-                                        onClick={() => {
-                                          rollbackPayment(
-                                            index,
-                                            item._id,
-                                            paymentAmounts[index],
-                                            paymentAmountsUsdt[index]
-                                          );
-                                        }}
+                                
+                                      
+                                      <div className="flex flex-row gap-2">
 
-                                      >
-                                          
+                                        <input
+                                          disabled={confirmingPayment[index]}
+                                          type="checkbox"
+                                          checked={confirmPaymentCheck[index]}
+                                          onChange={(e) => {
+                                            setConfirmPaymentCheck(
+                                              confirmPaymentCheck.map((item, idx) => {
+                                                if (idx === index) {
+                                                  return e.target.checked;
+                                                }
+                                                return item;
+                                              })
+                                            );
+                                          }}
+                                        />
+
+                                        <button
+                                          disabled={confirmingPayment[index] || !confirmPaymentCheck[index]}
+                                          className={`flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md ${confirmingPayment[index] || !confirmPaymentCheck[index] ? 'bg-gray-500' : 'bg-green-500'}`}
+                                          onClick={() => {
+                                            confirmPayment(
+                                              index,
+                                              item._id,
+                                              paymentAmounts[index],
+                                              paymentAmountsUsdt[index]
+                                            );
+                                          }}
+
+                                        >
+
                                           <Image
                                             src="/loading.png"
                                             alt="loading"
                                             width={16}
                                             height={16}
-                                            className={rollbackingPayment[index] ? 'animate-spin' : 'hidden'}
+                                            className={confirmingPayment[index] ? 'animate-spin' : 'hidden'}
                                           />
                                           <span className="text-sm">
-                                            에스크로 취소
+                                            {Confirm_Payment}
                                           </span>
 
-                                      </button>
+                                        </button>
+
+                                      </div>
+
+
+
+                                      <div className="flex flex-row gap-2">
+
+                                        <input
+                                          disabled={rollbackingPayment[index]}
+                                          type="checkbox"
+                                          checked={rollbackPaymentCheck[index]}
+                                          onChange={(e) => {
+                                            setRollbackPaymentCheck(
+                                              rollbackPaymentCheck.map((item, idx) => {
+                                                if (idx === index) {
+                                                  return e.target.checked;
+                                                }
+                                                return item;
+                                              })
+                                            );
+                                          }}
+                                        />
+
+                                        <button
+                                          disabled={rollbackingPayment[index] || !rollbackPaymentCheck[index]}
+                                          className={`flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md ${rollbackingPayment[index] || !rollbackPaymentCheck[index] ? 'bg-gray-500' : 'bg-red-500'}`}
+                                          onClick={() => {
+                                            rollbackPayment(
+                                              index,
+                                              item._id,
+                                              paymentAmounts[index],
+                                              paymentAmountsUsdt[index]
+                                            );
+                                          }}
+
+                                        >
+                                            
+                                            <Image
+                                              src="/loading.png"
+                                              alt="loading"
+                                              width={16}
+                                              height={16}
+                                              className={rollbackingPayment[index] ? 'animate-spin' : 'hidden'}
+                                            />
+                                            <span className="text-sm">
+                                              에스크로 취소
+                                            </span>
+
+                                        </button>
+
+                                      </div>
+
 
                                     </div>
 
-
-                                  </div>
-
-                                
+                                  
 
 
 
-                                )}
+                                  )}
 
-                                
+                                  
 
-                              </div>
-
-
-                            </td>
-
-                            */}
+                                </div>
 
 
-                            <td className="text-zinc-500 p-2">
-                              <div className="flex flex-col gap-2 items-center justify-center">
-                                <span className="text-sm font-semibold text-zinc-500">
-                                  {
-                                    item.seller?.nickname
-                                  }
-                                </span>
-                                {/* seller.walletAddress */}
-                                <button
-                                  className="text-sm text-zinc-500 font-semibold
-                                    hover:text-blue-500
-                                    hover:underline
-                                    cursor-pointer
+                              </td>
+
+                              */}
+
+
+
+
+
+                              <td className="
+                              p-2">
+
+                                {item?.settlement ? (
+
+
+                                  <button
+                                    className="
+                                    w-48
+                                    flex flex-col gap-2 items-center justify-center
+                                    bg-purple-500 text-white px-2 py-1 rounded-md hover:bg-purple-600
+                                    text-sm
+                                    transition duration-300 ease-in-out
+                                    transform hover:scale-105
+                                    hover:shadow-lg
+                                    hover:shadow-purple-500/50
+                                    hover:cursor-pointer
+                                    hover:transition-transform
+                                    hover:duration-300
+                                    hover:ease-in-out
+
                                     "
-                                  title="지갑주소 복사"
 
-                                  onClick={() => {
-                                    
-                                    // copy to clipboard
-                                    navigator.clipboard.writeText(item.seller?.walletAddress || '');
-
-                                    toast.success('지갑주소가 복사되었습니다.');
-                                  }}
-                                >
-                                  {item.seller?.walletAddress &&
-                                    item.seller?.walletAddress.substring(0, 10) + '...'}
-                                </button>
-                              </div>
-                            </td>
-
-
-                            <td className="
-                            p-2">
-
-                              {item?.settlement ? (
-
-
-                                <button
-                                  className="
-                                  w-48
-                                  flex flex-col gap-2 items-center justify-center
-                                  bg-purple-500 text-white px-2 py-1 rounded-md hover:bg-purple-600
-                                  text-sm
-                                  transition duration-300 ease-in-out
-                                  transform hover:scale-105
-                                  hover:shadow-lg
-                                  hover:shadow-purple-500/50
-                                  hover:cursor-pointer
-                                  hover:transition-transform
-                                  hover:duration-300
-                                  hover:ease-in-out
-
-                                  "
-
-                                  onClick={() => {
-                                    window.open(
-                                      `https://polygonscan.com/tx/${item.settlement.txid}`,
-                                      '_blank'
-                                    );
-                                  }}
-                                >
-
-
-                                  <div className="flex flex-col gap-2 items-end justify-center"
-                                    style={{
-                                      fontFamily: 'monospace',
+                                    onClick={() => {
+                                      window.open(
+                                        `https://polygonscan.com/tx/${item.settlement.txid}`,
+                                        '_blank'
+                                      );
                                     }}
                                   >
 
 
-                                    
-                                    <span>
-                                      {item?.settlement?.settlementAmount?.toLocaleString() + ' USDT'}
-                                      {' '}
-                                      {
-                                        item?.settlement?.settlementWalletAddress &&
-                                      item?.settlement?.settlementWalletAddress?.slice(0, 5) + '...'}
-                                    </span>
-                                    <span>
-                                      {item?.settlement?.agentFeeAmount?.toLocaleString() + ' USDT'}
-                                      {' '}
-                                      {
-                                        item?.settlement?.agentFeeWalletAddress &&
-                                      item?.settlement?.agentFeeWalletAddress?.slice(0, 5) + '...'}
-                                    </span>
-                                    <span>
-                                      {item?.settlement?.feeAmount?.toLocaleString() + ' USDT'}
-                                      {' '}
-                                      {
-                                        item?.settlement?.feeWalletAddress &&
-                                      item?.settlement?.feeWalletAddress?.slice(0, 5) + '...'}
-                                    </span>
+                                    <div className="flex flex-col gap-2 items-end justify-center"
+                                      style={{
+                                        fontFamily: 'monospace',
+                                      }}
+                                    >
 
-                                  </div>
 
-                                </button>
-
-                              ) : (
-                                <>
-                                  {item.status === 'paymentConfirmed'
-                                  && (
-                                    <div className="flex flex-row gap-2 items-center justify-center">
-
-                                      {item.storecode === 'admin' ? (
-
-                                        <div className="flex flex-row gap-2 items-center justify-center">
-                                          일반 회원 구매
-                                        </div>
-
-                                      ) : (
                                       
-                                        <div className="flex flex-row gap-2 items-center justify-center">
-                                          <Image
-                                            src="/icon-settlement.png"
-                                            alt="Settlement"
-                                            width={20}
-                                            height={20}
-                                            className="animate-spin"
-                                          />
-                                          <span className="text-sm font-semibold text-zinc-500">
-                                            가맹점 정산중...
-                                          </span>
-                                        </div>
-
-                                      )}
-
+                                      <span>
+                                        {item?.settlement?.settlementAmount?.toLocaleString() + ' USDT'}
+                                        {' '}
+                                        {
+                                          item?.settlement?.settlementWalletAddress &&
+                                        item?.settlement?.settlementWalletAddress?.slice(0, 5) + '...'}
+                                      </span>
+                                      <span>
+                                        {item?.settlement?.agentFeeAmount?.toLocaleString() + ' USDT'}
+                                        {' '}
+                                        {
+                                          item?.settlement?.agentFeeWalletAddress &&
+                                        item?.settlement?.agentFeeWalletAddress?.slice(0, 5) + '...'}
+                                      </span>
+                                      <span>
+                                        {item?.settlement?.feeAmount?.toLocaleString() + ' USDT'}
+                                        {' '}
+                                        {
+                                          item?.settlement?.feeWalletAddress &&
+                                        item?.settlement?.feeWalletAddress?.slice(0, 5) + '...'}
+                                      </span>
 
                                     </div>
-                                  )}
-                                </>
-                              )}
-                            </td>
+
+                                  </button>
+
+                                ) : (
+                                  <>
+                                    {item.status === 'paymentConfirmed'
+                                    && (
+                                      <div className="flex flex-row gap-2 items-center justify-center">
+
+                                        {item.storecode === 'admin' ? (
+
+                                          <div className="flex flex-row gap-2 items-center justify-center">
+                                            일반 회원 구매
+                                          </div>
+
+                                        ) : (
+                                        
+                                          <div className="flex flex-row gap-2 items-center justify-center">
+                                            <Image
+                                              src="/icon-settlement.png"
+                                              alt="Settlement"
+                                              width={20}
+                                              height={20}
+                                              className="animate-spin"
+                                            />
+                                            <span className="text-sm font-semibold text-zinc-500">
+                                              가맹점 정산중...
+                                            </span>
+                                          </div>
+
+                                        )}
+
+
+                                      </div>
+                                    )}
+                                  </>
+                                )}
+                              </td>
 
 
 
 
-                          </tr>
+                            </tr>
 
-                        ))}
+                          ))}
+
+                          </>
+
+                        )}
 
                       </tbody>
 
