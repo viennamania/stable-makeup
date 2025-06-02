@@ -2336,6 +2336,10 @@ export default function Index({ params }: any) {
     const [storeList, setStoreList] = useState([] as any[]);
   
 
+    // sellerWalletAddress
+    const [sellerWalletAddress, setSellerWalletAddress] = useState("");
+
+
     const [storeAdminWalletAddress, setStoreAdminWalletAddress] = useState("");
 
     const [fetchingStore, setFetchingStore] = useState(false);
@@ -2359,30 +2363,36 @@ export default function Index({ params }: any) {
   
           const data = await response.json();
   
-          //console.log("data", data);
+          console.log("data", data);
   
+
+
+
+
           if (data.result) {
   
             setStore(data.result);
   
             setStoreAdminWalletAddress(data.result?.adminWalletAddress);
+
+            setSellerWalletAddress(data.result?.sellerWalletAddress || "");
   
-        } else {
-          // get store list
-          const response = await fetch("/api/store/getAllStores", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-            }),
-          });
-          const data = await response.json();
-          //console.log("getAllStores data", data);
-          setStoreList(data.result.stores || []);
-          setStore(null);
-          setStoreAdminWalletAddress("");
-        }
+          } else {
+            // get store list
+            const response = await fetch("/api/store/getAllStores", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+              }),
+            });
+            const data = await response.json();
+            //console.log("getAllStores data", data);
+            setStoreList(data.result.stores || []);
+            setStore(null);
+            setStoreAdminWalletAddress("");
+          }
   
           setFetchingStore(false);
       };
@@ -2397,6 +2407,24 @@ export default function Index({ params }: any) {
     
 
 
+
+    // balance of sellerWalletAddress
+    const [balanceOfSellerWallet, setBalanceOfSellerWallet] = useState(0);
+    useEffect(() => {
+      const fetchBalanceOfSellerWallet = async () => {
+        if (!sellerWalletAddress) {
+          setBalanceOfSellerWallet(0);
+          return;
+        }
+        const result = await balanceOf({
+          contract,
+          address: sellerWalletAddress,
+        });
+        //console.log('balanceOfSellerWallet result', result);
+        setBalanceOfSellerWallet(Number(result) / 10 ** 6);
+      }
+      fetchBalanceOfSellerWallet();
+    } , [sellerWalletAddress, contract]);
 
 
 
@@ -3094,63 +3122,64 @@ export default function Index({ params }: any) {
 
 
 
-          <div className="w-full flex flex-row
-            gap-2 items-center justify-start text-zinc-500 text-lg"
-          >
+            <div className="w-full flex flex-row
+              gap-2 items-center justify-start text-zinc-500 text-lg"
+            >
 
 
-            <div className="flex flex-row items-center gap-2">
+              <div className="grid grid-cols-3 xl:grid-cols-5 gap-2">
 
-                <button
-                    onClick={() => router.push('/' + params.lang + '/' + params.center + '/member')}
-                    className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                    hover:bg-[#3167b4]/80
-                    hover:cursor-pointer
-                    hover:scale-105
-                    transition-transform duration-200 ease-in-out
-                    ">
-                    회원관리
-                </button>
+                  <button
+                      onClick={() => router.push('/' + params.lang + '/' + params.center + '/member')}
+                      className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                      hover:bg-[#3167b4]/80
+                      hover:cursor-pointer
+                      hover:scale-105
+                      transition-transform duration-200 ease-in-out
+                      ">
+                      회원관리
+                  </button>
 
-                <button
-                    onClick={() => router.push('/' + params.lang + '/' + params.center + '/buyorder')}
-                    className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                    hover:bg-[#3167b4]/80
-                    hover:cursor-pointer
-                    hover:scale-105
-                    transition-transform duration-200 ease-in-out
-                    ">
-                    구매주문관리
-                </button>
-
-
-                <button
-                    onClick={() => router.push('/' + params.lang + '/' + params.center + '/trade-history')}
-                    className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                    hover:bg-[#3167b4]/80
-                    hover:cursor-pointer
-                    hover:scale-105
-                    transition-transform duration-200 ease-in-out
-                    ">
-                    거래내역
-                </button>
+                  <button
+                      onClick={() => router.push('/' + params.lang + '/' + params.center + '/buyorder')}
+                      className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                      hover:bg-[#3167b4]/80
+                      hover:cursor-pointer
+                      hover:scale-105
+                      transition-transform duration-200 ease-in-out
+                      ">
+                      구매주문관리
+                  </button>
 
 
-                <div className='flex w-32 items-center justify-center gap-2
-                  bg-yellow-500 text-[#3167b4] text-sm rounded-lg p-2'>
-                    <Image
-                      src="/icon-clearance.png"
-                      alt="Trade"
-                      width={35}
-                      height={35}
-                      className="w-4 h-4"
-                    />
-                    <div className="text-sm font-semibold">
-                      판매(거래소)
+                  <button
+                      onClick={() => router.push('/' + params.lang + '/' + params.center + '/trade-history')}
+                      className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                      hover:bg-[#3167b4]/80
+                      hover:cursor-pointer
+                      hover:scale-105
+                      transition-transform duration-200 ease-in-out
+                      ">
+                      거래내역
+                  </button>
+
+
+                  <div className='flex w-32 items-center justify-center gap-2
+                    bg-yellow-500 text-[#3167b4] text-sm rounded-lg p-2'>
+                      <Image
+                        src="/icon-clearance.png"
+                        alt="Trade"
+                        width={35}
+                        height={35}
+                        className="w-4 h-4"
+                      />
+                      <div className="text-sm font-semibold">
+                        판매(거래소)
+                      </div>
                     </div>
-                  </div>
 
 
+              </div>
 
 
             </div>
@@ -3158,56 +3187,93 @@ export default function Index({ params }: any) {
 
 
 
-          </div>
 
+            {address && (
+                <div className="
+                mt-4 mb-2
+                w-full flex flex-col xl:flex-row items-center justify-end gap-5">
 
+                  <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
 
+                    {/* sellerWalletAddress */}
+                    <div className="flex flex-row items-center justify-center gap-2">
+                        <Image
+                            src="/icon-shield.png"
+                            alt="Wallet"
+                            width={100}
+                            height={100}
+                            className="w-6 h-6"
+                        />
+                        <span className="text-sm text-zinc-500">
+                          판매자 USDT통장
+                        </span>
+                        <button
+                            className="text-lg text-zinc-600 underline"
+                            onClick={() => {
+                                navigator.clipboard.writeText(sellerWalletAddress);
+                                toast.success(Copied_Wallet_Address);
+                            } }
+                        >
+                            {sellerWalletAddress.substring(0, 6)}...{sellerWalletAddress.substring(sellerWalletAddress.length - 4)}
+                        </button>
+                    </div>
 
+                    {/* balance of sellerWalletAddress */}
+                    <div className="flex flex-row items-center justify-center  gap-2">
+                        <span className="text-sm text-zinc-500">
+                            잔액
+                        </span>
+                        <span className="text-2xl xl:text-4xl font-semibold text-green-600">
+                            {Number(balanceOfSellerWallet).toFixed(2)}
+                        </span>
+                        {' '}
+                        <span className="text-sm">USDT</span>
+                    </div>
 
-                {address && (
-                    <div className="w-full flex flex-col xl:flex-row items-center justify-end gap-2">
-
-
-                        <div className="flex flex-row items-center justify-center gap-2">
-                            <Image
-                                src="/icon-shield.png"
-                                alt="Wallet"
-                                width={100}
-                                height={100}
-                                className="w-6 h-6"
-                            />
-                            <span className="text-sm text-zinc-500">
-                              USDT통장
-                            </span>
-                            <button
-                                className="text-lg text-zinc-600 underline"
-                                onClick={() => {
-                                    navigator.clipboard.writeText(address);
-                                    toast.success(Copied_Wallet_Address);
-                                } }
-                            >
-                                {address.substring(0, 6)}...{address.substring(address.length - 4)}
-                            </button>
-
-                        </div>
-
-                        <div className="flex flex-row items-center justify-center  gap-2">
-                            <span className="text-sm text-zinc-500">
-                                잔액
-                            </span>
-                            <span className="text-2xl xl:text-4xl font-semibold text-green-600">
-                                {Number(balance).toFixed(2)}
-                            </span>
-                            {' '}
-                            <span className="text-sm">USDT</span>
-                        </div>
+                  </div>
+                    
+                    
+                    
+                    <div className="flex flex-row items-center justify-center gap-2">
+                        <Image
+                            src="/icon-shield.png"
+                            alt="Wallet"
+                            width={100}
+                            height={100}
+                            className="w-6 h-6"
+                        />
+                        <span className="text-sm text-zinc-500">
+                          USDT통장
+                        </span>
+                        <button
+                            className="text-lg text-zinc-600 underline"
+                            onClick={() => {
+                                navigator.clipboard.writeText(address);
+                                toast.success(Copied_Wallet_Address);
+                            } }
+                        >
+                            {address.substring(0, 6)}...{address.substring(address.length - 4)}
+                        </button>
 
                     </div>
-                )}
+
+                    <div className="flex flex-row items-center justify-center  gap-2">
+                        <span className="text-sm text-zinc-500">
+                            잔액
+                        </span>
+                        <span className="text-2xl xl:text-4xl font-semibold text-green-600">
+                            {Number(balance).toFixed(2)}
+                        </span>
+                        {' '}
+                        <span className="text-sm">USDT</span>
+                    </div>
+
+                </div>
+            )}
 
 
 
-          <div className="flex flex-col items-start justify-center gap-2 mt-4">
+          <div className="w-full flex flex-col items-start justify-center gap-2 mt-4">
 
             
 
@@ -3263,7 +3329,7 @@ export default function Index({ params }: any) {
               p-4 rounded-lg shadow-md
               ">
 
-              <div className="w-1/4 flex flex-row items-center justify-center gap-2">
+              <div className="w-full xl:w-1/4 flex flex-row items-start justify-center gap-2">
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 거래수(건)</div>
                   <div className="text-xl font-semibold text-zinc-500">
@@ -3290,8 +3356,8 @@ export default function Index({ params }: any) {
               <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
               <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
-              <div className="w-1/2
-                flex flex-row items-center justify-center gap-2">
+              <div className="w-full xl:w-1/2
+                flex flex-row items-start justify-center gap-2">
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 정산수(건)</div>
                   <div className="text-xl font-semibold text-zinc-500">
@@ -3331,7 +3397,8 @@ export default function Index({ params }: any) {
               <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
               <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
-              <div className="w-1/4 flex flex-row items-center justify-center gap-2">
+              <div className="w-full xl:w-1/4
+                flex flex-row items-start justify-center gap-2">
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 청산수(건)</div>
                   <div className="text-xl font-semibold text-zinc-500">
