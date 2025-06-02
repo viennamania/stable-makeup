@@ -1356,12 +1356,22 @@ export default function Index({ params }: any) {
         //console.log("transactionResult===", transactionResult);
         */
 
+        /*
         const { transactionHash } = await sendTransaction({
           
           account: activeAccount as any,
 
           transaction,
         });
+        */
+
+        // sendAndConfirmTransaction
+        const transactionHash = await sendAndConfirmTransaction({
+          account: activeAccount as any,
+          transaction,
+        });
+
+
 
         ///console.log("transactionHash===", transactionHash);
 
@@ -1515,10 +1525,6 @@ export default function Index({ params }: any) {
           requestingPayment.map((item, idx) => idx === index ? true : item)
         );
         
-        
-        
-
-
 
 
       
@@ -1855,10 +1861,15 @@ export default function Index({ params }: any) {
 
 
 
-          
+          /*
           const { transactionHash } = await sendTransaction({
             account: activeAccount as any,
             transaction,
+          });
+          */
+          const { transactionHash } = await sendAndConfirmTransaction({
+            account: activeAccount as any,
+            transaction: transaction,
           });
           
 
