@@ -2266,7 +2266,7 @@ export default function Index({ params }: any) {
                           
 
                             <div className="
-                            w-36
+                            w-32
                             flex flex-col items-center justify-start gap-2">
 
                               <div className="w-full flex flex-row items-center justify-between gap-2"> 
@@ -2277,8 +2277,8 @@ export default function Index({ params }: any) {
                                     alt="Store Logo"
                                     width={50}
                                     height={50}
-                                    className="
-                                      rounded-lg w-12 h-12"
+                                    className="rounded-lg w-8 h-8"
+
                                   />
                                   <div className="flex flex-col items-start justify-center gap-1">
                                     <span className="text-sm font-bold text-gray-700">
@@ -2585,7 +2585,7 @@ export default function Index({ params }: any) {
 
                           <td className="p-2">
                             <div className="
-                              w-28
+                              w-32
                               flex flex-col items-start justify-start gap-2">
 
                               <div className="flex flex-row items-center gap-2">
