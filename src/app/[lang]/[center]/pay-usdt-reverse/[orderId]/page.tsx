@@ -2803,10 +2803,8 @@ export default function Index({ params }: any) {
                                     {
                                       // currency
                                     
-                                      Number(item.krwAmount)?.toLocaleString('ko-KR', {
-                                        style: 'currency',
-                                        currency: 'KRW',
-                                      })
+                                      Number(item.krwAmount)?.toLocaleString() + ' 원'
+                                      
 
                                     }
                                   </p>
