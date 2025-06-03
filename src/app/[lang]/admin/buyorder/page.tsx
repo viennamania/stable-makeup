@@ -3380,7 +3380,7 @@ const fetchBuyOrders = async () => {
                       </th>
                       
                       <th className="p-2">
-                        구매금액<br/>{Buy_Amount}<br/>{Rate}
+                        구매금액(원)<br/>{Buy_Amount}(USDT)<br/>{Rate}
                       </th>
                       {/*
                       <th className="p-2">{Payment_Amount}</th>
@@ -3468,7 +3468,7 @@ const fetchBuyOrders = async () => {
                               입금통장
                             </span>
                             <span className="text-sm text-zinc-50 font-semibold">
-                              입금액
+                              입금액(원)
                             </span>
                           </div>
 
@@ -3490,7 +3490,7 @@ const fetchBuyOrders = async () => {
                       <th className="
                         hidden xl:table-cell
                         p-2">
-                        정산비율
+                        정산비율(%)
                       </th>
 
                       <th className="
@@ -5072,7 +5072,7 @@ const fetchBuyOrders = async () => {
 
                             <div className="w-full flex flex-row gap-2 items-center justify-center">
                               <span className="
-                              w-14
+                              w-16
                               text-sm text-zinc-500">
                                 가맹점
                               </span>
@@ -5091,9 +5091,9 @@ const fetchBuyOrders = async () => {
 
                             <div className="w-full flex flex-row gap-2 items-center justify-center">
                               <span className="
-                              w-14
+                              w-16
                               text-sm text-zinc-500">
-                                에이전트
+                                AG 수수료
                               </span>
                               <span className="
                               w-14 text-end
@@ -5107,9 +5107,9 @@ const fetchBuyOrders = async () => {
 
                             <div className="w-full flex flex-row gap-2 items-center justify-center">
                               <span className="
-                              w-14
+                              w-16
                               text-sm text-zinc-500">
-                                센터
+                                PG 수수료
                               </span>
                               <span className="
                               w-14  text-end
