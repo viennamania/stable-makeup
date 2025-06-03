@@ -1610,6 +1610,7 @@ export default function Index({ params }: any) {
 
 
     // adminWalletAddress USDT balance
+    /*
     const [adminWalletBalance, setAdminWalletBalance] = useState(0);
     useEffect(() => {
       const getAdminWalletBalance = async () => {
@@ -1625,6 +1626,25 @@ export default function Index({ params }: any) {
         setAdminWalletBalance(Number(result) / 10 ** 6);
       };
       getAdminWalletBalance();
+    }, [store, contract]);
+    */
+
+    // sellerWalletAddress USDT balance
+    const [sellerWalletBalance, setSellerWalletBalance] = useState(0);
+    useEffect(() => {
+      const getSellerWalletBalance = async () => {
+        if (!store || !store.sellerWalletAddress) {
+          setSellerWalletBalance(0);
+          return;
+        }
+        const result = await balanceOf({
+          contract,
+          address: store.sellerWalletAddress,
+        });
+        //console.log('sellerWalletBalance result', result);
+        setSellerWalletBalance(Number(result) / 10 ** 6);
+      };
+      getSellerWalletBalance();
     }, [store, contract]);
 
 
@@ -1756,16 +1776,16 @@ export default function Index({ params }: any) {
                           className="w-6 h-6"
                       />
                       <span className="text-sm text-zinc-500">
-                        나의 USDT통장
+                        판매자 USDT통장
                       </span>
                       <button
                           className="text-lg text-zinc-600 underline"
                           onClick={() => {
-                              navigator.clipboard.writeText(address || "");
+                              navigator.clipboard.writeText(store?.sellerWalletAddress || "");
                               toast.success(Copied_Wallet_Address);
                           } }
                       >
-                          {address?.substring(0, 6)}...{address?.substring(address.length - 4)}
+                          {store?.sellerWalletAddress?.substring(0, 6)}...{store?.sellerWalletAddress?.substring(store?.sellerWalletAddress.length - 4)}
                       </button>
 
 
@@ -1777,7 +1797,7 @@ export default function Index({ params }: any) {
                       </span>
                       <span className="text-xl xl:text-2xl font-semibold text-green-600">
                           {
-                            (Number(balance || 0).toFixed(2))
+                            (Number(sellerWalletBalance || 0).toFixed(2))
                             .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                           }
                       </span>
