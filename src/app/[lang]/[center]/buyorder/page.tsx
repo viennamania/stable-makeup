@@ -902,9 +902,15 @@ export default function Index({ params }: any) {
 
   // limit number
   const [limitValue, setLimitValue] = useState(limit || 20);
+  useEffect(() => {
+    setLimitValue(limit || 20);
+  }, [limit]);
 
   // page number
   const [pageValue, setPageValue] = useState(page || 1);
+  useEffect(() => {
+    setPageValue(page || 1);
+  }, [page]);
 
 
 
@@ -2312,6 +2318,9 @@ export default function Index({ params }: any) {
 
     latestBuyOrder,
     //playSong,
+    params.center,
+    limitValue,
+    pageValue,
 ]);
 
 
@@ -3821,7 +3830,7 @@ export default function Index({ params }: any) {
 
                           <div className="
 
-                            w-32
+                            w-36 
                             flex flex-col xl:flex-row items-start justify-start gap-2
                             bg-zinc-100
                             rounded-lg
@@ -6567,22 +6576,36 @@ export default function Index({ params }: any) {
 
 
             <div className="flex flex-row items-center gap-2">
-                <select
-                  value={limit}
-                  onChange={(e) =>
-                    
-                    router.push(`/${params.lang}/${params.center}/buyorder?limit=${Number(e.target.value)}&page=${page}&wallet=${wallet}&searchMyOrders=${searchMyOrders}`)
+              <select
+                value={limit}
+                onChange={(e) =>
+                  
+                  router.push(`/${params.lang}/${params.center}/buyorder?limit=${Number(e.target.value)}&page=${page}&wallet=${wallet}&searchMyOrders=${searchMyOrders}`)
 
-                  }
+                }
 
-                  className="text-sm bg-zinc-800 text-zinc-200 px-2 py-1 rounded-md"
-                >
-                  <option value={10}>10</option>
-                  <option value={20}>20</option>
-                  <option value={50}>50</option>
-                  <option value={100}>100</option>
-                </select>
-              </div>
+                className="text-sm bg-zinc-800 text-zinc-200 px-2 py-1 rounded-md"
+              >
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+              </select>
+            </div>
+
+            {/* 처음 페이지로 이동 */}
+            <button
+              disabled={Number(page) <= 1}
+              className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
+              onClick={() => {
+                
+                router.push(`/${params.lang}/${params.center}/buyorder?limit=${Number(limit)}&page=1`);
+
+              }
+            }
+            >
+              처음
+            </button>
 
 
             <button
@@ -6613,6 +6636,19 @@ export default function Index({ params }: any) {
               }}
             >
               다음
+            </button>
+
+            {/* 마지막 페이지로 이동 */}
+            <button
+              disabled={Number(page) >= Math.ceil(Number(totalCount) / Number(limit))}
+              className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
+              onClick={() => {
+                
+                router.push(`/${params.lang}/${params.center}/buyorder?limit=${Number(limit)}&page=${Math.ceil(Number(totalCount) / Number(limit))}`);
+
+              }}
+            >
+              마지막
             </button>
 
           </div>
