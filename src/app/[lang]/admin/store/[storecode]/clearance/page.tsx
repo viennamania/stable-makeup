@@ -1795,7 +1795,7 @@ export default function Index({ params }: any) {
                       <span className="text-sm text-zinc-500">
                           잔액(USDT)
                       </span>
-                      <span className="text-xl xl:text-2xl font-semibold text-green-600">
+                      <span className="text-2xl xl:text-4xl font-semibold text-green-600">
                           {
                             (Number(sellerWalletBalance || 0).toFixed(2))
                             .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -1839,7 +1839,7 @@ export default function Index({ params }: any) {
                       <span className="text-sm text-zinc-500">
                           잔액(USDT)
                       </span>
-                      <span className="text-xl xl:text-2xl font-semibold text-green-600">
+                      <span className="text-2xl xl:text-4xl font-semibold text-green-600">
                           {
                             (Number(settlementWalletBalance || 0).toFixed(2))
                             .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
