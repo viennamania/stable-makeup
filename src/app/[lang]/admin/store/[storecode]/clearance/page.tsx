@@ -1588,7 +1588,7 @@ export default function Index({ params }: any) {
 
 
     // store settlementWalletAddress USDT balance
-    /*
+    
     const [settlementWalletBalance, setSettlementWalletBalance] = useState(0);
 
     useEffect(() => {
@@ -1606,7 +1606,9 @@ export default function Index({ params }: any) {
       };
       getSettlementWalletBalance();
     }, [store, contract]);
-    */
+    
+
+
     // adminWalletAddress USDT balance
     const [adminWalletBalance, setAdminWalletBalance] = useState(0);
     useEffect(() => {
@@ -1722,63 +1724,114 @@ export default function Index({ params }: any) {
         </div>
 
 
-          <div className="flex flex-col items-start justify-center space-y-4">
+          <div className="w-full flex flex-col items-start justify-center space-y-4">
 
-                <div className='flex flex-row items-center space-x-4'>
+            <div className='flex flex-row items-center space-x-4'>
+                  <Image
+                      src={store?.storeLogo || "/icon-collect.png"}
+                      alt="Store Logo"
+                      width={35}
+                      height={35}
+                      className="w-10 h-10 rounded-full"
+                  />
+
+                  <div className="text-xl font-semibold">
+                  가맹점{' '}{
+                      store && store.storeName + " (" + store.storecode + ")"
+                  }{' '}청산관리
+                  </div>
+              </div>
+
+              <div className="w-full flex flex-col xl:flex-row items-start justify-between gap-4">
+
+
+
+                <div className="flex flex-col items-start justify-start space-y-2">
+                  <div className="flex flex-row items-center justify-center gap-2">
                       <Image
-                          src={store?.storeLogo || "/icon-collect.png"}
-                          alt="Store Logo"
-                          width={35}
-                          height={35}
-                          className="w-10 h-10 rounded-full"
+                          src="/icon-shield.png"
+                          alt="Wallet"
+                          width={100}
+                          height={100}
+                          className="w-6 h-6"
                       />
+                      <span className="text-sm text-zinc-500">
+                        나의 USDT통장
+                      </span>
+                      <button
+                          className="text-lg text-zinc-600 underline"
+                          onClick={() => {
+                              navigator.clipboard.writeText(address || "");
+                              toast.success(Copied_Wallet_Address);
+                          } }
+                      >
+                          {address?.substring(0, 6)}...{address?.substring(address.length - 4)}
+                      </button>
 
-                      <div className="text-xl font-semibold">
-                      가맹점{' '}{
-                          store && store.storeName + " (" + store.storecode + ")"
-                      }{' '}청산관리
-                      </div>
+
                   </div>
 
-                  <div className="flex flex-col items-start justify-start space-y-2">
-                        <div className="flex flex-row items-center justify-center gap-2">
-                            <Image
-                                src="/icon-shield.png"
-                                alt="Wallet"
-                                width={100}
-                                height={100}
-                                className="w-6 h-6"
-                            />
-                            <span className="text-sm text-zinc-500">
-                              USDT통장
-                            </span>
-                            <button
-                                className="text-lg text-zinc-600 underline"
-                                onClick={() => {
-                                    navigator.clipboard.writeText(store?.settlementWalletAddress || "");
-                                    toast.success(Copied_Wallet_Address);
-                                } }
-                            >
-                                {store?.adminWalletAddress?.substring(0, 6)}...{store?.adminWalletAddress?.substring(store?.adminWalletAddress.length - 4)}
-                            </button>
-
-
-                        </div>
-
-                        <div className="flex flex-row items-center justify-center gap-2">
-                            <span className="text-sm text-zinc-500">
-                                잔액(USDT)
-                            </span>
-                            <span className="text-xl xl:text-2xl font-semibold text-green-600">
-                                {
-                                  (Number(adminWalletBalance || 0).toFixed(2))
-                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                                }
-                            </span>
-                            {' '}
-                            <span className="text-sm">USDT</span>
-                        </div>
+                  <div className="flex flex-row items-center justify-center gap-2">
+                      <span className="text-sm text-zinc-500">
+                          잔액(USDT)
+                      </span>
+                      <span className="text-xl xl:text-2xl font-semibold text-green-600">
+                          {
+                            (Number(balance || 0).toFixed(2))
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                          }
+                      </span>
+                      {' '}
+                      <span className="text-sm">USDT</span>
                   </div>
+                </div>
+
+
+
+
+
+                <div className="flex flex-col items-start justify-start space-y-2">
+                  <div className="flex flex-row items-center justify-center gap-2">
+                      <Image
+                          src="/icon-shield.png"
+                          alt="Wallet"
+                          width={100}
+                          height={100}
+                          className="w-6 h-6"
+                      />
+                      <span className="text-sm text-zinc-500">
+                        가맹점 정산용 USDT통장
+                      </span>
+                      <button
+                          className="text-lg text-zinc-600 underline"
+                          onClick={() => {
+                              navigator.clipboard.writeText(store?.settlementWalletAddress || "");
+                              toast.success(Copied_Wallet_Address);
+                          } }
+                      >
+                          {store?.settlementWalletAddress?.substring(0, 6)}...{store?.settlementWalletAddress?.substring(store?.settlementWalletAddress.length - 4)}
+                      </button>
+
+
+                  </div>
+
+                  <div className="flex flex-row items-center justify-center gap-2">
+                      <span className="text-sm text-zinc-500">
+                          잔액(USDT)
+                      </span>
+                      <span className="text-xl xl:text-2xl font-semibold text-green-600">
+                          {
+                            (Number(settlementWalletBalance || 0).toFixed(2))
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                          }
+                      </span>
+                      {' '}
+                      <span className="text-sm">USDT</span>
+                  </div>
+                </div>
+
+
+              </div>
 
 
 
@@ -1885,7 +1938,7 @@ export default function Index({ params }: any) {
                   ">
 
 
-                  <div className="w-1/3 flex flex-row items-center justify-center gap-2">
+                  <div className="w-full xl:w-1/3 flex flex-row items-center justify-center gap-2">
                     <div className="flex flex-col gap-2 items-center">
                       <div className="text-sm">총 거래수(건)</div>
                       <div className="text-xl font-semibold text-zinc-500">
@@ -1912,7 +1965,7 @@ export default function Index({ params }: any) {
                   <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
                   <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
-                  <div className="w-1/2
+                  <div className="w-full xl:w-1/2
                     flex flex-row items-center justify-center gap-2">
                     <div className="flex flex-col gap-2 items-center">
                       <div className="text-sm">총 정산수(건)</div>
