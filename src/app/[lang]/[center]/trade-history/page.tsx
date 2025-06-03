@@ -128,6 +128,8 @@ interface BuyOrder {
 
   agentName: string;
   agentcode: string;
+
+  agent: any;
 }
 
 
@@ -3317,18 +3319,21 @@ export default function Index({ params }: any) {
                       >
                         <tr>
                           <th className="p-2">
-                            {TID} / 구매신청시간
+                            구매신청시간 / {TID}
                           </th>
                           <th className="p-2">가맹점</th>
-                          <th className="p-2">{Buyer}</th>
+                          <th className="p-2">구매자 아이디</th>
                           <th className="p-2">입금자</th>
 
                           <th className="p-2">{Price} / {Buy_Amount} / {Rate}</th>
-                          <th className="p-2">입금통장</th>
+
+                          <th className="p-2">판매자 아이디</th>
+                          <th className="p-2">판매자 입금통장</th>
+
                           <th className="p-2">자동입금처리</th>
                           <th className="p-2">{Status}</th>
                           {/*<th className="p-2">{Trades}</th>*/}
-                          <th className="p-2">판매자</th>
+ 
                           <th className="p-2">자동결제 및 정산</th>
 
                         </tr>
@@ -3356,19 +3361,7 @@ export default function Index({ params }: any) {
 
                               <div className="flex flex-col gap-2 items-center justify-center">
 
-                                <button
-                                  onClick={() => {
-                                    // copy tradeId to clipboard
-                                    navigator.clipboard.writeText(item.tradeId);
-                                    toast.success('거래번호가 복사되었습니다.');
-                                  }}
-                                  className="text-sm text-zinc-500 font-semibold
-                                    hover:text-blue-600 cursor-pointer
-                                    hover:underline"
-                                  title="거래번호 복사"
-                                >
-                                  #{item?.tradeId}
-                                </button>
+
 
                                 <div className="flex flex-col gap-2 items-center justify-center">
                                   <span className="text-sm text-zinc-500 font-semibold">
@@ -3421,6 +3414,21 @@ export default function Index({ params }: any) {
                                   )}
                                 </span>
 
+
+                                <button
+                                  onClick={() => {
+                                    // copy tradeId to clipboard
+                                    navigator.clipboard.writeText(item.tradeId);
+                                    toast.success('거래번호가 복사되었습니다.');
+                                  }}
+                                  className="text-sm text-zinc-500 font-semibold
+                                    hover:text-blue-600 cursor-pointer
+                                    hover:underline"
+                                  title="거래번호 복사"
+                                >
+                                  #{item?.tradeId}
+                                </button>
+
                               </div>
                             </td>
 
@@ -3461,7 +3469,7 @@ export default function Index({ params }: any) {
 
                                   {/* agent name */}
                                   <span className="text-sm text-zinc-500 font-semibold">
-                                    {item?.agentName || item?.agentcode}
+                                    {item?.agent?.gentName || item?.agentcode}
                                   </span>
 
                                 </div>
@@ -3476,7 +3484,7 @@ export default function Index({ params }: any) {
                                 
                                 <div className="flex flex-col gap-2 items-center">
 
-                                  <div className="text-sm text-blue-600 font-semibold">
+                                  <div className="text-lg text-blue-600 font-semibold">
                                     {item?.nickname}
                                   </div>
 
@@ -3499,6 +3507,7 @@ export default function Index({ params }: any) {
 
                               </div>
                             </td>
+
 
                             
                             <td className="p-2">
@@ -3566,6 +3575,38 @@ export default function Index({ params }: any) {
                                 </span>
                               </div>
                             </td>
+
+
+                            <td className="text-zinc-500 p-2">
+                              <div className="flex flex-col gap-2 items-center justify-center">
+                                <span className="text-lg font-semibold text-blue-600">
+                                  {
+                                    item.seller?.nickname
+                                  }
+                                </span>
+                                {/* seller.walletAddress */}
+                                <button
+                                  className="text-sm text-zinc-500 font-semibold
+                                    hover:text-blue-500
+                                    hover:underline
+                                    cursor-pointer
+                                    "
+                                  title="지갑주소 복사"
+
+                                  onClick={() => {
+                                    
+                                    // copy to clipboard
+                                    navigator.clipboard.writeText(item.seller?.walletAddress || '');
+
+                                    toast.success('지갑주소가 복사되었습니다.');
+                                  }}
+                                >
+                                  {item.seller?.walletAddress &&
+                                    item.seller?.walletAddress.substring(0, 10) + '...'}
+                                </button>
+                              </div>
+                            </td>
+
 
 
                             <td className="p-2">
@@ -4100,37 +4141,6 @@ export default function Index({ params }: any) {
                             </td>
 
                             */}
-
-
-                            <td className="text-zinc-500 p-2">
-                              <div className="flex flex-col gap-2 items-center justify-center">
-                                <span className="text-sm font-semibold text-zinc-500">
-                                  {
-                                    item.seller?.nickname
-                                  }
-                                </span>
-                                {/* seller.walletAddress */}
-                                <button
-                                  className="text-sm text-zinc-500 font-semibold
-                                    hover:text-blue-500
-                                    hover:underline
-                                    cursor-pointer
-                                    "
-                                  title="지갑주소 복사"
-
-                                  onClick={() => {
-                                    
-                                    // copy to clipboard
-                                    navigator.clipboard.writeText(item.seller?.walletAddress || '');
-
-                                    toast.success('지갑주소가 복사되었습니다.');
-                                  }}
-                                >
-                                  {item.seller?.walletAddress &&
-                                    item.seller?.walletAddress.substring(0, 10) + '...'}
-                                </button>
-                              </div>
-                            </td>
 
 
                             <td className="
@@ -5197,22 +5207,36 @@ export default function Index({ params }: any) {
 
 
               <div className="flex flex-row items-center gap-2">
-                  <select
-                    value={limit}
-                    onChange={(e) =>
-                      
-                      router.push(`/${params.lang}/${params.center}/buyorder?limit=${Number(e.target.value)}&page=${page}&wallet=${wallet}&searchMyOrders=${searchMyOrders}`)
+                <select
+                  value={limit}
+                  onChange={(e) =>
+                    
+                    router.push(`/${params.lang}/${params.center}/trade-history?limit=${Number(e.target.value)}&page=${page}&wallet=${wallet}&searchMyOrders=${searchMyOrders}`)
 
-                    }
+                  }
 
-                    className="text-sm bg-zinc-800 text-zinc-200 px-2 py-1 rounded-md"
-                  >
-                    <option value={10}>10</option>
-                    <option value={20}>20</option>
-                    <option value={50}>50</option>
-                    <option value={100}>100</option>
-                  </select>
-                </div>
+                  className="text-sm bg-zinc-800 text-zinc-200 px-2 py-1 rounded-md"
+                >
+                  <option value={10}>10</option>
+                  <option value={20}>20</option>
+                  <option value={50}>50</option>
+                  <option value={100}>100</option>
+                </select>
+              </div>
+
+              {/* 처음 페이지로 이동 */}
+              <button
+                disabled={Number(page) <= 1}
+                className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
+                onClick={() => {
+                  
+                  router.push(`/${params.lang}/${params.center}/trade-history?limit=${Number(limit)}&page=1`);
+
+                }
+              }
+              >
+                처음
+              </button> 
 
 
               <button
@@ -5220,7 +5244,7 @@ export default function Index({ params }: any) {
                 className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
                 onClick={() => {
                   
-                  router.push(`/${params.lang}/${params.center}/buyorder?limit=${Number(limit)}&page=${Number(page) - 1}`);
+                  router.push(`/${params.lang}/${params.center}/trade-history?limit=${Number(limit)}&page=${Number(page) - 1}`);
 
                 }}
               >
@@ -5238,11 +5262,24 @@ export default function Index({ params }: any) {
                 className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
                 onClick={() => {
                   
-                  router.push(`/${params.lang}/${params.center}/buyorder?limit=${Number(limit)}&page=${Number(page) + 1}`);
+                  router.push(`/${params.lang}/${params.center}/trade-history?limit=${Number(limit)}&page=${Number(page) + 1}`);
 
                 }}
               >
                 다음
+              </button>
+
+              {/* 마지막 페이지로 이동 */}
+              <button
+                disabled={Number(page) >= Math.ceil(Number(totalCount) / Number(limit))}
+                className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
+                onClick={() => {
+                  
+                  router.push(`/${params.lang}/${params.center}/trade-history?limit=${Number(limit)}&page=${Math.ceil(Number(totalCount) / Number(limit))}`);
+
+                }}
+              >
+                마지막
               </button>
 
             </div>
