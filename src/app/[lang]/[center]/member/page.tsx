@@ -880,9 +880,15 @@ export default function Index({ params }: any) {
 
   // limit number
   const [limitValue, setLimitValue] = useState(limit || 20);
+  useEffect(() => {
+    setLimitValue(limit || 20);
+  }, [limit]);
 
   // page number
   const [pageValue, setPageValue] = useState(page || 1);
+  useEffect(() => {
+    setPageValue(page || 1);
+  }, [page]);
 
 
 
@@ -2497,6 +2503,7 @@ export default function Index({ params }: any) {
                         <th className="p-2">구매량</th>
                         <th className="p-2">회원 결제링크</th>
                         <th className="p-2">회원 USDT통장</th>
+                        <th className="p-2">주문상태</th>
                       </tr>
                     </thead>
 
@@ -2528,26 +2535,34 @@ export default function Index({ params }: any) {
                           </td>
 
                           <td className="p-2">
-                            {item?.buyer?.depositBankName}
-                            {' '}{item?.buyer?.depositBankAccountNumber}
-                            {' '}{item?.buyer?.depositName}
+                            <div className="flex flex-col items-end justify-center gap-1">
+                              {item?.buyer?.depositBankName}
+                              {' '}{item?.buyer?.depositBankAccountNumber}
+                              {' '}{item?.buyer?.depositName}
+                            </div>
                           </td>
 
                           <td className="p-2">
-                            {item?.buyer?.totalBuyCount || 0}
+                            <div className="flex flex-col items-end justify-center gap-1">
+                              {item?.totalPaymentConfirmedCount || 0} 건
+                            </div>
                           </td>
                           <td className="p-2">
-                            {item?.buyer?.totalBuyAmount || 0} 원
+                            <div className="flex flex-col items-end justify-center gap-1">
+                              {item?.totalPaymentConfirmedKrwAmount && item?.totalPaymentConfirmedKrwAmount.toLocaleString('ko-KR') || 0} 원
+                            </div>
                           </td>
                           <td className="p-2">
-                            {item?.buyer?.totalBuyQuantity || 0} USDT
+                            <div className="flex flex-col items-end justify-center gap-1">
+                              {item?.totalPaymentConfirmedUsdtAmount && item?.totalPaymentConfirmedUsdtAmount.toLocaleString('ko-KR') || 0} USDT
+                            </div>
                           </td>
 
 
 
                           <td className="p-2">
 
-                            <div className="flex flex-row items-center justify-start gap-2">
+                            <div className="flex flex-row items-center justify-center gap-2">
 
                               {/*}
                               <button
@@ -2597,7 +2612,34 @@ export default function Index({ params }: any) {
                               >
                                 링크 복사
                               </button>
+
+
+                              {/* 새창 열기 버튼 */}
+                              <button
+                                onClick={() => {
+                                  window.open(
+                                    'https://cryptopay.beauty/' + params.lang + '/' + item.storecode + '/payment?'
+                                    + 'storeUser=' + item.nickname
+                                    + '&depositBankName=' + item?.buyer?.depositBankName
+                                    + '&depositBankAccountNumber=' + item?.buyer?.depositBankAccountNumber
+                                    + '&depositName=' + item?.buyer?.depositName
+                                    ///+ '&depositAmountKrw=' + depositAmountKrw[index]
+                                    ,
+                                    '_blank'
+                                  );
+                                  toast.success('회원 홈페이지를 새창으로 열었습니다.');
+                                }}
+                                className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                  hover:bg-[#3167b4]/80"
+                              >
+                                새창열기
+                              </button>
+
+
                             </div>
+
+
+
 
                           </td>
 
@@ -2608,7 +2650,7 @@ export default function Index({ params }: any) {
                                 navigator.clipboard.writeText(item?.walletAddress);
                                 toast.success(Copied_Wallet_Address);
                               } }
-                              className="text-xs text-zinc-500 underline"
+                              className="text-sm text-zinc-500 underline"
                             >
                             {
                                 item?.walletAddress && (
@@ -2619,7 +2661,36 @@ export default function Index({ params }: any) {
                           </td>
 
  
+                          <td className="p-2">
+                            <div className="flex flex-col xl:flex-row items-start justify-center gap-2">
+                              <span className="text-sm text-zinc-500">
+                                {
+                                item?.buyOrderStatus === 'ordered' ? (
+                                  <span className="text-sm text-yellow-500">
+                                    구매주문
+                                  </span>
+                                ) : item?.buyOrderStatus === 'accepted' ? (
+                                  <span className="text-sm text-green-500">
+                                    판매자확정
+                                  </span>
+                                ) : item?.buyOrderStatus === 'paymentRequested' ? (
+                                  <span className="text-sm text-red-500">
+                                    결제요청
+                                  </span>
+                                ) : item?.buyOrderStatus === 'paymentConfirmed' ? (
+                                  <span className="text-sm text-green-500">
+                                    결제완료
+                                  </span>
+                                ) : item?.buyOrderStatus === 'cancelled' ? (
+                                  <span className="text-sm text-red-500">
+                                    거래취소
+                                  </span>
+                                ) : ''
+                                }
 
+                              </span>
+                            </div>
+                          </td>
 
 
 
@@ -2670,7 +2741,7 @@ export default function Index({ params }: any) {
                   value={limit}
                   onChange={(e) =>
                     
-                    router.push(`/${params.lang}/admin/store/${params.center}?limit=${Number(e.target.value)}&page=${page}`)
+                    router.push(`/${params.lang}/${params.center}/member?limit=${Number(e.target.value)}&page=${page}`)
 
                   }
 
@@ -2689,7 +2760,7 @@ export default function Index({ params }: any) {
               className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
               onClick={() => {
                 
-                router.push(`/${params.lang}/admin/store/${params.center}?limit=${Number(limit)}&page=${Number(page) - 1}`);
+                router.push(`/${params.lang}/${params.center}/member?limit=${Number(limit)}&page=${Number(page) - 1}`);
 
               }}
             >
@@ -2707,7 +2778,7 @@ export default function Index({ params }: any) {
               className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
               onClick={() => {
                 
-                router.push(`/${params.lang}/admin/store/${params.center}?limit=${Number(limit)}&page=${Number(page) + 1}`);
+                router.push(`/${params.lang}/${params.center}/member?limit=${Number(limit)}&page=${Number(page) + 1}`);
 
               }}
             >
