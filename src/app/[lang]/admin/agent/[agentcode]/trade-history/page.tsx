@@ -831,9 +831,15 @@ const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState
 
   // limit number
   const [limitValue, setLimitValue] = useState(limit || 20);
+  useEffect(() => {
+    setLimitValue(Number(limit) || 20);
+  }, [limit]);
 
   // page number
   const [pageValue, setPageValue] = useState(page || 1);
+  useEffect(() => {
+    setPageValue(Number(page) || 1);
+  }, [page]);
 
 
 
@@ -2700,7 +2706,7 @@ const fetchBuyOrders = async () => {
 
                         // storecode parameter is passed to fetchBuyOrders
                         onChange={(e) => {
-                          router.push('/' + params.lang + '/admin/trade-history?storecode=' + e.target.value);
+                          router.push('/' + params.lang + '/admin/agent/' + params.agentcode + '/trade-history?storecode=' + e.target.value);
                         }}
 
 
@@ -4695,7 +4701,7 @@ const fetchBuyOrders = async () => {
                   value={limit}
                   onChange={(e) =>
                     
-                    router.push(`/${params.lang}/admin/trade-history?storecode=${searchStorecode}&limit=${Number(e.target.value)}&page=${page}`)
+                    router.push(`/${params.lang}/admin/${params.agentcode}/trade-history?storecode=${searchStorecode}&limit=${Number(e.target.value)}&page=${page}`)
                   }
 
                   className="text-sm bg-zinc-800 text-zinc-200 px-2 py-1 rounded-md"
@@ -4712,7 +4718,7 @@ const fetchBuyOrders = async () => {
                 disabled={Number(page) <= 1}
                 className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
                 onClick={() => {
-                  router.push(`/${params.lang}/admin/trade-history?storecode=${searchStorecode}&limit=${Number(limit)}&page=1`)
+                  router.push(`/${params.lang}/admin/agent/${params.agentcode}/trade-history?storecode=${searchStorecode}&limit=${Number(limit)}&page=1`)
                 }}
               >
                 처음으로
@@ -4724,7 +4730,7 @@ const fetchBuyOrders = async () => {
                 className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
                 onClick={() => {
                   
-                  router.push(`/${params.lang}/admin/trade-history?storecode=${searchStorecode}&limit=${Number(limit)}&page=${Number(page) - 1}`)
+                  router.push(`/${params.lang}/admin/agent/${params.agentcode}/trade-history?storecode=${searchStorecode}&limit=${Number(limit)}&page=${Number(page) - 1}`)
 
 
                 }}
@@ -4743,7 +4749,7 @@ const fetchBuyOrders = async () => {
                 className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
                 onClick={() => {
                   
-                  router.push(`/${params.lang}/admin/trade-history?storecode=${searchStorecode}&limit=${Number(limit)}&page=${Number(page) + 1}`)
+                  router.push(`/${params.lang}/admin/agent/${params.agentcode}/trade-history?storecode=${searchStorecode}&limit=${Number(limit)}&page=${Number(page) + 1}`)
 
                 }}
               >
@@ -4756,7 +4762,7 @@ const fetchBuyOrders = async () => {
                 className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
                 onClick={() => {
                   
-                  router.push(`/${params.lang}/admin/trade-history?storecode=${searchStorecode}&limit=${Number(limit)}&page=${Math.ceil(Number(totalCount) / Number(limit))}`)
+                  router.push(`/${params.lang}/admin/agent/${params.agentcode}/trade-history?storecode=${searchStorecode}&limit=${Number(limit)}&page=${Math.ceil(Number(totalCount) / Number(limit))}`)
 
                 }}
               >
