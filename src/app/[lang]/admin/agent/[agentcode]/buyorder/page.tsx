@@ -855,9 +855,15 @@ export default function Index({ params }: any) {
 
   // limit number
   const [limitValue, setLimitValue] = useState(limit || 20);
+  useEffect(() => {
+    setLimitValue(limit || 20);
+  }, [limit]);
 
   // page number
   const [pageValue, setPageValue] = useState(page || 1);
+  useEffect(() => {
+    setPageValue(page || 1);
+  }, [page]);
 
 
 
@@ -3133,7 +3139,7 @@ const fetchBuyOrders = async () => {
 
                     // storecode parameter is passed to fetchBuyOrders
                     onChange={(e) => {
-                      router.push('/' + params.lang + '/admin/buyorder?storecode=' + e.target.value);
+                      router.push('/' + params.lang + '/admin/agent/' + params.agentcode + '/buyorder?storecode=' + e.target.value);
                     }}
 
 
@@ -6185,7 +6191,7 @@ const fetchBuyOrders = async () => {
               className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
               onClick={() => {
                 
-                router.push(`/${params.lang}/admin/buyorder?storecode=${searchStorecode}&limit=${Number(limit)}&page=${Number(page) + 1}`)
+                router.push(`/${params.lang}/admin/agent/${params.agentcode}/buyorder?storecode=${searchStorecode}&limit=${Number(limit)}&page=${Number(page) + 1}`)
 
               }}
             >
@@ -6198,7 +6204,7 @@ const fetchBuyOrders = async () => {
               className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
               onClick={() => {
                 
-                router.push(`/${params.lang}/admin/buyorder?storecode=${searchStorecode}&limit=${Number(limit)}&page=${Math.ceil(Number(totalCount) / Number(limit))}`)
+                router.push(`/${params.lang}/admin/agent/${params.agentcode}/buyorder?storecode=${searchStorecode}&limit=${Number(limit)}&page=${Math.ceil(Number(totalCount) / Number(limit))}`)
 
               }}
             >
