@@ -2351,7 +2351,7 @@ export default function Index({ params }: any) {
                           <td className="p-2">
                             <div className="flex flex-col items-end mr-2 justify-center gap-2">
 
-                              {item?.totalBuyCount ? (
+                              {item?.totalPaymentConfirmedCount ? (
                                 <div className="flex flex-row items-center justify-center gap-2">
                                   {item?.totalPaymentConfirmedCount} 건
                                 </div>
@@ -2365,7 +2365,7 @@ export default function Index({ params }: any) {
                               {item?.totalPaymentConfirmedKrwAmount ? (
 
                                 <div className="flex flex-row items-center justify-center gap-2">
-                                  {Number(item?.buyer?.depositAmount)?.toLocaleString('ko-KR')}
+                                  {Number(item?.totalPaymentConfirmedKrwAmount)?.toLocaleString('ko-KR')}
                                   {' '}원
                                 </div>
                               ) : (
@@ -2487,6 +2487,28 @@ export default function Index({ params }: any) {
                               >
                                 복사
                               </button>
+
+
+                              {/* 새창 열기 버튼 */}
+                              <button
+                                onClick={() => {
+                                  window.open(
+                                    'https://cryptopay.beauty/' + params.lang + '/' + item.storecode + '/payment?'
+                                    + 'storeUser=' + item.nickname
+                                    + '&depositBankName=' + item?.buyer?.depositBankName
+                                    + '&depositBankAccountNumber=' + item?.buyer?.depositBankAccountNumber
+                                    + '&depositName=' + item?.buyer?.depositName
+                                    + '&depositAmountKrw=' + depositAmountKrw[index],
+                                    '_blank'
+                                  );
+                                  toast.success('회원 홈페이지를 새창으로 열었습니다.');
+                                }}
+                                className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                  hover:bg-[#3167b4]/80"
+                              >
+                                새창열기
+                              </button>
+                              
                             </div>
 
                           </td>
