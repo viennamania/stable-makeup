@@ -2994,13 +2994,13 @@ const fetchBuyOrders = async () => {
                             <td className="p-2">
                               <div className="flex flex-col gap-2 items-center justify-center">
                                 <div className="text-sm font-semibold text-zinc-500">
-                                  {item?.store?.bankInfo?.bankName}
+                                  {item?.seller?.bankInfo?.bankName}
                                 </div>
 
                                 {/* copy account number to clipboard */}
                                 <button
                                   onClick={() => {
-                                    navigator.clipboard.writeText(item?.store?.bankInfo?.accountNumber);
+                                    navigator.clipboard.writeText(item?.seller?.bankInfo?.accountNumber);
                                     toast.success('입금통장번호가 복사되었습니다.');
                                   }}
                                   className="text-sm text-zinc-500 font-semibold
@@ -3008,11 +3008,11 @@ const fetchBuyOrders = async () => {
                                     hover:underline"
                                   title="입금통장번호 복사"
                                 >
-                                  {item?.store?.bankInfo?.accountNumber}
+                                  {item?.seller?.bankInfo?.accountNumber}
                                 </button>
 
                                 <div className="text-sm font-semibold text-zinc-500">
-                                  {item?.store?.bankInfo?.accountHolder}
+                                  {item?.seller?.bankInfo?.accountHolder}
                                 </div>
                               </div>
                             </td>
