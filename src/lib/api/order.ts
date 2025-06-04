@@ -1993,6 +1993,18 @@ export async function getBuyOrders(
 
   } else {
 
+    //const fromDateValue = fromDate ? fromDate + 'T00:00:00Z' : '1970-01-01T00:00:00Z';
+    //const toDateValue = toDate ? toDate + 'T23:59:59Z' : new Date().toISOString();
+    // korean timezone is UTC+9, so we need to convert to UTC time
+
+    const fromDateValue = fromDate ? fromDate + 'T00:00:00Z' : '1970-01-01T00:00:00Z';
+    const toDateValue = toDate ? toDate + 'T23:59:59Z' : new Date().toISOString();
+    
+    
+    console.log('getBuyOrders fromDateValue: ' + fromDateValue);
+    console.log('getBuyOrders toDateValue: ' + toDateValue);
+
+
     const results = await collection.find<UserProps>(
       {
         agentcode: { $regex: agentcode, $options: 'i' },
@@ -2039,10 +2051,25 @@ export async function getBuyOrders(
         'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
 
         // filter by fromDate and toDate
-        //createdAt: {
-        //  $gte: new Date(fromDate ? fromDate + 'T00:00:00Z' : '1970-01-01T00:00:00Z'),
-        //  $lte: new Date(toDate ? toDate + 'T23:59:59Z' : new Date().toISOString()),
-        //}
+        /*
+        createdAt
+        "2025-06-03T07:24:10.135Z"
+        */
+        /* createdAt is string format */
+        /* fromDate is string format YYYY-MM-DD */
+        /* convert createdAt to Date object */
+
+        createdAt: {
+          $gte: fromDateValue,
+          $lte: toDateValue,
+        }
+
+
+
+      
+          
+
+
 
       },
       
@@ -2080,10 +2107,10 @@ export async function getBuyOrders(
 
         // filter by fromDate and toDate
         
-        //createdAt: {
-        //  $gte: new Date(fromDate ? fromDate + 'T00:00:00Z' : '1970-01-01T00:00:00Z'),
-        //  $lte: new Date(toDate ? toDate + 'T23:59:59Z' : new Date().toISOString()),
-        //}
+        createdAt: {
+          $gte: fromDateValue,
+          $lte: toDateValue,
+        }
 
 
       }
