@@ -49,6 +49,7 @@ import {
 import {
   inAppWallet,
   createWallet,
+  getWalletBalance,
 } from "thirdweb/wallets";
 
 
@@ -1519,11 +1520,27 @@ export default function Index({ params }: any) {
       return 0;
     }
 
+
+
+    // get native balance of the store's settlement wallet address
+    // getWalletBalance
+    // getWalletBalance
+    /*
+    const result = await getWalletBalance({
+      address: address,
+      client: client,
+      chain: polygon,
+    });
+    */
+
+
+
+
+
     const balance = await balanceOf({
       contract,
       address: store.settlementWalletAddress,
     });
-
     
     //return Number(balance) / 10 ** 6; // Convert to USDT
 
@@ -3033,10 +3050,16 @@ export default function Index({ params }: any) {
                               </span>
 
                               {/* USDT 잔액 표시 */}
-                              <span className="text-lg text-green-500 font-bold"
+                              <span className="text-lg text-green-500"
                                 style={{ fontFamily: 'monospace' }}
                               >
                                 {item?.usdtBalance ? item?.usdtBalance.toFixed(2).toLocaleString('us-US') : 0}{' '}USDT
+                              </span>
+
+                              <span className="text-lg text-green-500"
+                                style={{ fontFamily: 'monospace' }}
+                              >
+                                {item?.nativeBalance ? item?.nativeBalance.toFixed(2).toLocaleString('us-US') : 0}{' '}POL
                               </span>
 
 
