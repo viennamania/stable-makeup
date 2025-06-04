@@ -1074,7 +1074,10 @@ export default function Index({ params }: any) {
     };
 
 
-    // cancel sell order state
+
+
+    
+    /*
     const [cancellings, setCancellings] = useState([] as boolean[]);
     useEffect(() => {
       setCancellings(buyOrders.map(() => false));
@@ -1119,6 +1122,82 @@ export default function Index({ params }: any) {
       setCancellings(cancellings.map((item, i) => i === index ? false : item));
 
     }
+    */
+
+
+
+
+
+
+
+
+
+
+    // cancel buy order state
+    const [cancellings, setCancellings] = useState([] as boolean[]);
+    useEffect(() => {
+      setCancellings(
+        buyOrders.map(() => false)
+      );
+    }, [buyOrders]);
+
+
+
+    const cancelTrade = async (orderId: string, index: number) => {
+
+
+
+      if (cancellings[index]) {
+        return;
+      }
+
+
+
+      setCancellings(cancellings.map((item, i) => i === index ? true : item));
+
+      const response = await fetch('/api/order/cancelTradeByBuyer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          orderId: orderId,
+          walletAddress: address
+        })
+      });
+
+      const data = await response.json();
+
+      ///console.log('data', data);
+
+      if (data.result) {
+        toast.success(Order_has_been_cancelled);
+
+        await fetch('/api/order/getAllBuyOrders', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+          })
+        }).then(async (response) => {
+          const data = await response.json();
+          //console.log('data', data);
+          if (data.result) {
+            setBuyOrders(data.result.orders);
+          }
+        });
+
+      } else {
+        toast.error('실패했습니다. 잠시 후 다시 시도해주세요.');
+      }
+
+      setCancellings(cancellings.map((item, i) => i === index ? false : item));
+
+    }
+
+
+
 
 
 
@@ -2834,7 +2913,7 @@ export default function Index({ params }: any) {
                                 && (
 
                                   <>
-                            
+                                  {/*
                                   <button
                                     disabled={cancellings[index]}
                                     className={`flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md ${cancellings[index] ? 'bg-gray-500' : 'bg-red-500'}`}
@@ -2850,6 +2929,7 @@ export default function Index({ params }: any) {
                                     <span>{Cancel_My_Order}</span>
                                    
                                   </button>
+                                  */}
 
 
                                   </>
@@ -2944,6 +3024,37 @@ export default function Index({ params }: any) {
                                     <span className="text-lg font-semibold text-yellow-600">
                                       결제요청
                                     </span>
+
+                                    {/* cancelTrade button */}
+                                    {/* functio cancelTrade(index, item._id) */}
+                                    <button
+                                      disabled={cancellings[index]}
+                                      className={`flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md ${cancellings[index] ? 'bg-gray-500' : 'bg-red-500'}`}
+                                      onClick={() => {
+                                        confirm (
+                                          "정말로 취소하시겠습니까? \n\n" +
+                                          "취소시 거래가 취소됩니다.\n\n"
+                                        )
+                                          &&  cancelTrade(item._id, index);
+                                     
+
+                                      } }
+                                    >
+                                      <Image
+                                        src="/loading.png"
+                                        alt="loading"
+                                        width={16}
+                                        height={16}
+                                        className={cancellings[index] ? 'animate-spin' : 'hidden'}
+                                      />
+                                      <span>{Cancel_My_Order}</span>
+                                    </button>
+
+
+
+                                  
+
+
 
                                     {/*
                                     <div className="flex flex-row gap-1">
@@ -3338,6 +3449,7 @@ export default function Index({ params }: any) {
                                     <span className="text-green-500">:{Me}</span>
                                     */}
                                            
+                                    {/*
                                     <button
                                         disabled={cancellings[index]}
                                         className={`text-sm bg-red-500 text-white px-3 py-2 rounded-md ${cancellings[index] ? 'bg-gray-500' : ''}`}
@@ -3379,6 +3491,7 @@ export default function Index({ params }: any) {
                                       </div>
                                       
                                     </button>
+                                    */}
 
                                   </div>
   
