@@ -3488,7 +3488,6 @@ const fetchBuyOrders = async () => {
                       </th>
 
                       <th className="
-                        hidden xl:table-cell
                         p-2">
                         정산비율(%)
                       </th>
@@ -5066,7 +5065,6 @@ const fetchBuyOrders = async () => {
 
 
                         <td className="
-                          hidden xl:table-cell
                           p-2">
                           <div className="flex flex-col gap-2 items-end justify-center">
 
