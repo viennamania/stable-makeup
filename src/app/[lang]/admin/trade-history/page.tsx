@@ -2905,6 +2905,7 @@ const fetchBuyOrders = async () => {
                         }}
                       >
                         <tr>
+
                           <th className="p-2">
                             <div className="flex flex-col gap-2 items-center justify-center">
                               <span className="text-sm text-white">
@@ -3073,7 +3074,9 @@ const fetchBuyOrders = async () => {
                               <td className="text-zinc-500 p-2">
                                 
 
-                                <div className="flex flex-row gap-2 items-center justify-start">
+                                <div className="
+                                w-32
+                                flex flex-row gap-2 items-center justify-start">
                                   
                                   <Image
                                     src={item?.store?.storeLogo || "/icon-store.png"}
@@ -3165,7 +3168,9 @@ const fetchBuyOrders = async () => {
 
 
                               <td className="p-2">
-                                <div className="flex flex-col gap-2 items-center justify-center">
+                                <div className="
+                                  w-32
+                                  flex flex-col gap-2 items-center justify-center">
 
                                   <div className="flex flex-col gap-2 items-end justify-center">
                                     <span className="text-lg text-zinc-500 font-semibold"
@@ -3198,7 +3203,9 @@ const fetchBuyOrders = async () => {
 
 
                               <td className="text-zinc-500 p-2">
-                                <div className="flex flex-col gap-2 items-center justify-center">
+                                <div className="
+                                  w-32
+                                  flex flex-col gap-2 items-center justify-center">
                                   <span className="text-lg font-semibold text-blue-600">
                                     {
                                       item.seller?.nickname
@@ -3263,7 +3270,9 @@ const fetchBuyOrders = async () => {
 
 
                               <td className="p-2">
-                                <div className="flex flex-col mr-2 items-center justify-end gap-2">
+                                <div className="
+                                  w-32
+                                  flex flex-col mr-2 items-center justify-end gap-2">
 
                                     {item?.autoConfirmPayment ? (
                                       <span className="text-sm text-green-500 font-semibold">
@@ -3291,7 +3300,9 @@ const fetchBuyOrders = async () => {
 
                               <td className="p-2">
 
-                                <div className="flex flex-col gap-2 items-center justify-center">
+                                <div className="
+                                  w-36 
+                                  flex flex-col gap-2 items-center justify-center">
 
                                   <div className="flex flex-row items-center gap-2">
                                     {/* status */}
