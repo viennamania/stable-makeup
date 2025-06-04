@@ -818,7 +818,7 @@ export default function Index({ params }: any) {
   
 
   // search form date to date
-  const [searchFormDate, setSearchFormDate] = useState("");
+  const [searchFromDate, setSearchFormDate] = useState("");
   // set today's date in YYYY-MM-DD format
   useEffect(() => {
     const today = new Date();
@@ -1030,7 +1030,7 @@ export default function Index({ params }: any) {
 
                     searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
-                    fromDate: searchFormDate,
+                    fromDate: searchFromDate,
                     toDate: searchToDate,
 
                   }
@@ -1160,7 +1160,7 @@ export default function Index({ params }: any) {
 
               searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
-              fromDate: searchFormDate,
+              fromDate: searchFromDate,
               toDate: searchToDate,
             }
           )
@@ -1424,7 +1424,7 @@ export default function Index({ params }: any) {
 
                   searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
-                  fromDate: searchFormDate,
+                  fromDate: searchFromDate,
                   toDate: searchToDate,
                 }
               ),
@@ -1635,7 +1635,7 @@ export default function Index({ params }: any) {
 
               searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
-              fromDate: searchFormDate,
+              fromDate: searchFromDate,
               toDate: searchToDate,
         
             }
@@ -1800,7 +1800,7 @@ export default function Index({ params }: any) {
 
               searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
-              fromDate: searchFormDate,
+              fromDate: searchFromDate,
               toDate: searchToDate,
             }
           ),
@@ -1962,7 +1962,7 @@ export default function Index({ params }: any) {
 
               searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
-              fromDate: searchFormDate,
+              fromDate: searchFromDate,
               toDate: searchToDate,
 
             }
@@ -2065,7 +2065,7 @@ export default function Index({ params }: any) {
     latestBuyOrder,
     searchStorecode,
 
-    searchFormDate,
+    searchFromDate,
     searchToDate,
 ]);
 
@@ -2102,7 +2102,7 @@ const fetchBuyOrders = async () => {
         searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
 
-        fromDate: searchFormDate,
+        fromDate: searchFromDate,
         toDate: searchToDate,
 
       }
@@ -2193,6 +2193,8 @@ const fetchBuyOrders = async () => {
 
 
 
+          fromDate: searchFromDate,
+          toDate: searchToDate,
 
 
 
@@ -2231,7 +2233,9 @@ const fetchBuyOrders = async () => {
       return () => clearInterval(interval);
 
 
-    } , [address, searchMyOrders, params.storecode,]);
+    } , [address, searchMyOrders, params.storecode,
+      searchFromDate, searchToDate,
+    ]);
 
 
 
@@ -2774,7 +2778,7 @@ const fetchBuyOrders = async () => {
                     />
                     <input
                       type="date"
-                      value={searchFormDate}
+                      value={searchFromDate}
                       onChange={(e) => setSearchFormDate(e.target.value)}
                       className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
                     />

@@ -3,6 +3,7 @@ import clientPromise from '../mongodb';
 
 // object id
 import { ObjectId } from 'mongodb';
+import { create } from 'domain';
 
 
 export interface UserProps {
@@ -3845,6 +3846,9 @@ export async function getAllTradesByAdmin(
     searchDepositName,
     searchStoreBankAccountNumber,
     privateSale,
+
+    fromDate, // 2025-04-01
+    toDate,   // 2025-04-30
   }: {
     limit: number;
     page: number;
@@ -3859,10 +3863,19 @@ export async function getAllTradesByAdmin(
     searchDepositName: string;
     searchStoreBankAccountNumber: string;
     privateSale: boolean;
+
+    fromDate?: string; // 2025-04-01
+    toDate?: string;   // 2025-04-30
+
   }
 
 ): Promise<any> {
 
+  const fromDateValue = fromDate ? fromDate + 'T00:00:00.000Z' : new Date(0).toISOString();
+  const toDateValue = toDate ? toDate + 'T23:59:59.999Z' : new Date().toISOString();
+
+  console.log('getAllTradesByAdmin fromDateValue: ' + fromDateValue);
+  console.log('getAllTradesByAdmin toDateValue: ' + toDateValue);
   
 
   console.log('privateSale: ' + privateSale);
@@ -3872,12 +3885,14 @@ export async function getAllTradesByAdmin(
   //console.log('getAllTradesByAdmin startDate: ' + startDate);
   //console.log('getAllTradesByAdmin endDate: ' + endDate);
 
+  /*
   if (!startDate) {
     startDate = new Date(0).toISOString();
   }
   if (!endDate) {
     endDate = new Date().toISOString();
   }
+  */
 
 
   /*
@@ -3928,6 +3943,10 @@ export async function getAllTradesByAdmin(
 
       //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
 
+
+      createdAt: { $gte: fromDateValue, $lt: toDateValue },
+
+
     },
 
   )
@@ -3962,6 +3981,8 @@ export async function getAllTradesByAdmin(
 
 
       //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+      createdAt: { $gte: fromDateValue, $lt: toDateValue },
 
  
     }
@@ -4000,6 +4021,8 @@ export async function getAllTradesByAdmin(
         'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
 
         //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
       }
     },
     {
@@ -4038,6 +4061,8 @@ export async function getAllTradesByAdmin(
         'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
 
         //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
       }
     },
     {
@@ -4078,6 +4103,8 @@ export async function getAllTradesByAdmin(
         'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
 
         //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
       }
     },
     {
@@ -4109,6 +4136,10 @@ export async function getAllTradesByAdmin(
         'buyer.depositName': { $regex: searchDepositName, $options: 'i' },
 
         'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
+
+
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
       }
     },
     {
@@ -4139,6 +4170,8 @@ export async function getAllTradesByAdmin(
         'buyer.depositName': { $regex: searchDepositName, $options: 'i' },
 
         'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
       }
     },
     // $settlement.settlementAmountKRW is string
@@ -4175,6 +4208,9 @@ export async function getAllTradesByAdmin(
         'buyer.depositName': { $regex: searchDepositName, $options: 'i' },
 
         'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
+
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
       }
     },
     {
@@ -4205,6 +4241,9 @@ export async function getAllTradesByAdmin(
         'buyer.depositName': { $regex: searchDepositName, $options: 'i' },
 
         'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
+
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
       }
     },
     {
