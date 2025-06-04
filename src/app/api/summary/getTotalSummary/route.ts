@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
   } = body;
 
 
-  console.log("getTotalSummary body", body);
+  //console.log("getTotalSummary body", body);
 
 
 
@@ -58,6 +58,12 @@ export async function POST(request: NextRequest) {
 
   const totalNumberOfStores = stores?.totalCount || 0;
   const latestStores = stores?.stores || [];
+
+  
+  ///console.log("getTotalSummary latestStores", latestStores);
+
+
+
 
 
 
@@ -105,6 +111,10 @@ export async function POST(request: NextRequest) {
 
 
   const totalNumberOfTrades = orders?.totalCount || 0;
+
+
+  //console.log("getTotal Summary totalNumberOfTrades", totalNumberOfTrades);
+
   const totalBuyAmountKrw = orders?.totalKrwAmount || 0;
   const totalUsdtAmount = orders?.totalUsdtAmount || 0;
   const totalSettlementAmount = orders?.totalSettlementAmount || 0;

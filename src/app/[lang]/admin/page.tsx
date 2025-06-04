@@ -769,12 +769,18 @@ export default function Index({ params }: any) {
     totalNumberOfBuyers: number;
     latestBuyers: any[];
 
+
+
+
     totalNumberOfTrades: number;
     totalBuyAmountKrw: number;
     totalUsdtAmount: number;
     totalSettlementAmount: number;
     totalSettlementAmountKRW: number;
     latestTrades: any[];
+
+
+
 
     totalNumberOfBuyOrders: number;
     latestBuyOrders: any[];
@@ -784,12 +790,14 @@ export default function Index({ params }: any) {
     totalNumberOfBuyers: 0,
     latestBuyers: [],
 
+
     totalNumberOfTrades: 0,
     totalBuyAmountKrw: 0,
     totalUsdtAmount: 0,
     totalSettlementAmount: 0,
     totalSettlementAmountKRW: 0,
     latestTrades: [],
+
 
     totalNumberOfBuyOrders: 0,
     latestBuyOrders: [],
@@ -1207,7 +1215,7 @@ export default function Index({ params }: any) {
                         >
                           {store.totalBuyerCount > 0 ? Number(store.totalBuyerCount)?.toLocaleString() : 0} 명
                           <br/>
-                          {store.totalTradeCount > 0 ? Number(store.totalTradeCount)?.toLocaleString() : 0} 건
+                          {store.totalPaymentConfirmedCount > 0 ? Number(store.totalPaymentConfirmedCount)?.toLocaleString() : 0} 건
                         </td>
 
                         <td className="px-4 py-2">{
