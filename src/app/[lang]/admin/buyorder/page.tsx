@@ -4511,7 +4511,9 @@ const fetchBuyOrders = async () => {
 
 
 
-                              <div className="w-full flex flex-col gap-2 items-start justify-start">
+                              <div className="
+                              w-full
+                              flex flex-col gap-2 items-start justify-start">
 
                                 {/*
                                 {item.status === 'accepted' && item.seller && item.seller.walletAddress === address && (
@@ -4870,7 +4872,10 @@ const fetchBuyOrders = async () => {
                                 {/* paymentConfirmed */}
                                 {/* paymentAmount */}
                                 {item.status === 'paymentConfirmed' && (
-                                  <div className="flex flex-col gap-2 items-center justify-center">
+
+                                  <div className="
+                                    w-48
+                                    flex flex-col gap-2 items-center justify-center">
 
 
 
@@ -4884,7 +4889,7 @@ const fetchBuyOrders = async () => {
                                     && (
 
 
-                                      <div className="flex flex-row gap-2">
+                                      <div className="w-full flex flex-row items-center justify-center gap-2">
 
                                         <input
                                           disabled={confirmingPayment[index]}
@@ -4900,6 +4905,7 @@ const fetchBuyOrders = async () => {
                                               })
                                             );
                                           }}
+                                          className="w-5 h-5 rounded-md border border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                         />
 
                                         <button
@@ -4910,6 +4916,7 @@ const fetchBuyOrders = async () => {
                                           }
 
                                           className={`
+                                            w-full
                                           flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md
                                           border border-green-600
                                           hover:border-green-700
