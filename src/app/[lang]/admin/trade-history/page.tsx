@@ -867,9 +867,15 @@ export default function Index({ params }: any) {
 
   // limit number
   const [limitValue, setLimitValue] = useState(limit || 20);
+  useEffect(() => {
+    setLimitValue(limit || 20);
+  }, [limit]);
 
   // page number
   const [pageValue, setPageValue] = useState(page || 1);
+  useEffect(() => {
+    setPageValue(page || 1);
+  }, [page]);
 
 
 
@@ -2961,7 +2967,7 @@ const fetchBuyOrders = async () => {
                           <th className="p-2">판매자 입금통장</th>
 
                           <th className="p-2">자동입금처리</th>
-                          <th className="p-2">{Status}</th>
+                          <th className="p-2">거래상태</th>
 
                           <th className="p-2">자동결제 및 정산</th>
 
@@ -2997,33 +3003,29 @@ const fetchBuyOrders = async () => {
 
                               <td className="p-2">
 
-                                <div className="flex flex-col gap-2 items-center justify-center">
+                                <div className="
+                                  w-24
+                                  flex flex-col gap-2 items-center justify-center">
 
 
 
                                   <div className="flex flex-col gap-2 items-center justify-center">
-                                    <span className="text-sm text-zinc-500 font-semibold">
+                                    <span className="text-sm text-zinc-500">
                                       {item?.createdAt && new Date(item.createdAt)?.toLocaleString('ko-KR', {
                                         year: 'numeric',
                                         month: '2-digit',
                                         day: '2-digit',
-                                        hour: '2-digit',
-                                        minute: '2-digit',
-                                        second: '2-digit',
                                       })}
                                     </span>
-                                    {/*
-                                    <span className="text-sm text-zinc-500 font-semibold">
+                                    
+                                    <span className="text-sm text-zinc-500">
                                       {item?.createdAt && new Date(item.createdAt)?.toLocaleString('en-US', {
-                                        year: 'numeric',
-                                        month: '2-digit',
-                                        day: '2-digit',
                                         hour: '2-digit',
                                         minute: '2-digit',
                                         second: '2-digit',
                                       })}
                                     </span>
-                                    */}
+                                    
                                   </div>
 
                                   <span className="text-sm text-zinc-500 font-semibold">
@@ -3188,7 +3190,7 @@ const fetchBuyOrders = async () => {
                                       {item.usdtAmount}{' '}USDT
                                     </span>
                                   </div>
-                                  <span className="text-sm text-zinc-500 font-semibold"
+                                  <span className="text-sm text-zinc-500"
                                     style={{
                                       fontFamily: 'monospace',
                                     }}
@@ -3422,7 +3424,9 @@ const fetchBuyOrders = async () => {
 
                                     {/* if status is accepted, show payment request button */}
                                     {item.status === 'paymentConfirmed' && (
-                                      <div className="flex flex-col gap-1 items-start justify-start">
+                                      <div className="
+                                        w-36  
+                                        flex flex-row gap-1 items-start justify-start">
 
                                         {/*
                                         <span className="text-sm font-semibold text-green-500">
@@ -3460,9 +3464,11 @@ const fetchBuyOrders = async () => {
                                           {item.seller?.nickname}
                                         </span>
                                         */}
-                                        {/*
+                                        
                                         <span
-                                          className="text-sm text-zinc-500"
+                                          className="
+                                            w-28 
+                                            text-sm text-zinc-500"
                                         >{
                                           //item.paymentConfirmedAt && new Date(item.paymentConfirmedAt)?.toLocaleString()
                                           // from now
@@ -3475,7 +3481,7 @@ const fetchBuyOrders = async () => {
                                           )
 
                                         }</span>
-                                        */}
+                                      
                                       </div>
                                     )}
 
@@ -3484,8 +3490,22 @@ const fetchBuyOrders = async () => {
 
 
                                     {item.status === 'completed' && (
-                                      <div className="text-sm text-green-500">
-                                        {Completed_at}
+                                      <div className="flex flex-row gap-1 items-start justify-start">
+                                        <div className="text-sm text-green-500">
+                                          {Completed_at}
+                                        </div>
+                                        {/* paymentConfirmedAt */}
+                                        <div className="text-sm text-zinc-500">
+                                          {
+                                            new Date().getTime() - new Date(item.paymentConfirmedAt).getTime() < 1000 * 60 ? (
+                                              ' ' + Math.floor((new Date().getTime() - new Date(item.paymentConfirmedAt).getTime()) / 1000) + ' ' + seconds_ago
+                                            ) : new Date().getTime() - new Date(item.paymentConfirmedAt).getTime() < 1000 * 60 * 60 ? (
+                                              ' ' + Math.floor((new Date().getTime() - new Date(item.paymentConfirmedAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
+                                            ) : (
+                                              ' ' + Math.floor((new Date().getTime() - new Date(item.paymentConfirmedAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
+                                            )
+                                          }
+                                        </div>
                                       </div>
                                     )}
 
