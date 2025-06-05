@@ -2770,7 +2770,7 @@ export default function Index({ params }: any) {
 
                                   <div className="flex flex-col items-end gap-2">
 
-                                    <span className="text-sm text-yellow-600"
+                                    <span className="text-sm text-yellow-600 font-semibold"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2835,7 +2835,7 @@ export default function Index({ params }: any) {
                                 <div className="w-full flex flex-row items-center justify-center gap-2">
 
                                   <div className="w-full flex flex-col items-end gap-2">
-                                    <span className="text-sm text-blue-500"
+                                    <span className="text-sm text-blue-500 font-semibold"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2855,7 +2855,7 @@ export default function Index({ params }: any) {
 
                                   <div className="w-full flex flex-col items-end gap-2">
 
-                                    <span className="text-sm text-green-600"
+                                    <span className="text-sm text-green-600 font-semibold"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2871,7 +2871,7 @@ export default function Index({ params }: any) {
                                       }{' '}USDT
                                     </span>
 
-                                    <span className="text-sm text-green-600"
+                                    <span className="text-sm text-green-600 font-semibold"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
