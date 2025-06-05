@@ -2170,10 +2170,13 @@ export default function Index({ params }: any) {
                         <th className="p-2">
                           <div className="flex flex-col items-center justify-center gap-2">
                             <span className="text-center">
-                              가맹점
+                              가맹점 이름
                             </span>
                             <span className="text-center">
-                              에이전트
+                              가맹점 코드
+                            </span>
+                            <span className="text-center">
+                              에이전트 이름
                             </span>
                           </div>
                         </th>
@@ -2213,17 +2216,18 @@ export default function Index({ params }: any) {
 
 
                         <th className="
-                          hidden xl:table-cell
                           p-2">
-
-                          판매자 원화통장
-                          <br />
-
-                          판매자 USDT통장
-
-                          <br />
-                          관리자 USDT통장
-
+                          <div className="flex flex-col items-center justify-center gap-2">
+                            <span className="text-center">
+                              판매자 원화통장
+                            </span>
+                            <span className="text-center">
+                              판매자 USDT통장
+                            </span>
+                            <span className="text-center">
+                              관리자 USDT통장
+                            </span>
+                          </div>
                         </th>
 
                         <th className="p-2">
@@ -2309,8 +2313,12 @@ export default function Index({ params }: any) {
                         <th className="p-2">
                           <div className="flex flex-col items-center justify-center gap-2">
                             <span className="text-center">
-                              가맹점<br />
-                              USDT통장<br />
+                              가맹점
+                            </span>
+                            <span className="text-center">
+                              USDT통장
+                            </span>
+                            <span className="text-center">
                               USDT통장 잔고
                             </span>
                           </div>
@@ -2336,22 +2344,22 @@ export default function Index({ params }: any) {
                           <td className="p-2">
                           
 
-                            <div className=" h-48
+                            <div className=" h-52
                               w-32
                               flex flex-col items-between justify-between gap-2">
 
 
 
 
-                              <div className="w-full flex flex-row items-center justify-between gap-2"> 
+                              <div className="w-full flex flex-col items-center justify-between gap-2"> 
                                 
-                                <div className="flex flex-row items-center justify-start gap-2">
+                                <div className="flex flex-col items-center justify-start gap-2">
                                   <Image
                                     src={item.storeLogo || '/icon-store.png'}
                                     alt="Store Logo"
-                                    width={50}
-                                    height={50}
-                                    className="rounded-lg w-8 h-8"
+                                    width={100}
+                                    height={100}
+                                    className="rounded-lg w-12 h-12 object-cover"
 
                                   />
                                   <div className="flex flex-col items-start justify-center gap-1">
@@ -2380,7 +2388,7 @@ export default function Index({ params }: any) {
 
                               </div>
 
-                              <div className="
+                              <div className="mb-2
                                 w-full
                                 flex flex-row items-between justify-between gap-2">
                                 {/* settings button */}
@@ -2430,7 +2438,7 @@ export default function Index({ params }: any) {
                             p-2
                             ">
  
-                            <div className=" h-48
+                            <div className=" h-52
                               w-24
                               flex flex-col items-between justify-between gap-2">
 
@@ -2454,7 +2462,7 @@ export default function Index({ params }: any) {
                                     '/' + params.lang + '/admin/member?storecode=' + item.storecode
                                   );
                                 }}
-                                className="w-full
+                                className="w-full mb-2
                                 bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
                                 hover:bg-[#3167b4]/80"
                               >
@@ -2492,11 +2500,11 @@ export default function Index({ params }: any) {
 
                           <td className="p-2">
 
-                            <div className="
+                            <div className="h-52
                               w-20
-                              flex flex-col items-start justify-start gap-2">
+                              flex flex-col items-between justify-between gap-2">
 
-                              <div className="flex flex-col xl:flex-row items-center gap-2">
+                              <div className="flex flex-col items-center gap-2">
                                 {/*
                                 <button
                                   onClick={() => {
@@ -2521,11 +2529,6 @@ export default function Index({ params }: any) {
                                 >
                                   회원
                                 </a>
-
-                              </div>
-
-
-                              <div className="flex flex-col xl:flex-row items-center gap-2">
                                 {/*
                                 <button
                                   onClick={() => {
@@ -2558,189 +2561,187 @@ export default function Index({ params }: any) {
                           </td>
 
                           <td className="
-                            hidden xl:table-cell
                             p-2">
-                            <div className="
+                            <div className="h-52
                               w-36
-                              flex flex-col items-start justify-start gap-2">
+                              flex flex-col items-between justify-between gap-2">
                               
-                              
-                              
-                              {/* 판매자 통장 */}
-                              {item?.bankInfo ? (
+                              <div className="flex flex-col items-center gap-2">
+                                
+                                {/* 판매자 통장 */}
+                                {item?.bankInfo ? (
+                                  <div className="flex flex-col xl:flex-row items-center gap-2">
+                                  {
+                                    item?.bankInfo?.bankName
+                                  }
+                                  {' '}
+                                  {
+                                    item?.bankInfo?.accountNumber?.slice(0, 3) + '...'
+                                  }
+                                  {' '}
+                                  {
+                                    item?.bankInfo?.accountHolder
+                                  }
+                                  </div>
+                                ) : (
+                                  <div className="flex flex-col xl:flex-row items-center gap-2">
+                                    <span className="text-sm text-red-500">
+                                      통장정보 없음
+                                    </span>
+                                    {/*
+                                    <button
+                                      onClick={() => {
+                                        router.push(
+                                          '/' + params.lang + '/admin/store/' + item.storecode + '/settings'
+                                        );
+                                      }
+                                      }
+                                      className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                      hover:bg-[#3167b4]/80"
+                                    >
+                                      통장관리
+                                    </button>
+                                    */}
+
+                                  </div>
+                                )}
+                                
+                                
                                 <div className="flex flex-col xl:flex-row items-center gap-2">
                                 {
-                                  item?.bankInfo?.bankName
-                                }
-                                {' '}
-                                {
-                                  item?.bankInfo?.accountNumber?.slice(0, 3) + '...'
-                                }
-                                {' '}
-                                {
-                                  item?.bankInfo?.accountHolder
-                                }
-                                </div>
-                              ) : (
-                                <div className="flex flex-col xl:flex-row items-center gap-2">
-                                  <span className="text-sm text-red-500">
-                                    통장정보 없음
-                                  </span>
-                                  {/*
-                                  <button
-                                    onClick={() => {
-                                      router.push(
-                                        '/' + params.lang + '/admin/store/' + item.storecode + '/settings'
-                                      );
-                                    }
-                                    }
-                                    className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
-                                    hover:bg-[#3167b4]/80"
-                                  >
-                                    통장관리
-                                  </button>
-                                  */}
-
-                                </div>
-                              )}
-                              
-                              
-                              <div className="flex flex-col xl:flex-row items-center gap-2">
-                              {
-                                item?.sellerWalletAddress ? (
-                                  <button
-                                    onClick={() => {
-                                      navigator.clipboard.writeText(
-                                        item.sellerWalletAddress
-                                      );
-                                      toast.success('복사되었습니다');
-                                    }
-                                  }
-                                  className="text-sm text-blue-500 hover:underline"
-                                  >
-                                    {item.sellerWalletAddress.substring(0, 6) + '...' + item.sellerWalletAddress.substring(item.sellerWalletAddress.length - 4)
-                                    }
-                                  </button>
-                                ) : (
-                                  <span className="text-sm text-red-500">
-                                    판매자 USDT통장 없음
-                                  </span>
-                                )
-                              }
-                              </div>
-
-
-
-
-                              <div className="flex flex-col xl:flex-row items-center gap-2">
-                              {
-                                item?.adminWalletAddress ? (
-                                  <button
-                                    onClick={() => {
-                                      navigator.clipboard.writeText(
-                                        item.adminWalletAddress
-                                      );
-                                      toast.success('복사되었습니다');
-                                    }
-                                  }
-                                  className="text-sm text-blue-500 hover:underline"
-                                  >
-                                    {item.adminWalletAddress.substring(0, 6) + '...' + item.adminWalletAddress.substring(item.adminWalletAddress.length - 4)
-                                    }
-                                  </button>
-                                ) : (
-                                  <span className="text-sm text-red-500">
-                                    관리자 USDT통장 없음
-                                  </span>
-                                )
-                              }
-                              </div>
-
-
-                            </div>
-
-                          </td>
-
-
-
-                          <td className="p-2">
-                            <div className="
-                              w-32
-                              flex flex-col items-start justify-start gap-2">
-
-
-    
-                              <div className="flex flex-row items-center gap-2">
-
-                                {item.settlementFeeWalletAddress ? (
-
-                                  <div className="flex flex-row items-center gap-2">
+                                  item?.sellerWalletAddress ? (
                                     <button
                                       onClick={() => {
                                         navigator.clipboard.writeText(
-                                          item.settlementFeeWalletAddress
+                                          item.sellerWalletAddress
                                         );
                                         toast.success('복사되었습니다');
                                       }
                                     }
                                     className="text-sm text-blue-500 hover:underline"
                                     >
-                                      {item.settlementFeeWalletAddress.substring(0, 6) + '...'
+                                      {item.sellerWalletAddress.substring(0, 6) + '...' + item.sellerWalletAddress.substring(item.sellerWalletAddress.length - 4)
                                       }
                                     </button>
-
-                                    <span className="text-lg text-gray-500">
-                                      {
-                                        item.settlementFeePercent ? item.settlementFeePercent : 0.00
-                                      }%
+                                  ) : (
+                                    <span className="text-sm text-red-500">
+                                      판매자 USDT통장 없음
                                     </span>
+                                  )
+                                }
+                                </div>
 
 
-                                  </div>
 
-                                ) : (
-                                  <span className="text-sm text-red-500">
-                                    가맹점 수수료 USDT통장 없음
-                                  </span>
-                                )}
+
+                                <div className="flex flex-col xl:flex-row items-center gap-2">
+                                {
+                                  item?.adminWalletAddress ? (
+                                    <button
+                                      onClick={() => {
+                                        navigator.clipboard.writeText(
+                                          item.adminWalletAddress
+                                        );
+                                        toast.success('복사되었습니다');
+                                      }
+                                    }
+                                    className="text-sm text-blue-500 hover:underline"
+                                    >
+                                      {item.adminWalletAddress.substring(0, 6) + '...' + item.adminWalletAddress.substring(item.adminWalletAddress.length - 4)
+                                      }
+                                    </button>
+                                  ) : (
+                                    <span className="text-sm text-red-500">
+                                      관리자 USDT통장 없음
+                                    </span>
+                                  )
+                                }
+                                </div>
+
                               </div>
 
 
+                            </div>
+
+                          </td>
 
 
 
-                              <div className="flex flex-row items-center gap-2">
+                          <td className="p-2">
+                            <div className="h-52
+                              w-32
+                              flex flex-col items-between justify-between gap-2">
 
-                                {item.agentFeeWalletAddress ? (
-                                  <button
-                                    onClick={() => {
-                                      navigator.clipboard.writeText(
-                                        item.agentFeeWalletAddress
-                                      );
-                                      toast.success('복사되었습니다');
+
+                              <div className="flex flex-col items-center gap-2">
+      
+                                <div className="flex flex-row items-center gap-2">
+
+                                  {item.settlementFeeWalletAddress ? (
+
+                                    <div className="flex flex-row items-center gap-2">
+                                      <button
+                                        onClick={() => {
+                                          navigator.clipboard.writeText(
+                                            item.settlementFeeWalletAddress
+                                          );
+                                          toast.success('복사되었습니다');
+                                        }
+                                      }
+                                      className="text-sm text-blue-500 hover:underline"
+                                      >
+                                        {item.settlementFeeWalletAddress.substring(0, 6) + '...'
+                                        }
+                                      </button>
+
+                                      <span className="text-sm text-gray-500 font-semibold">
+                                        {
+                                          item.settlementFeePercent ? item.settlementFeePercent : 0.00
+                                        }%
+                                      </span>
+
+
+                                    </div>
+
+                                  ) : (
+                                    <span className="text-sm text-red-500">
+                                      가맹점 수수료 USDT통장 없음
+                                    </span>
+                                  )}
+                                </div>
+
+                                <div className="flex flex-row items-center gap-2">
+
+                                  {item.agentFeeWalletAddress ? (
+                                    <button
+                                      onClick={() => {
+                                        navigator.clipboard.writeText(
+                                          item.agentFeeWalletAddress
+                                        );
+                                        toast.success('복사되었습니다');
+                                      }
                                     }
-                                  }
-                                  // underline text
-                                  className="text-sm text-blue-500 hover:underline"
-                                  >
-                                    {item.agentFeeWalletAddress?.substring(0, 6) + '...'
-                                    }
-                                  </button>
-                                ) : (
-                                  <span className="text-sm text-red-500">
-                                    에이전트 USDT통장 없음
+                                    // underline text
+                                    className="text-sm text-blue-500 hover:underline"
+                                    >
+                                      {item.agentFeeWalletAddress?.substring(0, 6) + '...'
+                                      }
+                                    </button>
+                                  ) : (
+                                    <span className="text-sm text-red-500">
+                                      에이전트 USDT통장 없음
+                                    </span>
+                                  )}
+
+                                  {' '}
+                                  <span className="text-sm text-gray-500 font-semibold">
+                                    {
+                                      item.agentFeePercent ? item.agentFeePercent : 0.00
+                                    }%
                                   </span>
-                                )}
+                                </div>
 
-                                {' '}
-                                <span className="text-lg text-gray-500">
-                                  {
-                                    item.agentFeePercent ? item.agentFeePercent : 0.00
-                                  }%
-                                </span>
                               </div>
-
-
 
                               
                             </div>
@@ -2751,7 +2752,7 @@ export default function Index({ params }: any) {
 
 
                           <td className="p-2">
-                            <div className=" h-48
+                            <div className=" h-52
                               w-36
                               flex flex-col items-between justify-between gap-2
                               ">
@@ -2770,7 +2771,7 @@ export default function Index({ params }: any) {
 
                                   <div className="flex flex-col items-end gap-2">
 
-                                    <span className="text-sm text-yellow-600 font-semibold"
+                                    <span className="text-lg text-yellow-600 font-semibold"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2778,7 +2779,7 @@ export default function Index({ params }: any) {
                                         ?.toLocaleString('ko-KR')
                                       }{' '}원
                                     </span>
-                                    <span className="text-sm text-gray-500"
+                                    <span className="text-sm text-green-600 font-semibold"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2797,7 +2798,7 @@ export default function Index({ params }: any) {
                                       '/' + params.lang + '/admin/trade-history?storecode=' + item.storecode
                                     );
                                   }}
-                                  className="
+                                  className="mb-2
                                   w-full
                                   bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
                                   hover:bg-[#3167b4]/80"
@@ -2814,7 +2815,7 @@ export default function Index({ params }: any) {
 
 
                           <td className="p-2">
-                            <div className=" h-48
+                            <div className=" h-52
                               w-64
                               flex flex-col items-between justify-between gap-2">
 
@@ -2832,10 +2833,10 @@ export default function Index({ params }: any) {
 
                                 </div>
 
-                                <div className="w-full flex flex-row items-center justify-center gap-2">
+                                <div className="w-full flex flex-row items-start justify-center gap-2">
 
                                   <div className="w-full flex flex-col items-end gap-2">
-                                    <span className="text-sm text-blue-500 font-semibold"
+                                    <span className="text-lg text-yellow-600 font-semibold"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2843,7 +2844,7 @@ export default function Index({ params }: any) {
                                           ?.toLocaleString('ko-KR')
                                       }{' '}원
                                     </span>
-                                    <span className="text-sm text-gray-500"
+                                    <span className="text-sm text-green-600 font-semibold"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2855,7 +2856,7 @@ export default function Index({ params }: any) {
 
                                   <div className="w-full flex flex-col items-end gap-2">
 
-                                    <span className="text-sm text-green-600 font-semibold"
+                                    <span className="text-lg text-yellow-600 font-semibold"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2863,7 +2864,7 @@ export default function Index({ params }: any) {
                                           ?.toLocaleString('ko-KR')
                                       }{' '}원
                                     </span>
-                                    <span className="text-sm text-gray-500"
+                                    <span className="text-sm text-green-600 font-semibold"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2871,7 +2872,7 @@ export default function Index({ params }: any) {
                                       }{' '}USDT
                                     </span>
 
-                                    <span className="text-sm text-green-600 font-semibold"
+                                    <span className="text-lg text-yellow-600 font-semibold"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2879,7 +2880,7 @@ export default function Index({ params }: any) {
                                           ?.toLocaleString('ko-KR')
                                       }{' '}원
                                     </span>
-                                    <span className="text-sm text-gray-500"
+                                    <span className="text-sm text-green-600 font-semibold"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2904,7 +2905,7 @@ export default function Index({ params }: any) {
                                   onClick={() => {
                                     alert('준비중입니다.');
                                   }}
-                                  className="
+                                  className="mb-2
                                   w-full
                                   bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
                                   hover:bg-[#3167b4]/80"
@@ -2925,7 +2926,7 @@ export default function Index({ params }: any) {
 
                           <td className="p-2">
 
-                            <div className="w-64 h-48
+                            <div className="w-64 h-52
                             flex flex-col items-between justify-between gap-2">
 
 
@@ -2947,7 +2948,7 @@ export default function Index({ params }: any) {
 
                                   <div className="w-full flex flex-col items-end justify-center gap-2">
                         
-                                    <span className="text-sm text-gray-500"
+                                    <span className="text-lg text-yellow-600 font-semibold"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2955,7 +2956,7 @@ export default function Index({ params }: any) {
                                           ?.toLocaleString('ko-KR')
                                       }{' '}원
                                     </span>
-                                    <span className="text-sm text-gray-500"
+                                    <span className="text-sm text-green-600 font-semibold"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2968,7 +2969,7 @@ export default function Index({ params }: any) {
 
                                   <div className="w-full flex flex-col items-end justify-center gap-2">
 
-                                      <span className="text-sm text-red-500"
+                                      <span className="text-lg text-yellow-600 font-semibold"
                                         style={{ fontFamily: 'monospace' }}
                                       >
                                         {
@@ -2981,7 +2982,7 @@ export default function Index({ params }: any) {
 
                                         }{' '}원
                                       </span>
-                                      <span className="text-sm text-gray-500"
+                                      <span className="text-sm text-green-600 font-semibold"
                                         style={{ fontFamily: 'monospace' }}
                                       >
                                         {
@@ -3013,7 +3014,7 @@ export default function Index({ params }: any) {
                                 }
                                 className={`
                                   ${!isAdmin || insertingStore ? 'opacity-50 cursor-not-allowed' : ''}
-                                  w-full
+                                  w-full mb-2
                                   bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
                                   hover:bg-[#3167b4]/80
                                 `}
@@ -3031,7 +3032,7 @@ export default function Index({ params }: any) {
                           {/* USDT 잔액 */}
                           <td className="p-2">
                             <div className="w-32
-                              h-48
+                              h-52
                               flex flex-col items-between justify-between gap-2">
 
 
@@ -3089,12 +3090,12 @@ export default function Index({ params }: any) {
                                 }}
                                 className={`
                                   ${!isAdmin || insertingStore ? 'opacity-50 cursor-not-allowed' : ''}
-                                  w-full
+                                  w-full mb-2
                                   bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
                                   hover:bg-[#3167b4]/80
                                 `}
                               >
-                                잔액 가져오기
+                                잔액 확인하기
                               </button>
 
                             </div>
