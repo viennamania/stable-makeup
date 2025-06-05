@@ -2077,7 +2077,7 @@ export default function SettingsPage({ params }: any) {
                                     {/* dot */}
                                     <div className='w-2 h-2 bg-green-500 rounded-full'></div>
                                     <span className="text-lg">
-                                        관지자용 USDT통장
+                                        관리자용 USDT통장
                                     </span>
                                 </div>
 

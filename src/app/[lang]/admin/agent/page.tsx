@@ -1559,7 +1559,7 @@ export default function Index({ params }: any) {
                         <th className="p-2">에이전트</th>
 
                         <th className="p-2">
-                          관지자 USDT통장 주소<br/>
+                          관리자 USDT통장 주소<br/>
                           수수료 수납용 USDT통장 주소
                         </th>
                         
