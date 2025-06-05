@@ -5221,7 +5221,11 @@ const fetchBuyOrders = async () => {
                                   item?.settlement?.settlementWalletAddress?.slice(0, 5) + '...'}
                                 </span>
                                 <span>
-                                  {item?.settlement?.agentFeeAmount?.toLocaleString() + ' USDT'}
+                                  {
+                                    item?.settlement?.agentFeeAmount ?
+                                    item?.settlement?.agentFeeAmount?.toLocaleString() + ' USDT'
+                                    : '0 USDT'
+                                  }
                                   {' '}
                                   {
                                     item?.settlement?.agentFeeWalletAddress &&
