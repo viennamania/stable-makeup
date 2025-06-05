@@ -3045,7 +3045,9 @@ const fetchBuyOrders = async () => {
 
 
                             <td className="p-2">
-                              <div className="flex flex-col gap-2 items-center justify-center">
+                              <div className="
+                                w-28
+                                flex flex-col gap-2 items-center justify-center">
 
                                 <div className="flex flex-col gap-2 items-end justify-center">
                                   <span className="text-lg text-zinc-500 font-semibold"
@@ -3078,7 +3080,9 @@ const fetchBuyOrders = async () => {
 
 
                             <td className="p-2">
-                              <div className="flex flex-col gap-2 items-center justify-center">
+                              <div className="
+                                w-28
+                                flex flex-col gap-2 items-center justify-center">
                                 <div className="text-sm font-semibold text-zinc-500">
                                   {item?.store?.bankInfo?.bankName}
                                 </div>
@@ -3105,7 +3109,9 @@ const fetchBuyOrders = async () => {
 
 
                             <td className="p-2">
-                              <div className="flex flex-col mr-2 items-center justify-end gap-2">
+                              <div className="
+                                w-28
+                                flex flex-col mr-2 items-center justify-end gap-2">
 
                                   {item?.autoConfirmPayment ? (
                                     <span className="text-sm text-green-500 font-semibold">
@@ -3131,9 +3137,13 @@ const fetchBuyOrders = async () => {
                               </div>
                             </td>
 
+
+
                             <td className="p-2">
 
-                              <div className="flex flex-col gap-2 items-center justify-center">
+                              <div className="
+                                w-48
+                                flex flex-col gap-2 items-center justify-center">
 
                                 <div className="flex flex-row items-center gap-2">
                                   {/* status */}
@@ -3690,7 +3700,11 @@ const fetchBuyOrders = async () => {
                                       item?.settlement?.settlementWalletAddress?.slice(0, 5) + '...'}
                                     </span>
                                     <span>
-                                      {item?.settlement?.agentFeeAmount?.toLocaleString() + ' USDT'}
+                                      {
+                                        item?.settlement?.agentFeeAmount ?
+                                        item?.settlement?.agentFeeAmount?.toLocaleString() + ' USDT'
+                                        : '0 USDT'
+                                      }
                                       {' '}
                                       {
                                         item?.settlement?.agentFeeWalletAddress &&
