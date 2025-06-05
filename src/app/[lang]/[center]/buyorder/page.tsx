@@ -3012,7 +3012,7 @@ export default function Index({ params }: any) {
 
 
 
-          <div className={`w-full flex flex-row items-center justify-between gap-2
+          <div className={`w-full flex flex-col xl:flex-row items-center justify-between gap-2
             p-2 rounded-lg mb-4
             ${store?.backgroundColor ?
               "bg-[#"+store?.backgroundColor+"]" :
@@ -3233,7 +3233,7 @@ export default function Index({ params }: any) {
 
 
 
-            <div className="w-full flex justify-start items-center gap-2">
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-2 mb-4">
 
                 <button
                     onClick={() => router.push('/' + params.lang + '/' + params.center + '/member')}
@@ -3312,7 +3312,7 @@ export default function Index({ params }: any) {
               p-4 rounded-lg shadow-md
               ">
 
-              <div className="w-1/4 flex flex-row items-center justify-center gap-2">
+              <div className="w-full xl:w-1/4 flex flex-row items-center justify-center gap-2">
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 거래수(건)</div>
                   <div className="text-xl font-semibold text-zinc-500">
@@ -3339,7 +3339,7 @@ export default function Index({ params }: any) {
               <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
               <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
-              <div className="w-1/2
+              <div className="w-full xl:w-1/2
                 flex flex-row items-center justify-center gap-2">
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 정산수(건)</div>
@@ -3380,7 +3380,7 @@ export default function Index({ params }: any) {
               <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
               <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
-              <div className="w-1/4 flex flex-row items-center justify-center gap-2">
+              <div className="w-full xl:w-1/4 flex flex-row items-center justify-center gap-2">
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 청산수(건)</div>
                   <div className="text-xl font-semibold text-zinc-500">
@@ -3409,7 +3409,7 @@ export default function Index({ params }: any) {
 
 
             {address && (
-                <div className="w-full flex flex-col xl:flex-row items-center justify-end gap-2">
+                <div className="mt-4 w-full flex flex-col xl:flex-row items-center justify-end gap-2">
 
 
                     <div className="flex flex-row items-center justify-center gap-2">

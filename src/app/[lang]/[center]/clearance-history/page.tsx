@@ -217,18 +217,18 @@ export default function Index({ params }: any) {
 
 
 
-    useEffect(() => {
-      // Dynamically load the Binance widget script
-      const script = document.createElement("script");
-      script.src = "https://public.bnbstatic.com/unpkg/growth-widget/cryptoCurrencyWidget@0.0.20.min.js";
-      script.async = true;
-      document.body.appendChild(script);
-  
-      return () => {
-        // Cleanup the script when the component unmounts
-        document.body.removeChild(script);
-      };
-    }, []);
+  useEffect(() => {
+    // Dynamically load the Binance widget script
+    const script = document.createElement("script");
+    script.src = "https://public.bnbstatic.com/unpkg/growth-widget/cryptoCurrencyWidget@0.0.20.min.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Cleanup the script when the component unmounts
+      document.body.removeChild(script);
+    };
+  }, []);
     
 
 
@@ -3096,93 +3096,86 @@ export default function Index({ params }: any) {
 
 
 
+          <div className="flex flex-col items-start justify-center gap-2 mt-4">
+
+            
+
             {/* USDT 가격 binance market price */}
-            <div className="w-full h-20 flex flex-row items-center justify-center gap-2">
               <div
-                className="
-                  w-full flex
-                  binance-widget-marquee
-                flex-row items-center justify-center gap-2
-                p-2
-                "
+              className="
+                w-full flex
+                binance-widget-marquee
+              flex-row items-center justify-center gap-2
+              p-2
+              "
 
 
-                data-cmc-ids="1,1027,52,5426,3408,74,20947,5994,24478,13502,35336,825"
-                data-theme="dark"
-                data-transparent="true"
-                data-locale="ko"
-                data-fiat="KRW"
-                //data-powered-by="Powered by Smart OTC"
-                //data-disclaimer="Disclaimer"
-              ></div>
-
-            </div>
+              data-cmc-ids="1,1027,52,5426,3408,74,20947,5994,24478,13502,35336,825"
+              data-theme="dark"
+              data-transparent="true"
+              data-locale="ko"
+              data-fiat="KRW"
+              //data-powered-by="Powered by Smart OTC"
+              //data-disclaimer="Disclaimer"
+            ></div>
 
 
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-2 mb-4">
+
+                <button
+                    onClick={() => router.push('/' + params.lang + '/' + params.center + '/member')}
+                    className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                    hover:bg-[#3167b4]/80
+                    hover:cursor-pointer
+                    hover:scale-105
+                    transition-transform duration-200 ease-in-out
+                    ">
+                    회원관리
+                </button>
+
+                <button
+                    onClick={() => router.push('/' + params.lang + '/' + params.center + '/buyorder')}
+                    className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                    hover:bg-[#3167b4]/80
+                    hover:cursor-pointer
+                    hover:scale-105
+                    transition-transform duration-200 ease-in-out
+                    ">
+                    구매주문관리
+                </button>
 
 
-
-            <div className="w-full flex flex-row
-              gap-2 items-center justify-start text-zinc-500 text-lg"
-            >
-
-
-              <div className="grid grid-cols-3 xl:grid-cols-5 gap-2">
-
-                  <button
-                      onClick={() => router.push('/' + params.lang + '/' + params.center + '/member')}
-                      className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                      hover:bg-[#3167b4]/80
-                      hover:cursor-pointer
-                      hover:scale-105
-                      transition-transform duration-200 ease-in-out
-                      ">
-                      회원관리
-                  </button>
-
-                  <button
-                      onClick={() => router.push('/' + params.lang + '/' + params.center + '/buyorder')}
-                      className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                      hover:bg-[#3167b4]/80
-                      hover:cursor-pointer
-                      hover:scale-105
-                      transition-transform duration-200 ease-in-out
-                      ">
-                      구매주문관리
-                  </button>
+                <button
+                    onClick={() => router.push('/' + params.lang + '/' + params.center + '/trade-history')}
+                    className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                    hover:bg-[#3167b4]/80
+                    hover:cursor-pointer
+                    hover:scale-105
+                    transition-transform duration-200 ease-in-out
+                    ">
+                    거래내역
+                </button>
 
 
-                  <button
-                      onClick={() => router.push('/' + params.lang + '/' + params.center + '/trade-history')}
-                      className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                      hover:bg-[#3167b4]/80
-                      hover:cursor-pointer
-                      hover:scale-105
-                      transition-transform duration-200 ease-in-out
-                      ">
-                      거래내역
-                  </button>
-
-
-                  <div className='flex w-32 items-center justify-center gap-2
-                    bg-yellow-500 text-[#3167b4] text-sm rounded-lg p-2'>
-                      <Image
-                        src="/icon-clearance.png"
-                        alt="Trade"
-                        width={35}
-                        height={35}
-                        className="w-4 h-4"
-                      />
-                      <div className="text-sm font-semibold">
-                        판매(거래소)
-                      </div>
+                <div className='flex w-32 items-center justify-center gap-2
+                  bg-yellow-500 text-[#3167b4] text-sm rounded-lg p-2'>
+                    <Image
+                      src="/icon-clearance.png"
+                      alt="Trade"
+                      width={35}
+                      height={35}
+                      className="w-4 h-4"
+                    />
+                    <div className="text-sm font-semibold">
+                      판매(거래소)
                     </div>
-
-
-              </div>
+                  </div>
 
 
             </div>
+
+
+   
 
 
 
@@ -3273,7 +3266,6 @@ export default function Index({ params }: any) {
 
 
 
-          <div className="w-full flex flex-col items-start justify-center gap-2 mt-4">
 
             
 

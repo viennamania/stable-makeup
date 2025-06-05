@@ -1866,7 +1866,7 @@ export default function Index({ params }: any) {
       <div className="py-0 w-full">
 
 
-          <div className={`w-full flex flex-row items-center justify-between gap-2
+          <div className={`w-full flex flex-col xl:flex-row items-center justify-between gap-2
             p-2 rounded-lg mb-4
             ${store?.backgroundColor ?
               "bg-[#"+store?.backgroundColor+"]" :
@@ -2059,9 +2059,11 @@ export default function Index({ params }: any) {
           </div>
             
        
+          <div className="flex flex-col items-start justify-center gap-2 mt-4">
+     
 
 
-          {/* USDT 가격 binance market price */}
+            {/* USDT 가격 binance market price */}
               <div
               className="
                 w-full flex
@@ -2081,21 +2083,11 @@ export default function Index({ params }: any) {
             ></div>
 
 
- 
-          <div className="w-full flex flex-row
-            gap-2 items-center justify-between text-zinc-500 text-lg"
-          ></div>
 
 
 
-          <div className="w-full flex flex-row
-            gap-2 items-center justify-between text-zinc-500 text-lg"
-          >
+          <div className="grid grid-cols-2 xl:grid-cols-4 gap-2 mb-4">
 
-
-            <div className="w-full flex justify-start items-center gap-2">
-
-  
 
                 <div className='flex w-32 items-center justify-center gap-2
                   bg-yellow-500 text-[#3167b4] text-sm rounded-lg p-2'>
@@ -2134,15 +2126,6 @@ export default function Index({ params }: any) {
                 </button>
 
 
-
-
-
-
-
-
-
-
-
                 <button
                     onClick={() => router.push('/' + params.lang + '/' + params.center + '/clearance-history')}
                     className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
@@ -2154,9 +2137,6 @@ export default function Index({ params }: any) {
                     판매(거래소)
                 </button>
 
-            </div>
-
-
 
 
           </div>
@@ -2164,7 +2144,6 @@ export default function Index({ params }: any) {
 
 
 
-        <div className="flex flex-col items-start justify-center gap-2 mt-4">
 
             <div className='flex flex-row items-center space-x-4'>
                 <Image

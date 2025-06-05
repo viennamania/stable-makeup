@@ -3036,7 +3036,12 @@ const fetchBuyOrders = async () => {
 
           </div>
 
-          {/* USDT 가격 binance market price */}
+
+          <div className="flex flex-col items-start justify-center gap-2 mt-4">
+
+            
+
+            {/* USDT 가격 binance market price */}
               <div
               className="
                 w-full flex
@@ -3056,20 +3061,9 @@ const fetchBuyOrders = async () => {
             ></div>
 
 
- 
-          <div className="w-full flex flex-row
-            gap-2 items-center justify-between text-zinc-500 text-lg"
-          ></div>
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-2 mb-4">
 
 
-
-
-          <div className="w-full flex flex-row
-            gap-2 items-center justify-between text-zinc-500 text-lg"
-          >
-
-
-            <div className="w-full flex justify-start items-center gap-2">
 
                 <button
                     onClick={() => router.push('/' + params.lang + '/' + params.center + '/member')}
@@ -3109,12 +3103,6 @@ const fetchBuyOrders = async () => {
                   </div>
 
 
-
-
-
-
-
-
                 <button
                     onClick={() => router.push('/' + params.lang + '/' + params.center + '/clearance-history')}
                     className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
@@ -3126,21 +3114,17 @@ const fetchBuyOrders = async () => {
                     판매(거래소)
                 </button>
 
+     
+
+
             </div>
 
 
 
 
-          </div>
 
 
 
-
-
-
-          <div className="flex flex-col items-start justify-center gap-2 mt-4">
-
-            
 
               <div className='flex flex-row items-center space-x-4'>
                   <Image
