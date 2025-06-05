@@ -157,11 +157,18 @@ export async function getStoreByStorecode(
         totalKrwAmount: 1,
         totalPaymentConfirmedCount: 1,
         totalUsdtAmount: 1,
+
+        totalSettlementCount: 1,
+        totalSettlementAmount: 1,
         totalSettlementAmountKRW: 1,
+        
         totalFeeAmount: 1,
         totalFeeAmountKRW: 1,
-        totalSettlementAmount: 1,
-        totalSettlementCount: 1,
+
+        totalAgentFeeAmount: 1,
+        totalAgentFeeAmountKRW: 1,
+
+
         totalPaymentConfirmedClearanceCount: 1,
         totalKrwAmountClearance: 1,
         totalUsdtAmountClearance: 1,
@@ -633,11 +640,19 @@ export async function getAllStores(
           totalKrwAmount: 1,
           totalPaymentConfirmedCount: 1,
           totalUsdtAmount: 1,
+
+
+          totalSettlementCount: 1,
+
+          totalSettlementAmount: 1,
           totalSettlementAmountKRW: 1,
+
           totalFeeAmount: 1,
           totalFeeAmountKRW: 1,
-          totalSettlementAmount: 1,
-          totalSettlementCount: 1,
+
+          totalAgentFeeAmount: 1,
+          totalAgentFeeAmountKRW: 1,
+    
 
 
           totalPaymentConfirmedClearanceCount: 1,

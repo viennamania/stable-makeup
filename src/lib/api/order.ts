@@ -2873,6 +2873,8 @@ export async function buyOrderConfirmPayment(data: any) {
           totalUsdtAmount: { $sum: '$usdtAmount' }
         } }
       ]).toArray();
+
+
       //console.log('confirmPayment totalPaymentConfirmed: ' + JSON.stringify(totalPaymentConfirmed));
       const totalPaymentConfirmedClearance = await collection.aggregate([
         { $match: {
@@ -2887,6 +2889,8 @@ export async function buyOrderConfirmPayment(data: any) {
           totalUsdtAmountClearance: { $sum: '$usdtAmount' }
         } }
       ]).toArray();
+
+
       //console.log('confirmPayment totalPaymentConfirmedClearance: ' + JSON.stringify(totalPaymentConfirmedClearance));
       // update store collection
       const storeCollection = client.db('ultraman').collection('stores');
@@ -3022,6 +3026,7 @@ export async function buyOrderConfirmPayment(data: any) {
           totalUsdtAmountClearance: { $sum: '$usdtAmount' }
         } }
       ]).toArray();
+      
       //console.log('confirmPayment totalPaymentConfirmedClearance: ' + JSON.stringify(totalPaymentConfirmedClearance));
       // update agent collection
       const agentCollection = client.db('ultraman').collection('agents');
