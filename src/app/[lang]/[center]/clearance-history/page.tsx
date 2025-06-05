@@ -3187,10 +3187,8 @@ export default function Index({ params }: any) {
                 w-full flex flex-col xl:flex-row items-center justify-end gap-5">
 
 
-                  <div className="hidden flex flex-col xl:flex-row items-center justify-center gap-2">
-
-                    {/* sellerWalletAddress */}
-                    
+                  {/*
+                  <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
                     <div className="flex flex-row items-center justify-center gap-2">
                         <Image
                             src="/icon-shield.png"
@@ -3212,9 +3210,7 @@ export default function Index({ params }: any) {
                             {sellerWalletAddress.substring(0, 6)}...{sellerWalletAddress.substring(sellerWalletAddress.length - 4)}
                         </button>
                     </div>
-                    
-
-                    {/* balance of sellerWalletAddress */}
+                  
                     <div className="flex flex-row items-center justify-center  gap-2">
                         <span className="text-sm text-zinc-500">
                             잔액
@@ -3226,6 +3222,41 @@ export default function Index({ params }: any) {
                         <span className="text-sm">USDT</span>
                     </div>
 
+                  </div>
+                  */}
+
+
+                  {/* {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()} USDT */}
+                  <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
+
+                    {/* 판매자 유보금 */}
+                    <div className="flex flex-row items-center justify-center gap-2">
+                        <Image
+                            src="/icon-shield.png"
+                            alt="Wallet"
+                            width={100}
+                            height={100}
+                            className="w-6 h-6"
+                        />
+                        <span className="text-sm text-zinc-500">
+                          판매자 보유금
+                        </span>
+                    </div>
+
+                    <div className="flex flex-row items-center justify-center  gap-2">
+                      <span className="text-sm text-zinc-500">
+                          잔액
+                      </span>
+                      <span className="text-2xl xl:text-4xl font-semibold text-green-600">
+                          {
+                            tradeSummary.totalClearanceAmountUSDT
+                              ? Number(tradeSummary.totalClearanceAmountUSDT).toFixed(2).toLocaleString()
+                              : "0.00"
+                          }
+                      </span>
+                      {' '}
+                      <span className="text-sm">USDT</span>
+                    </div>
                   </div>
                     
                     
