@@ -2068,8 +2068,9 @@ export default function Index({ params }: any) {
 
 
             {/* USDT 가격 binance market price */}
-              <div
+            <div
               className="
+              h-20
                 w-full flex
                 binance-widget-marquee
               flex-row items-center justify-center gap-2
