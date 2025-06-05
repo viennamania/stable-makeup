@@ -1453,7 +1453,11 @@ export default function Index({ params }: any) {
 
 
 
-
+  // array of depositAmountKrw
+  const [depositAmountKrw, setDepositAmountKrw] = useState([] as number[]);
+  for (let i = 0; i < 100; i++) {
+    depositAmountKrw.push(0);
+  }
 
 
 
@@ -2480,7 +2484,8 @@ export default function Index({ params }: any) {
                         <th className="p-2">구매건수</th>
                         <th className="p-2">구매금액</th>
                         <th className="p-2">구매량</th>
-                        <th className="p-2">회원 결제링크</th>
+                        <th className="p-2">충전금액</th>
+                        <th className="p-2">회원 결제페이지</th>
                         <th className="p-2">회원 USDT통장</th>
                         <th className="p-2">주문상태</th>
                       </tr>
@@ -2538,6 +2543,26 @@ export default function Index({ params }: any) {
                           </td>
 
 
+                          {/* depositAmountKrw input */}
+                          <td className="p-2">
+                            <div className="flex flex-col xl:flex-row items-start justify-center gap-2">
+                              <input
+                                type="text"
+                                value={depositAmountKrw[index]}
+                                onChange={(e) => {
+                                  setDepositAmountKrw((prev) => {
+                                    const newDepositAmountKrw = [...prev];
+                                    newDepositAmountKrw[index] = Number(e.target.value);
+                                    return newDepositAmountKrw;
+                                  });
+                                }}
+                                placeholder="충전금액"
+                                className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                              />
+                            </div>
+                          </td>
+
+
 
                           <td className="p-2">
 
@@ -2563,8 +2588,11 @@ export default function Index({ params }: any) {
                               {/* Modal open */}
                               <button
                                 onClick={() => {
+                                  setSelectedItem({
+                                    ...item,
+                                    depositAmountKrw: depositAmountKrw[index],
+                                  });
                                   openModal();
-                                  setSelectedItem(item);
                                 }}
                                 className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
                                   hover:bg-[#3167b4]/80"
@@ -2583,6 +2611,7 @@ export default function Index({ params }: any) {
                                     + '&depositBankName='+ item?.buyer?.depositBankName
                                     + '&depositBankAccountNumber=' + item?.buyer?.depositBankAccountNumber
                                     + '&depositName=' + item?.buyer?.depositName
+                                    + '&depositAmountKrw=' + depositAmountKrw[index]
                                   );
                                   toast.success('회원 결제페이지 링크가 복사되었습니다.');
                                 }}
@@ -2602,7 +2631,7 @@ export default function Index({ params }: any) {
                                     + '&depositBankName=' + item?.buyer?.depositBankName
                                     + '&depositBankAccountNumber=' + item?.buyer?.depositBankAccountNumber
                                     + '&depositName=' + item?.buyer?.depositName
-                                    ///+ '&depositAmountKrw=' + depositAmountKrw[index]
+                                    + '&depositAmountKrw=' + depositAmountKrw[index]
                                     ,
                                     '_blank'
                                   );
@@ -2809,11 +2838,11 @@ selectedItem?.buyer?.depositName
 const UserHomePage = (
   {
       closeModal = () => {},
-      selectedItem = null as { nickname: string; storecode: string; buyer?: {
-        depositBankName?: string;
-        depositBankAccountNumber?: string;
-        depositName?: string
-      } } | null,
+      selectedItem = null as {
+        nickname: string; storecode: string; buyer?: {
+          depositBankName?: string; depositName?: string; depositBankAccountNumber?: string;
+        }; depositAmountKrw?: number;
+      } | null,
   }
 ) => {
 
@@ -2827,7 +2856,9 @@ const UserHomePage = (
           + 'storeUser=' + selectedItem?.nickname
           + '&depositBankName=' + selectedItem?.buyer?.depositBankName
           + '&depositBankAccountNumber=' + selectedItem?.buyer?.depositBankAccountNumber
-          + '&depositName=' + selectedItem?.buyer?.depositName}
+          + '&depositName=' + selectedItem?.buyer?.depositName
+          + '&depositAmountKrw=' + selectedItem?.depositAmountKrw}
+
         width="400px"
         height="500px"
         className="border border-zinc-300 rounded-lg"
@@ -2845,7 +2876,6 @@ const UserHomePage = (
   );
 
 };
-
 
 
 // close modal
