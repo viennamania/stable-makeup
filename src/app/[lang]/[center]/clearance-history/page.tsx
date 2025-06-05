@@ -3243,20 +3243,43 @@ export default function Index({ params }: any) {
                         </span>
                     </div>
 
-                    <div className="flex flex-row items-center justify-center  gap-2">
-                      <span className="text-sm text-zinc-500">
-                          잔액
-                      </span>
-                      <span className="text-2xl xl:text-4xl font-semibold text-green-600">
-                          {
-                            tradeSummary.totalClearanceAmountUSDT
-                              ? Number(tradeSummary.totalClearanceAmountUSDT).toFixed(2).toLocaleString()
-                              : "0.00"
-                          }
-                      </span>
-                      {' '}
-                      <span className="text-sm">USDT</span>
+                    <div className="flex flex-col items-center justify-center gap-2">
+
+                      <div className="flex flex-row items-center justify-center  gap-2">
+                        <span className="text-sm text-zinc-500">
+                            잔액(USDT)
+                        </span>
+                        <span className="text-2xl xl:text-4xl font-semibold text-green-600">
+                            {
+                              tradeSummary.totalClearanceAmountUSDT
+                                ? Number(tradeSummary.totalClearanceAmountUSDT).toFixed(2).toLocaleString()
+                                : "0.00"
+                            }
+                        </span>
+                        {' '}
+                        <span className="text-sm">USDT</span>
+                      </div>
+
+                      {/* 잔액 원 */}
+                      <div className="flex flex-row items-center justify-center  gap-2">
+                        <span className="text-sm text-zinc-500">
+                            잔액(원)
+                        </span>
+                        <span className="text-2xl xl:text-4xl font-semibold text-green-600">
+                            {
+                              tradeSummary.totalClearanceAmount
+                                ? Number(tradeSummary.totalClearanceAmount).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                : "0"
+                            }
+                        </span>
+                        {' '}
+                        <span className="text-sm">원</span>
+                      </div>
+
+
                     </div>
+
+
                   </div>
                     
                     
