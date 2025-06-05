@@ -3042,8 +3042,9 @@ const fetchBuyOrders = async () => {
             
 
             {/* USDT 가격 binance market price */}
-              <div
+            <div
               className="
+              h-20
                 w-full flex
                 binance-widget-marquee
               flex-row items-center justify-center gap-2
@@ -3059,7 +3060,6 @@ const fetchBuyOrders = async () => {
               //data-powered-by="Powered by Smart OTC"
               //data-disclaimer="Disclaimer"
             ></div>
-
 
             <div className="grid grid-cols-2 xl:grid-cols-4 gap-2 mb-4">
 

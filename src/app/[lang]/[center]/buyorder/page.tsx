@@ -3211,24 +3211,25 @@ export default function Index({ params }: any) {
           <div className="flex flex-col items-start justify-center gap-2 mt-4">
 
 
-              {/* USDT 가격 binance market price */}
-              <div
-                className="
-                  w-full flex
-                  binance-widget-marquee
-                flex-row items-center justify-center gap-2
-                p-2
-                "
+            {/* USDT 가격 binance market price */}
+            <div
+              className="
+              h-20
+                w-full flex
+                binance-widget-marquee
+              flex-row items-center justify-center gap-2
+              p-2
+              "
 
 
-                data-cmc-ids="1,1027,52,5426,3408,74,20947,5994,24478,13502,35336,825"
-                data-theme="dark"
-                data-transparent="true"
-                data-locale="ko"
-                data-fiat="KRW"
-                //data-powered-by="Powered by Smart OTC"
-                //data-disclaimer="Disclaimer"
-              ></div>
+              data-cmc-ids="1,1027,52,5426,3408,74,20947,5994,24478,13502,35336,825"
+              data-theme="dark"
+              data-transparent="true"
+              data-locale="ko"
+              data-fiat="KRW"
+              //data-powered-by="Powered by Smart OTC"
+              //data-disclaimer="Disclaimer"
+            ></div>
 
 
 
