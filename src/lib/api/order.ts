@@ -4257,6 +4257,39 @@ export async function getAllTradesByAdmin(
 
 
 
+
+  // total agentFeeAmount, agentFeeAmountKRW
+  const totalResult = await collection.aggregate([
+    {
+      $match: {
+        //nickname: { $regex: searchNickname, $options: 'i' },
+        status: 'paymentConfirmed',
+        settlement: { $exists: true, $ne: null },
+        //privateSale: { $ne: true },
+        privateSale: privateSale,
+        agentcode: { $regex: agentcode, $options: 'i' },
+        //storecode: storecode,
+        storecode: { $regex: storecode, $options: 'i' },
+        nickname: { $regex: searchBuyer, $options: 'i' },
+        'buyer.depositName': { $regex: searchDepositName, $options: 'i' },
+        'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
+      }
+    },
+    {
+      $group: {
+        _id: null,
+        totalAgentFeeAmount: { $sum: '$settlement.agentFeeAmount' },
+        totalAgentFeeAmountKRW: { $sum: { $toDouble: '$settlement.agentFeeAmountKRW' } },
+      }
+    }
+  ]).toArray();
+
+
+
+
+
+
   //console.log('getAllTradesByAdmin totalCount: ' + totalCount);
   //console.log('getAllTradesByAdmin totalSettlementCount: ' + totalSettlementCount[0]?.totalSettlementCount);
 
@@ -4271,6 +4304,9 @@ export async function getAllTradesByAdmin(
     totalSettlementAmountKRW: totalSettlementAmountKRW ? totalSettlementAmountKRW[0]?.totalSettlementAmountKRW : 0,
     totalFeeAmount: totalFeeAmount ? totalFeeAmount[0]?.totalFeeAmount : 0,
     totalFeeAmountKRW: totalFeeAmountKRW ? totalFeeAmountKRW[0]?.totalFeeAmountKRW : 0,
+
+    totalAgentFeeAmount: totalResult ? totalResult[0]?.totalAgentFeeAmount : 0,
+    totalAgentFeeAmountKRW: totalResult ? totalResult[0]?.totalAgentFeeAmountKRW : 0,
 
     orders: results,
   };

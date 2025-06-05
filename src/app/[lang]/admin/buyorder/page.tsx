@@ -2336,8 +2336,7 @@ export default function Index({ params }: any) {
 
 
   } , [
-    limitValue,
-    pageValue,
+
     address,
     searchMyOrders,
     agreementForTrade,
@@ -2357,6 +2356,8 @@ export default function Index({ params }: any) {
 
     //searchStoreName,
 
+    limitValue,
+    pageValue,
     searchStorecode,
 ]);
 
