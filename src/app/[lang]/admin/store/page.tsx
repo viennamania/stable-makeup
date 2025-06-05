@@ -2855,7 +2855,7 @@ export default function Index({ params }: any) {
 
                                   <div className="w-full flex flex-col items-end gap-2">
 
-                                    <span className="text-sm text-green-500"
+                                    <span className="text-sm text-green-600"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2871,7 +2871,7 @@ export default function Index({ params }: any) {
                                       }{' '}USDT
                                     </span>
 
-                                    <span className="text-sm text-green-500"
+                                    <span className="text-sm text-green-600"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -3060,13 +3060,13 @@ export default function Index({ params }: any) {
                                 </span>
 
                                 {/* USDT 잔액 표시 */}
-                                <span className="text-lg text-green-500"
+                                <span className="text-lg text-green-600"
                                   style={{ fontFamily: 'monospace' }}
                                 >
                                   {item?.usdtBalance ? item?.usdtBalance.toFixed(2).toLocaleString('us-US') : 0}{' '}USDT
                                 </span>
 
-                                <span className="text-lg text-green-500"
+                                <span className="text-lg text-green-600"
                                   style={{ fontFamily: 'monospace' }}
                                 >
                                   {item?.nativeBalance ? item?.nativeBalance.toFixed(2).toLocaleString('us-US') : 0}{' '}POL
