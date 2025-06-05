@@ -5275,7 +5275,7 @@ const fetchBuyOrders = async () => {
                                           alt="Store Logo"
                                           width={20}
                                           height={20}
-                                          className="rounded-full"
+                                          className="rounded-lg w-6 h-6"
                                         />
                                         <span className="text-sm font-semibold text-zinc-500">
                                           {item.store?.storeName}
