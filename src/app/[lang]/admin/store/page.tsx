@@ -2336,9 +2336,12 @@ export default function Index({ params }: any) {
                           <td className="p-2">
                           
 
-                            <div className="
-                            w-32
-                            flex flex-col items-center justify-start gap-2">
+                            <div className=" h-48
+                              w-32
+                              flex flex-col items-between justify-between gap-2">
+
+
+
 
                               <div className="w-full flex flex-row items-center justify-between gap-2"> 
                                 
@@ -2426,18 +2429,24 @@ export default function Index({ params }: any) {
                           <td className="
                             p-2
                             ">
-                            <div className="w-24
-                              flex flex-col items-center justify-center gap-2">
-                              <span className="text-lg text-gray-500">
-                                {
-                                  item.totalBuyerCount ? item.totalBuyerCount : 0
-                                }{' '}명
-                              </span>
-                              <span className="text-lg text-red-500">
-                                {
-                                  item.totalBlackBuyerCount ? item.totalBlackBuyerCount : 0
-                                }{' '}명
-                              </span>
+ 
+                            <div className=" h-48
+                              w-24
+                              flex flex-col items-between justify-between gap-2">
+
+
+                              <div className="flex flex-col items-center justify-center gap-2">
+                                <span className="text-lg text-gray-500">
+                                  {
+                                    item.totalBuyerCount ? item.totalBuyerCount : 0
+                                  }{' '}명
+                                </span>
+                                <span className="text-lg text-red-500">
+                                  {
+                                    item.totalBlackBuyerCount ? item.totalBlackBuyerCount : 0
+                                  }{' '}명
+                                </span>
+                              </div>
                               
                               <button
                                 onClick={() => {
@@ -2744,36 +2753,40 @@ export default function Index({ params }: any) {
                           <td className="p-2">
                             <div className=" h-48
                               w-36
-                              flex flex-col items-center justify-start gap-2
+                              flex flex-col items-between justify-between gap-2
                               ">
 
 
-                                <div className="w-full flex flex-row items-center justify-center gap-2
-                                border-b border-gray-300 pb-2">
-                                  <span className="text-sm text-gray-500">
-                                    {
-                                      item.totalPaymentConfirmedCount ? item.totalPaymentConfirmedCount : 0
-                                    }{' '}건
-                                  </span>
-                                </div>
+                                <div className="w-full flex flex-col items-center justify-center gap-2">
 
-                                <div className="flex flex-col items-end gap-2">
+                                  <div className="w-full flex flex-row items-center justify-center gap-2
+                                  border-b border-gray-300 pb-2">
+                                    <span className="text-sm text-gray-500">
+                                      {
+                                        item.totalPaymentConfirmedCount ? item.totalPaymentConfirmedCount : 0
+                                      }{' '}건
+                                    </span>
+                                  </div>
 
-                                  <span className="text-sm text-yellow-600"
-                                    style={{ fontFamily: 'monospace' }}
-                                  >
-                                    {
-                                      Number(item.totalKrwAmount ? item.totalKrwAmount : 0)
-                                      ?.toLocaleString('ko-KR')
-                                    }{' '}원
-                                  </span>
-                                  <span className="text-sm text-gray-500"
-                                    style={{ fontFamily: 'monospace' }}
-                                  >
-                                    {
-                                      (item.totalUsdtAmount ? item.totalUsdtAmount : 0)?.toLocaleString('us-US')
-                                    }{' '}USDT
-                                  </span>
+                                  <div className="flex flex-col items-end gap-2">
+
+                                    <span className="text-sm text-yellow-600"
+                                      style={{ fontFamily: 'monospace' }}
+                                    >
+                                      {
+                                        Number(item.totalKrwAmount ? item.totalKrwAmount : 0)
+                                        ?.toLocaleString('ko-KR')
+                                      }{' '}원
+                                    </span>
+                                    <span className="text-sm text-gray-500"
+                                      style={{ fontFamily: 'monospace' }}
+                                    >
+                                      {
+                                        (item.totalUsdtAmount ? item.totalUsdtAmount : 0)?.toLocaleString('us-US')
+                                      }{' '}USDT
+                                    </span>
+
+                                  </div>
 
                                 </div>
 
@@ -2797,85 +2810,92 @@ export default function Index({ params }: any) {
 
                           </td>
 
+
+
+
                           <td className="p-2">
                             <div className=" h-48
                               w-64
-                              flex flex-col items-center justify-start gap-2">
+                              flex flex-col items-between justify-between gap-2">
 
 
-                              <div className="w-full flex flex-row items-center justify-center gap-2
-                              border-b border-gray-300 pb-2">
-                                <span className="text-sm text-gray-500">
-                                  {
-                                    item.totalSettlementCount ? item.totalSettlementCount : 0
-                                  }{' '}건
-                                </span>
+                              <div className="w-full flex flex-col items-center justify-center gap-2">
 
-                              </div>
 
-                              <div className="w-full flex flex-row items-center justify-center gap-2">
-
-                                <div className="w-full flex flex-col items-end gap-2">
-                                  <span className="text-sm text-blue-500"
-                                    style={{ fontFamily: 'monospace' }}
-                                  >
+                                <div className="w-full flex flex-row items-center justify-center gap-2
+                                border-b border-gray-300 pb-2">
+                                  <span className="text-sm text-gray-500">
                                     {
-                                      Number(item.totalSettlementAmountKRW ? item.totalSettlementAmountKRW : 0)
-                                        ?.toLocaleString('ko-KR')
-                                    }{' '}원
+                                      item.totalSettlementCount ? item.totalSettlementCount : 0
+                                    }{' '}건
                                   </span>
-                                  <span className="text-sm text-gray-500"
-                                    style={{ fontFamily: 'monospace' }}
-                                  >
-                                    {
-                                      (item.totalSettlementAmount ? item.totalSettlementAmount : 0)?.toLocaleString('us-US')
-                                    }{' '}USDT
-                                  </span>
-                                </div>
-
-
-                                <div className="w-full flex flex-col items-end gap-2">
-
-                                  <span className="text-sm text-gray-500"
-                                    style={{ fontFamily: 'monospace' }}
-                                  >
-                                    {
-                                      Number(item.totalFeeAmountKRW ? item.totalFeeAmountKRW : 0)
-                                        ?.toLocaleString('ko-KR')
-                                    }{' '}원
-                                  </span>
-                                  <span className="text-sm text-gray-500"
-                                    style={{ fontFamily: 'monospace' }}
-                                  >
-                                    {
-                                      (item.totalFeeAmount ? item.totalFeeAmount : 0)?.toLocaleString('us-US')
-                                    }{' '}USDT
-                                  </span>
-
-                                  <span className="text-sm text-gray-500"
-                                    style={{ fontFamily: 'monospace' }}
-                                  >
-                                    {
-                                      Number(item.totalAgentFeeAmountKRW ? item.totalAgentFeeAmountKRW : 0)
-                                        ?.toLocaleString('ko-KR')
-                                    }{' '}원
-                                  </span>
-                                  <span className="text-sm text-gray-500"
-                                    style={{ fontFamily: 'monospace' }}
-                                  >
-                                    {
-                                      (item.totalAgentFeeAmount ? item.totalAgentFeeAmount : 0)?.toLocaleString('us-US')
-                                    }{' '}USDT
-                                  </span>
-
-
 
                                 </div>
 
+                                <div className="w-full flex flex-row items-center justify-center gap-2">
+
+                                  <div className="w-full flex flex-col items-end gap-2">
+                                    <span className="text-sm text-blue-500"
+                                      style={{ fontFamily: 'monospace' }}
+                                    >
+                                      {
+                                        Number(item.totalSettlementAmountKRW ? item.totalSettlementAmountKRW : 0)
+                                          ?.toLocaleString('ko-KR')
+                                      }{' '}원
+                                    </span>
+                                    <span className="text-sm text-gray-500"
+                                      style={{ fontFamily: 'monospace' }}
+                                    >
+                                      {
+                                        (item.totalSettlementAmount ? item.totalSettlementAmount : 0)?.toLocaleString('us-US')
+                                      }{' '}USDT
+                                    </span>
+                                  </div>
+
+
+                                  <div className="w-full flex flex-col items-end gap-2">
+
+                                    <span className="text-sm text-green-500"
+                                      style={{ fontFamily: 'monospace' }}
+                                    >
+                                      {
+                                        Number(item.totalFeeAmountKRW ? item.totalFeeAmountKRW : 0)
+                                          ?.toLocaleString('ko-KR')
+                                      }{' '}원
+                                    </span>
+                                    <span className="text-sm text-gray-500"
+                                      style={{ fontFamily: 'monospace' }}
+                                    >
+                                      {
+                                        (item.totalFeeAmount ? item.totalFeeAmount : 0)?.toLocaleString('us-US')
+                                      }{' '}USDT
+                                    </span>
+
+                                    <span className="text-sm text-green-500"
+                                      style={{ fontFamily: 'monospace' }}
+                                    >
+                                      {
+                                        Number(item.totalAgentFeeAmountKRW ? item.totalAgentFeeAmountKRW : 0)
+                                          ?.toLocaleString('ko-KR')
+                                      }{' '}원
+                                    </span>
+                                    <span className="text-sm text-gray-500"
+                                      style={{ fontFamily: 'monospace' }}
+                                    >
+                                      {
+                                        (item.totalAgentFeeAmount ? item.totalAgentFeeAmount : 0)?.toLocaleString('us-US')
+                                      }{' '}USDT
+                                    </span>
+
+
+
+                                  </div>
+
+
+                                </div>
+
 
                               </div>
-
-
 
                               
                               <div className="w-full flex flex-col xl:flex-row items-center gap-2">
@@ -2906,94 +2926,100 @@ export default function Index({ params }: any) {
                           <td className="p-2">
 
                             <div className="w-64 h-48
-                            flex flex-col items-center justify-start gap-2">
-
-                              <div className="w-full flex flex-row items-center justify-center gap-2
-                              border-b border-gray-300 pb-2">
-                                <span className="text-sm text-gray-500">
-                                  {
-                                    item.totalPaymentConfirmedClearanceCount ? item.totalPaymentConfirmedClearanceCount : 0
-                                  }{' '}건
-                                </span>
-                       
-                              </div>
-
-                              <div className="w-full flex flex-row items-center justify-center gap-2">
+                            flex flex-col items-between justify-between gap-2">
 
 
-                                <div className="w-full flex flex-col items-end justify-center gap-2">
-                       
-                                  <span className="text-sm text-gray-500"
-                                    style={{ fontFamily: 'monospace' }}
-                                  >
+                              <div className="w-full flex flex-col items-center justify-center gap-2">
+
+
+                                <div className="w-full flex flex-row items-center justify-center gap-2
+                                border-b border-gray-300 pb-2">
+                                  <span className="text-sm text-gray-500">
                                     {
-                                      Number(item.totalKrwAmountClearance ? item.totalKrwAmountClearance : 0)
-                                        ?.toLocaleString('ko-KR')
-                                    }{' '}원
+                                      item.totalPaymentConfirmedClearanceCount ? item.totalPaymentConfirmedClearanceCount : 0
+                                    }{' '}건
                                   </span>
-                                  <span className="text-sm text-gray-500"
-                                    style={{ fontFamily: 'monospace' }}
-                                  >
-                                    {
-                                      (item.totalUsdtAmountClearance ? item.totalUsdtAmountClearance : 0)?.toLocaleString('us-US')
-                                    }{' '}USDT
-                                  </span>  
-
+                        
                                 </div>
 
+                                <div className="w-full flex flex-row items-center justify-center gap-2">
 
-                                <div className="w-full flex flex-col items-end justify-center gap-2">
 
-                                    <span className="text-sm text-red-500"
+                                  <div className="w-full flex flex-col items-end justify-center gap-2">
+                        
+                                    <span className="text-sm text-gray-500"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
-                                        //Number(item.totalKrwAmountClearanceBalance ? item.totalKrwAmountClearanceBalance : 0)
-                                        //  ?.toLocaleString('ko-KR')
-
-                                        Number(item?.totalSettlementAmountKRW - item?.totalKrwAmountClearance || 0)
-                                        ?.toLocaleString('ko-KR')
-
-
+                                        Number(item.totalKrwAmountClearance ? item.totalKrwAmountClearance : 0)
+                                          ?.toLocaleString('ko-KR')
                                       }{' '}원
                                     </span>
                                     <span className="text-sm text-gray-500"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
-                                        //////(item.totalUsdtAmountClearanceBalance ? item.totalUsdtAmountClearanceBalance : 0)?.toLocaleString('us-US')
-                                      
-
-                                        Number(item?.totalSettlementAmount - item?.totalUsdtAmountClearance || 0)
-                                        ?.toLocaleString('us-US')
-
+                                        (item.totalUsdtAmountClearance ? item.totalUsdtAmountClearance : 0)?.toLocaleString('us-US')
                                       }{' '}USDT
-                                    </span>
+                                    </span>  
+
+                                  </div>
+
+
+                                  <div className="w-full flex flex-col items-end justify-center gap-2">
+
+                                      <span className="text-sm text-red-500"
+                                        style={{ fontFamily: 'monospace' }}
+                                      >
+                                        {
+                                          //Number(item.totalKrwAmountClearanceBalance ? item.totalKrwAmountClearanceBalance : 0)
+                                          //  ?.toLocaleString('ko-KR')
+
+                                          Number(item?.totalSettlementAmountKRW - item?.totalKrwAmountClearance || 0)
+                                          ?.toLocaleString('ko-KR')
+
+
+                                        }{' '}원
+                                      </span>
+                                      <span className="text-sm text-gray-500"
+                                        style={{ fontFamily: 'monospace' }}
+                                      >
+                                        {
+                                          //////(item.totalUsdtAmountClearanceBalance ? item.totalUsdtAmountClearanceBalance : 0)?.toLocaleString('us-US')
+                                        
+
+                                          Number(item?.totalSettlementAmount - item?.totalUsdtAmountClearance || 0)
+                                          ?.toLocaleString('us-US')
+
+                                        }{' '}USDT
+                                      </span>
+
+                                  </div>
+
 
                                 </div>
 
-
                               </div>
 
-                                {/* 청산하기 button */}
-                                
-                                <button
-                                  disabled={!isAdmin || insertingStore}
-                                  onClick={() => {
-                                    router.push(
-                                      '/' + params.lang + '/admin/store/' + item.storecode + '/clearance'
-                                    );
-                                  }
-                                  }
-                                  className={`
-                                    ${!isAdmin || insertingStore ? 'opacity-50 cursor-not-allowed' : ''}
-                                    w-full
-                                    bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
-                                    hover:bg-[#3167b4]/80
-                                  `}
-                                >
-                                  청산관리
-                                </button>
+                              {/* 청산하기 button */}
+                              
+                              <button
+                                disabled={!isAdmin || insertingStore}
+                                onClick={() => {
+                                  router.push(
+                                    '/' + params.lang + '/admin/store/' + item.storecode + '/clearance'
+                                  );
+                                }
+                                }
+                                className={`
+                                  ${!isAdmin || insertingStore ? 'opacity-50 cursor-not-allowed' : ''}
+                                  w-full
+                                  bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                  hover:bg-[#3167b4]/80
+                                `}
+                              >
+                                청산관리
+                              </button>
 
 
 
@@ -3004,43 +3030,49 @@ export default function Index({ params }: any) {
 
                           {/* USDT 잔액 */}
                           <td className="p-2">
-                            <div className="w-32 flex flex-col items-center justify-center gap-2">
+                            <div className="w-32
+                              h-48
+                              flex flex-col items-between justify-between gap-2">
 
-                              {/* settlementWalletAddress */}
-                              <span className="text-sm text-gray-500">
-                                {item.settlementWalletAddress ? (
-                                  <button
-                                    onClick={() => {
-                                      navigator.clipboard.writeText(
-                                        item.settlementWalletAddress
-                                      );
-                                      toast.success('정산 지갑 주소가 복사되었습니다.');
-                                    }}
-                                    className="text-sm text-blue-500 hover:underline"
-                                  >
-                                    { item.settlementWalletAddress.substring(0, 6) + '...' + item.settlementWalletAddress.substring(item.settlementWalletAddress.length - 4)
-                                    }
-                                  </button>
-                                ) : (
-                                  <span className="text-sm text-red-500">
-                                    정산 지갑 주소 없음
-                                  </span>
-                                )}
-                              </span>
 
-                              {/* USDT 잔액 표시 */}
-                              <span className="text-lg text-green-500"
-                                style={{ fontFamily: 'monospace' }}
-                              >
-                                {item?.usdtBalance ? item?.usdtBalance.toFixed(2).toLocaleString('us-US') : 0}{' '}USDT
-                              </span>
+                              <div className="w-full flex flex-col items-center justify-center gap-2">
 
-                              <span className="text-lg text-green-500"
-                                style={{ fontFamily: 'monospace' }}
-                              >
-                                {item?.nativeBalance ? item?.nativeBalance.toFixed(2).toLocaleString('us-US') : 0}{' '}POL
-                              </span>
+                                {/* settlementWalletAddress */}
+                                <span className="text-sm text-gray-500">
+                                  {item.settlementWalletAddress ? (
+                                    <button
+                                      onClick={() => {
+                                        navigator.clipboard.writeText(
+                                          item.settlementWalletAddress
+                                        );
+                                        toast.success('정산 지갑 주소가 복사되었습니다.');
+                                      }}
+                                      className="text-sm text-blue-500 hover:underline"
+                                    >
+                                      { item.settlementWalletAddress.substring(0, 6) + '...' + item.settlementWalletAddress.substring(item.settlementWalletAddress.length - 4)
+                                      }
+                                    </button>
+                                  ) : (
+                                    <span className="text-sm text-red-500">
+                                      정산 지갑 주소 없음
+                                    </span>
+                                  )}
+                                </span>
 
+                                {/* USDT 잔액 표시 */}
+                                <span className="text-lg text-green-500"
+                                  style={{ fontFamily: 'monospace' }}
+                                >
+                                  {item?.usdtBalance ? item?.usdtBalance.toFixed(2).toLocaleString('us-US') : 0}{' '}USDT
+                                </span>
+
+                                <span className="text-lg text-green-500"
+                                  style={{ fontFamily: 'monospace' }}
+                                >
+                                  {item?.nativeBalance ? item?.nativeBalance.toFixed(2).toLocaleString('us-US') : 0}{' '}POL
+                                </span>
+                              
+                              </div>
 
 
                               {/* button to getBalance of USDT */}
