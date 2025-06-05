@@ -3189,6 +3189,7 @@ export default function Index({ params }: any) {
                   <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
 
                     {/* sellerWalletAddress */}
+                    {/*
                     <div className="flex flex-row items-center justify-center gap-2">
                         <Image
                             src="/icon-shield.png"
@@ -3210,6 +3211,7 @@ export default function Index({ params }: any) {
                             {sellerWalletAddress.substring(0, 6)}...{sellerWalletAddress.substring(sellerWalletAddress.length - 4)}
                         </button>
                     </div>
+                    */}
 
                     {/* balance of sellerWalletAddress */}
                     <div className="flex flex-row items-center justify-center  gap-2">
