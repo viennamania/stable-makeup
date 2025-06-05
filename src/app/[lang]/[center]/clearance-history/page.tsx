@@ -3631,7 +3631,9 @@ export default function Index({ params }: any) {
 
                           <th className="p-2">{Deposit_Name} / {Buyer}</th>
 
-                          <th className="p-2">{Price} / {Buy_Amount} / {Rate}</th>
+                          <th className="p-2">
+                            판매금액 / 판매량 / 환율
+                          </th>
                           <th className="p-2">결제통장</th>
                           {/*
                           <th className="p-2">{Payment_Amount}</th>
