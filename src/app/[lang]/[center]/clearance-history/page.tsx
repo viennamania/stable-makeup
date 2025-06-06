@@ -3246,7 +3246,7 @@ export default function Index({ params }: any) {
                   {/* {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()} USDT */}
                   <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
 
-                    {/* 판매자 보유금 */}
+                    {/* 가맹점 보유금 */}
                     <div className="flex flex-row items-center justify-center gap-2">
                         <Image
                             src="/icon-shield.png"
@@ -3256,7 +3256,7 @@ export default function Index({ params }: any) {
                             className="w-6 h-6"
                         />
                         <span className="text-sm text-zinc-500">
-                          판매자 보유금
+                          가맹점 보유금
                         </span>
                     </div>
 
@@ -3268,8 +3268,9 @@ export default function Index({ params }: any) {
                           style={{ fontFamily: 'monospace' }}
                         >
                             {
-                              Number(tradeSummary.totalSettlementAmount
-                                - tradeSummary.totalClearanceAmountUSDT
+                              Number(tradeSummary.totalClearanceAmountUSDT
+                               
+                                - tradeSummary.totalSettlementAmount
                               ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                             }
                         </span>
@@ -3285,8 +3286,9 @@ export default function Index({ params }: any) {
                         >
                             {
 
-                              Number(tradeSummary.totalSettlementAmountKRW
-                                - tradeSummary.totalClearanceAmount
+                              Number(tradeSummary.totalClearanceAmount
+                                
+                                - tradeSummary.totalSettlementAmountKRW
                               ).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                             }
 
