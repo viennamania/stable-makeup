@@ -907,7 +907,7 @@ export default function Index({ params }: any) {
 
 
 
-  // search form date to date
+// search form date to date
   const [searchFromDate, setSearchFormDate] = useState("");
   // set today's date in YYYY-MM-DD format
   useEffect(() => {
@@ -927,6 +927,9 @@ export default function Index({ params }: any) {
     const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
     setSearchToDate(formattedDate);
   }, []);
+
+
+
 
 
   const [searchBuyer, setSearchBuyer] = useState("");
@@ -1082,7 +1085,7 @@ export default function Index({ params }: any) {
 
 
 
-            fetch('/api/order/getAllBuyOrdersForSeller', {
+            fetch('/api/order/getAllBuyOrders', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1201,7 +1204,7 @@ export default function Index({ params }: any) {
         playSong();
 
 
-        await fetch('/api/order/getAllBuyOrdersForSeller', {
+        await fetch('/api/order/getAllBuyOrders', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -1463,7 +1466,7 @@ export default function Index({ params }: any) {
               
               //fetchBuyOrders();
               // fetch Buy Orders
-              await fetch('/api/order/getAllBuyOrdersForSeller', {
+              await fetch('/api/order/getAllBuyOrders', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -1567,7 +1570,7 @@ export default function Index({ params }: any) {
             
             //fetchBuyOrders();
             // fetch Buy Orders
-            await fetch('/api/order/getAllBuyOrdersForSeller', {
+            await fetch('/api/order/getAllBuyOrders', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -1771,7 +1774,7 @@ export default function Index({ params }: any) {
           ///fetchBuyOrders();
 
           // fetch Buy Orders
-          await fetch('/api/order/getAllBuyOrdersForSeller', {
+          await fetch('/api/order/getAllBuyOrders', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -1855,7 +1858,7 @@ export default function Index({ params }: any) {
             ///fetchBuyOrders();
 
             // fetch Buy Orders
-            await fetch('/api/order/getAllBuyOrdersForSeller', {
+            await fetch('/api/order/getAllBuyOrders', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -2020,7 +2023,7 @@ export default function Index({ params }: any) {
         ///fetchBuyOrders();
 
         // fetch Buy Orders
-        await fetch('/api/order/getAllBuyOrdersForSeller', {
+        await fetch('/api/order/getAllBuyOrders', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -2118,7 +2121,7 @@ export default function Index({ params }: any) {
 
       
 
-      const response = await fetch('/api/order/getAllBuyOrdersForSeller', {
+      const response = await fetch('/api/order/getAllBuyOrders', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -2131,6 +2134,9 @@ export default function Index({ params }: any) {
               page: Number(page),
               walletAddress: address,
               searchMyOrders: searchMyOrders,
+
+              fromDate: searchFromDate,
+              toDate: searchToDate,
             }
 
         ),
@@ -2193,6 +2199,9 @@ export default function Index({ params }: any) {
 
     limitValue,
     pageValue,
+
+    searchFromDate,
+    searchToDate,
 ]);
 
 
@@ -2209,7 +2218,7 @@ const fetchBuyOrders = async () => {
   }
   setFetchingBuyOrders(true);
 
-  const response = await fetch('/api/order/getAllBuyOrdersForSeller', {
+  const response = await fetch('/api/order/getAllBuyOrders', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -2394,6 +2403,9 @@ const fetchBuyOrders = async () => {
            //searchDepositName: searchDepositName,
  
            //searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+            fromDate: searchFromDate,
+            toDate: searchToDate,
          })
        });
        if (!response.ok) {
@@ -2428,7 +2440,7 @@ const fetchBuyOrders = async () => {
        }, 10000);
        return () => clearInterval(interval);
  
-     } , [address, searchMyOrders, params.storecode,]);
+     } , [address, searchMyOrders, params.center, searchFromDate, searchToDate,]);
  
 
 
