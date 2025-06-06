@@ -119,7 +119,9 @@ export async function POST(request: NextRequest) {
     searchDepositName: "",
     searchStoreBankAccountNumber: "",
   });
+
   //console.log("getStoreSummary clearances", clearances);
+
   const totalClearanceCount = clearances?.totalCount || 0;
   const totalClearanceKrwAmount = clearances?.totalKrwAmount || 0;
   const totalClearanceUsdtAmount = clearances?.totalUsdtAmount || 0;

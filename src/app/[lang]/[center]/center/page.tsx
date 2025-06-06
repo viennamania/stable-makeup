@@ -2658,7 +2658,7 @@ export default function Index({ params }: any) {
 
                   <div className="flex flex-row items-center justify-center gap-2">
                     <div className="flex flex-col items-center justify-center gap-2">
-                      <h2 className="text-lg font-semibold">총 판매건수</h2>
+                      <h2 className="text-lg font-semibold">총 판매주문수</h2>
                       <p className="text-lg text-zinc-500">
                         {storeSummary.totalClearanceCount} 건
                       </p>
@@ -2691,6 +2691,7 @@ export default function Index({ params }: any) {
                           <th className="px-4 py-2 text-left">판매번호</th>
                           <th className="px-4 py-2 text-left">판매금액</th>
                           <th className="px-4 py-2 text-left">판매량</th>
+                          <th className="px-4 py-2 text-left">판매상태</th>
                           <th className="px-4 py-2 text-left">판매일시</th>
                         </tr>
                       </thead>
@@ -2700,6 +2701,18 @@ export default function Index({ params }: any) {
                             <td className="px-4 py-2">#{trade.tradeId}</td>
                             <td className="px-4 py-2">{Number(trade.krwAmount)?.toLocaleString()} 원</td>
                             <td className="px-4 py-2">{Number(trade.usdtAmount)?.toLocaleString()} USDT</td>
+                            <td className="px-4 py-2">
+                              {trade.status === 'paymentConfirmed' && (
+                                <span className="text-sm text-green-500 font-semibold">
+                                  판매완료
+                                </span>
+                              )}
+                              {trade.status === 'paymentRequested' && (
+                                <span className="text-sm text-blue-500 font-semibold">  
+                                  판매요청
+                                </span>
+                              )}
+                            </td>
                             <td className="px-4 py-2">{new Date(trade.createdAt).toLocaleDateString()}</td>
                           </tr>
                         ))}

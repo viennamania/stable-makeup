@@ -3766,6 +3766,8 @@ export async function getAllBuyOrdersByStorecode(
       //status: 'paymentConfirmed',
       status: { $in: ['ordered', 'accepted', 'paymentRequested', ] },
       //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+      privateSale: { $ne: true }, // exclude private sale
     },
   )
     .sort({ paymentConfirmedAt: -1 })
@@ -3780,6 +3782,8 @@ export async function getAllBuyOrdersByStorecode(
       storecode: storecode,
       status: { $in: ['ordered', 'accepted', 'paymentRequested', ] },
       //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+      privateSale: { $ne: true }, // exclude private sale
     }
   );
   //console.log('getAllBuyOrdersByStorecode totalCount: ' + totalCount);
@@ -3791,6 +3795,8 @@ export async function getAllBuyOrdersByStorecode(
         storecode: storecode,
         status: { $in: ['ordered', 'accepted', 'paymentRequested', ] },
         //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+        privateSale: { $ne: true }, // exclude private sale
       }
     },
     {
@@ -3808,6 +3814,8 @@ export async function getAllBuyOrdersByStorecode(
         storecode: storecode,
         status: { $in: ['ordered', 'accepted', 'paymentRequested', ] },
         //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+        privateSale: { $ne: true }, // exclude private sale
       }
     },
     {
@@ -4390,7 +4398,10 @@ export async function getAllTradesByAdmin(
   const results = await collection.find<UserProps>(
     {
       // 'seller.walletAddress': walletAddress,
-      status: 'paymentConfirmed',
+      //status: 'paymentConfirmed', or 'paymentRequested'
+
+      status : { $in: ['paymentConfirmed', 'paymentRequested'] },
+
       privateSale: true, // only private sale orders
       agentcode: { $regex: agentcode, $options: 'i' },
       storecode: { $regex: storecode, $options: 'i' },
@@ -4400,13 +4411,17 @@ export async function getAllTradesByAdmin(
       //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
     },
   )
-    .sort({ paymentConfirmedAt: -1 })
+    .sort({ createdAt: -1 })
+    // .sort({ paymentConfirmedAt: -1 })
     .limit(limit).skip((page - 1) * limit).toArray();
   // get total count of orders
   const totalCount = await collection.countDocuments(
     {
       // 'seller.walletAddress': walletAddress,
-      status: 'paymentConfirmed',
+      //status: 'paymentConfirmed',
+      status : { $in: ['paymentConfirmed', 'paymentRequested'] },
+
+
       privateSale: true, // only private sale orders
       agentcode: { $regex: agentcode, $options: 'i' },
       storecode: { $regex: storecode, $options: 'i' },
@@ -4416,6 +4431,9 @@ export async function getAllTradesByAdmin(
       //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
     }
   );
+
+
+
   //console.log('getAllClearancesByAdmin totalCount: ' + totalCount);
   // sum of krwAmount
   const totalKrwAmount = await collection.aggregate([
