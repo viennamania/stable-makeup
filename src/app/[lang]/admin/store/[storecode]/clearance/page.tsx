@@ -1946,15 +1946,13 @@ export default function Index({ params }: any) {
                         {/* = 총 정산금액 - 총 청산금액 */}
                         {/* = totalSettlementAmountKRW - totalClearanceAmount */}
                         {/* = totalSettlementAmount - totalClearanceAmountUSDT */}
+                        {/*
                         <div className="flex flex-row items-center justify-center gap-5
                           border border-zinc-300/50
                           bg-white/50
                           p-4 rounded-lg shadow-md
                           w-full xl:w-1/2
                           ">
-
-
-                          {/* totalSettlementAmountKRW - totalClearanceAmount */}
                           <div className="flex flex-row items-center justify-center gap-2">
                             <div className="flex flex-col items-center">
                                 <span className="text-sm text-zinc-500">
@@ -1981,6 +1979,49 @@ export default function Index({ params }: any) {
                           </div>
 
                         </div>
+                        */}
+
+                        {/*
+                        tradeSummary.totalClearanceAmountUSDT - tradeSummary.totalSettlementAmount
+                        */}
+
+                                                <div className="flex flex-row items-center justify-center gap-5
+                          border border-zinc-300/50
+                          bg-white/50
+                          p-4 rounded-lg shadow-md
+                          w-full xl:w-1/2
+                          ">
+                          <div className="flex flex-row items-center justify-center gap-2">
+                            <div className="flex flex-col items-center">
+                                <span className="text-sm text-zinc-500">
+                                    가맹점 보유금(원)
+                                </span>
+                                <span className="text-xl xl:text-2xl font-semibold text-green-600">
+                                    {
+                                      (Number(tradeSummary.totalClearanceAmount - tradeSummary.totalSettlementAmountKRW).toFixed(2))
+                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                    }
+                                </span>
+                            </div>
+                            <div className="flex flex-col items-center">
+                                <span className="text-sm text-zinc-500">
+                                    가맹점 보유금(USDT)
+                                </span>
+                                <span className="text-xl xl:text-2xl font-semibold text-green-600">
+                                    {
+                                      (Number(tradeSummary.totalClearanceAmountUSDT - tradeSummary.totalSettlementAmount).toFixed(2))
+                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                    }
+                                </span>
+                            </div>
+                          </div>
+
+                        </div>
+
+
+
+
+
                         
 
 
