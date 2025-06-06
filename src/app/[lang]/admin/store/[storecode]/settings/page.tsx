@@ -1862,8 +1862,91 @@ export default function SettingsPage({ params }: any) {
                                     storecode={params.storecode as string}
                                 />
                             </div>
-        
 
+
+
+
+
+
+
+
+                            {/* store backgroundColor */}
+
+
+                            <div className='w-full flex flex-col items-start gap-2  
+                            
+                            '>
+                                <div className='flex flex-row items-center justify-center gap-2'>
+                                    {/* dot */}
+                                    <div className='w-2 h-2 bg-green-500 rounded-full'></div>
+                                    <span className="text-lg">
+                                        배경색
+                                    </span>
+                                    {/* bg-red-500 */}
+                                    <div className={`w-8 h-8 rounded-full ${store && store.backgroundColor ? `bg-${store.backgroundColor}` : 'bg-gray-300'}`}></div>
+                                </div>
+                            </div>
+
+                            <div className='
+                            w-64 flex flex-col gap-2 items-center justify-between'>
+                                <select
+                                    className="bg-white text-zinc-500 rounded-lg p-2 text-sm w-full"
+                                    value={backgroundColor}
+                                    onChange={(e) => setBackgroundColor(e.target.value)}
+                                >
+                                    <option value="">가맹점 배경색 변경</option>
+
+                                    {/* 100 ~ 900 */}
+                                    
+                                    {/* 흰색 */}
+                                    <option value="white-900">흰색</option>
+                                    <option value="black-900">검은색</option>
+
+                                    <option value="blue-500">파란색</option>
+                                    <option value="red-500">빨간색</option>
+                                    <option value="green-500">초록색</option>
+                                    <option value="yellow-500">노란색</option>
+                                    <option value="purple-500">보라색</option>
+                                    <option value="gray-500">회색</option>
+
+
+                                    {/* 연한 색상 */}
+                                    <option value="blue-100">연한 파란색</option>
+                                    <option value="red-100">연한 빨간색</option>
+                                    <option value="green-100">연한 초록색</option>
+                                    <option value="yellow-100">연한 노란색</option>
+                                    <option value="purple-100">연한 보라색</option>
+                                    <option value="gray-100">연한 회색</option>
+
+                       
+
+
+
+                                </select>
+
+
+                                <button
+                                    disabled={!address || !backgroundColor || updatingBackgroundColor}
+                                    className={`w-full bg-[#3167b4] text-zinc-100 rounded-lg p-2
+                                        ${!backgroundColor || updatingBackgroundColor
+                                        ? "opacity-50" : ""}`}
+                                    onClick={() => {
+                                        if (!backgroundColor) {
+                                            toast.error("배경색을 입력하세요");
+                                            return;
+                                        }
+
+                                        confirm(
+                                            `정말 ${backgroundColor}로 가맹점 배경색을 변경하시겠습니까?`
+                                        ) && updateBackgroundColor();
+                                    }}
+                                >
+                                    {updatingBackgroundColor ? '변경 중...' : '변경'}
+                                </button>
+                            
+                            </div>
+
+    
                         </div>
 
 
@@ -2787,118 +2870,6 @@ export default function SettingsPage({ params }: any) {
                         </div>
 
 
-
-                        {/* backgroundColor settings */}
-                        <div className='w-full flex flex-col items-start justify-center gap-2
-                            border border-gray-400 p-4 rounded-lg'>
-                            <div className='w-full flex flex-col items-center justify-between gap-2
-                                border-b border-gray-300 pb-2'>
-
-                                {/* store backgroundColor */}
-                                
-                                <div className="w-full flex flex-row items-center justify-start gap-2">
-                                    {/* dot */}
-                                    <Image
-                                        src="/icon-store.png"
-                                        alt="Color"
-                                        width={20}
-                                        height={20}
-                                        className="w-5 h-5"
-                                    />
-                                    <span className="text-lg">
-                                        가맹점 배경색 설정
-                                    </span>
-                                </div>
-
-                                <div className='w-full flex flex-col items-start gap-2  
-                                
-                                '>
-                                    <div className='flex flex-row items-center justify-center gap-2'>
-                                        {/* dot */}
-                                        <div className='w-2 h-2 bg-green-500 rounded-full'></div>
-                                        <span className="text-lg">
-                                            배경색:{' '}{store && store.backgroundColor}
-                                        </span>
-                                        {/* bg-red-500 */}
-                                        <div className={`w-8 h-8 rounded-full ${store && store.backgroundColor ? `bg-${store.backgroundColor}` : 'bg-gray-300'}`}></div>
-                                    </div>
-                                </div>
-
-                                <div className='w-64 flex flex-col gap-2 items-center justify-between'>
-                                    <select
-                                        className="bg-white text-zinc-500 rounded-lg p-2 text-sm w-full"
-                                        value={backgroundColor}
-                                        onChange={(e) => setBackgroundColor(e.target.value)}
-                                    >
-                                        <option value="">가맹점 배경색 변경</option>
-
-                                        {/* 100 ~ 900 */}
-                                        
-                                        {/* 흰색 */}
-                                        <option value="white-900">
-                                            <span className="text-white-900">흰색</span>
-                                        </option>
-                                        <option value="black-900">
-                                            <span className="text-black-900">검은색</span>
-                                        </option>
-
-                                        <option value="blue-900">파란색</option>
-                                        <option value="red-900">빨간색</option>
-                                        <option value="green-900">초록색</option>
-                                        <option value="yellow-900">노란색</option>
-                                        <option value="purple-900">보라색</option>
-                                        <option value="sky-900">하늘색</option>
-                                        <option value="orange-900">주황색</option>
-                                        <option value="gray-900">회색</option>
-
-                                        {/* 연한 색상 */}
-                                        <option value="blue-100">연한 파란색</option>
-                                        <option value="red-100">연한 빨간색</option>
-                                        <option value="green-100">연한 초록색</option>
-                                        <option value="yellow-100">연한 노란색</option>
-                                        <option value="purple-100">연한 보라색</option>
-                                        <option value="sky-100">연한 하늘색</option>
-                                        <option value="orange-100">연한 주황색</option>
-                                        <option value="gray-100">연한 회색</option>
-
-                                        {/* 찐한 색상 */}
-                                        <option value="blue-500">찐한 파란색</option>
-                                        <option value="red-500">찐한 빨간색</option>
-                                        <option value="green-500">찐한 초록색</option>
-                                        <option value="yellow-500">찐한 노란색</option>
-                                        <option value="purple-500">찐한 보라색</option>
-                                        <option value="sky-500">찐한 하늘색</option>
-                                        <option value="orange-500">찐한 주황색</option>
-                                        <option value="gray-500">찐한 회색</option>
-
-
-                                    </select>
-
-
-                                    <button
-                                        disabled={!address || !backgroundColor || updatingBackgroundColor}
-                                        className={`w-full bg-[#3167b4] text-zinc-100 rounded-lg p-2
-                                            ${!backgroundColor || updatingBackgroundColor
-                                            ? "opacity-50" : ""}`}
-                                        onClick={() => {
-                                            if (!backgroundColor) {
-                                                toast.error("배경색을 입력하세요");
-                                                return;
-                                            }
-
-                                            confirm(
-                                                `정말 ${backgroundColor}로 가맹점 배경색을 변경하시겠습니까?`
-                                            ) && updateBackgroundColor();
-                                        }}
-                                    >
-                                        {updatingBackgroundColor ? '변경 중...' : '변경'}
-                                    </button>
-                                
-                                </div>
-
-
-                            </div>
-                        </div>
 
 
 
