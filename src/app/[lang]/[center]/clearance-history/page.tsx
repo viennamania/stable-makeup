@@ -3185,7 +3185,10 @@ export default function Index({ params }: any) {
             {address && (
                 <div className="
                 mt-4 mb-2
-                w-full flex flex-col xl:flex-row items-center justify-end gap-5">
+                w-full flex flex-col xl:flex-row items-center justify-end gap-5
+                border border-zinc-200 rounded-lg p-4
+                bg-white shadow-md
+                ">
 
 
                   {/*
@@ -3230,7 +3233,7 @@ export default function Index({ params }: any) {
                   {/* {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()} USDT */}
                   <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
 
-                    {/* 판매자 유보금 */}
+                    {/* 판매자 보유금 */}
                     <div className="flex flex-row items-center justify-center gap-2">
                         <Image
                             src="/icon-shield.png"
@@ -3246,10 +3249,8 @@ export default function Index({ params }: any) {
 
                     <div className="flex flex-col items-center justify-center gap-2">
 
-                      <div className="flex flex-row items-center justify-center  gap-2">
-                        <span className="text-sm text-zinc-500">
-                            잔액(USDT)
-                        </span>
+                      <div className="w-full flex flex-row items-end justify-center gap-2">
+
                         <span className="text-2xl xl:text-4xl font-semibold text-green-600"
                           style={{ fontFamily: 'monospace' }}
                         >
@@ -3264,10 +3265,8 @@ export default function Index({ params }: any) {
                       </div>
 
                       {/* 잔액 원 */}
-                      <div className="flex flex-row items-center justify-center  gap-2">
-                        <span className="text-sm text-zinc-500">
-                            잔액(원)
-                        </span>
+                      <div className="w-full flex flex-row items-end justify-center gap-2">
+
                         <span className="text-2xl xl:text-4xl font-semibold text-yellow-600"
                           style={{ fontFamily: 'monospace' }}
                         >
@@ -3858,10 +3857,14 @@ export default function Index({ params }: any) {
 
                             <td className="p-2">
                               <div className="flex flex-row gap-2 items-center justify-center">
-                                <span className="text-lg text-zinc-500 font-semibold">
+                                <span className="text-lg text-yellow-600 font-semibold"
+                                  style={{ fontFamily: 'monospace' }}
+                                >
                                   {Number(item.krwAmount)?.toLocaleString()}{' '}원
                                 </span>
-                                <span className="text-lg text-green-600 font-semibold">
+                                <span className="text-lg text-green-600 font-semibold"
+                                  style={{ fontFamily: 'monospace' }}
+                                >
                                   {item.usdtAmount}{' '}USDT
                                 </span>
                                 <span className="text-sm text-zinc-500">
