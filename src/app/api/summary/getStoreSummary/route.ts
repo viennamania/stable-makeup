@@ -108,8 +108,10 @@ export async function POST(request: NextRequest) {
   const clearances = await getAllClearancesByAdmin({
     limit: 5,
     page: 1,
-    startDate: "",
-    endDate: "",
+    
+    //startDate: "",
+    //endDate: "",
+
     agentcode: "",
     searchNickname: "",
     walletAddress: "",
@@ -118,6 +120,9 @@ export async function POST(request: NextRequest) {
     searchBuyer: "",
     searchDepositName: "",
     searchStoreBankAccountNumber: "",
+
+    fromDate: "",
+    toDate: "",
   });
 
   //console.log("getStoreSummary clearances", clearances);

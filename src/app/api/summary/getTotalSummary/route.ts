@@ -94,8 +94,10 @@ export async function POST(request: NextRequest) {
   const orders = await getAllTradesByAdmin({
     limit: 5,
     page: 1,
-    startDate: "",
-    endDate: "",
+    
+    //startDate: "",
+    //endDate: "",
+
     agentcode: agentcode,
     searchNickname: "",
     walletAddress: "",
@@ -105,6 +107,9 @@ export async function POST(request: NextRequest) {
     searchDepositName: "",
     searchStoreBankAccountNumber: "",
     privateSale: false, // false for normal trades
+
+    fromDate: "",
+    toDate: "",
   });
 
   //console.log("getTotal Summary orders", orders);
@@ -131,8 +136,10 @@ export async function POST(request: NextRequest) {
   const clearances = await getAllTradesByAdmin({
     limit: 5,
     page: 1,
-    startDate: "",
-    endDate: "",
+    
+    //startDate: "",
+    //endDate: "",
+
     agentcode: agentcode,
     searchNickname: "",
     walletAddress: "",
@@ -142,6 +149,9 @@ export async function POST(request: NextRequest) {
     searchDepositName: "",
     searchStoreBankAccountNumber: "",
     privateSale: true, // true for clearances
+
+    fromDate: "",
+    toDate: "",
   });
   //console.log("getTotal Summary clearances", clearances);
   const totalNumberOfClearances = clearances?.totalCount || 0;

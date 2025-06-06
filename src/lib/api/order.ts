@@ -3848,8 +3848,10 @@ export async function getAllTradesByAdmin(
   {
     limit,
     page,
-    startDate,
-    endDate,
+    
+    //startDate,
+    //endDate,
+    
     agentcode,
     searchNickname,
     walletAddress,
@@ -3865,8 +3867,10 @@ export async function getAllTradesByAdmin(
   }: {
     limit: number;
     page: number;
-    startDate: string;
-    endDate: string;
+
+    //startDate: string;
+    //endDate: string;
+
     agentcode: string,
     searchNickname: string,
     walletAddress: string;
@@ -4345,8 +4349,11 @@ export async function getAllTradesByAdmin(
   {
     limit,
     page,
-    startDate,
-    endDate,
+    
+    //startDate,
+    //endDate,
+
+
     agentcode,
     searchNickname,
     walletAddress,
@@ -4356,11 +4363,16 @@ export async function getAllTradesByAdmin(
     searchDepositName,
     searchStoreBankAccountNumber,
     //privateSale,
+
+    fromDate,
+    toDate,
   }: {
     limit: number;
     page: number;
-    startDate: string;
-    endDate: string;
+
+    //startDate: string;
+    //endDate: string;
+
     agentcode: string,
     searchNickname: string,
     walletAddress: string;
@@ -4370,19 +4382,16 @@ export async function getAllTradesByAdmin(
     searchDepositName: string;
     searchStoreBankAccountNumber: string;
     //privateSale: boolean;
+
+    fromDate: string,
+    toDate: string,
   }
 
 ): Promise<any> {
 
-  //console.log('getAllClearancesByAdmin startDate: ' + startDate);
-  //console.log('getAllClearancesByAdmin endDate: ' + endDate);
+  const fromDateValue = fromDate ? fromDate + 'T00:00:00.000Z' : new Date(0).toISOString();
+  const toDateValue = toDate ? toDate + 'T23:59:59.999Z' : new Date().toISOString();
 
-  if (!startDate) {
-    startDate = new Date(0).toISOString();
-  }
-  if (!endDate) {
-    endDate = new Date().toISOString();
-  }
 
   /*
   console.log('getAllClearancesByAdmin startDate: ' + startDate);
@@ -4411,11 +4420,15 @@ export async function getAllTradesByAdmin(
       'buyer.depositName': { $regex: searchDepositName, $options: 'i' },
       'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
       //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+      createdAt: { $gte: fromDateValue, $lt: toDateValue },
     },
   )
     .sort({ createdAt: -1 })
     // .sort({ paymentConfirmedAt: -1 })
     .limit(limit).skip((page - 1) * limit).toArray();
+
+
   // get total count of orders
   const totalCount = await collection.countDocuments(
     {
@@ -4431,6 +4444,8 @@ export async function getAllTradesByAdmin(
       'buyer.depositName': { $regex: searchDepositName, $options: 'i' },
       'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
       //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+      createdAt: { $gte: fromDateValue, $lt: toDateValue },
     }
   );
 
@@ -4450,6 +4465,8 @@ export async function getAllTradesByAdmin(
         'buyer.depositName': { $regex: searchDepositName, $options: 'i' },
         'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
         //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
       }
     },
     {
@@ -4472,6 +4489,8 @@ export async function getAllTradesByAdmin(
         'buyer.depositName': { $regex: searchDepositName, $options: 'i' },
         'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
         //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
       }
     },
     {
@@ -4495,6 +4514,8 @@ export async function getAllTradesByAdmin(
         'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
         settlement: { $exists: true, $ne: null },
         //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
       }
     },
     {
@@ -4518,6 +4539,8 @@ export async function getAllTradesByAdmin(
         'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
         settlement: { $exists: true, $ne: null },
         //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
       }
     },
     {
@@ -4541,6 +4564,8 @@ export async function getAllTradesByAdmin(
         'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
         settlement: { $exists: true, $ne: null },
         //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
       }
     },
     // $settlement.settlementAmountKRW is string
@@ -4566,6 +4591,8 @@ export async function getAllTradesByAdmin(
         'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
         settlement: { $exists: true, $ne: null },
         //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
       }
     },
     {
@@ -4589,6 +4616,8 @@ export async function getAllTradesByAdmin(
         'store.bankInfo.accountNumber': { $regex: searchStoreBankAccountNumber, $options: 'i' },
         settlement: { $exists: true, $ne: null },
         //paymentConfirmedAt: { $gte: startDate, $lt: endDate },
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
       }
     },
     {

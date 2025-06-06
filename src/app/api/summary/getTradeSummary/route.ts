@@ -73,8 +73,10 @@ export async function POST(request: NextRequest) {
   const trades = await getAllTradesByAdmin({
     limit : limit,
     page : page,
-    startDate: startDate,
-    endDate: endDate,
+    
+    //startDate: startDate,
+    //endDate: endDate,
+
     agentcode: agentcode,
     searchNickname: searchNickname,
     walletAddress: walletAddress,
@@ -116,8 +118,8 @@ export async function POST(request: NextRequest) {
   const clearanceTrades = await getAllClearancesByAdmin({
     limit: 10,
     page: 1,
-    startDate: startDate,
-    endDate: endDate,
+    //startDate: startDate,
+    //endDate: endDate,
     agentcode: agentcode,
     searchNickname: searchNickname,
     walletAddress: walletAddress,
@@ -126,6 +128,9 @@ export async function POST(request: NextRequest) {
     searchBuyer: searchBuyer,
     searchDepositName: searchDepositName,
     searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+    fromDate: fromDate,
+    toDate: toDate,
   });
 
 

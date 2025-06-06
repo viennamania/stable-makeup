@@ -13,8 +13,10 @@ export async function POST(request: NextRequest) {
   const {
     limit,
     page,
-    startDate,
-    endDate,
+    
+    //startDate,
+    //endDate,
+
     agentcode,
     searchNickname,
     walletAddress,
@@ -24,6 +26,9 @@ export async function POST(request: NextRequest) {
     searchDepositName = "",
     searchStoreBankAccountNumber = "",
     privateSale = false, // false for normal trades
+
+    fromDate = "",
+    toDate = "",
   } = body;
 
 
@@ -31,8 +36,10 @@ export async function POST(request: NextRequest) {
   const result = await getAllTradesByAdmin({
     limit,
     page,
-    startDate,
-    endDate,
+    
+    //startDate,
+    //endDate,
+
     agentcode,
     searchNickname,
     walletAddress,
@@ -42,6 +49,9 @@ export async function POST(request: NextRequest) {
     searchDepositName,
     searchStoreBankAccountNumber,
     privateSale,
+
+    fromDate,
+    toDate,
   });
 
  
