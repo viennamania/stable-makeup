@@ -1191,7 +1191,7 @@ export default function Index({ params }: any) {
                                 alt="Store Logo"
                                 width={40}
                                 height={40}
-                                className="rounded-full w-10 h-10"
+                                className="rounded-lg w-10 h-10 object-cover"
                               />
                               <div className="flex flex-col items-start justify-start">
                                 <button
@@ -1428,7 +1428,7 @@ export default function Index({ params }: any) {
                     </p>
                   </div>
                   <div className="flex flex-col items-center justify-center gap-2">
-                    <h2 className="text-lg font-semibold">총 정산수량(USDT)</h2>
+                    <h2 className="text-lg font-semibold">총 정산량(USDT)</h2>
                     <p className="text-lg text-zinc-500">
                       {Number(totalSummary.totalSettlementAmount)?.toLocaleString()} USDT
                     </p>
@@ -1474,7 +1474,7 @@ export default function Index({ params }: any) {
                           가맹점<br/>구매자
                         </th>
                         <th className="px-4 py-2 text-left">거래금액(원)<br/>거래량(USDT)</th>
-                        <th className="px-4 py-2 text-left">정산금액(원)<br/>정산수량(USDT)</th>
+                        <th className="px-4 py-2 text-left">정산금액(원)<br/>정산량(USDT)</th>
                     
                         <th className="hidden xl:block
                           px-4 py-2 text-left">판매자</th>

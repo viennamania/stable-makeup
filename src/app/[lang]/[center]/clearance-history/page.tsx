@@ -3445,7 +3445,7 @@ export default function Index({ params }: any) {
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 정산수량(USDT)</div>
+                  <div className="text-sm">총 정산량(USDT)</div>
                   <div className="text-sm font-semibold text-zinc-500">
                     <span className="text-xl text-green-600"
                       style={{ fontFamily: 'monospace' }}
@@ -3499,7 +3499,7 @@ export default function Index({ params }: any) {
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 판매수량(USDT)</div>
+                  <div className="text-sm">총 판매량(USDT)</div>
                   <div className="text-sm font-semibold text-zinc-500">
                     <span className="text-xl text-green-600"
                       style={{ fontFamily: 'monospace' }}

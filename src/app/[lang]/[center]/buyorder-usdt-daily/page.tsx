@@ -762,7 +762,7 @@ export default function Index({ params }: any) {
             No: index + 1,
             결제일: item._id,
             결제건수: item.trades,
-            판매수량: item.totalUsdtAmount.toFixed(2),
+            판매량: item.totalUsdtAmount.toFixed(2),
             결제금액: Number(item.totalKrwAmount)?.toLocaleString('ko-KR', {
               style: 'currency',
               currency: 'KRW',
@@ -1176,7 +1176,7 @@ export default function Index({ params }: any) {
                         </th>
                         */}
                         <th className="p-2 text-right pr-4">
-                          판매수량(USDT)
+                          판매량(USDT)
                         </th>
                         <th className="p-2 text-right pr-4">
                           {Payment_Amount}(KRW)

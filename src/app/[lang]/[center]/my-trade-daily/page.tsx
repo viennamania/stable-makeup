@@ -1010,7 +1010,7 @@ export default function Index({ params }: any) {
                           결제건수(건)
                         </th>
                         <th className="p-2 text-right pr-4">
-                          판매수량(USDT)
+                          판매량(USDT)
                         </th>
                         <th className="p-2 text-right pr-4">
                           {Payment_Amount}(KRW)
