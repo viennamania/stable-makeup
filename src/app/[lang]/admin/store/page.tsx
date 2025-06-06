@@ -2218,26 +2218,30 @@ export default function Index({ params }: any) {
                         <th className="
                           p-2">
                           <div className="flex flex-col items-center justify-center gap-2">
+
+
                             <span className="text-center">
                               판매자 원화통장
                             </span>
                             <span className="text-center">
                               판매자 USDT통장
                             </span>
+
                             <span className="text-center">
                               관리자 USDT통장
                             </span>
+
                           </div>
                         </th>
 
                         <th className="p-2">
                           <div className="flex flex-col items-center justify-center gap-2">
                             <span className="text-center">
-                              가맹점 수수료(%)
+                              PG 수수료율(%)
                             </span>
 
                             <span className="text-center">
-                              에이전트 수수료(%)
+                              AG 수수료율(%)
                             </span>
 
                           </div>
@@ -2567,6 +2571,8 @@ export default function Index({ params }: any) {
                               flex flex-col items-between justify-between gap-2">
                               
                               <div className="flex flex-col items-center gap-2">
+
+
                                 
                                 {/* 판매자 통장 */}
                                 {item?.bankInfo ? (
@@ -2632,8 +2638,6 @@ export default function Index({ params }: any) {
                                 </div>
 
 
-
-
                                 <div className="flex flex-col xl:flex-row items-center gap-2">
                                 {
                                   item?.adminWalletAddress ? (
@@ -2657,6 +2661,9 @@ export default function Index({ params }: any) {
                                   )
                                 }
                                 </div>
+
+
+
 
                               </div>
 
