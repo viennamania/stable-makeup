@@ -3178,7 +3178,20 @@ export default function Index({ params }: any) {
 
    
 
+            <div className='flex flex-row items-center space-x-4'>
+                <Image
+                  src="/icon-clearance.png"
+                  alt="Clearance"
+                  width={35}
+                  height={35}
+                  className="w-6 h-6"
+                />
 
+                <div className="text-xl font-semibold">
+                  판매(거래소)
+                </div>
+
+            </div>
 
 
 
@@ -3335,20 +3348,7 @@ export default function Index({ params }: any) {
 
             
 
-              <div className='flex flex-row items-center space-x-4'>
-                  <Image
-                    src="/icon-clearance.png"
-                    alt="Clearance"
-                    width={35}
-                    height={35}
-                    className="w-6 h-6"
-                  />
 
-                  <div className="text-xl font-semibold">
-                    판매(거래소)
-                  </div>
-
-              </div>
 
 
                 {/* check box for Native Wallet */}
@@ -3651,7 +3651,37 @@ export default function Index({ params }: any) {
                   </div>
 
 
-                  <div className="flex flex-row items-center justify-between gap-2 w-full">
+                  <div className="mt-4 flex flex-row items-center justify-between gap-2 w-full">
+
+
+                    {/* store.withdrawalBankInfo */}
+                    <div className="flex flex-col gap-2 items-start">
+                      <div className="flex flex-row items-start gap-2">
+                        <Image
+                          src="/icon-bank.png"
+                          alt="Bank"
+                          width={20}
+                          height={20}
+                          className="w-5 h-5"
+                        />
+                        <div className="text-sm text-zinc-500">
+                          결제통장 정보
+                        </div>
+                      </div>
+                      <div className="flex flex-row items-start gap-2 text-zinc-500">
+
+                        <span className="text-sm">
+                          {store?.withdrawalBankInfo?.bankName}
+                        </span>
+                        <span className="text-sm">
+                          {store?.withdrawalBankInfo?.accountNumber}
+                        </span>
+                        <span className="text-sm">
+                          {store?.withdrawalBankInfo?.accountHolder}
+                        </span>
+
+                      </div>
+                    </div>
 
                     <div className="flex flex-row items-start gap-5">
 
