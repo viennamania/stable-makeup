@@ -2810,13 +2810,17 @@ export default function SettingsPage({ params }: any) {
                                     </span>
                                 </div>
 
-                                <div className='w-full flex flex-col items-start gap-2'>
+                                <div className='w-full flex flex-col items-start gap-2  
+                                
+                                '>
                                     <div className='flex flex-row items-center justify-center gap-2'>
                                         {/* dot */}
                                         <div className='w-2 h-2 bg-green-500 rounded-full'></div>
                                         <span className="text-lg">
                                             배경색:{' '}{store && store.backgroundColor}
                                         </span>
+                                        {/* bg-red-500 */}
+                                        <div className={`w-8 h-8 rounded-full ${store && store.backgroundColor ? `bg-${store.backgroundColor}` : 'bg-gray-300'}`}></div>
                                     </div>
                                 </div>
 
@@ -2827,24 +2831,46 @@ export default function SettingsPage({ params }: any) {
                                         onChange={(e) => setBackgroundColor(e.target.value)}
                                     >
                                         <option value="">가맹점 배경색 변경</option>
-                                        <option value="000000">검정색</option>
-                                        <option value="ffffff">흰색</option>
-                                        <option value="ff0000">빨간색</option>
-                                        <option value="00ff00">초록색</option>
-                                        <option value="0000ff">파란색</option>
-                                        <option value="ffff00">노란색</option>
-                                        <option value="ff00ff">보라색</option>
-                                        <option value="00ffff">하늘색</option>
-                                        <option value="ff7f00">주황색</option>
-                                        <option value="7f00ff">보라색</option>
-                                        <option value="7f7f7f">회색</option>
-                                        <option value="ff7f7f">연한 빨간색</option>
-                                        <option value="7fff7f">연한 초록색</option>
-                                        <option value="7f7fff">연한 파란색</option>
-                                        <option value="ffff7f">연한 노란색</option>
-                                        <option value="ff7fff">연한 보라색</option>
-                                        <option value="7fffff">연한 하늘색</option>
-                                        <option value="ff7f00">연한 주황색</option>
+
+                                        {/* 500 ~ 950 */}
+                                        
+                                        {/* 흰색 */}
+                                        <option value="white-950">
+                                            <span className="text-white-950">흰색</span>
+                                        </option>
+                                        <option value="black-950">
+                                            <span className="text-black-950">검은색</span>
+                                        </option>
+
+                                        <option value="blue-950">파란색</option>
+                                        <option value="red-950">빨간색</option>
+                                        <option value="green-950">초록색</option>
+                                        <option value="yellow-950">노란색</option>
+                                        <option value="purple-950">보라색</option>
+                                        <option value="sky-950">하늘색</option>
+                                        <option value="orange-950">주황색</option>
+                                        <option value="gray-950">회색</option>
+
+                                        {/* 연한 색상 */}
+                                        <option value="blue-100">연한 파란색</option>
+                                        <option value="red-100">연한 빨간색</option>
+                                        <option value="green-100">연한 초록색</option>
+                                        <option value="yellow-100">연한 노란색</option>
+                                        <option value="purple-100">연한 보라색</option>
+                                        <option value="sky-100">연한 하늘색</option>
+                                        <option value="orange-100">연한 주황색</option>
+                                        <option value="gray-100">연한 회색</option>
+
+                                        {/* 찐한 색상 */}
+                                        <option value="blue-500">찐한 파란색</option>
+                                        <option value="red-500">찐한 빨간색</option>
+                                        <option value="green-500">찐한 초록색</option>
+                                        <option value="yellow-500">찐한 노란색</option>
+                                        <option value="purple-500">찐한 보라색</option>
+                                        <option value="sky-500">찐한 하늘색</option>
+                                        <option value="orange-500">찐한 주황색</option>
+                                        <option value="gray-500">찐한 회색</option>
+
 
                                     </select>
 

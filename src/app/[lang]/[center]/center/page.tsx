@@ -220,17 +220,17 @@ export default function Index({ params }: any) {
  
 
     useEffect(() => {
-    // Dynamically load the Binance widget script
-    const script = document.createElement("script");
-    script.src = "https://public.bnbstatic.com/unpkg/growth-widget/cryptoCurrencyWidget@0.0.20.min.js";
-    script.async = true;
-    document.body.appendChild(script);
+      // Dynamically load the Binance widget script
+      const script = document.createElement("script");
+      script.src = "https://public.bnbstatic.com/unpkg/growth-widget/cryptoCurrencyWidget@0.0.20.min.js";
+      script.async = true;
+      document.body.appendChild(script);
 
-    return () => {
-      // Cleanup the script when the component unmounts
-      document.body.removeChild(script);
-    };
-  }, []);
+      return () => {
+        // Cleanup the script when the component unmounts
+        document.body.removeChild(script);
+      };
+    }, []);
 
 
 
@@ -1109,10 +1109,14 @@ export default function Index({ params }: any) {
 
 
 
+  const [storeBackgroundColor, setStoreBackgroundColor] = useState("blue-500");
+
   const [storeAdminWalletAddress, setStoreAdminWalletAddress] = useState("");
 
   const [fetchingStore, setFetchingStore] = useState(false);
   const [store, setStore] = useState(null) as any;
+
+
 
   useEffect(() => {
 
@@ -1140,19 +1144,11 @@ export default function Index({ params }: any) {
 
           setStoreAdminWalletAddress(data.result?.adminWalletAddress);
 
+          setStoreBackgroundColor(data.result?.backgroundColor || "blue-500");
+
         } else {
-          // get store list
-          const response = await fetch("/api/store/getAllStores", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-            }),
-          });
-          const data = await response.json();
-          //console.log("getStoreList data", data);
-          setStoreList(data.result.stores);
+          toast.error("가맹점 정보를 불러오는데 실패했습니다.");
+
           setStore(null);
           setStoreAdminWalletAddress("");
         }
@@ -1521,7 +1517,15 @@ export default function Index({ params }: any) {
 
 
 
-  console.log('store.backgroundColor==========================', store?.backgroundColor);
+  console.log('storeBackgroundColor==========================',storeBackgroundColor);
+
+
+
+
+
+
+
+
 
 
 
@@ -1619,8 +1623,8 @@ export default function Index({ params }: any) {
 
           <div className={`w-full flex flex-col xl:flex-row items-center justify-start gap-2
             p-2 rounded-lg mb-4
-            ${store?.backgroundColor ?
-              "bg-[#"+store?.backgroundColor+"]" :
+            ${storeBackgroundColor ?
+              "bg-[#"+storeBackgroundColor+"]" :
               "bg-black/10"
             }`}>
             
@@ -1857,8 +1861,8 @@ export default function Index({ params }: any) {
 
       <div className={`w-full flex flex-row items-start justify-start gap-2
         p-2 rounded-lg mb-4
-        ${store?.backgroundColor ?
-          "bg-[#"+store?.backgroundColor+"]" :
+        ${storeBackgroundColor ?
+          "bg-[#"+storeBackgroundColor+"]" :
           "bg-black/10"
         }`}>
 
@@ -1960,6 +1964,8 @@ export default function Index({ params }: any) {
 
   // 
 
+  
+
 
 
   return (
@@ -1972,8 +1978,11 @@ export default function Index({ params }: any) {
 
         <div className={`w-full flex flex-col xl:flex-row items-center justify-between gap-2
           p-2 rounded-lg mb-4
-          ${store?.backgroundColor ?
-            "bg-[#"+store?.backgroundColor+"]" :
+          ${storeBackgroundColor ?
+            
+          //"bg-[#"+storeBackgroundColor+"]" :
+          "bg-" + storeBackgroundColor + " " :
+
             "bg-black/10"
           }`}>
             
