@@ -3250,11 +3250,13 @@ export default function Index({ params }: any) {
                         <span className="text-sm text-zinc-500">
                             잔액(USDT)
                         </span>
-                        <span className="text-2xl xl:text-4xl font-semibold text-green-600">
+                        <span className="text-2xl xl:text-4xl font-semibold text-green-600"
+                          style={{ fontFamily: 'monospace' }}
+                        >
                             {
-                              tradeSummary.totalClearanceAmountUSDT
-                                ? Number(tradeSummary.totalClearanceAmountUSDT).toFixed(2).toLocaleString()
-                                : "0.00"
+                              Number(tradeSummary.totalSettlementAmount
+                                - tradeSummary.totalClearanceAmountUSDT
+                              ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                             }
                         </span>
                         {' '}
@@ -3266,12 +3268,17 @@ export default function Index({ params }: any) {
                         <span className="text-sm text-zinc-500">
                             잔액(원)
                         </span>
-                        <span className="text-2xl xl:text-4xl font-semibold text-green-600">
+                        <span className="text-2xl xl:text-4xl font-semibold text-yellow-600"
+                          style={{ fontFamily: 'monospace' }}
+                        >
                             {
-                              tradeSummary.totalClearanceAmount
-                                ? Number(tradeSummary.totalClearanceAmount).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                                : "0"
+
+                              Number(tradeSummary.totalSettlementAmountKRW
+                                - tradeSummary.totalClearanceAmount
+                              ).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                             }
+
+
                         </span>
                         {' '}
                         <span className="text-sm">원</span>
@@ -3312,7 +3319,9 @@ export default function Index({ params }: any) {
                       <span className="text-sm text-zinc-500">
                           잔액
                       </span>
-                      <span className="text-2xl xl:text-4xl font-semibold text-green-600">
+                      <span className="text-2xl xl:text-4xl font-semibold text-green-600"
+                        style={{ fontFamily: 'monospace' }}
+                      >
                           {Number(balance).toFixed(2)}
                       </span>
                       {' '}
@@ -3389,15 +3398,24 @@ export default function Index({ params }: any) {
 
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 거래금액(원)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalKrwAmount?.toLocaleString()} 원
+                  <div className="text-sm font-semibold text-zinc-500">
+                    <span className="text-xl text-yellow-600"
+                      style={{ fontFamily: 'monospace' }}
+                    >
+                      {tradeSummary.totalKrwAmount?.toLocaleString()}
+                    </span>{' '}원
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 거래량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalUsdtAmount?.toLocaleString()} USDT
+                  <div className="text-sm font-semibold text-zinc-500">
+                    <span className="text-xl text-green-600"
+                      style={{ fontFamily: 'monospace' }}
+                    >
+                      {tradeSummary.totalUsdtAmount?.toLocaleString()}
+                    </span>{' '}
+                      USDT
                   </div>
                 </div>
               </div>
@@ -3417,17 +3435,28 @@ export default function Index({ params }: any) {
 
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 정산금액(원)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalSettlementAmountKRW?.toLocaleString()} 원
+                  <div className="text-sm font-semibold text-zinc-500">
+                    <span className="text-xl text-yellow-600"
+                      style={{ fontFamily: 'monospace' }}
+                    >
+                      {tradeSummary.totalSettlementAmountKRW?.toLocaleString()}
+                    </span>{' '}
+                      원
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 정산수량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalSettlementAmount?.toLocaleString()} USDT
+                  <div className="text-sm font-semibold text-zinc-500">
+                    <span className="text-xl text-green-600"
+                      style={{ fontFamily: 'monospace' }}
+                    >
+                      {tradeSummary.totalSettlementAmount?.toLocaleString()}
+                    </span>{' '}
+                      USDT
                   </div>
                 </div>
 
+                {/*
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 수수료금액(원)</div>
                   <div className="text-xl font-semibold text-zinc-500">
@@ -3440,6 +3469,8 @@ export default function Index({ params }: any) {
                     {tradeSummary.totalFeeAmount?.toLocaleString()} USDT
                   </div>
                 </div>
+                */}
+
               </div>
 
 
@@ -3450,22 +3481,32 @@ export default function Index({ params }: any) {
               <div className="w-full xl:w-1/4
                 flex flex-row items-start justify-center gap-2">
                 <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 청산수(건)</div>
+                  <div className="text-sm">총 판매수(건)</div>
                   <div className="text-xl font-semibold text-zinc-500">
                     {tradeSummary.totalClearanceCount?.toLocaleString()} 건
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 청산금액(원)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalClearanceAmount?.toLocaleString()} 원
+                  <div className="text-sm">총 판매금액(원)</div>
+                  <div className="text-sm font-semibold text-zinc-500">
+                    <span className="text-xl text-yellow-600"
+                      style={{ fontFamily: 'monospace' }}
+                    >
+                      {tradeSummary.totalClearanceAmount?.toLocaleString()}
+                    </span>{' '}
+                      원
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 청산수량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()} USDT
+                  <div className="text-sm">총 판매수량(USDT)</div>
+                  <div className="text-sm font-semibold text-zinc-500">
+                    <span className="text-xl text-green-600"
+                      style={{ fontFamily: 'monospace' }}
+                    >
+                      {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()}
+                    </span>{' '}
+                      USDT
                   </div>
                 </div>
               </div>
@@ -3796,14 +3837,17 @@ export default function Index({ params }: any) {
                                     {
                                       //item.walletAddress === address ? 'Me' : item.tradeId ? item.tradeId : ''
 
-                                      item.walletAddress === address ? 'Me' :
+                                      //item.walletAddress === address ? 'Me' :
 
                                       item?.buyer?.depositBankName + ' ' + item?.buyer?.depositName
 
                                     }
                                   </div>
                                   <div className="text-sm font-semibold text-zinc-500">
-                                    {item.walletAddress === address ? 'Me' : item?.nickname}
+                                    {
+                                      //item.walletAddress === address ? 'Me' :
+                                      item?.nickname
+                                    }
                                   </div>
 
                                 </div>
@@ -3817,7 +3861,7 @@ export default function Index({ params }: any) {
                                 <span className="text-lg text-zinc-500 font-semibold">
                                   {Number(item.krwAmount)?.toLocaleString()}{' '}원
                                 </span>
-                                <span className="text-lg text-green-500 font-semibold">
+                                <span className="text-lg text-green-600 font-semibold">
                                   {item.usdtAmount}{' '}USDT
                                 </span>
                                 <span className="text-sm text-zinc-500">
@@ -3851,7 +3895,7 @@ export default function Index({ params }: any) {
 
                                   item.status === 'paymentConfirmed' ? (
 
-                                    <div className=" text-green-500 text-xl font-semibold">
+                                    <div className=" text-green-600 text-xl font-semibold">
                                       {
                                         item.krwAmount
                                         ? Number(item.krwAmount)?.toLocaleString('ko-KR', {
@@ -3901,7 +3945,7 @@ export default function Index({ params }: any) {
                                       {item.seller?.nickname}
                                     </div>
 
-                                    <div className="text-sm text-green-500">
+                                    <div className="text-sm text-green-600">
                                       {Trade_Started}
                                     </div>
 
@@ -3918,7 +3962,7 @@ export default function Index({ params }: any) {
                                       {item.seller?.nickname}
                                     </div>
                                     
-                                    <div className="text-sm text-green-500">
+                                    <div className="text-sm text-green-600">
                                       {/*Waiting_for_seller_to_deposit*/}
 
                                       결제요청
@@ -3970,7 +4014,7 @@ export default function Index({ params }: any) {
 
 
                                 {item.status === 'completed' && (
-                                  <div className="text-sm text-green-500">
+                                  <div className="text-sm text-green-600">
                                     {Completed_at}
                                   </div>
                                 )}
@@ -4547,7 +4591,7 @@ export default function Index({ params }: any) {
                                   />
 
 
-                                  <p className="text-sm font-semibold text-green-500 ">
+                                  <p className="text-sm font-semibold text-green-600 ">
                                     {item.tradeId}
                                   </p>
 
@@ -4729,7 +4773,7 @@ export default function Index({ params }: any) {
                                     <div className="text-sm font-semibold">
                                       {item.walletAddress === address ? 'Me' : item.nickname}
                                     </div>
-                                    <div className="text-lg text-green-500">
+                                    <div className="text-lg text-green-600">
                                       {item.buyer?.depositName}
                                     </div>
                                   </div>
@@ -4825,7 +4869,7 @@ export default function Index({ params }: any) {
                                         height: '32px',
                                     }}
                                   />
-                                  <p className="text-xl text-green-500 font-semibold">
+                                  <p className="text-xl text-green-600 font-semibold">
                                     {Seller}: {
                                       item.seller?.walletAddress === address ? Me :
                                       item.seller?.nickname.substring(0, 1) + '***'
@@ -4970,7 +5014,7 @@ export default function Index({ params }: any) {
                               {/* if status is accepted, show payment request button */}
                               {item.status === 'paymentConfirmed' && (
                                 <div className="flex flex-col gap-1">
-                                  <span className="text-sm font-semibold text-green-500">
+                                  <span className="text-sm font-semibold text-green-600">
                                     {Completed}
                                   </span>
                                   <span>{
