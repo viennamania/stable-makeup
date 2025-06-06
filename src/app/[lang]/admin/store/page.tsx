@@ -1164,15 +1164,6 @@ export default function Index({ params }: any) {
 
     if (data.result) {
       toast.success('가맹점 코드가 추가되었습니다.');
-      setAgentcode('');
-      setStoreCode('');
-      setStoreName('');
-      setStoreType('');
-      setStoreUrl('');
-      setStoreDescription('');
-      setStoreLogo('');
-      setStoreBanner('');
-
 
       // fetch all store code
       fetchAllStore();
