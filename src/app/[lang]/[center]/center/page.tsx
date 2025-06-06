@@ -1109,7 +1109,7 @@ export default function Index({ params }: any) {
 
 
 
-  const [storeBackgroundColor, setStoreBackgroundColor] = useState("blue-500");
+  //const [storeBackgroundColor, setStoreBackgroundColor] = useState("blue-500");
 
   const [storeAdminWalletAddress, setStoreAdminWalletAddress] = useState("");
 
@@ -1144,7 +1144,7 @@ export default function Index({ params }: any) {
 
           setStoreAdminWalletAddress(data.result?.adminWalletAddress);
 
-          setStoreBackgroundColor(data.result?.backgroundColor || "blue-500");
+          //setStoreBackgroundColor(data.result?.backgroundColor || "blue-500");
 
         } else {
           toast.error("가맹점 정보를 불러오는데 실패했습니다.");
@@ -1517,16 +1517,6 @@ export default function Index({ params }: any) {
 
 
 
-  console.log('storeBackgroundColor==========================',storeBackgroundColor);
-
-
-
-
-
-
-
-
-
 
 
   if (fetchingStore) {
@@ -1623,8 +1613,8 @@ export default function Index({ params }: any) {
 
           <div className={`w-full flex flex-col xl:flex-row items-center justify-start gap-2
             p-2 rounded-lg mb-4
-            ${storeBackgroundColor ?
-              "bg-[#"+storeBackgroundColor+"]" :
+            ${store.backgroundColor ?
+              "bg-" + store.backgroundColor + " " :
               "bg-black/10"
             }`}>
             
@@ -1861,8 +1851,8 @@ export default function Index({ params }: any) {
 
       <div className={`w-full flex flex-row items-start justify-start gap-2
         p-2 rounded-lg mb-4
-        ${storeBackgroundColor ?
-          "bg-[#"+storeBackgroundColor+"]" :
+        ${store.backgroundColor ?
+          "bg-" + store.backgroundColor + " " :
           "bg-black/10"
         }`}>
 
@@ -1978,10 +1968,10 @@ export default function Index({ params }: any) {
 
         <div className={`w-full flex flex-col xl:flex-row items-center justify-between gap-2
           p-2 rounded-lg mb-4
-          ${storeBackgroundColor ?
+          ${store.backgroundColor ?
             
           //"bg-[#"+storeBackgroundColor+"]" :
-          "bg-" + storeBackgroundColor + " " :
+          "bg-" + store.backgroundColor + " " :
 
             "bg-black/10"
           }`}>

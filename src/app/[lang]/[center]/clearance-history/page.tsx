@@ -2606,7 +2606,7 @@ export default function Index({ params }: any) {
         <div className={`w-full flex flex-row items-center justify-start gap-2
           p-2 rounded-lg mb-4
           ${store?.backgroundColor ?
-            "bg-[#"+store?.backgroundColor+"]" :
+            "bg-" + store.backgroundColor + " " :
             "bg-black/10"
           }`}>
 
@@ -2822,7 +2822,7 @@ export default function Index({ params }: any) {
       <div className={`w-full flex flex-row items-center justify-start gap-2
         p-2 rounded-lg mb-4
         ${store?.backgroundColor ?
-          "bg-[#"+store?.backgroundColor+"]" :
+          "bg-" + store.backgroundColor + " " :
           "bg-black/10"
         }`}>
 
@@ -2905,7 +2905,7 @@ export default function Index({ params }: any) {
           <div className={`w-full flex flex-col xl:flex-row items-center justify-between gap-2
             p-2 rounded-lg mb-4
             ${store?.backgroundColor ?
-              "bg-[#"+store?.backgroundColor+"]" :
+              "bg-" + store.backgroundColor + " " :
               "bg-black/10"
             }`}>
               

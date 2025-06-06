@@ -2832,24 +2832,24 @@ export default function SettingsPage({ params }: any) {
                                     >
                                         <option value="">가맹점 배경색 변경</option>
 
-                                        {/* 500 ~ 950 */}
+                                        {/* 100 ~ 900 */}
                                         
                                         {/* 흰색 */}
-                                        <option value="white-950">
-                                            <span className="text-white-950">흰색</span>
+                                        <option value="white-900">
+                                            <span className="text-white-900">흰색</span>
                                         </option>
-                                        <option value="black-950">
-                                            <span className="text-black-950">검은색</span>
+                                        <option value="black-900">
+                                            <span className="text-black-900">검은색</span>
                                         </option>
 
-                                        <option value="blue-950">파란색</option>
-                                        <option value="red-950">빨간색</option>
-                                        <option value="green-950">초록색</option>
-                                        <option value="yellow-950">노란색</option>
-                                        <option value="purple-950">보라색</option>
-                                        <option value="sky-950">하늘색</option>
-                                        <option value="orange-950">주황색</option>
-                                        <option value="gray-950">회색</option>
+                                        <option value="blue-900">파란색</option>
+                                        <option value="red-900">빨간색</option>
+                                        <option value="green-900">초록색</option>
+                                        <option value="yellow-900">노란색</option>
+                                        <option value="purple-900">보라색</option>
+                                        <option value="sky-900">하늘색</option>
+                                        <option value="orange-900">주황색</option>
+                                        <option value="gray-900">회색</option>
 
                                         {/* 연한 색상 */}
                                         <option value="blue-100">연한 파란색</option>
