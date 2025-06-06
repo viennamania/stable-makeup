@@ -3389,7 +3389,7 @@ export default function Index({ params }: any) {
               p-4 rounded-lg shadow-md
               ">
 
-              <div className="w-full xl:w-1/4 flex flex-row items-start justify-center gap-2">
+              <div className="w-full xl:w-1/3 flex flex-row items-start justify-center gap-2">
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 거래수(건)</div>
                   <div className="text-xl font-semibold text-zinc-500">
@@ -3425,7 +3425,7 @@ export default function Index({ params }: any) {
               <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
               <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
-              <div className="w-full xl:w-1/2
+              <div className="w-full xl:w-1/3
                 flex flex-row items-start justify-center gap-2">
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 정산수(건)</div>
@@ -3479,7 +3479,7 @@ export default function Index({ params }: any) {
               <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
               <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
-              <div className="w-full xl:w-1/4
+              <div className="w-full xl:w-1/3
                 flex flex-row items-start justify-center gap-2">
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 판매주문수(건)</div>
