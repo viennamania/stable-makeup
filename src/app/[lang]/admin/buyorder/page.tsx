@@ -2539,7 +2539,7 @@ const fetchBuyOrders = async () => {
 
           */
 
-          agnetcode: params.agentcode,
+          agentcode: params.agentcode,
           storecode: searchStorecode,
           walletAddress: address,
           searchMyOrders: searchMyOrders,

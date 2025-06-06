@@ -1287,7 +1287,7 @@ export default function Index({ params }: any) {
 
           */
 
-          agnetcode: params.agentcode,
+          agentcode: paramAgentcode,
           storecode: "",
           walletAddress: address,
           searchMyOrders: searchMyOrders,
@@ -1314,7 +1314,7 @@ export default function Index({ params }: any) {
       }
       const data = await response.json();
       
-      console.log('getTradeSummary data', data);
+      ///console.log('getTradeSummary data', data);
 
 
       setTradeSummary(data.result);
@@ -1340,7 +1340,7 @@ export default function Index({ params }: any) {
       return () => clearInterval(interval);
 
 
-    } , [address, searchMyOrders, params.storecode,]);
+    } , [address, searchMyOrders, paramAgentcode]);
 
 
     

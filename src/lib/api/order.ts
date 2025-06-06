@@ -3920,6 +3920,8 @@ export async function getAllTradesByAdmin(
   console.log('getAllTradesByAdmin searchDepositName: ' + searchDepositName);
   */
 
+  ///console.log('getAllTradesByAdmin agentcode: ' + agentcode);
+
 
   const client = await clientPromise;
   const collection = client.db('ultraman').collection('buyorders');
