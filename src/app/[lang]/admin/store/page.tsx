@@ -2345,8 +2345,14 @@ export default function Index({ params }: any) {
                           }
                         `}>
 
-                          <td className="p-2">
-                          
+                          <td className={`
+                            p-2
+                            ${item?.backgroundColor &&
+                              "bg-" + item.backgroundColor + " "
+                              
+                            }`}>
+  
+                        
 
                             <div className=" h-52
                               w-32

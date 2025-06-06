@@ -623,6 +623,7 @@ export async function getAllStores(
           storecode: 1,
           storeName: 1,
           storeLogo: 1,
+          backgroundColor: 1,
    
 
           settlementFeePercent: 1,
