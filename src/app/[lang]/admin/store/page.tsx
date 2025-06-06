@@ -2779,7 +2779,7 @@ export default function Index({ params }: any) {
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
-                                        Number(item.totalKrwAmount ? item.totalKrwAmount : 0)
+                                        Number(item.totalKrwAmount ? item.totalKrwAmount.toFixed(0) : 0)
                                         ?.toLocaleString('ko-KR')
                                       }{' '}원
                                     </span>
@@ -2844,7 +2844,7 @@ export default function Index({ params }: any) {
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
-                                        Number(item.totalSettlementAmountKRW ? item.totalSettlementAmountKRW : 0)
+                                        Number(item.totalSettlementAmountKRW ? item.totalSettlementAmountKRW.toFixed(0) : 0)
                                           ?.toLocaleString('ko-KR')
                                       }{' '}원
                                     </span>
@@ -2864,7 +2864,7 @@ export default function Index({ params }: any) {
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
-                                        Number(item.totalFeeAmountKRW ? item.totalFeeAmountKRW : 0)
+                                        Number(item.totalFeeAmountKRW ? item.totalFeeAmountKRW.toFixed(0) : 0)
                                           ?.toLocaleString('ko-KR')
                                       }{' '}원
                                     </span>
@@ -2880,7 +2880,7 @@ export default function Index({ params }: any) {
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
-                                        Number(item.totalAgentFeeAmountKRW ? item.totalAgentFeeAmountKRW : 0)
+                                        Number(item.totalAgentFeeAmountKRW ? item.totalAgentFeeAmountKRW.toFixed(0) : 0)
                                           ?.toLocaleString('ko-KR')
                                       }{' '}원
                                     </span>
