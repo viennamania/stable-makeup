@@ -467,6 +467,22 @@ export async function getAllAgents(
       totalTradeAmount: 1,
       totalTradeAmountKRW: 1,
 
+      totalKrwAmount: 1,
+      totalUsdtAmount: 1,
+
+      totalPaymentConfirmedCount: 1,
+      totalPaymentConfirmedAmount: 1,
+      totalPaymentConfirmedAmountKRW: 1,
+
+      totalSettlementCount: 1,
+      totalSettlementAmount: 1,
+      totalSettlementAmountKRW: 1,
+
+      totalFeeAmount: 1,
+      totalFeeAmountKRW: 1,
+
+
+
     })
     .sort({ createdAt: -1 })
     .skip((page - 1) * limit)

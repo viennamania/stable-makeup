@@ -1576,10 +1576,11 @@ export default function Index({ params }: any) {
                         <th className="p-2">거래수<br/>금액(원)<br/>거래수량(USDT)</th>
 
                         <th className="p-2">정산수<br/>정산수수료(원)<br/>정산수수료수량(USDT)</th>
-
+                        {/*
                         <th className="p-2">
                           청산건수<br/>청산금액(원)<br/>청산수량(USDT)
                         </th>
+                        */}
                       </tr>
                     </thead>
 
@@ -1870,7 +1871,7 @@ export default function Index({ params }: any) {
                                     style={{ fontFamily: 'monospace' }}
                                   >
                                     {
-                                      Number(item.totalSettlementFeeKRW ? item.totalSettlementFeeKRW : 0)
+                                      Number(item.totalFeeAmountKRW ? item.totalFeeAmountKRW : 0)
                                         ?.toLocaleString('ko-KR')
                                     }{' '}원
                                   </span>
@@ -1878,7 +1879,7 @@ export default function Index({ params }: any) {
                                     style={{ fontFamily: 'monospace' }}
                                   >
                                     {
-                                      (item.totalSettlementFeeAmount ? item.totalSettlementFeeAmount : 0)?.toLocaleString('us-US')
+                                      (item.totalFeeAmount ? item.totalFeeAmount : 0)?.toLocaleString('us-US')
                                     }{' '}USDT
                                   </span>
 
@@ -1892,7 +1893,7 @@ export default function Index({ params }: any) {
 
                           </td>
 
-
+                          {/*
                           <td className="p-2">
                             <div className="flex flex-col items-start justify-start gap-2">
 
@@ -1926,8 +1927,7 @@ export default function Index({ params }: any) {
 
                               </div>
 
-                              {/* 청산하기 button */}
-                              
+          
                               <div className="flex flex-col xl:flex-row items-center gap-2">
                                 <button
                                   disabled={!isAdmin}
@@ -1951,6 +1951,7 @@ export default function Index({ params }: any) {
 
                             </div>
                           </td>
+                          */}
 
 
 
