@@ -1227,7 +1227,10 @@ export async function getAllUsersByStorecode(
         skip: (page - 1) * limit,
       },
     )
+    
     .sort({ nickname: 1 })
+
+
     .toArray();
   const totalCount = await collection.countDocuments(
     {

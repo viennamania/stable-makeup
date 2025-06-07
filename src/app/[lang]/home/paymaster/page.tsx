@@ -2001,7 +2001,7 @@ export default function Index({ params }: any) {
                     <div className="w-full flex flex-row items-center justify-end gap-2">
                       <button
                         onClick={() => {
-                          router.push('/' + params.lang + '/admin/profile-settings');
+                          router.push('/' + params.lang + '/home/profile-settings');
                         }}
                         className="flex bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
                       >
@@ -2026,7 +2026,7 @@ export default function Index({ params }: any) {
 
 
                                   //router.push(
-                                  //    "/admin/" + params.center
+                                  //    "/home/" + params.center
                                   //);
                               });
                           } }
@@ -2491,7 +2491,7 @@ export default function Index({ params }: any) {
                         ${!address || !user?.nickname || !selectedKrwAmount || acceptingSellOrderRandom
                         ? 'bg-zinc-100' : 'bg-[#f472b6]'
                         }
-                          mt-5 w-40 flex items-center justify-center gap-2
+                          mt-5 w-44 flex items-center justify-center gap-2
                           text-lg text-zinc-50 px-4 py-2 rounded-md border border-zinc-100
                           hover:bg-[#f472b6] hover:text-zinc-50
                           `}

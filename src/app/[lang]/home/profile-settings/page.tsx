@@ -54,6 +54,7 @@ import { getDictionary } from "../../../dictionaries";
 
 
 
+const storecode = "admin";
 
 
 
@@ -362,7 +363,7 @@ export default function SettingsPage({ params }: any) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            chain: params.center,
+            chain: storecode,
             walletAddress: address,
           }),
         })
@@ -385,7 +386,7 @@ export default function SettingsPage({ params }: any) {
   
       return () => clearInterval(interval);
   
-    } , [address, contract, params.center]);
+    } , [address, contract, storecode]);
   
 
 
@@ -468,7 +469,7 @@ export default function SettingsPage({ params }: any) {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    storecode: params.center,
+                    storecode: storecode,
                     walletAddress: address,
                 }),
             });
@@ -545,7 +546,7 @@ export default function SettingsPage({ params }: any) {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    storecode: params.center,
+                    storecode: storecode,
                     walletAddress: address,
                     
     
@@ -590,7 +591,9 @@ export default function SettingsPage({ params }: any) {
                 },
                 body: JSON.stringify({
                     lang: params.lang,
-                    storecode: params.center,
+                    
+                    storecode: storecode,
+
                     walletAddress: address,
                     
 
@@ -682,7 +685,7 @@ export default function SettingsPage({ params }: any) {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                storecode: params.center,
+                storecode: storecode,
                 walletAddress: address,
                 sellerStatus: 'confirmed',
                 bankName: bankName,
@@ -699,7 +702,7 @@ export default function SettingsPage({ params }: any) {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                storecode: params.center,
+                storecode: storecode,
                 walletAddress: address,
             }),
           }).then((response) => response.json())
@@ -756,7 +759,7 @@ export default function SettingsPage({ params }: any) {
         },
         body: JSON.stringify({
           lang: params.lang,
-          chain: params.center,
+          chain: storecode,
           walletAddress: address,
           mobile: phoneNumber,
         }),
@@ -789,7 +792,7 @@ export default function SettingsPage({ params }: any) {
         },
         body: JSON.stringify({
           lang: params.lang,
-          chain: params.center,
+          chain: storecode,
           walletAddress: address,
           otp: otp,
         }),
@@ -838,7 +841,7 @@ export default function SettingsPage({ params }: any) {
             },
             body: JSON.stringify({
             lang: params.lang,
-            storecode: params.center,
+            storecode: storecode,
             walletAddress: address,
             //isSmartAccount: activeWallet === inAppConnectWallet ? false : true,
             isSmartAccount: false,
@@ -906,7 +909,7 @@ export default function SettingsPage({ params }: any) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            chain: params.center,
+            chain: storecode,
             walletAddress: escrowWalletAddress,
         }),
         })
@@ -929,7 +932,7 @@ export default function SettingsPage({ params }: any) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            storecode: params.center,
+            storecode: storecode,
             walletAddress: escrowWalletAddress,
         }),
         })
@@ -957,7 +960,7 @@ export default function SettingsPage({ params }: any) {
 
     return () => clearInterval(interval);
 
-    } , [address, escrowWalletAddress, contract, params.center]);
+    } , [address, escrowWalletAddress, contract, storecode]);
 
 
 
@@ -986,7 +989,7 @@ export default function SettingsPage({ params }: any) {
             },
             body: JSON.stringify({
             lang: params.lang,
-            storecode: params.center,
+            storecode: storecode,
             walletAddress: address,
             amount: amountOfEscrowBalance,
             ///escrowWalletAddress: escrowWalletAddress,
@@ -1026,10 +1029,10 @@ export default function SettingsPage({ params }: any) {
             <div className="py-0 w-full">
         
 
-                {params.center && (
+                {storecode && (
                     <div className="w-full flex flex-row items-center justify-center gap-2 bg-black/10 p-2 rounded-lg mb-4">
                         <span className="text-sm text-zinc-500">
-                        {params.center}
+                        {storecode}
                         </span>
                     </div>
                 )}

@@ -484,7 +484,13 @@ export async function getAllAgents(
 
 
     })
-    .sort({ createdAt: -1 })
+    
+    //.sort({ createdAt: -1 })
+    // order by totalTradeAmountUSDT descending
+    .sort({ totalTradeAmountUSDT: -1 })
+
+
+
     .skip((page - 1) * limit)
     .limit(limit)
     .toArray();
