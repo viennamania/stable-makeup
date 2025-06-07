@@ -64,6 +64,10 @@ export interface UserProps {
 
   agentcode: string,
 
+  totalPaymentConfirmedCount: number,
+  totalPaymentConfirmedKrwAmount: number,
+  totalPaymentConfirmedUsdtAmount: number,
+
 }
 
 export interface ResultProps {
@@ -1568,10 +1572,17 @@ export async function insertBuyOrder(data: any) {
       agent: agent,
       storecode: data.storecode,
       store: store,
+
       walletAddress: data.walletAddress,
       nickname: nickname,
       mobile: mobile,
       avatar: avatar,
+      
+      userStats: {
+        totalPaymentConfirmedCount: user.totalPaymentConfirmedCount || 0,
+        totalPaymentConfirmedKrwAmount: user.totalPaymentConfirmedKrwAmount || 0,
+        totalPaymentConfirmedUsdtAmount: user.totalPaymentConfirmedUsdtAmount || 0,
+      },
       
       //seller: seller,
 
