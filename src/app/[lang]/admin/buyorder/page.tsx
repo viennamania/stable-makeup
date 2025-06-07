@@ -3490,10 +3490,12 @@ const fetchBuyOrders = async () => {
                         </div>
                       </th>
 
+                      {/*
                       <th className="
                         p-2">
                         정산비율(%)
                       </th>
+                      */}
 
                       <th className="
                         p-2">
@@ -5102,7 +5104,7 @@ const fetchBuyOrders = async () => {
 
 
 
-
+                        {/*
                         <td className="
                           p-2">
                           <div className="flex flex-col gap-2 items-end justify-center">
@@ -5158,47 +5160,9 @@ const fetchBuyOrders = async () => {
                               </span>
                             </div>
 
-
-                            {/*
-                            <span className="text-sm text-zinc-500"
-                              style={{
-                                fontFamily: 'monospace',
-                              }}
-                            >
-                              가맹점:{' '}
-                              { //  settlementFeePercent
-                                // dealerFeePercent
-                                Number(
-                                  100 - (item.store?.agentFeePercent ? item.store?.agentFeePercent : 0.0) - (item.store.settlementFeePercent ? item.store.settlementFeePercent : 0.3)
-                                ).toFixed(2)
-
-                              }%
-                            </span>
-                            <span className="text-sm text-zinc-500"
-                              style={{
-                                fontFamily: 'monospace',
-                              }}
-                            >
-                              에이전트:{' '}
-                              {
-                                Number(item.store?.agentFeePercent ? item.store?.agentFeePercent : 0.0).toFixed(2)
-                              }%
-                            </span>
-                            <span className="text-sm text-zinc-500"
-                              style={{
-                                fontFamily: 'monospace',
-                              }}
-                            >
-                              센터:{' '}
-                              {
-                                Number(item.store.settlementFeePercent ? item.store.settlementFeePercent : 0.3).toFixed(2)
-                              }%
-                            </span>
-                            */}
-
-
                           </div>
                         </td>
+                        */}
 
 
                           {/* font monospace */}
@@ -5207,136 +5171,225 @@ const fetchBuyOrders = async () => {
 
                         <td className="
                         p-2">
+                          <div className="w-full flex flex-col gap-2 items-center justify-center">
 
-                          {item?.settlement ? (
+                            {item?.settlement && (
 
+                              <div className="flex flex-row gap-2 items-center justify-center">
 
-                            <button
-                              className="
-                              w-48
-                              flex flex-col gap-2 items-center justify-center
-                              bg-purple-500 text-white px-2 py-1 rounded-md hover:bg-purple-600
-                              text-sm
-                              transition duration-300 ease-in-out
-                              transform hover:scale-105
-                              hover:shadow-lg
-                              hover:shadow-purple-500/50
-                              hover:cursor-pointer
-                              hover:transition-transform
-                              hover:duration-300
-                              hover:ease-in-out
-
-                              "
-
-                              onClick={() => {
-                                window.open(
-                                  `https://polygonscan.com/tx/${item.settlement.txid}`,
-                                  '_blank'
-                                );
-                              }}
-                            >
-
-
-                              <div className="flex flex-col gap-2 items-end justify-center"
-                                style={{
-                                  fontFamily: 'monospace',
-                                }}
-                              >
-
-
-                                
-                                <span>
-                                  {item?.settlement?.settlementAmount?.toLocaleString() + ' USDT'}
-                                  {' '}
-                                  {
-                                    item?.settlement?.settlementWalletAddress &&
-                                  item?.settlement?.settlementWalletAddress?.slice(0, 5) + '...'}
-                                </span>
-                                <span>
-                                  {
-                                    item?.settlement?.agentFeeAmount ?
-                                    item?.settlement?.agentFeeAmount?.toLocaleString() + ' USDT'
-                                    : '0 USDT'
-                                  }
-                                  {' '}
-                                  {
-                                    item?.settlement?.agentFeeWalletAddress &&
-                                  item?.settlement?.agentFeeWalletAddress?.slice(0, 5) + '...'}
-                                </span>
-                                <span>
-                                  {item?.settlement?.feeAmount?.toLocaleString() + ' USDT'}
-                                  {' '}
-                                  {
-                                    item?.settlement?.feeWalletAddress &&
-                                  item?.settlement?.feeWalletAddress?.slice(0, 5) + '...'}
+                                <Image
+                                  src="/icon-settlement-completed.png"
+                                  alt="Settlement Completed"
+                                  width={30}
+                                  height={30}
+                                  className="w-6 h-6 rounded-lg"
+                                />
+                                <span className="text-sm font-semibold text-zinc-500">
+                                  정산완료
                                 </span>
 
                               </div>
 
-                            </button>
-
-                          ) : (
-                            <>
-                              {item.status === 'paymentConfirmed'
-                              && item?.transactionHash !== '0x'
-                              && (
-                                <div className="flex flex-row gap-2 items-center justify-center">
-
-                                  {item.storecode === 'admin' ? (
-
-                                    <div className="flex flex-row gap-2 items-center justify-center">
-                                      일반 회원 구매
-                                    </div>
-
-                                  ) : (
-                                  
-                                    <div className="flex flex-col gap-2 items-center justify-center">
-
-                                      <div className="flex flex-row gap-2 items-center justify-center">
-                                        <Image
-                                          src="/icon-settlement.png"
-                                          alt="Settlement"
-                                          width={20}
-                                          height={20}
-                                          className="animate-spin"
-                                        />
-                                        <span className="text-sm font-semibold text-zinc-500">
-                                          가맹점 결제 및 정산중...
-                                        </span>
-                                      </div>
-
-                                      <div className="flex flex-row gap-2 items-center justify-center">
-                                        <Image
-                                          src={item.store?.storeLogo || '/icon-store.png'}
-                                          alt="Store Logo"
-                                          width={20}
-                                          height={20}
-                                          className="rounded-lg w-6 h-6"
-                                        />
-                                        <span className="text-sm font-semibold text-zinc-500">
-                                          {item.store?.storeName}
-                                        </span>
-                                      </div>
-
-                                      <span className="text-lg font-semibold text-green-600"
-                                        style={{
-                                          fontFamily: 'monospace',
-                                        }}
-                                      >
-                                        {item.usdtAmount}{' '}USDT
-                                      </span>
+                            )}
 
 
 
-                                    </div>
+                            <div className="flex flex-row gap-2 items-between justify-center">
 
-                                  )}
+                              {item?.settlement && (
+                                <div className="flex flex-col gap-2 items-end justify-center">
 
+                                  <div className="w-full flex flex-row gap-2 items-center justify-center">
+                                    <span className="
+                                    w-16
+                                    text-sm text-zinc-500">
+                                      가맹점
+                                    </span>
+                                    <span className="
+                                    w-14 text-end
+                                    text-sm text-zinc-500"
+                                      style={{
+                                        fontFamily: 'monospace',
+                                      }}>
+                                      {Number(
+                                        100 - (item.store?.agentFeePercent ? item.store?.agentFeePercent : 0.0) - (item.store.settlementFeePercent ? item.store.settlementFeePercent : 0.3)
+                                      ).toFixed(2)
+                                      }%
+                                    </span>
+                                  </div>
+
+                                  <div className="w-full flex flex-row gap-2 items-center justify-center">
+                                    <span className="
+                                    w-16
+                                    text-sm text-zinc-500">
+                                      AG 수수료
+                                    </span>
+                                    <span className="
+                                    w-14 text-end
+                                    text-sm text-zinc-500"
+                                      style={{
+                                        fontFamily: 'monospace',
+                                      }}>
+                                      {Number(item.store?.agentFeePercent ? item.store?.agentFeePercent : 0.0).toFixed(2)}%
+                                    </span>
+                                  </div>
+
+                                  <div className="w-full flex flex-row gap-2 items-center justify-center">
+                                    <span className="
+                                    w-16
+                                    text-sm text-zinc-500">
+                                      PG 수수료
+                                    </span>
+                                    <span className="
+                                    w-14  text-end
+                                    text-sm text-zinc-500"
+                                      style={{
+                                        fontFamily: 'monospace',
+                                      }}>
+                                      {Number(item.store.settlementFeePercent ? item.store.settlementFeePercent : 0.3).toFixed(2)}%
+                                    </span>
+                                  </div>
 
                                 </div>
                               )}
-                            </>
-                          )}
+
+
+
+                              {item?.settlement ? (
+
+
+                                <button
+                                  className="
+                                  w-48
+                                  flex flex-col gap-2 items-center justify-center
+                                  bg-purple-500 text-white px-2 py-1 rounded-md hover:bg-purple-600
+                                  text-sm
+                                  transition duration-300 ease-in-out
+                                  transform hover:scale-105
+                                  hover:shadow-lg
+                                  hover:shadow-purple-500/50
+                                  hover:cursor-pointer
+                                  hover:transition-transform
+                                  hover:duration-300
+                                  hover:ease-in-out
+
+                                  "
+
+                                  onClick={() => {
+                                    window.open(
+                                      `https://polygonscan.com/tx/${item.settlement.txid}`,
+                                      '_blank'
+                                    );
+                                  }}
+                                >
+
+
+                                  <div className="flex flex-col gap-2 items-end justify-center"
+                                    style={{
+                                      fontFamily: 'monospace',
+                                    }}
+                                  >
+
+
+                                    
+                                    <span>
+                                      {item?.settlement?.settlementAmount?.toLocaleString() + ' USDT'}
+                                      {' '}
+                                      {
+                                        item?.settlement?.settlementWalletAddress &&
+                                      item?.settlement?.settlementWalletAddress?.slice(0, 5) + '...'}
+                                    </span>
+                                    <span>
+                                      {
+                                        item?.settlement?.agentFeeAmount ?
+                                        item?.settlement?.agentFeeAmount?.toLocaleString() + ' USDT'
+                                        : '0 USDT'
+                                      }
+                                      {' '}
+                                      {
+                                        item?.settlement?.agentFeeWalletAddress &&
+                                      item?.settlement?.agentFeeWalletAddress?.slice(0, 5) + '...'}
+                                    </span>
+                                    <span>
+                                      {item?.settlement?.feeAmount?.toLocaleString() + ' USDT'}
+                                      {' '}
+                                      {
+                                        item?.settlement?.feeWalletAddress &&
+                                      item?.settlement?.feeWalletAddress?.slice(0, 5) + '...'}
+                                    </span>
+
+                                  </div>
+
+                                </button>
+
+                              ) : (
+                                <>
+                                  {item.status === 'paymentConfirmed'
+                                  && item?.transactionHash !== '0x'
+                                  && (
+                                    <div className="flex flex-row gap-2 items-center justify-center">
+
+                                      {item.storecode === 'admin' ? (
+
+                                        <div className="flex flex-row gap-2 items-center justify-center">
+                                          일반 회원 구매
+                                        </div>
+
+                                      ) : (
+                                      
+                                        <div className="flex flex-col gap-2 items-center justify-center">
+
+                                          <div className="flex flex-row gap-2 items-center justify-center">
+                                            <Image
+                                              src="/icon-settlement.png"
+                                              alt="Settlement"
+                                              width={20}
+                                              height={20}
+                                              className="animate-spin"
+                                            />
+                                            <span className="text-sm font-semibold text-zinc-500">
+                                              가맹점 결제 및 정산중...
+                                            </span>
+                                          </div>
+
+                                          <div className="flex flex-row gap-2 items-center justify-center">
+                                            <Image
+                                              src={item.store?.storeLogo || '/icon-store.png'}
+                                              alt="Store Logo"
+                                              width={20}
+                                              height={20}
+                                              className="rounded-lg w-6 h-6"
+                                            />
+                                            <span className="text-sm font-semibold text-zinc-500">
+                                              {item.store?.storeName}
+                                            </span>
+                                          </div>
+
+                                          <span className="text-lg font-semibold text-green-600"
+                                            style={{
+                                              fontFamily: 'monospace',
+                                            }}
+                                          >
+                                            {item.usdtAmount}{' '}USDT
+                                          </span>
+
+
+
+                                        </div>
+
+                                      )}
+
+
+                                    </div>
+                                  )}
+                                </>
+                              )}
+
+
+                            </div>
+
+                          </div>
+
                         </td>
 
 
