@@ -3875,9 +3875,9 @@ const fetchBuyOrders = async () => {
                                   <Image
                                     src="/icon-matching-completed.png"
                                     alt="Matching Completed"
-                                    width={20}
-                                    height={20}
-                                    className="w-5 h-5"
+                                    width={50}
+                                    height={50}
+                                    className="w-8 h-8 rounded-full"
                                   />
                                   <span className="text-sm text-zinc-500 font-semibold">
                                     매칭완료
@@ -4216,11 +4216,11 @@ const fetchBuyOrders = async () => {
                               flex flex-col gap-2 items-center justify-center">
                               <div className="flex flex-row gap-2 items-center justify-center">
                                 <Image
-                                  src="/icon-bank-check.png"
+                                  src="/icon-payaction.png"
                                   alt="Bank Check"
-                                  width={20}
-                                  height={20}
-                                  className="w-5 h-5"
+                                  width={50}
+                                  height={50}
+                                  className="w-8 h-8 rounded-full"
                                 />
                                 <span className="text-sm font-semibold text-zinc-500">
                                   입금완료
