@@ -135,6 +135,8 @@ interface BuyOrder {
 
   agent: any;
 
+  userStats: any;
+
 }
 
 
@@ -3725,6 +3727,35 @@ const fetchBuyOrders = async () => {
                                 {item.walletAddress.substring(0, 6)}...{item.walletAddress.substring(item.walletAddress.length - 4)}
                               </button>
                             </div>
+                            
+                            {/* userStats */}
+                            {/* userStats.totalPaymentConfirmedCount */}
+                            {/* userStats.totalPaymentConfirmedKrwAmount */}
+                            <div className="flex flex-row items-center justify-center gap-2">
+                              <span className="text-sm text-zinc-500">
+                                {
+                                  item?.userStats?.totalPaymentConfirmedCount
+                                  ? item?.userStats?.totalPaymentConfirmedCount.toLocaleString() + ' 건' :
+                                  0 + ' 건'
+                                }
+                              </span>
+                              <span className="text-sm text-zinc-500">
+                                {
+                                  item?.userStats?.totalPaymentConfirmedKrwAmount &&
+                                  item?.userStats?.totalPaymentConfirmedKrwAmount.toLocaleString() + ' 원'
+                                }
+                              </span>
+
+                              {!item?.userStats?.totalPaymentConfirmedCount && (
+                                <Image
+                                  src="/icon-new-user.png"
+                                  alt="New User"
+                                  width={50}
+                                  height={50}
+                                  className="w-10 h-10"
+                                />
+                              )}
+                            </div>
 
                           </div>
 
@@ -4192,7 +4223,7 @@ const fetchBuyOrders = async () => {
                                   className="w-5 h-5"
                                 />
                                 <span className="text-sm font-semibold text-zinc-500">
-                                  입금 확인완료
+                                  입금완료
                                 </span>
                               </div>
 
@@ -4209,7 +4240,7 @@ const fetchBuyOrders = async () => {
                               </div>
 
                               {/* paymentAmount */}
-                              <span className="text-lg text-green-600 font-semibold"
+                              <span className="text-lg text-yellow-600 font-semibold"
                                 style={{ fontFamily: 'monospace' }}>
                                 {
                                   item.paymentAmount?.toLocaleString()

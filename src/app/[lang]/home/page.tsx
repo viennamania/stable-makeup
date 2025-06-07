@@ -4415,7 +4415,7 @@ const fetchBuyOrders = async () => {
                                       className="w-5 h-5"
                                     />
                                     <span className="text-sm font-semibold text-zinc-500">
-                                      입금 확인완료
+                                      입금완료
                                     </span>
                                   </div>
 
