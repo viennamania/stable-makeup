@@ -671,7 +671,12 @@ export async function getAllStores(
        
         },
       },
-      { $sort: { createdAt: -1 } }, // Sort by createdAt in descending order
+      
+      //{ $sort: { createdAt: -1 } }, // Sort by createdAt in descending order
+      // sort by totalUsdtAmount in descending order
+      { $sort: { totalUsdtAmount: -1, createdAt: -1 } }, // Sort by totalUsdtAmount in descending order and then by createdAt in descending order
+
+
       { $skip: (page - 1) * limit },
       { $limit: limit },
     ]).toArray();
