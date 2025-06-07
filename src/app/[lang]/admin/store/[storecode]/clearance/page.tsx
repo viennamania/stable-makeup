@@ -1998,7 +1998,7 @@ export default function Index({ params }: any) {
                                 </span>
                                 <span className="text-xl xl:text-2xl font-semibold text-green-600">
                                     {
-                                      (Number(tradeSummary.totalClearanceAmount - tradeSummary.totalSettlementAmountKRW).toFixed(2))
+                                      (Number(tradeSummary.totalClearanceAmount - tradeSummary.totalSettlementAmountKRW).toFixed(0))
                                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                     }
                                 </span>
@@ -2042,7 +2042,7 @@ export default function Index({ params }: any) {
                                   </span>
                                   <span className="text-xl xl:text-2xl font-semibold text-green-600">
                                       {
-                                        (Number(tradeSummary.totalClearanceAmount).toFixed(2))
+                                        (Number(tradeSummary.totalClearanceAmount).toFixed(0))
                                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                       }
                                   </span>
