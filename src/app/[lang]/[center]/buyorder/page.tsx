@@ -5220,7 +5220,10 @@ export default function Index({ params }: any) {
                                     {/* 자동입금처리일경우 */}
                                     {/* 수동으로 결제완료처리 버튼 */}
                                   
-                                    {item?.autoConfirmPayment
+                                    {
+                                    item.seller.walletAddress === address &&
+
+                                    item?.autoConfirmPayment
                                     && (item?.transactionHash === '0x' || item?.transactionHash === undefined)
                                     && (
 
