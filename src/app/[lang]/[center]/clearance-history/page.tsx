@@ -217,21 +217,6 @@ export default function Index({ params }: any) {
 
 
 
-  useEffect(() => {
-    // Dynamically load the Binance widget script
-    const script = document.createElement("script");
-    script.src = "https://public.bnbstatic.com/unpkg/growth-widget/cryptoCurrencyWidget@0.0.20.min.js";
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      // Cleanup the script when the component unmounts
-      document.body.removeChild(script);
-    };
-  }, []);
-    
-
-
   const [data, setData] = useState({
     title: "",
     description: "",
@@ -2240,271 +2225,231 @@ export default function Index({ params }: any) {
 ]);
 
 
-///console.log('agreementForTrade', agreementForTrade);
 
 
 
-  const reload = () => {
 
-    console.log('agreementForTrade', agreementForTrade.some((item) => item === true));
-    console.log('acceptingBuyOrder', acceptingBuyOrder.some((item) => item === true));
-    console.log('escrowing', escrowing.some((item) => item === true));
-    console.log('requestingPayment', requestingPayment.some((item) => item === true));
-    console.log('confirmingPayment', confirmingPayment.some((item) => item === true));
+  // check table view or card view
+  const [tableView, setTableView] = useState(true);
 
 
 
-    if (!address
-      || agreementForTrade.some((item) => item === true)
-      || acceptingBuyOrder.some((item) => item === true)
-      || escrowing.some((item) => item === true)
-      || requestingPayment.some((item) => item === true)
-      || confirmingPayment.some((item) => item === true)
-    ) {
-      return;
+
+  const [storeCodeNumber, setStoreCodeNumber] = useState('');
+
+  useEffect(() => {
+
+    const fetchStoreCode = async () => {
+
+      const response = await fetch('/api/order/getStoreCodeNumber', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const data = await response.json();
+
+      //console.log('getStoreCodeNumber data', data);
+
+      setStoreCodeNumber(data?.storeCodeNumber);
+
     }
 
+    fetchStoreCode();
 
-    fetch('/api/order/getAllCollectOrdersForSeller', {
+  } , []);
+  
+
+
+
+  // array of stores
+  const [storeList, setStoreList] = useState([] as any[]);
+
+
+  // sellerWalletAddress
+  const [sellerWalletAddress, setSellerWalletAddress] = useState("");
+
+
+  const [storeAdminWalletAddress, setStoreAdminWalletAddress] = useState("");
+
+  const [fetchingStore, setFetchingStore] = useState(false);
+  const [store, setStore] = useState(null) as any;
+
+  useEffect(() => {
+
+    setFetchingStore(true);
+
+    const fetchData = async () => {
+        const response = await fetch("/api/store/getOneStore", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              storecode: params.center,
+              //////walletAddress: address,
+            }),
+        });
+
+        const data = await response.json();
+
+        console.log("data", data);
+
+
+
+
+
+        if (data.result) {
+
+          setStore(data.result);
+
+          setStoreAdminWalletAddress(data.result?.adminWalletAddress);
+
+          setSellerWalletAddress(data.result?.sellerWalletAddress || "");
+
+        } else {
+          // get store list
+          const response = await fetch("/api/store/getAllStores", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+            }),
+          });
+          const data = await response.json();
+          //console.log("getAllStores data", data);
+          setStoreList(data.result.stores || []);
+          setStore(null);
+          setStoreAdminWalletAddress("");
+        }
+
+        setFetchingStore(false);
+    };
+
+    fetchData();
+
+  } , [params.center]);
+
+
+
+  const [selectedItem, setSelectedItem] = useState<any>(null);
+  
+
+
+
+  // balance of sellerWalletAddress
+  const [balanceOfSellerWallet, setBalanceOfSellerWallet] = useState(0);
+  useEffect(() => {
+    const fetchBalanceOfSellerWallet = async () => {
+      if (!sellerWalletAddress) {
+        setBalanceOfSellerWallet(0);
+        return;
+      }
+      const result = await balanceOf({
+        contract,
+        address: sellerWalletAddress,
+      });
+      //console.log('balanceOfSellerWallet result', result);
+      setBalanceOfSellerWallet(Number(result) / 10 ** 6);
+    }
+    fetchBalanceOfSellerWallet();
+  } , [sellerWalletAddress, contract]);
+
+
+
+
+const [tradeSummary, setTradeSummary] = useState({
+    totalCount: 0,
+    totalKrwAmount: 0,
+    totalUsdtAmount: 0,
+    totalSettlementCount: 0,
+    totalSettlementAmount: 0,
+    totalSettlementAmountKRW: 0,
+    totalFeeAmount: 0,
+    totalFeeAmountKRW: 0,
+    orders: [] as BuyOrder[],
+
+    totalClearanceCount: 0,
+    totalClearanceAmount: 0,
+    totalClearanceAmountUSDT: 0,
+  });
+  const [loadingTradeSummary, setLoadingTradeSummary] = useState(false);
+
+
+  const getTradeSummary = async () => {
+    if (!address) {
+      return;
+    }
+    setLoadingTradeSummary(true);
+    const response = await fetch('/api/summary/getTradeSummary', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(
-        {
-          storecode: params.center,
-          limit: Number(limit),
-          page: Number(page),
-          walletAddress: address,
-          searchMyOrders: searchMyOrders,
-        }
-      ),
-    })
-    .then(response => response.json())
-    .then(data => {
-        ///console.log('data', data);
-        setBuyOrders(data.result.orders);
+      body: JSON.stringify({
+        storecode: params.center,
+        walletAddress: address,
+        searchMyOrders: searchMyOrders,
+        searchOrderStatusCompleted: true,
+        //searchBuyer: searchBuyer,
+        //searchDepositName: searchDepositName,
 
-        setTotalCount(data.result.totalCount);
-    })
+        //searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+      })
+    });
+    if (!response.ok) {
+      setLoadingTradeSummary(false);
+      toast.error('Failed to fetch trade summary');
+      return;
+    }
+    const data = await response.json();
+    
+    console.log('getTradeSummary data', data);
 
+
+    setTradeSummary(data.result);
+    setLoadingTradeSummary(false);
+    return data.result;
   }
 
 
 
 
+  useEffect(() => {
 
-
-  
-
-
-    // check table view or card view
-    const [tableView, setTableView] = useState(true);
-
-
-
-
-    const [storeCodeNumber, setStoreCodeNumber] = useState('');
-
-    useEffect(() => {
-  
-      const fetchStoreCode = async () => {
-  
-        const response = await fetch('/api/order/getStoreCodeNumber', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-  
-        const data = await response.json();
-  
-        //console.log('getStoreCodeNumber data', data);
-  
-        setStoreCodeNumber(data?.storeCodeNumber);
-  
-      }
-  
-      fetchStoreCode();
-  
-    } , []);
-    
-
-
-
-    // array of stores
-    const [storeList, setStoreList] = useState([] as any[]);
-  
-
-    // sellerWalletAddress
-    const [sellerWalletAddress, setSellerWalletAddress] = useState("");
-
-
-    const [storeAdminWalletAddress, setStoreAdminWalletAddress] = useState("");
-
-    const [fetchingStore, setFetchingStore] = useState(false);
-    const [store, setStore] = useState(null) as any;
-  
-    useEffect(() => {
-  
-      setFetchingStore(true);
-  
-      const fetchData = async () => {
-          const response = await fetch("/api/store/getOneStore", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                storecode: params.center,
-                //////walletAddress: address,
-              }),
-          });
-  
-          const data = await response.json();
-  
-          console.log("data", data);
-  
-
-
-
-
-          if (data.result) {
-  
-            setStore(data.result);
-  
-            setStoreAdminWalletAddress(data.result?.adminWalletAddress);
-
-            setSellerWalletAddress(data.result?.sellerWalletAddress || "");
-  
-          } else {
-            // get store list
-            const response = await fetch("/api/store/getAllStores", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-              }),
-            });
-            const data = await response.json();
-            //console.log("getAllStores data", data);
-            setStoreList(data.result.stores || []);
-            setStore(null);
-            setStoreAdminWalletAddress("");
-          }
-  
-          setFetchingStore(false);
-      };
-  
-      fetchData();
-  
-    } , [params.center]);
-
-
-
-    const [selectedItem, setSelectedItem] = useState<any>(null);
-    
-
-
-
-    // balance of sellerWalletAddress
-    const [balanceOfSellerWallet, setBalanceOfSellerWallet] = useState(0);
-    useEffect(() => {
-      const fetchBalanceOfSellerWallet = async () => {
-        if (!sellerWalletAddress) {
-          setBalanceOfSellerWallet(0);
-          return;
-        }
-        const result = await balanceOf({
-          contract,
-          address: sellerWalletAddress,
-        });
-        //console.log('balanceOfSellerWallet result', result);
-        setBalanceOfSellerWallet(Number(result) / 10 ** 6);
-      }
-      fetchBalanceOfSellerWallet();
-    } , [sellerWalletAddress, contract]);
-
-
-
-
-  const [tradeSummary, setTradeSummary] = useState({
-      totalCount: 0,
-      totalKrwAmount: 0,
-      totalUsdtAmount: 0,
-      totalSettlementCount: 0,
-      totalSettlementAmount: 0,
-      totalSettlementAmountKRW: 0,
-      totalFeeAmount: 0,
-      totalFeeAmountKRW: 0,
-      orders: [] as BuyOrder[],
-
-      totalClearanceCount: 0,
-      totalClearanceAmount: 0,
-      totalClearanceAmountUSDT: 0,
-    });
-    const [loadingTradeSummary, setLoadingTradeSummary] = useState(false);
-
-
-    const getTradeSummary = async () => {
-      if (!address) {
-        return;
-      }
-      setLoadingTradeSummary(true);
-      const response = await fetch('/api/summary/getTradeSummary', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          storecode: params.center,
-          walletAddress: address,
-          searchMyOrders: searchMyOrders,
-          searchOrderStatusCompleted: true,
-          //searchBuyer: searchBuyer,
-          //searchDepositName: searchDepositName,
-
-          //searchStoreBankAccountNumber: searchStoreBankAccountNumber,
-        })
-      });
-      if (!response.ok) {
-        setLoadingTradeSummary(false);
-        toast.error('Failed to fetch trade summary');
-        return;
-      }
-      const data = await response.json();
-      
-      console.log('getTradeSummary data', data);
-
-
-      setTradeSummary(data.result);
-      setLoadingTradeSummary(false);
-      return data.result;
+    if (!address) {
+      return;
     }
 
+    getTradeSummary();
 
-
-
-    useEffect(() => {
-
-      if (!address) {
-        return;
-      }
-
+    // fetch trade summary every 10 seconds
+    const interval = setInterval(() => {
       getTradeSummary();
+    }, 10000);
+    return () => clearInterval(interval);
 
-      // fetch trade summary every 10 seconds
-      const interval = setInterval(() => {
-        getTradeSummary();
-      }, 10000);
-      return () => clearInterval(interval);
-
-    } , [address, searchMyOrders, params.storecode,]);
+  } , [address, searchMyOrders, params.storecode,]);
 
 
 
 
+
+  useEffect(() => {
+    // Dynamically load the Binance widget script
+    const script = document.createElement("script");
+    script.src = "https://public.bnbstatic.com/unpkg/growth-widget/cryptoCurrencyWidget@0.0.20.min.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Cleanup the script when the component unmounts
+      document.body.removeChild(script);
+    };
+  }, [address, store]);
+    
 
 
 
@@ -3096,7 +3041,7 @@ export default function Index({ params }: any) {
 
 
 
-          <div className="flex flex-col items-start justify-center gap-2 mt-4">
+          <div className="flex flex-col items-start justify-center gap-2">
 
             
 

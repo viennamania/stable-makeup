@@ -216,24 +216,6 @@ export default function Index({ params }: any) {
   });
 
 
- 
-
-
-
-  useEffect(() => {
-    // Dynamically load the Binance widget script
-    const script = document.createElement("script");
-    script.src = "https://public.bnbstatic.com/unpkg/growth-widget/cryptoCurrencyWidget@0.0.20.min.js";
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      // Cleanup the script when the component unmounts
-      document.body.removeChild(script);
-    };
-  }, []);
-
-
 
   const [data, setData] = useState({
     title: "",
@@ -1433,7 +1415,18 @@ export default function Index({ params }: any) {
 
 
 
+  useEffect(() => {
+    // Dynamically load the Binance widget script
+    const script = document.createElement("script");
+    script.src = "https://public.bnbstatic.com/unpkg/growth-widget/cryptoCurrencyWidget@0.0.20.min.js";
+    script.async = true;
+    document.body.appendChild(script);
 
+    return () => {
+      // Cleanup the script when the component unmounts
+      document.body.removeChild(script);
+    };
+  }, [address, store]);
 
 
 
@@ -1677,7 +1670,7 @@ export default function Index({ params }: any) {
         )}
 
 
-        <div className="w-full flex flex-col justify-between items-center gap-2 mb-5">
+        <div className="w-full flex flex-col justify-between items-center gap-2">
    
 
           <div className="w-full flex flex-row gap-2 justify-end items-center">
@@ -1740,24 +1733,6 @@ export default function Index({ params }: any) {
 
         </div>
 
-
-
-        {/* USDT 가격 binance market price */}
-        <div
-          className="binance-widget-marquee
-          w-full flex flex-row items-center justify-center gap-2
-          p-2
-          "
-
-
-          data-cmc-ids="1,1027,52,5426,3408,74,20947,5994,24478,13502,35336,825"
-          data-theme="dark"
-          data-transparent="true"
-          data-locale="ko"
-          data-fiat="KRW"
-          //data-powered-by="Powered by Smart OTC"
-          //data-disclaimer="Disclaimer"
-        ></div>
 
       </div>
 
@@ -2063,7 +2038,7 @@ export default function Index({ params }: any) {
           </div>
             
        
-          <div className="flex flex-col items-start justify-center gap-2 mt-4">
+          <div className="flex flex-col items-start justify-center gap-2">
      
 
 
