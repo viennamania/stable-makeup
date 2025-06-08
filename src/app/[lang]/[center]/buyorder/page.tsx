@@ -3685,9 +3685,10 @@ export default function Index({ params }: any) {
                               alt="Auto Matching"
                               width={20}
                               height={20}
-                              className="
-                              bg-zinc-100 rounded-full
-                              w-5 h-5 animate-spin"
+                              className={`
+                                ${buyOrders.filter((item) => item.status === 'ordered').length > 0 ? 'animate-spin' : ''}
+                                w-5 h-5
+                              `}
                             />
 
                             {/* the count of status is ordered */}
@@ -3719,7 +3720,9 @@ export default function Index({ params }: any) {
                               alt="Bank Auto"
                               width={20}
                               height={20}
-                              className="w-5 h-5 animate-spin"
+                              className={`
+                                ${buyOrders.filter((item) => item.status === 'paymentRequested').length > 0 ? 'animate-spin' : ''}
+                              w-5 h-5`}
                             />
                             <span className="text-sm text-zinc-50 font-semibold">
                               {
@@ -3764,7 +3767,11 @@ export default function Index({ params }: any) {
                               alt="Settlement"
                               width={20}
                               height={20}
-                              className="w-5 h-5 animate-spin"
+                              className={`
+                                ${buyOrders.filter((item) => item.status === 'paymentConfirmed'
+                                && item?.settlement?.status !== "paymentSettled").length > 0 ? 'animate-spin' : ''}
+                                w-5 h-5
+                              `}
                             />
 
                             <span className="text-sm text-zinc-50 font-semibold">
@@ -4503,11 +4510,11 @@ export default function Index({ params }: any) {
                               flex flex-col gap-2 items-center justify-center">
                               <div className="flex flex-row gap-2 items-center justify-center">
                                 <Image
-                                  src="/icon-bank-check.png"
+                                  src="/icon-payaction.png"
                                   alt="Bank Check"
-                                  width={20}
-                                  height={20}
-                                  className="w-5 h-5"
+                                  width={30}
+                                  height={30}
+                                  className="w-6 h-6 rounded-full"
                                 />
                                 <span className="text-sm font-semibold text-zinc-500">
                                   입금완료
