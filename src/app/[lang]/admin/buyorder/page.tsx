@@ -5175,7 +5175,7 @@ const fetchBuyOrders = async () => {
 
                             {item?.settlement && (
 
-                              <div className="flex flex-row gap-2 items-center justify-center">
+                              <div className="w-full flex flex-row gap-2 items-center justify-start">
 
                                 <Image
                                   src="/icon-settlement-completed.png"
