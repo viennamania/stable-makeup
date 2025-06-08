@@ -3581,11 +3581,6 @@ const fetchBuyOrders = async () => {
                                     {item?.store?.storecode}
                                   </button>
 
-                                  {/* agent name */}
-                                  <span className="text-sm text-zinc-500 font-semibold">
-                                    {item?.agent?.gentName || item?.agentcode}
-                                  </span>
-
                                 </div>
                               </div>
 
