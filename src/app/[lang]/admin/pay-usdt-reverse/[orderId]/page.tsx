@@ -1946,7 +1946,7 @@ export default function Index({ params }: any) {
             <span className="text-lg text-zinc-500">
               가맹점으로 USDT 충전하기
             </span>
-            <div className='flex flex-row gap-2 items-center justify-center'>
+            <div className='flex flex-col xl:flex-row gap-2 items-center justify-center'>
               <span className="text-lg text-zinc-500">
                 충전금액
               </span>

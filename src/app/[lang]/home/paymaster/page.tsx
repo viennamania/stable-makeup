@@ -810,7 +810,8 @@ export default function Index({ params }: any) {
   const [loadingUser, setLoadingUser] = useState(false);
 
   const [buyOrderStatus, setBuyOrderStatus] = useState(''); // 'ordered', 'accepted', 'paymentRequested', 'paymentConfirmed'
-  
+  const [latestBuyOrder, setLatestBuyOrder] = useState<any>(null);
+
   useEffect(() => {
 
     if (!address) {
@@ -842,6 +843,7 @@ export default function Index({ params }: any) {
         setIsAdmin(data.result?.role === "admin");
 
         setBuyOrderStatus(data.result?.buyOrderStatus || '');
+        setLatestBuyOrder(data.result?.latestBuyOrder || null);
 
     })
     .catch((error) => {
@@ -1916,13 +1918,19 @@ export default function Index({ params }: any) {
   }
 
 
-  /*
+  
   if (!loadingUser && (buyOrderStatus === 'ordered' || buyOrderStatus === 'accepted' || buyOrderStatus === 'paymentRequested')) {
       
-      router.push('/' + params.lang + '/' + storecode + '/pay-usdt/' + buyOrderStatus);
+      router.push('/' + params.lang + '/' + storecode + '/pay-usdt-reverse/' + latestBuyOrder?._id);
+
+      return (
+        <div>
+          Redirecting to payment page...
+        </div>
+      );
 
   }
-      */
+      
 
 
     
