@@ -3512,14 +3512,21 @@ const fetchBuyOrders = async () => {
                               ///className="w-5 h-5 animate-spin"
                               className={`
                                 w-5 h-5
-                                ${buyOrders.filter((item) => item.status === 'paymentConfirmed' && item?.settlement?.status !== "paymentSettled").length > 0 ? 'animate-spin' : ''}
+                                ${buyOrders.filter((item) =>
+                                  item.status === 'paymentConfirmed'
+                                  && item?.settlement?.status !== "paymentSettled"
+                                  && item?.storecode !== 'admin' // admin storecode is not included
+                                ).length > 0
+                                ? 'animate-spin' : ''}
                               `}
                             />
 
                             <span className="text-sm text-zinc-50 font-semibold">
                               {
                                 buyOrders.filter((item) => item.status === 'paymentConfirmed'
-                                && item?.settlement?.status !== "paymentSettled").length
+                                && item?.settlement?.status !== "paymentSettled"
+                                && item?.storecode !== 'admin' // admin storecode is not included
+                              ).length
                               }
                             </span>
 
