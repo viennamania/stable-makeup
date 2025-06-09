@@ -808,6 +808,8 @@ export default function Index({ params }: any) {
 
   const [user, setUser] = useState<any>(null);
   const [loadingUser, setLoadingUser] = useState(false);
+
+  const [buyOrderStatus, setBuyOrderStatus] = useState(''); // 'ordered', 'accepted', 'paymentRequested', 'paymentConfirmed'
   
   useEffect(() => {
 
@@ -832,12 +834,14 @@ export default function Index({ params }: any) {
     .then(response => response.json())
     .then(data => {
         
-        //console.log('data.result', data.result);
+        ///console.log('data.result', data.result);
 
 
         setUser(data.result);
 
         setIsAdmin(data.result?.role === "admin");
+
+        setBuyOrderStatus(data.result?.buyOrderStatus || '');
 
     })
     .catch((error) => {
@@ -1912,6 +1916,13 @@ export default function Index({ params }: any) {
   }
 
 
+  /*
+  if (!loadingUser && (buyOrderStatus === 'ordered' || buyOrderStatus === 'accepted' || buyOrderStatus === 'paymentRequested')) {
+      
+      router.push('/' + params.lang + '/' + storecode + '/pay-usdt/' + buyOrderStatus);
+
+  }
+      */
 
 
     

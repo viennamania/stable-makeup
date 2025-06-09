@@ -4,6 +4,7 @@ import clientPromise from '../mongodb';
 // object id
 import { ObjectId } from 'mongodb';
 import { create } from 'domain';
+import { stat } from 'fs';
 
 
 export interface UserProps {
@@ -1614,7 +1615,20 @@ export async function insertBuyOrder(data: any) {
         walletAddress: data.walletAddress,
         storecode: data.storecode,
       },
-      { $set: { buyOrderStatus: 'ordered' } }
+      { $set: {
+        buyOrderStatus: 'ordered',
+        latestBuyOrder: {
+          _id: result.insertedId,
+          tradeId: tradeId,
+          storecode: data.storecode,
+          storeName: store.storeName,
+          storeLogo: store.storeLogo,
+          usdtAmount: data.usdtAmount,
+          krwAmount: data.krwAmount,
+          rate: data.rate,
+          createdAt: new Date().toISOString(),
+        }
+      } }
     );
 
 

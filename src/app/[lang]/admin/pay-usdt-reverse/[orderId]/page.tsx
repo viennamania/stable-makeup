@@ -1619,7 +1619,7 @@ export default function Index({ params }: any) {
   <main className="
       pl-2 pr-2
       pb-10 min-h-[100vh] flex flex-col items-center justify-start container
-      max-w-screen-sm
+      max-w-screen-lg
       mx-auto
       bg-zinc-50
       text-zinc-500
