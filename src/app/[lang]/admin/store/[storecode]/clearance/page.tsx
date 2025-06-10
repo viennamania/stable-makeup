@@ -2917,15 +2917,15 @@ export default function Index({ params }: any) {
 
                               <td>
                                 <div className="flex flex-row gap-1">
-                                  <span className="text-lg text-zinc-600 font-semibold">
+                                  <span className="text-xl text-yellow-600 font-semibold">
                                     {Number(item.krwAmount)?.toLocaleString() + ' 원'}
                                   </span>
                                 
-                                  <span className="text-lg text-blue-500 font-semibold">
+                                  <span className="text-xl text-green-600 font-semibold">
                                     {item.usdtAmount?.toLocaleString() + ' USDT'}
                                   </span>
                                   <span className="text-lg text-zinc-400 font-semibold">
-                                    {Number(item.krwAmount / item.usdtAmount).toFixed(2)}
+                                    {Number(item.rate)}
                                     </span>
                                 </div>
                               </td>
@@ -2949,7 +2949,7 @@ export default function Index({ params }: any) {
                               <td>
                                 
                                 {item.status === 'paymentConfirmed' && (
-                                  <span className="text-lg text-zinc-600 font-semibold">
+                                  <span className="text-xl text-yellow-600 font-semibold">
                                     
                                     {Number(item.krwAmount)?.toLocaleString() + ' 원'}
                                   </span>

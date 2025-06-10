@@ -817,6 +817,10 @@ export default function Index({ params }: any) {
   
   
 
+
+
+
+  
   // search form date to date
   const [searchFromDate, setSearchFormDate] = useState("");
   // set today's date in YYYY-MM-DD format
@@ -838,13 +842,12 @@ export default function Index({ params }: any) {
     setSearchToDate(formattedDate);
   }, []);
 
-  /*
-  useEffect(() => {
-    const today = new Date();
-    const toDate = new Date(today.setDate(today.getDate() + 1)); // add 1 day to today
-    setSearchToDate(toDate.toISOString().split('T')[0]); // YYYY-MM-DD format
-  }, []);
-  */
+
+
+
+
+
+
 
 
 

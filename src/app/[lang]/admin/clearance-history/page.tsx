@@ -816,26 +816,60 @@ export default function Index({ params }: any) {
   
 
 
-const [searchBuyer, setSearchBuyer] = useState("");
 
-const [searchDepositName, setSearchDepositName] = useState("");
+  const [searchBuyer, setSearchBuyer] = useState("");
+
+  const [searchDepositName, setSearchDepositName] = useState("");
 
 
-// search store bank account number
-const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState("");
+  // search store bank account number
+  const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState("");
 
-  
+    
 
 
   const [searchMyOrders, setSearchMyOrders] = useState(false);
 
 
 
+
+
+  // search form date to date
+  const [searchFromDate, setSearchFormDate] = useState("");
+  // set today's date in YYYY-MM-DD format
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+    setSearchFormDate(formattedDate);
+  }, []);
+
+
+
+
+  const [searchToDate, setSearchToDate] = useState("");
+
+  // set today's date in YYYY-MM-DD format
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+    setSearchToDate(formattedDate);
+  }, []);
+
+
+
+
+
   // limit number
   const [limitValue, setLimitValue] = useState(limit || 20);
+  useEffect(() => {
+    setLimitValue(limit || 20);
+  }, [limit]);
 
   // page number
   const [pageValue, setPageValue] = useState(page || 1);
+  useEffect(() => {
+    setPageValue(page || 1);
+  }, [page]);
 
 
 
@@ -991,6 +1025,8 @@ const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState
 
                     privateSale: true,
 
+                    fromDate: searchFromDate,
+                    toDate: searchToDate,
 
 
                   }
@@ -1118,6 +1154,9 @@ const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState
               searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
               privateSale: true,
+
+              fromDate: searchFromDate,
+              toDate: searchToDate,
             }
           )
         }).then(async (response) => {
@@ -1381,6 +1420,10 @@ const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState
                   searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
                   privateSale: true,
+
+                  fromDate: searchFromDate,
+                  toDate: searchToDate,
+
                 }
               ),
             })
@@ -1591,7 +1634,11 @@ const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState
 
               searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
-              privateSale: true,              
+              privateSale: true, 
+              
+              fromDate: searchFromDate,
+              toDate: searchToDate,
+
             }
           ),
         })
@@ -1756,6 +1803,9 @@ const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState
               searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
               privateSale: true,
+
+              fromDate: searchFromDate,
+              toDate: searchToDate,
             }
           ),
         })
@@ -1917,6 +1967,9 @@ const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState
 
               privateSale: true,
 
+              fromDate: searchFromDate,
+              toDate: searchToDate,
+
             }
 
         ),
@@ -2014,6 +2067,10 @@ const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState
 
     latestBuyOrder,
     searchStorecode,
+
+    searchFromDate,
+    searchToDate,
+
 ]);
 
 
@@ -2049,6 +2106,9 @@ const fetchBuyOrders = async () => {
         searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
         privateSale: true,
+
+        fromDate: searchFromDate,
+        toDate: searchToDate,
 
       }
 
@@ -2137,6 +2197,8 @@ const fetchBuyOrders = async () => {
           searchStoreBankAccountNumber: '',
 
 
+          fromDate: searchFromDate,
+          toDate: searchToDate,
 
 
 
@@ -2176,7 +2238,10 @@ const fetchBuyOrders = async () => {
       return () => clearInterval(interval);
 
 
-    } , [address, searchMyOrders, params.storecode,]);
+    } , [address, searchMyOrders, params.storecode,
+        searchFromDate,
+        searchToDate,
+    ]);
 
 
 
@@ -2710,6 +2775,52 @@ const fetchBuyOrders = async () => {
                 </div>
 
 
+
+
+
+                {/* serach fromDate and toDate */}
+                {/* DatePicker for fromDate and toDate */}
+                <div className="flex flex-col xl:flex-row items-center gap-2">
+                  <div className="flex flex-row items-center gap-2">
+                    <Image
+                      src="/icon-calendar.png"
+                      alt="Calendar"
+                      width={20}
+                      height={20}
+                      className="rounded-lg w-5 h-5"
+                    />
+                    <input
+                      type="date"
+                      value={searchFromDate}
+                      onChange={(e) => setSearchFormDate(e.target.value)}
+                      className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                    />
+                  </div>
+
+                  <div className="flex flex-row items-center gap-2">
+                    <Image
+                      src="/icon-calendar.png"
+                      alt="Calendar"
+                      width={20}
+                      height={20}
+                      className="rounded-lg w-5 h-5"
+                    />
+                    <input
+                      type="date"
+                      value={searchToDate}
+                      onChange={(e) => setSearchToDate(e.target.value)}
+                      className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                    />
+                  </div>
+                </div>
+
+
+
+
+
+
+
+
                 {/* search depositName */}
                 <div className="flex flex-col xl:flex-row items-center gap-2">
 
@@ -2983,7 +3094,7 @@ const fetchBuyOrders = async () => {
                                   }}
                                 >
                                   {
-                                    Number(item.rate).toFixed(2)
+                                    Number(item.rate)
                                     //Number(item.krwAmount / item.usdtAmount).toFixed(2)
                                   }
                                 </span>
