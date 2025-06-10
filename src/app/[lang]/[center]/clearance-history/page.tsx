@@ -3512,67 +3512,121 @@ const [tradeSummary, setTradeSummary] = useState({
                         {/* {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()} USDT */}
                         <div className="w-full flex flex-col items-center justify-center gap-2">
 
-                          {/* 가맹점 보유금 */}
-                          <div className="flex flex-row items-center justify-center gap-2">
-                              <Image
-                                  src="/icon-shield.png"
-                                  alt="Wallet"
-                                  width={100}
-                                  height={100}
-                                  className="w-6 h-6"
-                              />
-                              <span className="text-sm text-zinc-500">
-                                가맹점 보유금
-                              </span>
-                          </div>
 
-                          <div className="flex flex-col items-center justify-center gap-2">
 
-                            <div className="w-full flex flex-row items-end justify-center gap-2">
+                          <div className="flex flex-row items-start justify-center gap-2">
 
-                              <span className="text-2xl xl:text-4xl font-semibold text-green-600"
-                                style={{ fontFamily: 'monospace' }}
-                              >
-                                  {
-                                    Number(tradeSummary.totalClearanceAmountUSDT
-                                    
-                                      - tradeSummary.totalSettlementAmount
-                                    ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                                  }
-                              </span>
-                              {' '}
-                              <span className="text-sm">USDT</span>
-                            </div>
+                            <Image
+                              src="/icon-escrow.jpeg"
+                              alt="Escrow"
+                              width={100}
+                              height={100}
+                              className="w-18 h-18 rounded-lg"
+                            />
 
-                            {/* 잔액 원 */}
-                            <div className="w-full flex flex-row items-end justify-center gap-2">
+                            <div className="flex flex-col items-center justify-center gap-2">
 
-                              <span className="text-2xl xl:text-4xl font-semibold text-yellow-600"
-                                style={{ fontFamily: 'monospace' }}
-                              >
-                                  {
 
-                                    Number(tradeSummary.totalClearanceAmount
+                              {/* 가맹점 보유금 */}
+                              <div className="flex flex-row items-center justify-center gap-2">
+                                  <Image
+                                      src="/icon-shield.png"
+                                      alt="Wallet"
+                                      width={100}
+                                      height={100}
+                                      className="w-6 h-6"
+                                  />
+                                  <span className="text-sm text-zinc-500">
+                                    가맹점 보유금
+                                  </span>
+                              </div>
+
+
+
+                              <div className="w-full flex flex-row items-end justify-center gap-2">
+
+                                <span className="text-2xl xl:text-4xl font-semibold text-green-600"
+                                  style={{ fontFamily: 'monospace' }}
+                                >
+                                    {
+                                      Number(tradeSummary.totalClearanceAmountUSDT
                                       
-                                      - tradeSummary.totalSettlementAmountKRW
-                                    ).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                                  }
+                                        - tradeSummary.totalSettlementAmount
+                                      ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                    }
+                                </span>
+                                {' '}
+                                <span className="text-sm">USDT</span>
+                              </div>
+
+                              {/* 잔액 원 */}
+                              <div className="w-full flex flex-row items-end justify-center gap-2">
+
+                                <span className="text-2xl xl:text-4xl font-semibold text-yellow-600"
+                                  style={{ fontFamily: 'monospace' }}
+                                >
+                                    {
+
+                                      Number(tradeSummary.totalClearanceAmount
+                                        
+                                        - tradeSummary.totalSettlementAmountKRW
+                                      ).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                    }
 
 
-                              </span>
-                              {' '}
-                              <span className="text-sm">원</span>
-                            </div>
+                                </span>
+                                {' '}
+                                <span className="text-sm">원</span>
+                              </div>
 
-                            {
-                            Number(tradeSummary.totalClearanceAmountUSDT
-                             - tradeSummary.totalSettlementAmount) >= 50
-                            &&
-                            Number(tradeSummary.totalClearanceAmountUSDT
-                             - tradeSummary.totalSettlementAmount) < 1000
-                             && (
-                              <div className="flex flex-col items-center justify-center gap-2">
+                              {
+                              Number(tradeSummary.totalClearanceAmountUSDT
+                              - tradeSummary.totalSettlementAmount) >= 50
+                              &&
+                              Number(tradeSummary.totalClearanceAmountUSDT
+                              - tradeSummary.totalSettlementAmount) < 1000
+                              && (
+                                <div className="flex flex-col items-center justify-center gap-2">
 
+                                  <div className="flex flex-row items-center justify-center gap-2">
+                                    <Image
+                                      src="/icon-warning.png"
+                                      alt="Warning"
+                                      width={20}
+                                      height={20}
+                                      className="w-5 h-5"
+                                    />
+                                    <span className="text-sm text-red-500">
+                                      가맹점 보유금이 부족합니다. 보유금이 50 USDT 미만이면 판매가 중지됩니다.
+                                    </span>
+                                  </div>
+
+                                  {/* telegram link */}
+                                  <div className="flex flex-row items-center justify-center gap-2">
+                                    <Image
+                                      src="/icon-telegram.png"
+                                      alt="Telegram"
+                                      width={20}
+                                      height={20}
+                                      className="w-5 h-5"
+                                    />
+                                    <a
+                                      href="https://t.me/stablemakeup"
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-sm text-blue-500 underline"
+                                    >
+                                      문의하기
+                                    </a>
+                                  </div>
+
+                                </div>
+                              )}
+
+
+
+                              {Number(tradeSummary.totalClearanceAmountUSDT
+                              - tradeSummary.totalSettlementAmount) < 50 && (
                                 <div className="flex flex-row items-center justify-center gap-2">
                                   <Image
                                     src="/icon-warning.png"
@@ -3581,54 +3635,16 @@ const [tradeSummary, setTradeSummary] = useState({
                                     height={20}
                                     className="w-5 h-5"
                                   />
-                                  <span className="text-sm text-red-500">
-                                    가맹점 보유금이 부족합니다. 보유금이 50 USDT 미만이면 판매가 중지됩니다.
-                                  </span>
+                                  <div className="text-sm text-red-500">
+                                    가맹점 보유금이 부족합니다. 보유금을 충전하지 않으면 판매가 불가능합니다.
+                                  </div>
                                 </div>
-
-                                {/* telegram link */}
-                                <div className="flex flex-row items-center justify-center gap-2">
-                                  <Image
-                                    src="/icon-telegram.png"
-                                    alt="Telegram"
-                                    width={20}
-                                    height={20}
-                                    className="w-5 h-5"
-                                  />
-                                  <a
-                                    href="https://t.me/stablemakeup"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-sm text-blue-500 underline"
-                                  >
-                                    문의하기
-                                  </a>
-                                </div>
-
-                              </div>
-                            )}
-
-
-
-                            {Number(tradeSummary.totalClearanceAmountUSDT
-                             - tradeSummary.totalSettlementAmount) < 50 && (
-                              <div className="flex flex-row items-center justify-center gap-2">
-                                <Image
-                                  src="/icon-warning.png"
-                                  alt="Warning"
-                                  width={20}
-                                  height={20}
-                                  className="w-5 h-5"
-                                />
-                                <div className="text-sm text-red-500">
-                                  가맹점 보유금이 부족합니다. 보유금을 충전하지 않으면 판매가 불가능합니다.
-                                </div>
-                              </div>
-                            )}
+                              )}
 
 
 
 
+                            </div>
                           </div>
 
 
