@@ -801,18 +801,46 @@ export default function Index({ params }: any) {
   
 
 
-const [searchBuyer, setSearchBuyer] = useState("");
+  const [searchBuyer, setSearchBuyer] = useState("");
 
-const [searchDepositName, setSearchDepositName] = useState("");
+  const [searchDepositName, setSearchDepositName] = useState("");
 
 
-// search store bank account number
-const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState("");
+  // search store bank account number
+  const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState("");
 
-  
+    
 
 
   const [searchMyOrders, setSearchMyOrders] = useState(false);
+
+
+
+
+  // search form date to date
+  const [searchFromDate, setSearchFormDate] = useState("");
+  // set today's date in YYYY-MM-DD format
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+    setSearchFormDate(formattedDate);
+  }, []);
+
+
+
+
+  const [searchToDate, setSearchToDate] = useState("");
+
+  // set today's date in YYYY-MM-DD format
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+    setSearchToDate(formattedDate);
+  }, []);
+
+
+
+
 
 
 
@@ -981,7 +1009,8 @@ const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState
 
                     searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
-
+                    fromDate: searchFromDate,
+                    toDate: searchToDate,
 
                   }
                 ),
@@ -1107,6 +1136,10 @@ const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState
               searchDepositName: searchDepositName,
 
               searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+              fromDate: searchFromDate,
+              toDate: searchToDate,
+
             }
           )
         }).then(async (response) => {
@@ -1369,6 +1402,10 @@ const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState
                   searchDepositName: searchDepositName,
 
                   searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+                  fromDate: searchFromDate,
+                  toDate: searchToDate,
+
                 }
               ),
             })
@@ -1580,6 +1617,9 @@ const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState
 
               searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
+              fromDate: searchFromDate,
+              toDate: searchToDate,              
+
               
             }
           ),
@@ -1744,6 +1784,11 @@ const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState
               searchDepositName: searchDepositName,
 
               searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+
+              fromDate: searchFromDate,
+              toDate: searchToDate,
+
             }
           ),
         })
@@ -1904,6 +1949,10 @@ const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState
 
               searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
+
+              fromDate: searchFromDate,
+              toDate: searchToDate,              
+
             }
 
         ),
@@ -2002,6 +2051,11 @@ const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState
     latestBuyOrder,
     searchStorecode,
     params.agentcode,
+
+    searchFromDate,
+    searchToDate,
+
+
 ]);
 
 
@@ -2036,6 +2090,10 @@ const fetchBuyOrders = async () => {
         searchDepositName: searchDepositName,
 
         searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+
+        fromDate: searchFromDate,
+        toDate: searchToDate,        
 
       }
 
@@ -2131,6 +2189,9 @@ const fetchBuyOrders = async () => {
           searchDepositName: searchDepositName,
 
           searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+          fromDate: searchFromDate,
+          toDate: searchToDate,
         })
       });
       if (!response.ok) {
@@ -2156,7 +2217,11 @@ const fetchBuyOrders = async () => {
 
       getTradeSummary();
 
-    } , [address, searchMyOrders, searchStorecode,]);
+    } , [address, searchMyOrders, searchStorecode,
+
+        searchFromDate,
+        searchToDate,
+    ]);
 
 
     ///console.log('tradeSummary', tradeSummary);
@@ -2556,14 +2621,14 @@ const fetchBuyOrders = async () => {
 
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 거래금액(원)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
+                  <div className="text-xl font-semibold text-yellow-600">
                     {tradeSummary.totalKrwAmount?.toLocaleString()} 원
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 거래량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
+                  <div className="text-xl font-semibold text-green-600">
                     {tradeSummary.totalUsdtAmount?.toLocaleString()} USDT
                   </div>
                 </div>
@@ -2583,40 +2648,26 @@ const fetchBuyOrders = async () => {
 
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 정산금액(원)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
+                  <div className="text-xl font-semibold text-yellow-600">
                     {tradeSummary.totalSettlementAmountKRW?.toLocaleString()} 원
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 정산량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
+                  <div className="text-xl font-semibold text-green-600">
                     {tradeSummary.totalSettlementAmount?.toLocaleString()} USDT
-                  </div>
-                </div>
-              </div>
-
-
-              {/* divider */}
-              <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
-              <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
-
-              <div className="w-full flex flex-row items-center justify-center gap-2">
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 정산수(건)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalSettlementCount?.toLocaleString()} 건
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 수수료금액(원)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
+                  <div className="text-xl font-semibold text-yellow-600">
                     {tradeSummary.totalFeeAmountKRW?.toLocaleString()} 원
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 수수료수량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
+                  <div className="text-xl font-semibold text-green-600">
                     {tradeSummary.totalFeeAmount?.toLocaleString()} USDT
                   </div>
                 </div>
@@ -2731,6 +2782,46 @@ const fetchBuyOrders = async () => {
                 </div>
 
 
+
+
+                {/* serach fromDate and toDate */}
+                {/* DatePicker for fromDate and toDate */}
+                <div className="flex flex-col xl:flex-row items-center gap-2">
+                  <div className="flex flex-row items-center gap-2">
+                    <Image
+                      src="/icon-calendar.png"
+                      alt="Calendar"
+                      width={20}
+                      height={20}
+                      className="rounded-lg w-5 h-5"
+                    />
+                    <input
+                      type="date"
+                      value={searchFromDate}
+                      onChange={(e) => setSearchFormDate(e.target.value)}
+                      className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                    />
+                  </div>
+
+                  <div className="flex flex-row items-center gap-2">
+                    <Image
+                      src="/icon-calendar.png"
+                      alt="Calendar"
+                      width={20}
+                      height={20}
+                      className="rounded-lg w-5 h-5"
+                    />
+                    <input
+                      type="date"
+                      value={searchToDate}
+                      onChange={(e) => setSearchToDate(e.target.value)}
+                      className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                    />
+                  </div>
+                </div>
+
+
+
                 {/* search depositName */}
                 <div className="flex flex-col xl:flex-row items-center gap-2">
 
@@ -2829,6 +2920,7 @@ const fetchBuyOrders = async () => {
                         }}
                       >
                         <tr>
+                        
                           <th className="p-2">
                             {TID} / 구매신청시간
                           </th>
@@ -2849,6 +2941,14 @@ const fetchBuyOrders = async () => {
 
                       {/* if my trading, then tr has differenc color */}
                       <tbody>
+
+                        {buyOrders.length === 0 && (
+                          <tr>
+                            <td colSpan={9} className="p-4 text-center text-zinc-500">
+                              거래내역이 없습니다.
+                            </td>
+                          </tr>
+                        )}
 
                         {buyOrders.map((item, index) => (
 
@@ -3049,7 +3149,7 @@ const fetchBuyOrders = async () => {
                                 flex flex-col gap-2 items-center justify-center">
 
                                 <div className="flex flex-col gap-2 items-end justify-center">
-                                  <span className="text-lg text-zinc-500 font-semibold"
+                                  <span className="text-lg text-yellow-600 font-semibold"
                                     style={{
                                       fontFamily: 'monospace',
                                     }}
@@ -3070,7 +3170,7 @@ const fetchBuyOrders = async () => {
                                   }}
                                 >
                                   {
-                                    Number(item.rate).toFixed(2)
+                                    Number(item.rate)
                                     //Number(item.krwAmount / item.usdtAmount).toFixed(2)
                                   }
                                 </span>
@@ -3122,7 +3222,7 @@ const fetchBuyOrders = async () => {
                                     </span>
                                   )}
                                
-                                  <div className=" text-green-600 text-xl font-semibold"
+                                  <div className=" text-yellow-600 text-xl font-semibold"
                                     style={{
                                       fontFamily: 'monospace',
                                     }}
