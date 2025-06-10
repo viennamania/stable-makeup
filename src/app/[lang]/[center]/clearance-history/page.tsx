@@ -1670,7 +1670,19 @@ export default function Index({ params }: any) {
     }
       */
 
+    if (!address) {
+      toast.error('Please connect your wallet');
+      return;
+    }
+    if (isWithoutEscrow && balance < paymentAmountUsdt) {
+      toast.error(Insufficient_balance);
+      return;
+    }
 
+    if (!isWithoutEscrow && escrowBalance < paymentAmountUsdt) {
+      toast.error(Escrow_balance_is_less_than_payment_amount);
+      return;
+    }
 
     if (confirmingPayment[index]) {
       return;
@@ -3310,7 +3322,7 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
 
-                <div className="w-full flex flex-col xl:flex-row items-start justify-between gap-3">
+                <div className="w-full flex flex-col xl:flex-row items-start justify-between gap-5">
 
          
                   <div className="hidden flex-row items-start gap-3">
@@ -3551,6 +3563,22 @@ const [tradeSummary, setTradeSummary] = useState({
                               {' '}
                               <span className="text-sm">원</span>
                             </div>
+
+                            {Number(tradeSummary.totalClearanceAmountUSDT
+                             - tradeSummary.totalSettlementAmount) < 100 && (
+                              <div className="flex flex-row items-center justify-center gap-2">
+                                <Image
+                                  src="/icon-warning.png"
+                                  alt="Warning"
+                                  width={20}
+                                  height={20}
+                                  className="w-5 h-5"
+                                />
+                                <div className="text-sm text-red-500">
+                                  가맹점 보유금이 부족합니다. 보유금을 충전하지 않으면 판매가 불가능합니다.
+                                </div>
+                              </div>
+                            )}
 
 
                           </div>
