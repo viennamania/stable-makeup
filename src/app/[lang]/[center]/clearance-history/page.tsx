@@ -3564,8 +3564,54 @@ const [tradeSummary, setTradeSummary] = useState({
                               <span className="text-sm">원</span>
                             </div>
 
+                            {
+                            Number(tradeSummary.totalClearanceAmountUSDT
+                             - tradeSummary.totalSettlementAmount) >= 50
+                            &&
+                            Number(tradeSummary.totalClearanceAmountUSDT
+                             - tradeSummary.totalSettlementAmount) < 1000
+                             && (
+                              <div className="flex flex-col items-center justify-center gap-2">
+
+                                <div className="flex flex-row items-center justify-center gap-2">
+                                  <Image
+                                    src="/icon-warning.png"
+                                    alt="Warning"
+                                    width={20}
+                                    height={20}
+                                    className="w-5 h-5"
+                                  />
+                                  <span className="text-sm text-red-500">
+                                    가맹점 보유금이 부족합니다. 보유금이 50 USDT 미만이면 판매가 중지됩니다.
+                                  </span>
+                                </div>
+
+                                {/* telegram link */}
+                                <div className="flex flex-row items-center justify-center gap-2">
+                                  <Image
+                                    src="/icon-telegram.png"
+                                    alt="Telegram"
+                                    width={20}
+                                    height={20}
+                                    className="w-5 h-5"
+                                  />
+                                  <a
+                                    href="https://t.me/stablemakeup"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-sm text-blue-500 underline"
+                                  >
+                                    문의하기
+                                  </a>
+                                </div>
+
+                              </div>
+                            )}
+
+
+
                             {Number(tradeSummary.totalClearanceAmountUSDT
-                             - tradeSummary.totalSettlementAmount) < 100 && (
+                             - tradeSummary.totalSettlementAmount) < 50 && (
                               <div className="flex flex-row items-center justify-center gap-2">
                                 <Image
                                   src="/icon-warning.png"
@@ -3579,6 +3625,8 @@ const [tradeSummary, setTradeSummary] = useState({
                                 </div>
                               </div>
                             )}
+
+
 
 
                           </div>
