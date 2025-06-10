@@ -481,10 +481,10 @@ export default function Index({ params }: any) {
   
 
 
-    const [rate, setRate] = useState(1480);
+    const [rate, setRate] = useState(1380);
 
 
-
+    /*
     const [usdtPrice, setUsdtPrice] = useState(0);
     useEffect(() => {
 
@@ -520,6 +520,7 @@ export default function Index({ params }: any) {
     }
 
     , []);
+    */
 
 
 
