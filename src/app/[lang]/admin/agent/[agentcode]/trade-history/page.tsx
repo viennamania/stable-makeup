@@ -2672,8 +2672,6 @@ const fetchBuyOrders = async () => {
                   </div>
                 </div>
               </div>
-
-
               
             </div>
 

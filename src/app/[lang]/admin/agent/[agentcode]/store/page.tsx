@@ -881,6 +881,32 @@ export default function Index({ params }: any) {
 
   
 
+    // search form date to date
+    const [searchFromDate, setSearchFormDate] = useState("");
+    // set today's date in YYYY-MM-DD format
+    useEffect(() => {
+      const today = new Date();
+      const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+      setSearchFormDate(formattedDate);
+    }, []);
+  
+  
+  
+  
+    const [searchToDate, setSearchToDate] = useState("");
+  
+    // set today's date in YYYY-MM-DD format
+    useEffect(() => {
+      const today = new Date();
+      const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+      setSearchToDate(formattedDate);
+    }, []);
+  
+
+
+
+
+
 
   const [storeAdminWalletAddress, setStoreAdminWalletAddress] = useState("");
 
@@ -1159,6 +1185,81 @@ export default function Index({ params }: any) {
 
 
   
+
+
+
+
+
+    const [tradeSummary, setTradeSummary] = useState({
+      totalCount: 0,
+      totalKrwAmount: 0,
+      totalUsdtAmount: 0,
+      totalSettlementCount: 0,
+      totalSettlementAmount: 0,
+      totalSettlementAmountKRW: 0,
+      totalFeeAmount: 0,
+      totalFeeAmountKRW: 0,
+      orders: [] as BuyOrder[],
+    });
+    const [loadingTradeSummary, setLoadingTradeSummary] = useState(false);
+
+
+    const getTradeSummary = async () => {
+      if (!address) {
+        return;
+      }
+      setLoadingTradeSummary(true);
+      const response = await fetch('/api/summary/getTradeSummary', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          agentcode: params.agentcode,
+          //storecode: searchStorecode,
+          walletAddress: address,
+          searchMyOrders: searchMyOrders,
+          searchOrderStatusCompleted: true,
+          //searchBuyer: searchBuyer,
+          //searchDepositName: searchDepositName,
+
+          //searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+          fromDate: searchFromDate,
+          toDate: searchToDate,
+        })
+      });
+      if (!response.ok) {
+        setLoadingTradeSummary(false);
+        toast.error('Failed to fetch trade summary');
+        return;
+      }
+      const data = await response.json();
+      //console.log('getTradeSummary data', data);
+      setTradeSummary(data.result);
+      setLoadingTradeSummary(false);
+      return data.result;
+    }
+
+
+
+
+    useEffect(() => {
+
+      if (!address) {
+        return;
+      }
+
+      getTradeSummary();
+
+    } , [address, searchMyOrders,
+
+        searchFromDate,
+        searchToDate,
+    ]);
+
+
+
 
 
   // check table view or card view
@@ -1449,6 +1550,82 @@ export default function Index({ params }: any) {
 
 
 
+
+            {/* trade summary */}
+
+            <div className="flex flex-col xl:flex-row items-center justify-between gap-2
+              w-full
+              bg-zinc-100/50
+              p-4 rounded-lg shadow-md
+              ">
+
+              <div className="w-full flex flex-row items-center justify-center gap-2">
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 거래수(건)</div>
+                  <div className="text-xl font-semibold text-zinc-500">
+                    {tradeSummary.totalCount?.toLocaleString()} 건
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 거래금액(원)</div>
+                  <div className="text-xl font-semibold text-yellow-600">
+                    {tradeSummary.totalKrwAmount?.toLocaleString()} 원
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 거래량(USDT)</div>
+                  <div className="text-xl font-semibold text-green-600">
+                    {tradeSummary.totalUsdtAmount?.toLocaleString()} USDT
+                  </div>
+                </div>
+              </div>
+
+              {/* divider */}
+              <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
+              <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
+
+              <div className="w-full flex flex-row items-center justify-center gap-2">
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 정산수(건)</div>
+                  <div className="text-xl font-semibold text-zinc-500">
+                    {tradeSummary.totalSettlementCount?.toLocaleString()} 건
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 정산금액(원)</div>
+                  <div className="text-xl font-semibold text-yellow-600">
+                    {tradeSummary.totalSettlementAmountKRW?.toLocaleString()} 원
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 정산량(USDT)</div>
+                  <div className="text-xl font-semibold text-green-600">
+                    {tradeSummary.totalSettlementAmount?.toLocaleString()} USDT
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 수수료금액(원)</div>
+                  <div className="text-xl font-semibold text-yellow-600">
+                    {tradeSummary.totalFeeAmountKRW?.toLocaleString()} 원
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 수수료수량(USDT)</div>
+                  <div className="text-xl font-semibold text-green-600">
+                    {tradeSummary.totalFeeAmount?.toLocaleString()} USDT
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+
+
+
+
               <div className="w-full flex flex-row items-center justify-end gap-2">
 
 
@@ -1539,6 +1716,50 @@ export default function Index({ params }: any) {
                     {insertingStore ? '가맹점 추가 중...' : '가맹점 추가'}
                   </button>
                 </div>
+
+
+
+
+                {/* serach fromDate and toDate */}
+                {/* DatePicker for fromDate and toDate */}
+                <div className="flex flex-col xl:flex-row items-center gap-2">
+                  <div className="flex flex-row items-center gap-2">
+                    <Image
+                      src="/icon-calendar.png"
+                      alt="Calendar"
+                      width={20}
+                      height={20}
+                      className="rounded-lg w-5 h-5"
+                    />
+                    <input
+                      type="date"
+                      value={searchFromDate}
+                      onChange={(e) => setSearchFormDate(e.target.value)}
+                      className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                    />
+                  </div>
+
+                  <div className="flex flex-row items-center gap-2">
+                    <Image
+                      src="/icon-calendar.png"
+                      alt="Calendar"
+                      width={20}
+                      height={20}
+                      className="rounded-lg w-5 h-5"
+                    />
+                    <input
+                      type="date"
+                      value={searchToDate}
+                      onChange={(e) => setSearchToDate(e.target.value)}
+                      className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                    />
+                  </div>
+                </div>
+
+
+
+
+
 
                 {/* search bar */}
                 {/* searchStore */}
@@ -1870,7 +2091,7 @@ export default function Index({ params }: any) {
 
                                 <div className="flex flex-col items-end gap-2">
 
-                                  <span className="text-lg text-gray-500 font-semibold"
+                                  <span className="text-lg text-yellow-600 font-semibold"
                                     style={{ fontFamily: 'monospace' }}
                                   >
                                     {
@@ -1878,7 +2099,7 @@ export default function Index({ params }: any) {
                                       ?.toLocaleString('ko-KR')
                                     }{' '}원
                                   </span>
-                                  <span className="text-lg text-gray-500 font-semibold"
+                                  <span className="text-lg text-green-600 font-semibold"
                                     style={{ fontFamily: 'monospace' }}
                                   >
                                     {
@@ -1926,7 +2147,7 @@ export default function Index({ params }: any) {
                               <div className="w-full flex flex-row items-center justify-center gap-2">
 
                                 <div className="w-full flex flex-col items-end gap-2">
-                                  <span className="text-xl text-blue-500 font-bold"
+                                  <span className="text-xl text-yellow-600 font-bold"
                                     style={{ fontFamily: 'monospace' }}
                                   >
                                     {
@@ -1934,7 +2155,7 @@ export default function Index({ params }: any) {
                                         ?.toLocaleString('ko-KR')
                                     }{' '}원
                                   </span>
-                                  <span className="text-lg text-gray-500 font-semibold"
+                                  <span className="text-lg text-green-600 font-semibold"
                                     style={{ fontFamily: 'monospace' }}
                                   >
                                     {
@@ -1946,7 +2167,7 @@ export default function Index({ params }: any) {
 
                                 <div className="w-full flex flex-col items-end gap-2">
 
-                                  <span className="text-lg text-gray-500 font-semibold"
+                                  <span className="text-lg text-yellow-600 font-semibold"
                                     style={{ fontFamily: 'monospace' }}
                                   >
                                     {
@@ -1954,7 +2175,7 @@ export default function Index({ params }: any) {
                                         ?.toLocaleString('ko-KR')
                                     }{' '}원
                                   </span>
-                                  <span className="text-lg text-gray-500 font-semibold"
+                                  <span className="text-lg text-green-600 font-semibold"
                                     style={{ fontFamily: 'monospace' }}
                                   >
                                     {
