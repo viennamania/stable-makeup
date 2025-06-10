@@ -1886,50 +1886,6 @@ export default function Index({ params }: any) {
                 </div>
 
 
-
-
-
-                <div className="flex flex-col items-start justify-start space-y-2">
-                  <div className="flex flex-row items-center justify-center gap-2">
-                      <Image
-                          src="/icon-shield.png"
-                          alt="Wallet"
-                          width={100}
-                          height={100}
-                          className="w-6 h-6"
-                      />
-                      <span className="text-sm text-zinc-500">
-                        가맹점 정산용 USDT통장
-                      </span>
-                      <button
-                          className="text-lg text-zinc-600 underline"
-                          onClick={() => {
-                              navigator.clipboard.writeText(store?.settlementWalletAddress || "");
-                              toast.success(Copied_Wallet_Address);
-                          } }
-                      >
-                          {store?.settlementWalletAddress?.substring(0, 6)}...{store?.settlementWalletAddress?.substring(store?.settlementWalletAddress.length - 4)}
-                      </button>
-
-
-                  </div>
-
-                  <div className="flex flex-row items-center justify-center gap-2">
-                      <span className="text-sm text-zinc-500">
-                          잔액(USDT)
-                      </span>
-                      <span className="text-2xl xl:text-4xl font-semibold text-green-600">
-                          {
-                            (Number(settlementWalletBalance || 0).toFixed(2))
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                          }
-                      </span>
-                      {' '}
-                      <span className="text-sm">USDT</span>
-                  </div>
-                </div>
-
-
               </div>
 
 
@@ -2090,33 +2046,41 @@ export default function Index({ params }: any) {
                         tradeSummary.totalClearanceAmountUSDT - tradeSummary.totalSettlementAmount
                         */}
 
-                        <div className="flex flex-row items-center justify-center gap-5
+                        <div className="flex flex-col xl:flex-row items-center justify-between gap-5
                           border border-zinc-300/50
                           bg-white/50
                           p-4 rounded-lg shadow-md
                           w-full xl:w-1/2
                           ">
-                          <div className="flex flex-row items-center justify-center gap-2">
-                            <div className="flex flex-col items-center">
-                                <span className="text-sm text-zinc-500">
-                                    가맹점 보유금(원)
-                                </span>
-                                <div className="flex flex-row items-center gap-2">
-                                  <span className="text-xl xl:text-2xl font-semibold text-yellow-600">
-                                      {
-                                        (Number(tradeSummary.totalClearanceAmount - tradeSummary.totalSettlementAmountKRW).toFixed(0))
-                                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                                      }
+                          
+                          <div className="w-full flex flex-row items-center justify-end gap-5">
+
+                            <Image
+                              src="/icon-escrow.jpeg"
+                              alt="Escrow"
+                              width={100}
+                              height={100}
+                              className="w-18 h-18 rounded-full"
+                            />
+
+
+
+                            <div className="flex flex-col items-center justify-end gap-2">
+
+                                <div className="flex flex-row items-center justify-center gap-2">
+                                  <Image
+                                      src="/icon-info.png"
+                                      alt="Info"
+                                      width={30}
+                                      height={30}
+                                      className="w-6 h-6"
+                                  />
+                                  <span className="text-sm text-zinc-500">
+                                      가맹점 보유금
                                   </span>
-                                  <span className="text-sm">원</span>
                                 </div>
-                            </div>
-                            <div className="flex flex-col items-center">
-                                <span className="text-sm text-zinc-500">
-                                    가맹점 보유금(USDT)
-                                </span>
                                 <div className="flex flex-row items-center gap-2">
-                                  <span className="text-xl xl:text-2xl font-semibold text-green-600">
+                                  <span className="text-2xl xl:text-4xl font-semibold text-green-600">
                                       {
                                         (Number(tradeSummary.totalClearanceAmountUSDT - tradeSummary.totalSettlementAmount).toFixed(2))
                                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -2124,8 +2088,91 @@ export default function Index({ params }: any) {
                                   </span>
                                   <span className="text-sm">USDT</span>
                                 </div>
+
+                                <div className="flex flex-row items-center gap-2">
+                                  <span className="text-2xl xl:text-4xl font-semibold text-yellow-600">
+                                      {
+                                        (Number(tradeSummary.totalClearanceAmount - tradeSummary.totalSettlementAmountKRW).toFixed(0))
+                                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                      }
+                                  </span>
+                                  <span className="text-sm">원</span>
+                                </div>
+
+                                {
+                                Number(tradeSummary.totalClearanceAmountUSDT
+                                - tradeSummary.totalSettlementAmount) >= 50
+                                &&
+                                Number(tradeSummary.totalClearanceAmountUSDT
+                                - tradeSummary.totalSettlementAmount) < 1000
+                                && (
+                                  <div className="flex flex-col items-center justify-center gap-2">
+
+                                    <div className="flex flex-row items-center justify-center gap-2">
+                                      <Image
+                                        src="/icon-warning.png"
+                                        alt="Warning"
+                                        width={20}
+                                        height={20}
+                                        className="w-5 h-5"
+                                      />
+                                      <span className="text-sm text-red-500">
+                                        가맹점 보유금이 부족합니다. 보유금이 50 USDT 미만이면 판매가 중지됩니다.
+                                        <br/>회수신청을 통해 가맹점 보유금을 충전해주세요.
+                                      </span>
+                                    </div>
+
+                                  </div>
+                                )}
+
+                            </div>
+
+                          </div>
+
+
+                          <div className="w-full flex flex-col items-center justify-end gap-2">
+
+                            <div className="flex flex-row items-center justify-center gap-2">
+                                <Image
+                                    src="/icon-shield.png"
+                                    alt="Wallet"
+                                    width={100}
+                                    height={100}
+                                    className="w-6 h-6"
+                                />
+                                <span className="text-sm text-zinc-500">
+                                  가맹점 정산용 USDT통장
+                                </span>
+                                <button
+                                    className="text-lg text-zinc-600 underline"
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(store?.settlementWalletAddress || "");
+                                        toast.success(Copied_Wallet_Address);
+                                    } }
+                                >
+                                    {store?.settlementWalletAddress?.substring(0, 6)}...{store?.settlementWalletAddress?.substring(store?.settlementWalletAddress.length - 4)}
+                                </button>
+
+
+                            </div>
+
+                            <div className="flex flex-row items-center justify-center gap-2">
+                                <span className="text-sm text-zinc-500">
+                                    잔액(USDT)
+                                </span>
+                                <span className="text-2xl xl:text-4xl font-semibold text-green-600">
+                                    {
+                                      (Number(settlementWalletBalance || 0).toFixed(2))
+                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                    }
+                                </span>
+                                {' '}
+                                <span className="text-sm">USDT</span>
                             </div>
                           </div>
+
+
+
 
                         </div>
 
