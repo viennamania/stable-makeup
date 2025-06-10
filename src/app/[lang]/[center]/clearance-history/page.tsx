@@ -3530,7 +3530,7 @@ const [tradeSummary, setTradeSummary] = useState({
                               {/* 가맹점 보유금 */}
                               <div className="flex flex-row items-center justify-center gap-2">
                                   <Image
-                                      src="/icon-shield.png"
+                                      src="/icon-info.png"
                                       alt="Wallet"
                                       width={100}
                                       height={100}
@@ -3543,7 +3543,7 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
 
-                              <div className="w-full flex flex-row items-end justify-center gap-2">
+                              <div className="w-full flex flex-row items-center justify-end gap-2">
 
                                 <span className="text-2xl xl:text-4xl font-semibold text-green-600"
                                   style={{ fontFamily: 'monospace' }}
@@ -3560,7 +3560,7 @@ const [tradeSummary, setTradeSummary] = useState({
                               </div>
 
                               {/* 잔액 원 */}
-                              <div className="w-full flex flex-row items-end justify-center gap-2">
+                              <div className="w-full flex flex-row items-center justify-end gap-2">
 
                                 <span className="text-2xl xl:text-4xl font-semibold text-yellow-600"
                                   style={{ fontFamily: 'monospace' }}
