@@ -3999,7 +3999,7 @@ export async function getAllTradesByAdmin(
 
 
   
-
+  /*
   // get total count of orders
   const totalCount = await collection.countDocuments(
     {
@@ -4031,6 +4031,7 @@ export async function getAllTradesByAdmin(
  
     }
   );
+  */
 
 
 
@@ -4039,7 +4040,7 @@ export async function getAllTradesByAdmin(
   // sum of krwAmount
   // TypeError: Cannot read properties of undefined (reading 'totalKrwAmount')
 
-  const totalKrwAmount = await collection.aggregate([
+  const totalResult = await collection.aggregate([
     {
       $match: {
         
@@ -4073,7 +4074,20 @@ export async function getAllTradesByAdmin(
       $group: {
         _id: null,
         
+
+        totalCount: { $sum: 1 },
         totalKrwAmount: { $sum: '$krwAmount' },
+        totalUsdtAmount: { $sum: '$usdtAmount' },
+
+        totalSettlementCount: { $sum: 1 },
+        totalSettlementAmount: { $sum: { $toDouble: '$settlement.settlementAmount' } },
+        totalSettlementAmountKRW: { $sum: { $toDouble: '$settlement.settlementAmountKRW' } },
+
+        totalFeeAmount: { $sum: { $toDouble: '$settlement.feeAmount' } },
+        totalFeeAmountKRW: { $sum: { $toDouble: '$settlement.feeAmountKRW' } },
+
+        totalAgentFeeAmount: { $sum: '$settlement.agentFeeAmount' },
+        totalAgentFeeAmountKRW: { $sum: { $toDouble: '$settlement.agentFeeAmountKRW' } },
 
       }
     }
@@ -4082,7 +4096,7 @@ export async function getAllTradesByAdmin(
   /////console.log('getAllTradesByAdmin totalKrwAmount: ' + JSON.stringify(totalKrwAmount));
 
 
-
+  /*
   // totalUsdtAmount
   const totalUsdtAmount = await collection.aggregate([
     {
@@ -4116,12 +4130,13 @@ export async function getAllTradesByAdmin(
       }
     }
   ]).toArray();
+  */
 
 
 
 
 
-
+  /*
   // totalSettlementCount
   const totalSettlementCount = await collection.aggregate([
     {
@@ -4158,9 +4173,12 @@ export async function getAllTradesByAdmin(
       }
     }
   ]).toArray();
+  */
+
+
+  /*
   // totalSettlementAmount
   // settlement.settlementAmount
-  
   const totalSettlementAmount = await collection.aggregate([
     {
       $match: {
@@ -4193,7 +4211,9 @@ export async function getAllTradesByAdmin(
       }
     }
   ]).toArray();
+  */
 
+  /*
   // totalSettlementAmountKRW
   const totalSettlementAmountKRW = await collection.aggregate([
     {
@@ -4228,9 +4248,10 @@ export async function getAllTradesByAdmin(
       }
     }
   ]).toArray();
+  */
   
 
-
+  /*
   // total feeAmount
   const totalFeeAmount = await collection.aggregate([
     {
@@ -4264,7 +4285,9 @@ export async function getAllTradesByAdmin(
       }
     }
   ]).toArray();
+  */
 
+  /*
   // total feeAmountKRW
   const totalFeeAmountKRW = await collection.aggregate([
     {
@@ -4298,10 +4321,11 @@ export async function getAllTradesByAdmin(
       }
     }
   ]).toArray();
+  */
 
 
 
-
+  /*
   // total agentFeeAmount, agentFeeAmountKRW
   const totalResult = await collection.aggregate([
     {
@@ -4328,6 +4352,7 @@ export async function getAllTradesByAdmin(
       }
     }
   ]).toArray();
+  */
 
 
 
@@ -4338,7 +4363,7 @@ export async function getAllTradesByAdmin(
   //console.log('getAllTradesByAdmin totalSettlementCount: ' + totalSettlementCount[0]?.totalSettlementCount);
 
 
-
+  /*
   return {
     totalCount: totalCount,
     totalKrwAmount: totalKrwAmount ? totalKrwAmount[0]?.totalKrwAmount : 0,
@@ -4352,6 +4377,20 @@ export async function getAllTradesByAdmin(
     totalAgentFeeAmount: totalResult ? totalResult[0]?.totalAgentFeeAmount : 0,
     totalAgentFeeAmountKRW: totalResult ? totalResult[0]?.totalAgentFeeAmountKRW : 0,
 
+    orders: results,
+  };
+  */
+  return {
+    totalCount: totalResult ? totalResult[0]?.totalCount : 0,
+    totalKrwAmount: totalResult ? totalResult[0]?.totalKrwAmount : 0,
+    totalUsdtAmount: totalResult ? totalResult[0]?.totalUsdtAmount : 0,
+    totalSettlementCount: totalResult ? totalResult[0]?.totalSettlementCount : 0,
+    totalSettlementAmount: totalResult ? totalResult[0]?.totalSettlementAmount : 0,
+    totalSettlementAmountKRW: totalResult ? totalResult[0]?.totalSettlementAmountKRW : 0,
+    totalFeeAmount: totalResult ? totalResult[0]?.totalFeeAmount : 0,
+    totalFeeAmountKRW: totalResult ? totalResult[0]?.totalFeeAmountKRW : 0,
+    totalAgentFeeAmount: totalResult ? totalResult[0]?.totalAgentFeeAmount : 0,
+    totalAgentFeeAmountKRW: totalResult ? totalResult[0]?.totalAgentFeeAmountKRW : 0,
     orders: results,
   };
 

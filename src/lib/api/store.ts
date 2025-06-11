@@ -572,11 +572,18 @@ export async function getAllStores(
     page,
     search,
     agentcode,
+
+    fromDate = "",
+    toDate = "",
   }: {
     limit: number;
     page: number;
     search: string;
     agentcode: string;
+
+    fromDate?: string;
+    toDate?: string;
+
   }
 ): Promise<any> {
 

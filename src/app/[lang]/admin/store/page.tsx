@@ -970,12 +970,12 @@ export default function Index({ params }: any) {
 
 
   // search form date to date
-  const [searchFormDate, setSearchFormDate] = useState("");
+  const [searchFromDate, setSearchFromDate] = useState("");
   // from date is not today, but today - 30 days
   useEffect(() => {
     const today = new Date();
     const formattedDate = new Date(today.setDate(today.getDate() - 30)).toISOString().split('T')[0]; // YYYY-MM-DD format
-    setSearchFormDate(formattedDate);
+    setSearchFromDate(formattedDate);
   }, []);
 
 
@@ -1020,6 +1020,9 @@ export default function Index({ params }: any) {
           page: Number(pageValue),
           searchStore: searchStore,
           agentcode: paramAgentcode,
+
+          fromDate: searchFromDate,
+          toDate: searchToDate,
         }
       ),
     });
@@ -1076,7 +1079,9 @@ export default function Index({ params }: any) {
       return;
     }
     fetchAllStore();
-  } , [address, limitValue, pageValue, paramAgentcode]);
+  } , [address, limitValue, pageValue, paramAgentcode,
+    searchFromDate, searchToDate,
+  ]);
 
 
 
@@ -1301,7 +1306,8 @@ export default function Index({ params }: any) {
           searchStoreBankAccountNumber: '',
 
 
-
+          fromDate: searchFromDate,
+          toDate: searchToDate,
 
 
 
@@ -1340,7 +1346,9 @@ export default function Index({ params }: any) {
       return () => clearInterval(interval);
 
 
-    } , [address, searchMyOrders, paramAgentcode]);
+    } , [address, searchMyOrders, paramAgentcode,
+        searchFromDate, searchToDate,
+    ]);
 
 
     
@@ -2078,8 +2086,8 @@ export default function Index({ params }: any) {
                     />
                     <input
                       type="date"
-                      value={searchFormDate}
-                      onChange={(e) => setSearchFormDate(e.target.value)}
+                      value={searchFromDate}
+                      onChange={(e) => setSearchFromDate(e.target.value)}
                       className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
                     />
                   </div>

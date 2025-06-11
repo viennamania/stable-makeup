@@ -16,6 +16,9 @@ export async function POST(request: NextRequest) {
     page,
     searchStore,
     agentcode,
+
+    fromDate = "",
+    toDate = "",
   } = body;
 
   //console.log("getAllStores request body", body);
@@ -27,6 +30,9 @@ export async function POST(request: NextRequest) {
     //search: '',
     search: searchStore || '',
     agentcode: agentcode || '',
+
+    fromDate: fromDate || '',
+    toDate: toDate || '',
   });
 
   ///console.log("getAllStores result", result);
