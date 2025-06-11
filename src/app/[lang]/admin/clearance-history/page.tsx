@@ -2238,7 +2238,7 @@ const fetchBuyOrders = async () => {
       return () => clearInterval(interval);
 
 
-    } , [address, searchMyOrders, params.storecode,
+    } , [address, searchMyOrders, searchStorecode,
         searchFromDate,
         searchToDate,
     ]);
