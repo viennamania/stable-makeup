@@ -2303,8 +2303,8 @@ export default function Index({ params }: any) {
                               </div>
 
                               <div className="flex flex-col items-center justify-center gap-2">
-                                <span>남은금액(원)</span>
-                                <span>남은수량(USDT)</span>
+                                <span>보유금액(원)</span>
+                                <span>보유수량(USDT)</span>
                               </div>
 
                             </div>
@@ -2938,7 +2938,7 @@ export default function Index({ params }: any) {
 
                           <td className="p-2">
 
-                            <div className="w-64 h-52
+                            <div className="w-72 h-52
                             flex flex-col items-between justify-between gap-2">
 
 
@@ -2988,7 +2988,8 @@ export default function Index({ params }: any) {
                                           //Number(item.totalKrwAmountClearanceBalance ? item.totalKrwAmountClearanceBalance : 0)
                                           //  ?.toLocaleString('ko-KR')
 
-                                          Number(item?.totalSettlementAmountKRW - item?.totalKrwAmountClearance || 0)
+                                          //Number(item?.totalSettlementAmountKRW - item?.totalKrwAmountClearance || 0)
+                                          Number(item?.totalKrwAmountClearance - item?.totalSettlementAmountKRW || 0)
                                           ?.toLocaleString('ko-KR')
 
 
@@ -3001,7 +3002,8 @@ export default function Index({ params }: any) {
                                           //////(item.totalUsdtAmountClearanceBalance ? item.totalUsdtAmountClearanceBalance : 0)?.toLocaleString('us-US')
                                         
 
-                                          Number(item?.totalSettlementAmount - item?.totalUsdtAmountClearance || 0)
+                                          //Number(item?.totalSettlementAmount - item?.totalUsdtAmountClearance || 0)
+                                          Number(item?.totalUsdtAmountClearance - item?.totalSettlementAmount || 0)
                                           ?.toLocaleString('us-US')
 
                                         }{' '}USDT

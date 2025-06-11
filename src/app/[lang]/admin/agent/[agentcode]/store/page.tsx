@@ -885,8 +885,14 @@ export default function Index({ params }: any) {
     const [searchFromDate, setSearchFormDate] = useState("");
     // set today's date in YYYY-MM-DD format
     useEffect(() => {
+      //const today = new Date();
+      //const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+
+      // this month first day
       const today = new Date();
-      const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+      const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+      const formattedDate = firstDayOfMonth.toISOString().split('T')[0]; // YYYY-MM-DD format
+
       setSearchFormDate(formattedDate);
     }, []);
   
@@ -1630,7 +1636,7 @@ export default function Index({ params }: any) {
 
 
                 <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">전체수량</div>
+                  <div className="text-sm">전체수</div>
                   <div className="flex flex-row items-center gap-2">
                     {
                       fetchingAllStore ? (
@@ -1648,7 +1654,7 @@ export default function Index({ params }: any) {
                   </div>
                 </div>
 
-
+                {/*
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">검색수량</div>
                   <div className="flex flex-row items-center gap-2">
@@ -1667,13 +1673,15 @@ export default function Index({ params }: any) {
                     }
                   </div>
                 </div>
+                */}
 
               </div>
+               
 
-              <div className="w-full flex flex-col xl:flex-row items-start justify-between gap-5">
+              <div className="w-full flex flex-col xl:flex-row items-center justify-between gap-5">
 
                 {/* 가맹점 추가 input and button */}
-                <div className="flex flex-row items-center gap-2 mt-4">
+                <div className="flex flex-row items-center gap-2">
                   <input
                     disabled={insertingStore}
                     type="text"
