@@ -2354,7 +2354,7 @@ export default function Index({ params }: any) {
                         
 
                             <div className=" h-52
-                              w-32
+                              w-28
                               flex flex-col items-between justify-between gap-2">
 
 
@@ -2510,7 +2510,7 @@ export default function Index({ params }: any) {
                           <td className="p-2">
 
                             <div className="h-52
-                              w-20
+                              w-16 
                               flex flex-col items-between justify-between gap-2">
 
                               <div className="flex flex-col items-center gap-2">
@@ -2572,7 +2572,7 @@ export default function Index({ params }: any) {
                           <td className="
                             p-2">
                             <div className="h-52
-                              w-36
+                              w-28
                               flex flex-col items-between justify-between gap-2">
                               
                               <div className="flex flex-col items-center gap-2">
@@ -2584,10 +2584,6 @@ export default function Index({ params }: any) {
                                   <div className="flex flex-col xl:flex-row items-center gap-2">
                                   {
                                     item?.bankInfo?.bankName
-                                  }
-                                  {' '}
-                                  {
-                                    item?.bankInfo?.accountNumber?.slice(0, 3) + '...'
                                   }
                                   {' '}
                                   {
