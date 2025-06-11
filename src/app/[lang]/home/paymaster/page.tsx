@@ -1680,7 +1680,7 @@ export default function Index({ params }: any) {
 
           const order = data.result;
 
-          router.push('/' + params.lang + '/' + storecode + '/pay-usdt-reverse/' + order._id);
+          router.push('/' + params.lang + '/home/pay-usdt-reverse/' + order._id);
 
 
         } else {
@@ -2000,18 +2000,18 @@ export default function Index({ params }: any) {
               </span>
             </button>
 
-              <div className='flex flex-col xl:flex-row gap-2 items-center justify-start'>
-                <Image
-                  src={storeInfo?.storeLogo || '/logo.png'}
-                  alt="Store Logo"
-                  width={38}
-                  height={38}
-                  className='rounded-lg w-16 h-16 bg-zinc-200'
-                />
-                <span className="text-sm text-zinc-100 font-semibold">
-                  {storeInfo?.storeName}
-                </span>
-              </div>
+            <div className='flex flex-col xl:flex-row gap-2 items-center justify-start'>
+              <Image
+                src={storeInfo?.storeLogo || '/logo.png'}
+                alt="Store Logo"
+                width={38}
+                height={38}
+                className='rounded-lg w-16 h-16 bg-zinc-200'
+              />
+              <span className="text-sm text-zinc-100 font-semibold">
+                {storeInfo?.storeName}
+              </span>
+            </div>
 
             {loadingUser && (
               <div className="flex flex-row items-center justify-center gap-2">
@@ -2140,6 +2140,9 @@ export default function Index({ params }: any) {
 
 
       </div>
+
+
+
 
       {/* USDT 가격 binance market price */}
       <div
