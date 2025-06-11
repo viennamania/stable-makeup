@@ -1844,7 +1844,19 @@ export default function Index({ params }: any) {
                         <th className="p-2">에이전트 수수료(%)</th>
 
 
-                        <th className="p-2">거래수<br/>금액(원)<br/>수량(USDT)</th>
+                        <th className="p-2">
+                          <div className="flex flex-col items-center justify-center gap-2">
+                            <span className="text-center">
+                              거래수(건)
+                            </span>
+                            <span className="text-center">
+                              금액(원)
+                            </span>
+                            <span className="text-center">
+                              수량(USDT)
+                            </span>
+                          </div>
+                        </th>
 
                         <th className="p-2">
                           <div className="flex flex-col items-center justify-center gap-2">
@@ -1870,7 +1882,32 @@ export default function Index({ params }: any) {
                           </div>
                         </th>
 
+                        <th className="p-2">
 
+                          <div className="flex flex-col items-center justify-center gap-2">
+                            <div className="flex flex-row items-center justify-center gap-2">   
+                              <span className="text-center">
+                                청산수(건)
+                              </span>
+                            </div>                       
+                            <div className="flex flex-row items-center justify-center gap-2">
+                              
+                              {/*}
+                              <div className="flex flex-col items-center justify-center gap-2">
+                                <span>금액(원)</span>
+                                <span>수량(USDT)</span>
+                              </div>
+                              */}
+
+                              <div className="flex flex-col items-center justify-center gap-2">
+                                <span>보유금액(원)</span>
+                                <span>보유수량(USDT)</span>
+                              </div>
+
+                            </div>
+
+                          </div>
+                        </th>
 
 
   
@@ -2084,12 +2121,13 @@ export default function Index({ params }: any) {
 
 
                           <td className="p-2">
-                            <div className="flex flex-col items-center justify-center gap-2">
+                            <div className="
+                              w-40 h-36
+                              flex flex-col items-end justify-start gap-2">
 
-                              <div className="flex flex-col items-center justify-center gap-2">
-
-
-                                <div className="flex flex-row items-end gap-2">
+      
+                                <div className="w-full flex flex-row items-center justify-center gap-2
+                                border-b border-gray-300 pb-2">
                                   <span className="text-sm text-gray-500">
                                     {
                                       item.totalPaymentConfirmedCount ? item.totalPaymentConfirmedCount : 0
@@ -2118,21 +2156,20 @@ export default function Index({ params }: any) {
                                 </div>
 
 
-                              </div>
+                        
 
-                              {/* 거래내역 */}
-                              <button
-                                onClick={() => {
-                                  router.push('/' + params.lang + '/admin/agent/' + params.agentcode + '/trade-history?storecode=' + item.storecode);
-                                }}
-                                className="
-                                w-full
-                                bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
-                                hover:bg-[#3167b4]/80"
-                              >
-                                거래내역
-                              </button>
-
+                                {/* 거래내역 */}
+                                <button
+                                  onClick={() => {
+                                    router.push('/' + params.lang + '/admin/agent/' + params.agentcode + '/trade-history?storecode=' + item.storecode);
+                                  }}
+                                  className="
+                                  w-full
+                                  bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                  hover:bg-[#3167b4]/80"
+                                >
+                                  거래내역
+                                </button>
 
                             </div>
                              
@@ -2141,10 +2178,11 @@ export default function Index({ params }: any) {
 
                           <td className="p-2">
                             <div className="
-                              w-80
-                              flex flex-col items-center justify-center gap-2">
+                              w-80 h-36
+                              flex flex-col items-end justify-start gap-2">
 
-                              <div className="w-full flex flex-row items-center justify-center gap-2">
+                              <div className="w-full flex flex-row items-center justify-center gap-2
+                              border-b border-gray-300 pb-2">
                                 <span className="text-sm text-gray-500">
                                   {
                                     item.totalSettlementCount ? item.totalSettlementCount : 0
@@ -2217,7 +2255,116 @@ export default function Index({ params }: any) {
                           </td>
 
 
+                          <td className="p-2">
 
+                            <div className="w-48 h-36
+                            flex flex-col items-end justify-start gap-2">
+
+
+                              <div className="w-full flex flex-col items-center justify-center gap-2">
+
+
+                                <div className="w-full flex flex-row items-center justify-center gap-2
+                                border-b border-gray-300 pb-2">
+                                  <span className="text-sm text-gray-500">
+                                    {
+                                      item.totalPaymentConfirmedClearanceCount ? item.totalPaymentConfirmedClearanceCount : 0
+                                    }{' '}건
+                                  </span>
+                        
+                                </div>
+
+                                <div className="w-full flex flex-row items-center justify-center gap-2">
+
+                                  {/*}
+                                  <div className="w-full flex flex-col items-end justify-center gap-2">
+                        
+                                    <span className="text-lg text-yellow-600 font-semibold"
+                                      style={{ fontFamily: 'monospace' }}
+                                    >
+                                      {
+                                        Number(item.totalKrwAmountClearance ? item.totalKrwAmountClearance : 0)
+                                          ?.toLocaleString('ko-KR')
+                                      }{' '}원
+                                    </span>
+                                    <span className="text-sm text-green-600 font-semibold"
+                                      style={{ fontFamily: 'monospace' }}
+                                    >
+                                      {
+                                        (item.totalUsdtAmountClearance ? item.totalUsdtAmountClearance : 0)?.toLocaleString('us-US')
+                                      }{' '}USDT
+                                    </span>  
+
+                                  </div>
+                                  */}
+
+                            
+
+
+                                  <div className="w-full flex flex-col items-end justify-center gap-2">
+
+                                      <span className="text-lg text-yellow-600 font-semibold"
+                                        style={{ fontFamily: 'monospace' }}
+                                      >
+                                        {
+                                          //Number(item.totalKrwAmountClearanceBalance ? item.totalKrwAmountClearanceBalance : 0)
+                                          //  ?.toLocaleString('ko-KR')
+
+                                          //Number(item?.totalSettlementAmountKRW - item?.totalKrwAmountClearance || 0)
+                                          Number(item?.totalKrwAmountClearance - item?.totalSettlementAmountKRW || 0)
+                                          ?.toLocaleString('ko-KR')
+
+
+                                        }{' '}원
+                                      </span>
+                                      <span className="text-sm text-green-600 font-semibold"
+                                        style={{ fontFamily: 'monospace' }}
+                                      >
+                                        {
+                                          //////(item.totalUsdtAmountClearanceBalance ? item.totalUsdtAmountClearanceBalance : 0)?.toLocaleString('us-US')
+                                        
+
+                                          //Number(item?.totalSettlementAmount - item?.totalUsdtAmountClearance || 0)
+                                          Number(item?.totalUsdtAmountClearance - item?.totalSettlementAmount || 0)
+                                          ?.toLocaleString('us-US')
+
+                                        }{' '}USDT
+                                      </span>
+
+                                  </div>
+
+
+                                </div>
+
+                              </div>
+
+                              {/* 청산하기 button */}
+                              {/*
+                              <button
+                                disabled={!isAdmin || insertingStore}
+                                onClick={() => {
+                                  router.push(
+                                    '/' + params.lang + '/admin/store/' + item.storecode + '/clearance'
+                                  );
+                                }
+                                }
+                                className={`
+                                  ${!isAdmin || insertingStore ? 'opacity-50 cursor-not-allowed' : ''}
+                                  w-full mb-2
+                                  bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                  hover:bg-[#3167b4]/80
+                                `}
+                              >
+                                청산관리
+                              </button>
+                              */}
+
+
+
+                            </div>
+
+
+                          </td>
 
 
 
