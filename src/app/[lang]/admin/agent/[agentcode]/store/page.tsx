@@ -2317,7 +2317,7 @@ export default function Index({ params }: any) {
 
                                         }{' '}원
                                       </span>
-                                      <span className="text-sm text-green-600 font-semibold"
+                                      <span className="text-lg text-green-600 font-semibold"
                                         style={{ fontFamily: 'monospace' }}
                                       >
                                         {
