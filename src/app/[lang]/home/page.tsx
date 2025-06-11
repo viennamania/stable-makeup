@@ -5839,30 +5839,44 @@ const fetchBuyOrders = async () => {
 
 
               <div className="flex flex-row items-center gap-2">
-                  <select
-                    value={limit}
-                    onChange={(e) =>
-                      
-                      router.push(`/${params.lang}/home/buyorder?limit=${Number(e.target.value)}&page=${page}`)
+                <select
+                  value={limit}
+                  onChange={(e) =>
+                    
+                    router.push(`/${params.lang}/home?limit=${Number(e.target.value)}&page=${page}`)
 
-                    }
+                  }
 
-                    className="text-sm bg-zinc-800 text-zinc-200 px-2 py-1 rounded-md"
-                  >
-                    <option value={10}>10</option>
-                    <option value={20}>20</option>
-                    <option value={50}>50</option>
-                    <option value={100}>100</option>
-                  </select>
-                </div>
+                  className="text-sm bg-zinc-800 text-zinc-200 px-2 py-1 rounded-md"
+                >
+                  <option value={10}>10</option>
+                  <option value={20}>20</option>
+                  <option value={50}>50</option>
+                  <option value={100}>100</option>
+                </select>
+              </div>
 
+
+              {/* 처을으로 */}
+              <button
+                disabled={Number(page) <= 1}
+                className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
+                onClick={() => {
+                  
+                  router.push(`/${params.lang}/home?limit=${Number(limit)}&page=1`);
+
+                }
+              }
+              >
+                처음으로
+              </button>
 
               <button
                 disabled={Number(page) <= 1}
                 className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
                 onClick={() => {
                   
-                  router.push(`/${params.lang}/home/buyorder?limit=${Number(limit)}&page=${Number(page) - 1}`);
+                  router.push(`/${params.lang}/home?limit=${Number(limit)}&page=${Number(page) - 1}`);
 
                 }}
               >
@@ -5880,11 +5894,24 @@ const fetchBuyOrders = async () => {
                 className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
                 onClick={() => {
                   
-                  router.push(`/${params.lang}/home/buyorder?limit=${Number(limit)}&page=${Number(page) + 1}`);
+                  router.push(`/${params.lang}/home?limit=${Number(limit)}&page=${Number(page) + 1}`);
 
                 }}
               >
                 다음
+              </button>
+
+              {/* 마지막으로 */}
+              <button
+                disabled={Number(page) >= Math.ceil(Number(totalCount) / Number(limit))}
+                className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
+                onClick={() => {
+                  
+                  router.push(`/${params.lang}/home?limit=${Number(limit)}&page=${Math.ceil(Number(totalCount) / Number(limit))}`);
+
+                }}
+              >
+                마지막으로
               </button>
 
             </div>
