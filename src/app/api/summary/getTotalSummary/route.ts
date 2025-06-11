@@ -125,13 +125,17 @@ export async function POST(request: NextRequest) {
   const totalSettlementAmount = orders?.totalSettlementAmount || 0;
   const totalSettlementAmountKRW = orders?.totalSettlementAmountKRW || 0;
 
+  const totalAgentFeeAmount = orders?.totalAgentFeeAmount || 0;
+  const totalAgentFeeAmountKRW = orders?.totalAgentFeeAmountKRW || 0;
+
+
   const latestTrades = orders?.orders || [];
 
   //console.log("getTotal Summary latestTrades", latestTrades);
 
 
 
-
+  /*
   // only get the latest 5 clearances and privateSale is true for private sales
   const clearances = await getAllTradesByAdmin({
     limit: 5,
@@ -161,6 +165,7 @@ export async function POST(request: NextRequest) {
   const totalSettlementAmountKRWClearances = clearances?.totalSettlementAmountKRW || 0;
   const latestClearances = clearances?.clearances || [];
   //console.log("getTotal Summary latestClearances", latestClearances);
+  */
 
 
 
@@ -186,6 +191,9 @@ export async function POST(request: NextRequest) {
   const totalNumberOfBuyOrders = buyOrders?.totalCount || 0;
   const totalBuyAmount = buyOrders?.totalKrwAmount || 0;
   const totalUsdtAmountBuyOrders = buyOrders?.totalUsdtAmount || 0;
+
+
+
   const latestBuyOrders = buyOrders?.orders || [];
 
 
@@ -205,6 +213,9 @@ export async function POST(request: NextRequest) {
     totalUsdtAmount,
     totalSettlementAmount,
     totalSettlementAmountKRW,
+
+    totalAgentFeeAmount,
+    totalAgentFeeAmountKRW,
 
 
     totalNumberOfBuyOrders,

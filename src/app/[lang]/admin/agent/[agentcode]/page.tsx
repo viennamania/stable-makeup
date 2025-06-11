@@ -1285,7 +1285,8 @@ export default function Index({ params }: any) {
     }
 
     setLoadingSummary(true);
-    const response = await fetch('/api/summary/getTotalSummaryForAgent', {
+    //const response = await fetch('/api/summary/getTotalSummaryForAgent', {
+    const response = await fetch('/api/summary/getTotalSummary', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
@@ -2222,19 +2223,24 @@ export default function Index({ params }: any) {
                         <td className="px-4 py-2">
                           {store.totalBuyerCount > 0 ? Number(store.totalBuyerCount)?.toLocaleString() : 0} 명
                           <br/>
-                          {store.totalTradeCount > 0 ? Number(store.totalTradeCount)?.toLocaleString() : 0} 건
+                          {store.totalPaymentConfirmedCount > 0 ? Number(store.totalPaymentConfirmedCount)?.toLocaleString() : 0} 건
                         </td>
-                        <td className="px-4 py-2">{
+
+                        <td className="px-4 py-2
+                        text-right">{
                           store.totalKrwAmount > 0 ? Number(store.totalKrwAmount)?.toLocaleString() : 0} 원
                           <br/>
                           {store.totalUsdtAmount > 0 ? Number(store.totalUsdtAmount)?.toLocaleString() : 0} USDT
                         </td>
-                        <td className="px-4 py-2">
+                        <td className="px-4 py-2
+                        text-right">
                           {store.totalSettlementAmountKRW > 0 ? Number(store.totalSettlementAmountKRW)?.toLocaleString() : 0} 원
                           <br/>
                           {store.totalSettlementAmount > 0 ? Number(store.totalSettlementAmount)?.toLocaleString() : 0} USDT
                         </td>
-                        <td className="px-4 py-2">
+                        <td className="px-4 py-2
+                        text-right
+                        ">
                           {store.totalAgentFeeAmountKRW > 0 ? Number(store.totalAgentFeeAmountKRW)?.toLocaleString() : 0} 원
                           <br/>
                           {store.totalAgentFeeAmount > 0 ? Number(store.totalAgentFeeAmount)?.toLocaleString() : 0} USDT
@@ -2465,44 +2471,68 @@ export default function Index({ params }: any) {
 
               </div>
 
-              <div className="w-full flex flex-row items-center justify-center gap-2
+              <div className="w-full flex flex-col items-center justify-center gap-2
                 bg-white shadow-md rounded-lg p-4 mt-4">
 
-                <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    <h2 className="text-lg font-semibold">총 거래금액(원)</h2>
-                    <p className="text-lg text-zinc-500">
-                      {Number(totalSummary.totalBuyAmountKrw)?.toLocaleString()} 원
-                    </p>
-                  </div>
-
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    <h2 className="text-lg font-semibold">총 거래량(USDT)</h2>
-                    <p className="text-lg text-zinc-500">
-                      {Number(totalSummary.totalUsdtAmount)?.toLocaleString()} USDT
-                    </p>
-                  </div>
-                </div>
-
-                {/* divider */}
-                <div className="w-0.5 h-10 bg-gray-300 mx-2"></div>
-
-                <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
+                <div className="flex flex-row items-center justify-center gap-2">
                 
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    <h2 className="text-lg font-semibold">총 정산금액(원)</h2>
-                    <p className="text-lg text-zinc-500">
-                      {Number(totalSummary.totalSettlementAmountKRW)?.toLocaleString()} 원
-                    </p>
+                  <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
+                    <div className="flex flex-col items-center justify-center gap-2">
+                      <h2 className="text-lg font-semibold">총 거래금액(원)</h2>
+                      <p className="text-lg text-zinc-500">
+                        {Number(totalSummary.totalBuyAmountKrw)?.toLocaleString()} 원
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col items-center justify-center gap-2">
+                      <h2 className="text-lg font-semibold">총 거래량(USDT)</h2>
+                      <p className="text-lg text-zinc-500">
+                        {Number(totalSummary.totalUsdtAmount)?.toLocaleString()} USDT
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    <h2 className="text-lg font-semibold">총 정산량(USDT)</h2>
-                    <p className="text-lg text-zinc-500">
-                      {Number(totalSummary.totalSettlementAmount)?.toLocaleString()} USDT
-                    </p>
+
+                  {/* divider */}
+                  <div className="w-0.5 h-10 bg-gray-300 mx-2"></div>
+
+                  <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
+                  
+                    <div className="flex flex-col items-center justify-center gap-2">
+                      <h2 className="text-lg font-semibold">총 정산금액(원)</h2>
+                      <p className="text-lg text-zinc-500">
+                        {Number(totalSummary.totalSettlementAmountKRW)?.toLocaleString()} 원
+                      </p>
+                    </div>
+                    <div className="flex flex-col items-center justify-center gap-2">
+                      <h2 className="text-lg font-semibold">총 정산량(USDT)</h2>
+                      <p className="text-lg text-zinc-500">
+                        {Number(totalSummary.totalSettlementAmount)?.toLocaleString()} USDT
+                      </p>
+                    </div>
+
                   </div>
 
                 </div>
+
+                {/* 총 수수료금액 */}
+                <div className="flex flex-row items-center justify-center gap-2 mt-4">
+                  <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
+                    <div className="flex flex-col items-center justify-center gap-2">
+                      <h2 className="text-lg font-semibold">총 수수료금액(원)</h2>
+                      <p className="text-lg text-zinc-500">
+                        {Number(totalSummary.totalAgentFeeAmountKRW)?.toLocaleString()} 원
+                      </p>
+                    </div>
+                    <div className="flex flex-col items-center justify-center gap-2">
+                      <h2 className="text-lg font-semibold">총 수수료량(USDT)</h2>
+                      <p className="text-lg text-zinc-500">
+                        {Number(totalSummary.totalAgentFeeAmount)?.toLocaleString()} USDT
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+
 
               </div>
 
@@ -2543,7 +2573,7 @@ export default function Index({ params }: any) {
                         </th>
                         <th className="px-4 py-2 text-left">거래금액(원)<br/>거래량(USDT)</th>
                         <th className="px-4 py-2 text-left">정산금액(원)<br/>정산량(USDT)</th>
-                        <th className="px-4 py-2 text-left">수수료금액(원)<br/>수수료수량(USDT)</th>
+                        <th className="px-4 py-2 text-left">수수료금액(원)<br/>수수료량(USDT)</th>
                     
                         {/*
                         <th className="hidden xl:block
