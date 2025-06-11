@@ -827,7 +827,12 @@ export default function Index({ params }: any) {
   // set today's date in YYYY-MM-DD format
   useEffect(() => {
     const today = new Date();
-    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+    
+    //const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+    // this month first date
+    const firstDateOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const formattedDate = firstDateOfMonth.toISOString().split('T')[0]; // YYYY-MM-DD format
+
     setSearchFormDate(formattedDate);
   }, []);
 
@@ -1005,6 +1010,10 @@ export default function Index({ params }: any) {
                     page: Number(pageValue),
                     walletAddress: address,
                     searchMyOrders: searchMyOrders,
+
+                    searchFromDate: searchFromDate,
+                    searchToDate: searchToDate,
+
                     searchOrderStatusCancelled: searchOrderStatusCancelled,
                     searchOrderStatusCompleted: searchOrderStatusCompleted,
 
@@ -1131,6 +1140,10 @@ export default function Index({ params }: any) {
               page: Number(pageValue),
               walletAddress: address,
               searchMyOrders: searchMyOrders,
+
+              searchFromDate: searchFromDate,
+              searchToDate: searchToDate,
+
               searchOrderStatusCancelled: searchOrderStatusCancelled,
               searchOrderStatusCompleted: searchOrderStatusCompleted,
             }
@@ -1397,6 +1410,10 @@ export default function Index({ params }: any) {
                     page: Number(pageValue),
                     walletAddress: address,
                     searchMyOrders: searchMyOrders,
+
+                    searchFromDate: searchFromDate,
+                    searchToDate: searchToDate,
+
                     searchOrderStatusCancelled: searchOrderStatusCancelled,
                     searchOrderStatusCompleted: searchOrderStatusCompleted,
                   }
@@ -1500,6 +1517,10 @@ export default function Index({ params }: any) {
                   page: Number(pageValue),
                   walletAddress: address,
                   searchMyOrders: searchMyOrders,
+
+                  searchFromDate: searchFromDate,
+                  searchToDate: searchToDate,
+
                   searchOrderStatusCancelled: searchOrderStatusCancelled,
                   searchOrderStatusCompleted: searchOrderStatusCompleted,
                 }
@@ -1708,6 +1729,10 @@ export default function Index({ params }: any) {
                 page: Number(pageValue),
                 walletAddress: address,
                 searchMyOrders: searchMyOrders,
+
+                searchFromDate: searchFromDate,
+                searchToDate: searchToDate,
+
                 searchOrderStatusCancelled: searchOrderStatusCancelled,
                 searchOrderStatusCompleted: searchOrderStatusCompleted,
               }
@@ -1825,6 +1850,10 @@ export default function Index({ params }: any) {
                     page: Number(pageValue),
                     walletAddress: address,
                     searchMyOrders: searchMyOrders,
+
+                    searchFromDate: searchFromDate,
+                    searchToDate: searchToDate,
+
                     searchOrderStatusCancelled: searchOrderStatusCancelled,
                     searchOrderStatusCompleted: searchOrderStatusCompleted,
                   }
@@ -1998,6 +2027,10 @@ export default function Index({ params }: any) {
               page: Number(pageValue),
               walletAddress: address,
               searchMyOrders: searchMyOrders,
+
+              searchFromDate: searchFromDate,
+              searchToDate: searchToDate,
+
               searchOrderStatusCancelled: searchOrderStatusCancelled,
               searchOrderStatusCompleted: searchOrderStatusCompleted,
             }
@@ -2151,6 +2184,10 @@ export default function Index({ params }: any) {
               page: Number(pageValue),
               walletAddress: address,
               searchMyOrders: searchMyOrders,
+
+              searchFromDate: searchFromDate,
+              searchToDate: searchToDate,
+
               searchOrderStatusCancelled: searchOrderStatusCancelled,
               searchOrderStatusCompleted: searchOrderStatusCompleted,
             }
@@ -2247,6 +2284,9 @@ export default function Index({ params }: any) {
     latestBuyOrder,
     searchOrderStatusCancelled,
     searchOrderStatusCompleted,
+
+    searchFromDate,
+    searchToDate,
     //playSong,
 ]);
 
@@ -2274,6 +2314,12 @@ const fetchBuyOrders = async () => {
         page: Number(pageValue),
         walletAddress: address,
         searchMyOrders: searchMyOrders,
+
+        fromDate: searchFromDate,
+        toDate: searchToDate,
+
+        searchOrderStatusCancelled: searchOrderStatusCancelled,
+        searchOrderStatusCompleted: searchOrderStatusCompleted,
       }
 
     ),
