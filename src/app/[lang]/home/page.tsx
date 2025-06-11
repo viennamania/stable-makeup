@@ -820,12 +820,45 @@ export default function Index({ params }: any) {
 
 
 
+
+    
+  // search form date to date
+  const [searchFromDate, setSearchFormDate] = useState("");
+  // set today's date in YYYY-MM-DD format
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+    setSearchFormDate(formattedDate);
+  }, []);
+
+
+
+
+  const [searchToDate, setSearchToDate] = useState("");
+
+  // set today's date in YYYY-MM-DD format
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+    setSearchToDate(formattedDate);
+  }, []);
+  
+  
+
+
+
+
   // limit number
   const [limitValue, setLimitValue] = useState(limit || 20);
+  useEffect(() => {
+    setLimitValue(limit || 20);
+  }, [limit]);
 
   // page number
   const [pageValue, setPageValue] = useState(page || 1);
-
+  useEffect(() => {
+    setPageValue(page || 1);
+  }, [page]);
 
 
   const [totalCount, setTotalCount] = useState(0);
@@ -2420,6 +2453,57 @@ const fetchBuyOrders = async () => {
   
 
 
+
+
+        // get All stores
+    const [fetchingAllStores, setFetchingAllStores] = useState(false);
+    const [allStores, setAllStores] = useState([] as any[]);
+    const [storeTotalCount, setStoreTotalCount] = useState(0);
+    const fetchAllStores = async () => {
+      if (fetchingAllStores) {
+        return;
+      }
+      setFetchingAllStores(true);
+      const response = await fetch('/api/store/getAllStores', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(
+          {
+            limit: 100,
+            page: 1,
+          }
+        ),
+      });
+  
+      if (!response.ok) {
+        setFetchingAllStores(false);
+        toast.error('가맹점 검색에 실패했습니다.');
+        return;
+      }
+  
+      const data = await response.json();
+      
+      ///console.log('getAllStores data', data);
+  
+  
+  
+  
+      setAllStores(data.result.stores);
+      setStoreTotalCount(data.result.totalCount);
+      setFetchingAllStores(false);
+      return data.result.stores;
+    }
+    useEffect(() => {
+
+      fetchAllStores();
+    }, []); 
+
+
+
+
+
     return (
 
       <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-2xl mx-auto">
@@ -2608,7 +2692,7 @@ const fetchBuyOrders = async () => {
                 />
 
                 <div className="text-xl font-semibold">
-                  
+                  거래내역
                 </div>
 
             </div>
@@ -2648,11 +2732,11 @@ const fetchBuyOrders = async () => {
 
                   <button
                     onClick={() => {
-                      //router.push('/' + params.lang + '/home/paymaster');
-                      window.open(
-                        '/'+ params.lang + '/home/paymaster',
-                        '_blank'
-                      );
+                      router.push('/' + params.lang + '/home/paymaster');
+                      //window.open(
+                      //  '/'+ params.lang + '/home/paymaster',
+                      //</div>  '_blank'
+                      //);
                     }}
                     className="bg-yellow-500 text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-yellow-400"
                   >
@@ -2765,99 +2849,142 @@ const fetchBuyOrders = async () => {
 
 
 
-                <div className="w-full flex flex-col xl:flex-row items-center justify-between gap-5">
+                <div className="w-full flex flex-col xl:flex-row items-center justify-between gap-3">
 
-                  <div className="flex flex-col xl:flex-row items-center gap-2">
 
-                    {/* search bar */}
-                    {/* searchStorecode */}
-                    <div className="flex flex-col xl:flex-row items-center gap-2">
-                      <input
-                        type="text"
-                        value={searchStorecode}
-                        onChange={(e) => setSearchStorecode(e.target.value)}
-                        placeholder="가맹점 코드"
-                        className="p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  {/* select storecode */}
+                  <div className="flex flex-row items-center gap-2">
+    
+                      <Image
+                        src="/icon-store.png"
+                        alt="Store"
+                        width={20}
+                        height={20}
+                        className="rounded-lg w-5 h-5"
                       />
 
-                      <button
-                        onClick={() => {
+                      <span className="
+                        w-32
+                        text-sm font-semibold">
+                        가맹점선택
+                      </span>
+
+
+                      <select
+                        value={searchStorecode}
+                        
+                        //onChange={(e) => setSearchStorecode(e.target.value)}
+
+                        // storecode parameter is passed to fetchBuyOrders
+                        onChange={(e) => {
+                          router.push('/' + params.lang + '/admin/trade-history?storecode=' + e.target.value);
+                        }}
+
+
+
+                        className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                      >
+                        <option value="">전체</option>
+
+                        {fetchingAllStores && (
+                          <option value="" disabled>
+                            가맹점 검색중...
+                          </option>
+                        )}
+
+                        {!fetchingAllStores && allStores && allStores.map((item, index) => (
+                          <option key={index} value={item.storecode}
+                            className="flex flex-row items-center justify-start gap-2"
+                          >
+                            
+                            {item.storeName}{' '}({item.storecode})
+
+                          </option>
+                        ))}
+                      </select>
+                  
+                  </div>
+
+
+
+
+
+                  {/* serach fromDate and toDate */}
+                  {/* DatePicker for fromDate and toDate */}
+                  <div className="flex flex-col xl:flex-row items-center gap-2">
+                    <div className="flex flex-row items-center gap-2">
+                      <Image
+                        src="/icon-calendar.png"
+                        alt="Calendar"
+                        width={20}
+                        height={20}
+                        className="rounded-lg w-5 h-5"
+                      />
+                      <input
+                        type="date"
+                        value={searchFromDate}
+                        onChange={(e) => setSearchFormDate(e.target.value)}
+                        className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                      />
+                    </div>
+
+                    <div className="flex flex-row items-center gap-2">
+                      <Image
+                        src="/icon-calendar.png"
+                        alt="Calendar"
+                        width={20}
+                        height={20}
+                        className="rounded-lg w-5 h-5"
+                      />
+                      <input
+                        type="date"
+                        value={searchToDate}
+                        onChange={(e) => setSearchToDate(e.target.value)}
+                        className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                      />
+                    </div>
+                  </div>
+
+
+                  <div className="flex flex-row items-center gap-2">
+                    {/* checkbox for searchOrderStatus is 'cancelled' */}
+                    {/* 거래취소 */}
+                    {/* 거래완료 */}
+                    {/* only one checkbox can be checked */}
+                    <div className="flex flex-row items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={searchOrderStatusCancelled}
+                        onChange={(e) => {
+                          setSearchOrderStatusCancelled(e.target.checked);
                           setPageValue(1);
                           fetchBuyOrders();
                         }}
-                        //className="bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
-                        className={
-                          `${fetchingBuyOrders ? 'bg-zinc-500' : 'bg-[#3167b4]'}
-                          w-32
-                          flex flex-row items-center justify-center gap-2
-                          text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80`
-                        }
-                      >
-                        {fetchingBuyOrders ? (
-                          <Image
-                            src="/loading.png"
-                            alt="Loading"
-                            width={20}
-                            height={20}
-                            className="w-5 h-5 animate-spin"
-                          />
-                        ) : (
-                          <Image
-                            src="/icon-search.png"
-                            alt="Search"
-                            width={20}
-                            height={20}
-                            className="w-5 h-5"
-                          />
-                        )}
-                        <span className="text-sm">
-                          {fetchingBuyOrders ? '검색중...' : '검색'}
-                        </span>
-                        
-                      </button>
-
+                        className="w-5 h-5"
+                      />
+                      <label className="text-sm text-zinc-500">거래취소</label>
                     </div>
-
-
                     <div className="flex flex-row items-center gap-2">
-                      {/* checkbox for searchOrderStatus is 'cancelled' */}
-                      {/* 거래취소 */}
-                      {/* 거래완료 */}
-                      {/* only one checkbox can be checked */}
-                      <div className="flex flex-row items-center gap-2">
-                        <input
-                          type="checkbox"
-                          checked={searchOrderStatusCancelled}
-                          onChange={(e) => {
-                            setSearchOrderStatusCancelled(e.target.checked);
-                            setPageValue(1);
-                            fetchBuyOrders();
-                          }}
-                          className="w-5 h-5"
-                        />
-                        <label className="text-sm text-zinc-500">거래취소</label>
-                      </div>
-                      <div className="flex flex-row items-center gap-2">
-                        <input
-                          type="checkbox"
-                          checked={searchOrderStatusCompleted}
-                          onChange={(e) => {
-                            setSearchOrderStatusCompleted(e.target.checked);
-                            setPageValue(1);
-                            fetchBuyOrders();
-                          }}
-                          className="w-5 h-5"
-                        />
-                        <label className="text-sm text-zinc-500">거래완료</label>
-                      </div>
+                      <input
+                        type="checkbox"
+                        checked={searchOrderStatusCompleted}
+                        onChange={(e) => {
+                          setSearchOrderStatusCompleted(e.target.checked);
+                          setPageValue(1);
+                          fetchBuyOrders();
+                        }}
+                        className="w-5 h-5"
+                      />
+                      <label className="text-sm text-zinc-500">거래완료</label>
                     </div>
-
                   </div>
+
+               
 
 
                   {true && (
                     <div className="flex flex-col xl:flex-row items-center justify-center gap-2
-                    w-full xl:w-1/2
+                    
                     border border-zinc-800 rounded-lg p-2 bg-zinc-100">
 
 
@@ -2907,20 +3034,18 @@ const fetchBuyOrders = async () => {
                       </div>
 
                       {/* divider */}
+                      {/*
                       <div className="xl:hidden w-full h-0.5 bg-zinc-200 my-2" />
-
-                      {/* 총 정산수, 총 정산금액, 총 정산량 */}
 
                       <div className="w-full flex flex-row items-between justify-center gap-2">
 
-                        {/* 총 정산수 */}
                         <div className="flex flex-col items-center justify-center gap-2">
                           <h2 className="text-lg">총 정산수</h2>
                           <p className="text-lg text-zinc-500">
                             {storeTrades?.totalSettlementCount} 건
                           </p>
                         </div>
-                        {/* 총 정산금액 */}
+
                         <div className="flex flex-col items-center justify-center gap-2">
                           <h2 className="text-lg">총 정산금액</h2>
                           <p className="text-lg text-zinc-500">
@@ -2928,7 +3053,7 @@ const fetchBuyOrders = async () => {
                           </p>
                         </div>
 
-                        {/* 총 정산량 */}
+
                         <div className="flex flex-col items-center justify-center gap-2">
                           <h2 className="text-lg">총 정산량</h2>
                           <p className="text-lg text-zinc-500">
@@ -2937,6 +3062,7 @@ const fetchBuyOrders = async () => {
                         </div>
 
                       </div>
+                      */}
 
 
                     </div>

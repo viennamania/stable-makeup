@@ -1939,7 +1939,7 @@ export default function Index({ params }: any) {
     <main className="
       pl-2 pr-2
       pb-10 min-h-[100vh] flex flex-col items-center justify-start container
-      max-w-screen-lg
+      max-w-screen-2xl
       mx-auto
       bg-zinc-50
       text-zinc-500
@@ -1975,18 +1975,43 @@ export default function Index({ params }: any) {
         ) : (
           <div className="w-full flex flex-row items-center justify-between gap-2">
 
-            <div className='flex flex-col xl:flex-row gap-2 items-center justify-start'>
+
+            <button
+              onClick={() => {
+                router.push('/' + params.lang + '/home');
+              }}
+              className="flex items-center justify-center gap-2
+                bg-[#f472b6] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#f472b6]/80"
+            >
               <Image
-                src={storeInfo?.storeLogo || '/logo.png'}
-                alt="Store Logo"
-                width={38}
-                height={38}
-                className='rounded-full w-10 h-10'
+                src="/icon-home.png"
+                alt="Home"
+                width={20}
+                height={20}
+                className="rounded-lg w-5 h-5"
               />
-              <span className="text-sm text-zinc-100 font-semibold">
-                {storeInfo?.storeName}
+              <span className="text-sm text-[#f3f4f6]">
+                <span className="hidden xl:inline">
+                  홈으로
+                </span>
+                <span className="xl:hidden">
+                  홈
+                </span>
               </span>
-            </div>
+            </button>
+
+              <div className='flex flex-col xl:flex-row gap-2 items-center justify-start'>
+                <Image
+                  src={storeInfo?.storeLogo || '/logo.png'}
+                  alt="Store Logo"
+                  width={38}
+                  height={38}
+                  className='rounded-lg w-16 h-16 bg-zinc-200'
+                />
+                <span className="text-sm text-zinc-100 font-semibold">
+                  {storeInfo?.storeName}
+                </span>
+              </div>
 
             {loadingUser && (
               <div className="flex flex-row items-center justify-center gap-2">
@@ -2283,6 +2308,8 @@ export default function Index({ params }: any) {
                   '>
 
                     {/* selected krw amount */}
+                  
+                  <div className='w-full flex flex-col xl:flex-row gap-2 items-center justify-between'>
 
                     <div className='w-full flex flex-col xl:flex-row gap-5 items-center justify-center'>
                       <div className="flex flex-row gap-2 items-center justify-center">
@@ -2436,8 +2463,10 @@ export default function Index({ params }: any) {
 
                     </div>
 
+                  </div>
 
-                    <div className='mt-5 w-full flex flex-col xl:flex-row gap-2 items-center justify-center'>
+
+                    <div className='mt-5 flex flex-col xl:flex-row gap-2 items-center justify-center'>
 
                       <div className="w-full flex flex-col gap-2 items-center justify-center">
 
