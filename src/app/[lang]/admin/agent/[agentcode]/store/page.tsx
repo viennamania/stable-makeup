@@ -2133,7 +2133,7 @@ export default function Index({ params }: any) {
 
                           <td className="p-2">
                             <div className="
-                              w-72
+                              w-80
                               flex flex-col items-center justify-center gap-2">
 
                               <div className="w-full flex flex-row items-center justify-center gap-2">
