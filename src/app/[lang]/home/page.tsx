@@ -2773,32 +2773,60 @@ const fetchBuyOrders = async () => {
 
                 <div className="w-full flex flex-col xl:flex-row items-center justify-end gap-2">
 
-                  {/* 구매하기 버튼 */}
-                  {/* new window */}
 
-                  <button
-                    onClick={() => {
-                      router.push('/' + params.lang + '/home/paymaster');
-                      //window.open(
-                      //  '/'+ params.lang + '/home/paymaster',
-                      //</div>  '_blank'
-                      //);
-                    }}
-                    className="bg-yellow-500 text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-yellow-400"
-                  >
-                    <div className="flex flex-row items-center justify-center gap-2">
-                      <Image
-                        src="/icon-paymaster-buy.webp"
-                        alt="Buy"
-                        width={20}
-                        height={20}
-                        className="w-5 h-5"
-                      />
-                      <span className="text-sm">
-                        구매하기
-                      </span>
-                    </div>
-                  </button>
+                  <div className="flex flex-row items-center justify-center gap-2">
+                    {/* 구매하기 버튼 */}
+                    {/* new window */}
+
+                    <button
+                      onClick={() => {
+                        router.push('/' + params.lang + '/home/paymaster');
+                        //window.open(
+                        //  '/'+ params.lang + '/home/paymaster',
+                        //</div>  '_blank'
+                        //);
+                      }}
+                      className="bg-yellow-500 text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-yellow-400"
+                    >
+                      <div className="flex flex-row items-center justify-center gap-2">
+                        <Image
+                          src="/icon-paymaster-buy.webp"
+                          alt="Buy"
+                          width={20}
+                          height={20}
+                          className="w-5 h-5"
+                        />
+                        <span className="text-sm">
+                          구매하기
+                        </span>
+                      </div>
+                    </button>
+
+                    {/* 출금하기 버튼 */}
+                    <button
+                      onClick={() => {
+                        router.push('/' + params.lang + '/admin/withdraw-usdt');
+                        //window.open(
+                        //  '/'+ params.lang + '/home/withdraw',
+                        //  '_blank'
+                        //);
+                      }}
+                      className="bg-green-500 text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-green-400"
+                    >
+                      <div className="flex flex-row items-center justify-center gap-2">
+                        <Image
+                          src="/icon-withdraw.png"
+                          alt="Withdraw"
+                          width={20}
+                          height={20}
+                          className="w-5 h-5"
+                        />
+                        <span className="text-sm">
+                          출금하기
+                        </span>
+                      </div>
+                    </button>
+                  </div>
 
 
 
@@ -3986,7 +4014,9 @@ const fetchBuyOrders = async () => {
 
 
                             {address && (
-                              <td className="p-2">
+                              <td className="p-2
+                              w-32
+                              ">
                                 <div className="w-full flex flex-col gap-2 items-center justify-center">
     
 
