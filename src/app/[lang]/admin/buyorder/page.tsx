@@ -2545,7 +2545,8 @@ const fetchBuyOrders = async () => {
           storecode: searchStorecode,
           walletAddress: address,
           searchMyOrders: searchMyOrders,
-          searchOrderStatusCompleted: true,
+          searchOrderStatusCancelled: searchOrderStatusCancelled,
+          searchOrderStatusCompleted: searchOrderStatusCompleted,
           
           //searchBuyer: searchBuyer,
           searchBuyer: '',
@@ -2594,7 +2595,7 @@ const fetchBuyOrders = async () => {
       return () => clearInterval(interval);
 
 
-    } , [address, searchMyOrders, params.storecode,]);
+    } , [address, searchMyOrders, searchStorecode, searchOrderStatusCancelled, searchOrderStatusCompleted, ]);
 
 
 

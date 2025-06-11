@@ -2162,6 +2162,7 @@ const fetchBuyOrders = async () => {
       if (!address) {
         return;
       }
+
       setLoadingTradeSummary(true);
       const response = await fetch('/api/summary/getTradeSummary', {
         method: 'POST',
@@ -2236,7 +2237,7 @@ const fetchBuyOrders = async () => {
       return () => clearInterval(interval);
 
 
-    } , [address, searchMyOrders, params.storecode,
+    } , [address, searchMyOrders, searchStorecode,
       searchFromDate, searchToDate,
     ]);
 
