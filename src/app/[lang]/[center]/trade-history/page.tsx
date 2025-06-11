@@ -3544,7 +3544,7 @@ const fetchBuyOrders = async () => {
                               
 
                               <div className="
-                                w-28
+                                w-32
                                 flex flex-row gap-2 items-center justify-start">
                                 
                                 <Image
@@ -3589,7 +3589,7 @@ const fetchBuyOrders = async () => {
                             
                             <td className="p-2">
                               <div className="
-                                w-24 
+                                w-20  
                                 flex flex-col items-center justify-center gap-2">
 
                                   {/* buyer nickname */}
@@ -3652,7 +3652,7 @@ const fetchBuyOrders = async () => {
                                 flex flex-col gap-2 items-center justify-center">
 
                                 <div className="flex flex-col gap-2 items-end justify-center">
-                                  <span className="text-lg text-zinc-500 font-semibold"
+                                  <span className="text-lg text-yellow-600 font-semibold"
                                     style={{
                                       fontFamily: 'monospace',
                                     }}
@@ -3673,7 +3673,7 @@ const fetchBuyOrders = async () => {
                                   }}
                                 >
                                   {
-                                    Number(item.rate).toFixed(2)
+                                    Number(item.rate)
                                     //Number(item.krwAmount / item.usdtAmount).toFixed(2)
                                   }
                                 </span>
@@ -3759,7 +3759,7 @@ const fetchBuyOrders = async () => {
                                     </span>
                                   )}
                                
-                                  <div className=" text-green-600 text-xl font-semibold"
+                                  <div className=" text-yellow-600 text-lg font-semibold"
                                     style={{
                                       fontFamily: 'monospace',
                                     }}
