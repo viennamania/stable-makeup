@@ -3281,6 +3281,17 @@ export async function cancelTradeBySeller(
   );
 
   if (result) {
+
+
+    // update user status to 'cancelled'
+    const userCollection = client.db('ultraman').collection('users');
+    await userCollection.updateOne(
+      { walletAddress: walletAddress, storecode: storecode },
+      { $set: { buyOrderStatus: 'cancelled' } }
+    );
+
+
+
     console.log('cancelTradeBySeller result: ' + JSON.stringify(result));
     const updated = await collection.findOne<UserProps>(
       { _id: new ObjectId(orderId) }
