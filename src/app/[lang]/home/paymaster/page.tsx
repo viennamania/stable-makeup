@@ -1921,7 +1921,7 @@ export default function Index({ params }: any) {
   
   if (!loadingUser && (buyOrderStatus === 'ordered' || buyOrderStatus === 'accepted' || buyOrderStatus === 'paymentRequested')) {
       
-      router.push('/' + params.lang + '/' + storecode + '/pay-usdt-reverse/' + latestBuyOrder?._id);
+      router.push('/' + params.lang + '/home/pay-usdt-reverse/' + latestBuyOrder?._id);
 
       return (
         <div>
