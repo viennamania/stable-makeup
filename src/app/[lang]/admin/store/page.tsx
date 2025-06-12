@@ -2787,13 +2787,23 @@ export default function Index({ params }: any) {
                                         ?.toLocaleString('ko-KR')
                                       }{' '}원
                                     </span>
-                                    <span className="text-sm text-green-600 font-semibold"
-                                      style={{ fontFamily: 'monospace' }}
-                                    >
-                                      {
-                                        (item.totalUsdtAmount ? item.totalUsdtAmount : 0)?.toLocaleString('us-US')
-                                      }{' '}USDT
-                                    </span>
+                                    <div className="flex flex-row items-center gap-2">
+                                      <Image
+                                        src="/icon-tether.png"
+                                        alt="Tether"
+                                        width={20}
+                                        height={20}
+                                        className="w-5 h-5"
+                                      />
+                                      <span className="text-lg text-green-600 font-semibold"
+                                        style={{ fontFamily: 'monospace' }}
+                                      >
+                                        {
+                                          (item.totalUsdtAmount ? item.totalUsdtAmount : 0)
+                                          .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                        }
+                                      </span>
+                                    </div>
 
                                   </div>
 
@@ -2852,13 +2862,23 @@ export default function Index({ params }: any) {
                                           ?.toLocaleString('ko-KR')
                                       }{' '}원
                                     </span>
-                                    <span className="text-sm text-green-600 font-semibold"
-                                      style={{ fontFamily: 'monospace' }}
-                                    >
-                                      {
-                                        (item.totalSettlementAmount ? item.totalSettlementAmount : 0)?.toLocaleString('us-US')
-                                      }{' '}USDT
-                                    </span>
+                                    <div className="flex flex-row items-center gap-2">
+                                      <Image
+                                        src="/icon-tether.png"
+                                        alt="Tether"
+                                        width={20}
+                                        height={20}
+                                        className="w-5 h-5"
+                                      />
+                                      <span className="text-lg text-green-600 font-semibold"
+                                        style={{ fontFamily: 'monospace' }}
+                                      >
+                                        {
+                                          (item.totalSettlementAmount ? item.totalSettlementAmount : 0)
+                                          .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                        }
+                                      </span>
+                                    </div>
                                   </div>
 
 
@@ -2872,13 +2892,23 @@ export default function Index({ params }: any) {
                                           ?.toLocaleString('ko-KR')
                                       }{' '}원
                                     </span>
-                                    <span className="text-sm text-green-600 font-semibold"
-                                      style={{ fontFamily: 'monospace' }}
-                                    >
-                                      {
-                                        (item.totalFeeAmount ? item.totalFeeAmount : 0)?.toLocaleString('us-US')
-                                      }{' '}USDT
-                                    </span>
+                                    <div className="flex flex-row items-center gap-2">
+                                      <Image
+                                        src="/icon-tether.png"
+                                        alt="Tether"
+                                        width={20}
+                                        height={20}
+                                        className="w-5 h-5"
+                                      />
+                                      <span className="text-lg text-green-600 font-semibold"
+                                        style={{ fontFamily: 'monospace' }}
+                                      >
+                                        {
+                                          (item.totalFeeAmount ? item.totalFeeAmount : 0)
+                                          .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                        }
+                                      </span>
+                                    </div>
 
                                     <span className="text-lg text-yellow-600 font-semibold"
                                       style={{ fontFamily: 'monospace' }}
@@ -2888,13 +2918,23 @@ export default function Index({ params }: any) {
                                           ?.toLocaleString('ko-KR')
                                       }{' '}원
                                     </span>
-                                    <span className="text-sm text-green-600 font-semibold"
-                                      style={{ fontFamily: 'monospace' }}
-                                    >
-                                      {
-                                        (item.totalAgentFeeAmount ? item.totalAgentFeeAmount : 0)?.toLocaleString('us-US')
-                                      }{' '}USDT
-                                    </span>
+                                    <div className="flex flex-row items-center gap-2">
+                                      <Image
+                                        src="/icon-tether.png"
+                                        alt="Tether"
+                                        width={20}
+                                        height={20}
+                                        className="w-5 h-5"
+                                      />
+                                      <span className="text-lg text-green-600 font-semibold"
+                                        style={{ fontFamily: 'monospace' }}
+                                      >
+                                        {
+                                          (item.totalAgentFeeAmount ? item.totalAgentFeeAmount : 0)
+                                          .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                        }
+                                      </span>
+                                    </div>
 
 
 
@@ -2961,16 +3001,26 @@ export default function Index({ params }: any) {
                                     >
                                       {
                                         Number(item.totalKrwAmountClearance ? item.totalKrwAmountClearance : 0)
-                                          ?.toLocaleString('ko-KR')
+                                          .toLocaleString('ko-KR')
                                       }{' '}원
                                     </span>
-                                    <span className="text-sm text-green-600 font-semibold"
-                                      style={{ fontFamily: 'monospace' }}
-                                    >
-                                      {
-                                        (item.totalUsdtAmountClearance ? item.totalUsdtAmountClearance : 0)?.toLocaleString('us-US')
-                                      }{' '}USDT
-                                    </span>  
+                                    <div className="flex flex-row items-center gap-2">
+                                      <Image
+                                        src="/icon-tether.png"
+                                        alt="Tether"
+                                        width={20}
+                                        height={20}
+                                        className="w-5 h-5"
+                                      />
+                                      <span className="text-lg text-green-600 font-semibold"
+                                        style={{ fontFamily: 'monospace' }}
+                                      >
+                                        {
+                                          (item.totalUsdtAmountClearance ? item.totalUsdtAmountClearance : 0)
+                                          .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                        }
+                                      </span>
+                                    </div>
 
                                   </div>
 
@@ -2986,24 +3036,33 @@ export default function Index({ params }: any) {
 
                                           //Number(item?.totalSettlementAmountKRW - item?.totalKrwAmountClearance || 0)
                                           Number(item?.totalKrwAmountClearance - item?.totalSettlementAmountKRW || 0)
-                                          ?.toLocaleString('ko-KR')
+                                          .toLocaleString('ko-KR')
 
 
                                         }{' '}원
                                       </span>
-                                      <span className="text-sm text-green-600 font-semibold"
-                                        style={{ fontFamily: 'monospace' }}
-                                      >
-                                        {
-                                          //////(item.totalUsdtAmountClearanceBalance ? item.totalUsdtAmountClearanceBalance : 0)?.toLocaleString('us-US')
-                                        
+                                      <div className="flex flex-row items-center gap-2">
+                                        <Image
+                                          src="/icon-tether.png"
+                                          alt="Tether"
+                                          width={20}
+                                          height={20}
+                                          className="w-5 h-5"
+                                        />
+                                        <span className="text-lg text-green-600 font-semibold"
+                                          style={{ fontFamily: 'monospace' }}
+                                        >
+                                          {
+                                            //////(item.totalUsdtAmountClearanceBalance ? item.totalUsdtAmountClearanceBalance : 0)?.toLocaleString('us-US')
+                                          
 
-                                          //Number(item?.totalSettlementAmount - item?.totalUsdtAmountClearance || 0)
-                                          Number(item?.totalUsdtAmountClearance - item?.totalSettlementAmount || 0)
-                                          ?.toLocaleString('us-US')
+                                            //Number(item?.totalSettlementAmount - item?.totalUsdtAmountClearance || 0)
+                                            Number(item?.totalUsdtAmountClearance - item?.totalSettlementAmount || 0)
+                                            .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
-                                        }{' '}USDT
-                                      </span>
+                                          }
+                                        </span>
+                                      </div>
 
                                   </div>
 

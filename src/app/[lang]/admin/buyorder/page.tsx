@@ -3776,7 +3776,7 @@ const fetchBuyOrders = async () => {
                           <div className="
                             w-28
                             flex flex-col gap-2 items-end justify-start">
-                            <span className="text-lg text-zinc-500 font-semibold"
+                            <span className="text-lg text-yellow-600 font-semibold"
                               style={{
                                 fontFamily: 'monospace',
                               }}
@@ -3785,20 +3785,31 @@ const fetchBuyOrders = async () => {
                                 item.krwAmount?.toLocaleString() + ' 원'
                               }
                             </span>
-                            <span className="text-lg text-green-600"
-                              style={{
-                                fontFamily: 'monospace',
-                              }}
-                            >
-                              {item.usdtAmount}{' '}USDT
-                            </span>
+
+                            <div className="flex flex-row items-center justify-end gap-2">
+                              <Image
+                                src="/icon-tether.png"
+                                alt="Tether"
+                                width={20}
+                                height={20}
+                                className="w-5 h-5"
+                              />
+                              <span className="text-lg text-green-600 font-semibold"
+                                style={{
+                                  fontFamily: 'monospace',
+                                }}
+                              >
+                                {item.usdtAmount}
+                              </span>
+                            </div>
+
                             <span className="text-sm text-zinc-500"
                               style={{
                                 fontFamily: 'monospace',
                               }}
                             >
                               {
-                                Number(item.rate).toFixed(2)
+                                Number(item.rate)
                                 //Number(item.krwAmount / item.usdtAmount).toFixed(2)
                               }
                             </span>
