@@ -2638,9 +2638,9 @@ export default function Index({ params }: any) {
                                   </span>
 
                                 </div>
-                                {/* 회수수량 */}
+                                {/* 매입수량 */}
                                 <span className="text-lg font-semibold text-zinc-400">
-                                  회수수량(USDT)
+                                  매입수량(USDT)
                                 </span>
   
                                 <p className=" text-xl text-zinc-400 font-bold">
@@ -2725,7 +2725,7 @@ export default function Index({ params }: any) {
                                           buyOrder();
                                       }}
                                   >
-                                    회수신청
+                                    매입신청
                                   </button>
                               )}
 
@@ -2854,7 +2854,12 @@ export default function Index({ params }: any) {
                           <th className="p-2 text-left">구매자정보</th>
 
                           <th className="p-2 text-left">
-                            지급금액(원) / 회수수량(USDT) / {Rate}</th>
+                            <div className="flex flex-col gap-1">
+                              <span>지급금액(원)</span>
+                              <span>매입수량(USDT)</span>
+                              <span>{Rate}</span>
+                            </div>
+                          </th>
 
 
                           <th className="p-2 text-left">{Payment}</th>
@@ -2881,7 +2886,7 @@ export default function Index({ params }: any) {
 
                               <td className="p-2">
 
-                                <div className="flex flex-row items-center justify-center gap-1">
+                                <div className="flex flex-col items-center justify-center gap-1">
                                   <span className="text-lg text-zinc-600 font-semibold">
                                     {new Date(item.createdAt).toLocaleString()}
                                   </span>
@@ -2916,14 +2921,24 @@ export default function Index({ params }: any) {
 
 
                               <td>
-                                <div className="flex flex-row gap-1">
+                                <div className="flex flex-col items-end justify-center gap-1 mr-5">
                                   <span className="text-xl text-yellow-600 font-semibold">
                                     {Number(item.krwAmount)?.toLocaleString() + ' 원'}
                                   </span>
                                 
-                                  <span className="text-xl text-green-600 font-semibold">
-                                    {item.usdtAmount?.toLocaleString() + ' USDT'}
-                                  </span>
+                                  <div className="flex flex-row items-center gap-1">
+                                    <Image
+                                      src="/icon-tether.png"
+                                      alt="Tether"
+                                      width={20}
+                                      height={20}
+                                      className="w-5 h-5"
+                                    />
+                                    <span className="text-xl text-green-600 font-semibold">
+                                      {item.usdtAmount && item.usdtAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                    </span>
+                                  </div>
+
                                   <span className="text-lg text-zinc-400 font-semibold">
                                     {Number(item.rate)}
                                     </span>
@@ -2932,14 +2947,14 @@ export default function Index({ params }: any) {
 
                            
                               <td>
-                                <div className="flex flex-row gap-1">
-                                  <span className="text-lg text-zinc-600 font-semibold">
+                                <div className="flex flex-col items-start justify-center gap-1">
+                                  <span className="text-sm text-zinc-400">
                                     {item.seller?.bankInfo?.bankName}
                                   </span>
-                                  <span className="text-lg text-zinc-600 font-semibold">
+                                  <span className="text-sm text-zinc-400">
                                     {item.seller?.bankInfo?.accountNumber}
                                     </span>
-                                  <span className="text-lg text-zinc-600 font-semibold">
+                                  <span className="text-sm text-zinc-400">
                                     {item.seller?.bankInfo?.accountHolder}
                                     </span>
                                 </div>
@@ -3044,7 +3059,7 @@ export default function Index({ params }: any) {
 
 
                                 {item.status === 'paymentConfirmed' && (
-                                  <div className="flex flex-row gap-1">
+                                  <div className="flex flex-col gap-1">
                                     <span className="text-lg font-semibold text-green-600">
                                       {Completed}
                                     </span>

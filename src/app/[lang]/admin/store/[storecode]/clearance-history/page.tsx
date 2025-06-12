@@ -1691,7 +1691,12 @@ export default function Index({ params }: any) {
 
 
                           <th className="text-left">
-                            지급금액(원) / 회수수량(USDT) / {Rate}</th>
+                            <div className="flex flex-col gap-1">
+                              <span>지급금액(원)</span>
+                              <span>회수수량(USDT)</span>
+                              <span>{Rate}</span>
+                            </div>
+                          </th>
 
 
                           <th className="text-left">{Payment}</th>
@@ -1727,7 +1732,8 @@ export default function Index({ params }: any) {
 
                               <td>
                                 <div className="flex flex-col gap-1">
-                                  <span className="text-lg text-yellow-500 font-semibold">
+
+                                  <span className="text-lg text-yellow-600 font-semibold">
                                     {Number(item.krwAmount)?.toLocaleString('ko-KR', {
                                       style: 'currency',
                                       currency: 'KRW',
@@ -1735,6 +1741,7 @@ export default function Index({ params }: any) {
                                   </span>
                                 
                                   <span>{item.usdtAmount}</span>
+                                  
                                   <span>{Number(item.krwAmount / item.usdtAmount).toFixed(2)}</span>
                                 </div>
                               </td>
