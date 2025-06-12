@@ -2353,7 +2353,7 @@ export default function Index({ params }: any) {
   
                         
 
-                            <div className=" h-52
+                            <div className=" h-56 
                               w-28
                               flex flex-col items-between justify-between gap-2">
 
@@ -2447,7 +2447,7 @@ export default function Index({ params }: any) {
                             p-2
                             ">
  
-                            <div className=" h-52
+                            <div className=" h-56
                               w-24
                               flex flex-col items-between justify-between gap-2">
 
@@ -2509,7 +2509,7 @@ export default function Index({ params }: any) {
 
                           <td className="p-2">
 
-                            <div className="h-52
+                            <div className="h-56
                               w-16 
                               flex flex-col items-between justify-between gap-2">
 
@@ -2571,7 +2571,7 @@ export default function Index({ params }: any) {
 
                           <td className="
                             p-2">
-                            <div className="h-52
+                            <div className="h-56
                               w-28
                               flex flex-col items-between justify-between gap-2">
                               
@@ -2676,7 +2676,7 @@ export default function Index({ params }: any) {
 
 
                           <td className="p-2">
-                            <div className="h-52
+                            <div className="h-56
                               w-32
                               flex flex-col items-between justify-between gap-2">
 
@@ -2760,7 +2760,7 @@ export default function Index({ params }: any) {
 
 
                           <td className="p-2">
-                            <div className=" h-52
+                            <div className=" h-56
                               w-36
                               flex flex-col items-between justify-between gap-2
                               ">
@@ -2833,7 +2833,7 @@ export default function Index({ params }: any) {
 
 
                           <td className="p-2">
-                            <div className=" h-52
+                            <div className=" h-56
                               w-64
                               flex flex-col items-between justify-between gap-2">
 
@@ -2974,7 +2974,7 @@ export default function Index({ params }: any) {
 
                           <td className="p-2">
 
-                            <div className="w-72 h-52
+                            <div className="w-72 h-56
                             flex flex-col items-between justify-between gap-2">
 
 
@@ -3101,7 +3101,7 @@ export default function Index({ params }: any) {
                           {/* USDT 잔액 */}
                           <td className="p-2">
                             <div className="w-32
-                              h-52
+                              h-56
                               flex flex-col items-between justify-between gap-2">
 
 

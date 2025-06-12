@@ -3070,23 +3070,34 @@ const fetchBuyOrders = async () => {
 
 
                             <td className="p-2">
-                              <div className="flex flex-col gap-2 items-center justify-center">
+                              <div className="flex flex-col gap-2 items-end justify-center">
 
                                 <div className="flex flex-col gap-2 items-end justify-center">
-                                  <span className="text-lg text-zinc-500 font-semibold"
+                                  <span className="text-lg text-yellow-600 font-semibold"
                                     style={{
                                       fontFamily: 'monospace',
                                     }}
                                   >
                                     {Number(item.krwAmount)?.toLocaleString()}{' '}원
                                   </span>
-                                  <span className="text-lg text-green-600 font-semibold"
-                                    style={{
-                                      fontFamily: 'monospace',
-                                      }}
-                                    >
-                                    {item.usdtAmount}{' '}USDT
-                                  </span>
+
+                                  <div className="flex flex-row items-center gap-1">
+                                    <Image
+                                      src="/icon-tether.png"
+                                      alt="Tether"
+                                      width={20}
+                                      height={20}
+                                      className="w-5 h-5"
+                                    />
+                                    <span className="text-lg text-green-600 font-semibold"
+                                      style={{
+                                        fontFamily: 'monospace',
+                                        }}
+                                      >
+                                      {item.usdtAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    </span>
+                                  </div>
+
                                 </div>
                                 <span className="text-sm text-zinc-500 font-semibold"
                                   style={{
@@ -3142,7 +3153,7 @@ const fetchBuyOrders = async () => {
                                     </span>
                                   )}
                                
-                                  <div className=" text-green-600 text-xl font-semibold"
+                                  <div className="text-yellow-600 text-lg font-semibold"
                                     style={{
                                       fontFamily: 'monospace',
                                     }}
