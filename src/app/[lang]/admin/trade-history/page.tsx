@@ -2949,10 +2949,10 @@ const fetchBuyOrders = async () => {
                           <th className="p-2">
                             <div className="flex flex-col gap-2 items-center justify-center">
                               <span className="text-sm text-white">
-                                {Price}
+                                {Price}(원)
                               </span>
                               <span className="text-sm text-white">
-                                {Buy_Amount}
+                                {Buy_Amount}(USDT)
                               </span>
                               <span className="text-sm text-white">
                                 {Rate}
