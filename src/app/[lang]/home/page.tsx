@@ -3429,10 +3429,12 @@ const fetchBuyOrders = async () => {
                                   <div className="flex flex-row items-center justify-start gap-2">
                                     <Image
                                       src={item?.store?.storeLogo || "/icon-store.png"}
-                                      alt="Avatar"
+                                      alt="Store Logo"
                                       width={35}
                                       height={35}
-                                      className="rounded-full w-8 h-8"
+                                      className="
+                                      rounded-lg
+                                      w-8 h-8 object-cover"
                                     />
                                     
                                     <span className="text-sm text-zinc-500 font-semibold">

@@ -3093,7 +3093,7 @@ const fetchBuyOrders = async () => {
                                     alt="Store"
                                     width={50}
                                     height={50}
-                                    className="rounded-full w-8 h-8 object-cover"
+                                    className="w-8 h-8 object-cover"
                                   />
                                   <div className="flex flex-col items-start justify-start">
                                     <span className="text-sm text-zinc-500 font-bold">
