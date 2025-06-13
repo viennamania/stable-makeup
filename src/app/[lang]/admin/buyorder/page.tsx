@@ -5190,8 +5190,7 @@ const fetchBuyOrders = async () => {
 
                         {/* `https://polygonscan.com/tx/${item.settlement.txid}` */}
 
-                        <td className="
-                        p-2">
+                        <td className="p-2">
                           <div className="w-full flex flex-col gap-2 items-center justify-center">
 
                             {item?.settlement && (

@@ -3292,7 +3292,7 @@ export default function Index({ params }: any) {
               p-4 rounded-lg shadow-md
               ">
 
-              <div className="w-full xl:w-1/4 flex flex-row items-center justify-center gap-2">
+              <div className="w-full xl:w-1/4 flex flex-row items-center justify-between gap-2 pl-4 pr-4">
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 거래수(건)</div>
                   <div className="text-xl font-semibold text-zinc-500">
@@ -3302,15 +3302,29 @@ export default function Index({ params }: any) {
 
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 거래금액(원)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalKrwAmount?.toLocaleString()} 원
+                  <div className="flex flex-row items-center gap-1">
+                    <span className="text-xl font-semibold text-yellow-600">
+                      {tradeSummary.totalKrwAmount?.toLocaleString()}
+                    </span>
+                    <span className="text-sm text-zinc-500">원</span>
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 거래량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalUsdtAmount?.toLocaleString()} USDT
+                  <div className="flex flex-row items-center gap-1">
+                    <Image
+                      src="/icon-tether.png"
+                      alt="Tether"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5"
+                    />
+                    <span className="text-xl font-semibold text-green-600">
+                      {tradeSummary.totalUsdtAmount
+                      && tradeSummary.totalUsdtAmount.toFixed(2)
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -3320,7 +3334,7 @@ export default function Index({ params }: any) {
               <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
               <div className="w-full xl:w-1/2
-                flex flex-row items-center justify-center gap-2">
+                flex flex-row items-center justify-between gap-2 pl-4 pr-4">
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 정산수(건)</div>
                   <div className="text-xl font-semibold text-zinc-500">
@@ -3330,29 +3344,53 @@ export default function Index({ params }: any) {
 
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 정산금액(원)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalSettlementAmountKRW?.toLocaleString()} 원
+                  <div className="flex flex-row items-center gap-1"> 
+                    <span className="text-xl font-semibold text-yellow-600">
+                      {tradeSummary.totalSettlementAmountKRW?.toLocaleString()}
+                    </span>
+                    <span className="text-sm text-zinc-500">원</span>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 정산량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalSettlementAmount
-                    && tradeSummary.totalSettlementAmount.toFixed(2)
-                    .toLocaleString()} USDT
+                  <div className="flex flex-row items-center gap-1">
+                    <Image
+                      src="/icon-tether.png"
+                      alt="Tether"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5"
+                    />
+                    <span className="text-xl font-semibold text-green-600">
+                      {tradeSummary.totalSettlementAmount
+                      && tradeSummary.totalSettlementAmount.toFixed(2)
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    </span>
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 수수료금액(원)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalFeeAmountKRW?.toLocaleString()} 원
+                  <div className="flex flex-row items-center gap-1">
+                    <span className="text-xl font-semibold text-yellow-600">
+                      {tradeSummary.totalFeeAmountKRW?.toLocaleString()}
+                    </span>
+                    <span className="text-sm text-zinc-500">원</span>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 수수료수량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalFeeAmount?.toLocaleString()} USDT
+                  <div className="flex flex-row items-center gap-1">
+                    <Image
+                      src="/icon-tether.png"
+                      alt="Tether"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5"
+                    />
+                    <span className="text-xl font-semibold text-green-600">
+                      {tradeSummary.totalFeeAmount?.toLocaleString()}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -3362,7 +3400,7 @@ export default function Index({ params }: any) {
               <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
               <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
-              <div className="w-full xl:w-1/4 flex flex-row items-center justify-center gap-2">
+              <div className="w-full xl:w-1/4 flex flex-row items-center justify-between gap-2 pl-4 pr-4">
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 청산수(건)</div>
                   <div className="text-xl font-semibold text-zinc-500">
@@ -3372,14 +3410,28 @@ export default function Index({ params }: any) {
 
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 청산금액(원)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalClearanceAmount?.toLocaleString()} 원
+                  <div className="flex flex-row items-center gap-1">
+                    <span className="text-xl font-semibold text-yellow-600">
+                      {tradeSummary.totalClearanceAmount?.toLocaleString()}
+                    </span>
+                    <span className="text-sm text-zinc-500">원</span>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 청산수량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()} USDT
+                  <div className="flex flex-row items-center gap-1">
+                    <Image
+                      src="/icon-tether.png"
+                      alt="Tether"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5"
+                    />
+                    <span className="text-xl font-semibold text-green-600">
+                      {tradeSummary.totalClearanceAmountUSDT
+                      && tradeSummary.totalClearanceAmountUSDT.toFixed(2)
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -3667,12 +3719,21 @@ export default function Index({ params }: any) {
                       </th>
 
                       <th className="p-2">
-                        구매자 아이디<br/>입금자<br/>USDT통장
+                        <div className="flex flex-col items-center justify-center gap-2">
+                          <span>구매자 아이디</span>
+                          <span>입금자</span>
+                          <span>USDT통장</span>
+                        </div>
                       </th>
                       
                       <th className="p-2">
-                        구매금액<br/>{Buy_Amount}<br/>{Rate}
+                        <div className="flex flex-col items-center justify-center gap-2">
+                          <span>구매금액(원)</span>
+                          <span>구매량(USDT)</span>
+                          <span>환율</span>
+                        </div>
                       </th>
+
                       {/*
                       <th className="p-2">{Payment_Amount}</th>
                       */}
@@ -3704,6 +3765,10 @@ export default function Index({ params }: any) {
                               거래상태
                             </span>
                           </div>
+                          {/* 판매자 USDT통장 */}
+                          <span className="text-sm text-zinc-50 font-semibold">
+                            판매자 USDT통장
+                          </span>
 
                         </div>
                       </th>
@@ -3748,13 +3813,6 @@ export default function Index({ params }: any) {
                             거래완료
                           </span>
                         </div>
-                      </th>
-
-
-                      <th className="
-                        hidden xl:table-cell
-                        p-2">
-                        정산비율
                       </th>
 
                       <th className="
@@ -3976,15 +4034,7 @@ export default function Index({ params }: any) {
                             <div className="flex flex-row items-center gap-2">
                               <button
                                 className="text-sm text-blue-600 font-semibold
-                                  border border-blue-600 rounded-lg p-2
-                                  bg-blue-100
-                                  w-full text-center
-                                  hover:bg-blue-200
-                                  cursor-pointer
-                                  transition-all duration-200 ease-in-out
-                                  hover:scale-105
-                                  hover:shadow-lg
-                                  hover:shadow-blue-500/50
+                                underline
                                 "
                                 onClick={() => {
                                   navigator.clipboard.writeText(item.walletAddress);
@@ -4004,7 +4054,7 @@ export default function Index({ params }: any) {
                           <div className="
                             w-28
                             flex flex-col gap-2 items-end justify-start">
-                            <span className="text-lg text-zinc-500 font-semibold"
+                            <span className="text-lg text-yellow-600 font-semibold"
                               style={{
                                 fontFamily: 'monospace',
                               }}
@@ -4013,20 +4063,33 @@ export default function Index({ params }: any) {
                                 item.krwAmount?.toLocaleString() + ' 원'
                               }
                             </span>
-                            <span className="text-lg text-green-600"
-                              style={{
-                                fontFamily: 'monospace',
-                              }}
-                            >
-                              {item.usdtAmount}{' '}USDT
-                            </span>
+
+                            <div className="flex flex-row items-center justify-end gap-2">
+                              <Image
+                                src="/icon-tether.png"
+                                alt="Tether"
+                                width={20}
+                                height={20}
+                                className="w-5 h-5"
+                              />
+                              <span className="text-lg text-green-600"
+                                style={{
+                                  fontFamily: 'monospace',
+                                }}
+                              >
+                                {item.usdtAmount
+                                  && item.usdtAmount.toFixed(2)
+                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                              </span>
+                            </div>
+
                             <span className="text-sm text-zinc-500"
                               style={{
                                 fontFamily: 'monospace',
                               }}
                             >
                               {
-                                Number(item.rate).toFixed(2)
+                                Number(item.rate)
                                 //Number(item.krwAmount / item.usdtAmount).toFixed(2)
                               }
                             </span>
@@ -4193,15 +4256,7 @@ export default function Index({ params }: any) {
                                 <div className="flex flex-row items-center justify-center gap-2">
                                   <button
                                     className="text-sm text-blue-600 font-semibold
-                                      border border-blue-600 rounded-lg p-2
-                                      bg-blue-100
-                                      w-full text-center
-                                      hover:bg-blue-200
-                                      cursor-pointer
-                                      transition-all duration-200 ease-in-out
-                                      hover:scale-105
-                                      hover:shadow-lg
-                                      hover:shadow-blue-500/50
+                                    underline
                                     "
                                     onClick={() => {
                                       navigator.clipboard.writeText(item.seller?.walletAddress);
@@ -4536,7 +4591,7 @@ export default function Index({ params }: any) {
                               </div>
 
                               {/* paymentAmount */}
-                              <span className="text-lg text-green-600 font-semibold"
+                              <span className="text-lg text-yellow-600 font-semibold"
                                 style={{ fontFamily: 'monospace' }}>
                                 {
                                   item.paymentAmount?.toLocaleString()
@@ -5354,220 +5409,230 @@ export default function Index({ params }: any) {
                         </td>
 
 
-
-                        
-
-                        <td className="
-                          hidden xl:table-cell
-                          p-2">
-                          <div className="flex flex-col gap-2 items-end justify-center">
-
-                            <div className="w-full flex flex-row gap-2 items-center justify-center">
-                              <span className="
-                              w-12
-                              text-sm text-zinc-500">
-                                가맹점
-                              </span>
-                              <span className="
-                              w-14 text-end
-                              text-sm text-zinc-500"
-                                style={{
-                                  fontFamily: 'monospace',
-                                }}>
-                                {Number(
-                                  100 - (item.store?.agentFeePercent ? item.store?.agentFeePercent : 0.0) - (item.store.settlementFeePercent ? item.store.settlementFeePercent : 0.3)
-                                ).toFixed(2)
-                                }%
-                              </span>
-                            </div>
-
-                            {/*
-                            <div className="w-full flex flex-row gap-2 items-center justify-center">
-                              <span className="
-                              w-12
-                              text-sm text-zinc-500">
-                                에이전트
-                              </span>
-                              <span className="
-                              w-14 text-end
-                              text-sm text-zinc-500"
-                                style={{
-                                  fontFamily: 'monospace',
-                                }}>
-                                {Number(item.store?.agentFeePercent ? item.store?.agentFeePercent : 0.0).toFixed(2)}%
-                              </span>
-                            </div>
-                            */}
-
-                            {/*
-
-                            <div className="w-full flex flex-row gap-2 items-center justify-center">
-                              <span className="
-                              w-12
-                              text-sm text-zinc-500">
-                                센터
-                              </span>
-                              <span className="
-                              w-14  text-end
-                              text-sm text-zinc-500"
-                                style={{
-                                  fontFamily: 'monospace',
-                                }}>
-                                {Number(item.store.settlementFeePercent ? item.store.settlementFeePercent : 0.3).toFixed(2)}%
-                              </span>
-                            </div>
-                            */}
-
-
-                            {/*
-                            <span className="text-sm text-zinc-500"
-                              style={{
-                                fontFamily: 'monospace',
-                              }}
-                            >
-                              가맹점:{' '}
-                              { //  settlementFeePercent
-                                // dealerFeePercent
-                                Number(
-                                  100 - (item.store?.agentFeePercent ? item.store?.agentFeePercent : 0.0) - (item.store.settlementFeePercent ? item.store.settlementFeePercent : 0.3)
-                                ).toFixed(2)
-
-                              }%
-                            </span>
-                            <span className="text-sm text-zinc-500"
-                              style={{
-                                fontFamily: 'monospace',
-                              }}
-                            >
-                              에이전트:{' '}
-                              {
-                                Number(item.store?.agentFeePercent ? item.store?.agentFeePercent : 0.0).toFixed(2)
-                              }%
-                            </span>
-                            <span className="text-sm text-zinc-500"
-                              style={{
-                                fontFamily: 'monospace',
-                              }}
-                            >
-                              센터:{' '}
-                              {
-                                Number(item.store.settlementFeePercent ? item.store.settlementFeePercent : 0.3).toFixed(2)
-                              }%
-                            </span>
-                            */}
-
-
-                          </div>
-                        </td>
-
-
-                          {/* font monospace */}
-
                         {/* `https://polygonscan.com/tx/${item.settlement.txid}` */}
 
-                        <td className="
-                        p-2">
+                        <td className="p-2">
+                          <div className="w-full flex flex-col gap-2 items-center justify-center">
 
-                          {item?.settlement ? (
+                            {item?.settlement && (
 
+                              <div className="w-full flex flex-row gap-2 items-center justify-start">
 
-                            <button
-                              className="
-                              w-48
-                              flex flex-col gap-2 items-center justify-center
-                              bg-purple-500 text-white px-2 py-1 rounded-md hover:bg-purple-600
-                              text-sm
-                              transition duration-300 ease-in-out
-                              transform hover:scale-105
-                              hover:shadow-lg
-                              hover:shadow-purple-500/50
-                              hover:cursor-pointer
-                              hover:transition-transform
-                              hover:duration-300
-                              hover:ease-in-out
-
-                              "
-
-                              onClick={() => {
-                                window.open(
-                                  `https://polygonscan.com/tx/${item.settlement.txid}`,
-                                  '_blank'
-                                );
-                              }}
-                            >
-
-
-                              <div className="flex flex-col gap-2 items-end justify-center"
-                                style={{
-                                  fontFamily: 'monospace',
-                                }}
-                              >
-
-
-                                
-                                <span>
-                                  {item?.settlement?.settlementAmount?.toLocaleString() + ' USDT'}
-                                  {' '}
-                                  {
-                                    item?.settlement?.settlementWalletAddress &&
-                                  item?.settlement?.settlementWalletAddress?.slice(0, 5) + '...'}
+                                <Image
+                                  src="/icon-settlement-completed.png"
+                                  alt="Settlement Completed"
+                                  width={30}
+                                  height={30}
+                                  className="w-6 h-6 rounded-lg"
+                                />
+                                <span className="text-sm font-semibold text-zinc-500">
+                                  정산완료
                                 </span>
-                                {/*
-                                <span>
-                                  {item?.settlement?.agentFeeAmount?.toLocaleString() + ' USDT'}
-                                  {' '}
-                                  {
-                                    item?.settlement?.agentFeeWalletAddress &&
-                                  item?.settlement?.agentFeeWalletAddress?.slice(0, 5) + '...'}
-                                </span>
-                                <span>
-                                  {item?.settlement?.feeAmount?.toLocaleString() + ' USDT'}
-                                  {' '}
-                                  {
-                                    item?.settlement?.feeWalletAddress &&
-                                  item?.settlement?.feeWalletAddress?.slice(0, 5) + '...'}
-                                </span>
-                                */}
 
                               </div>
 
-                            </button>
+                            )}
 
-                          ) : (
-                            <>
-                              {item.status === 'paymentConfirmed'
-                              && item?.transactionHash !== '0x'
-                              && (
-                                <div className="flex flex-row gap-2 items-center justify-center">
 
-                                  {item.storecode === 'admin' ? (
 
-                                    <div className="flex flex-row gap-2 items-center justify-center">
-                                      일반 회원 구매
-                                    </div>
+                            <div className="flex flex-row gap-2 items-between justify-center">
 
-                                  ) : (
-                                  
-                                    <div className="flex flex-row gap-2 items-center justify-center">
-                                      <Image
-                                        src="/icon-settlement.png"
-                                        alt="Settlement"
-                                        width={20}
-                                        height={20}
-                                        className="animate-spin"
-                                      />
-                                      <span className="text-sm font-semibold text-zinc-500">
-                                        가맹점 정산중...
-                                      </span>
-                                    </div>
+                              {item?.settlement && (
+                                <div className="flex flex-col gap-2 items-end justify-center">
 
-                                  )}
+                                  <div className="w-full flex flex-row gap-2 items-center justify-center">
+                                    <span className="
+                                    w-16
+                                    text-sm text-zinc-500">
+                                      가맹점
+                                    </span>
+                                    <span className="
+                                    w-14 text-end
+                                    text-sm text-zinc-500"
+                                      style={{
+                                        fontFamily: 'monospace',
+                                      }}>
+                                      {Number(
+                                        100 - (item.store?.agentFeePercent ? item.store?.agentFeePercent : 0.0) - (item.store.settlementFeePercent ? item.store.settlementFeePercent : 0.3)
+                                      ).toFixed(2)
+                                      }%
+                                    </span>
+                                  </div>
 
+                                  {/*
+                                  <div className="w-full flex flex-row gap-2 items-center justify-center">
+                                    <span className="
+                                    w-16
+                                    text-sm text-zinc-500">
+                                      AG 수수료
+                                    </span>
+                                    <span className="
+                                    w-14 text-end
+                                    text-sm text-zinc-500"
+                                      style={{
+                                        fontFamily: 'monospace',
+                                      }}>
+                                      {Number(item.store?.agentFeePercent ? item.store?.agentFeePercent : 0.0).toFixed(2)}%
+                                    </span>
+                                  </div>
+
+                                  <div className="w-full flex flex-row gap-2 items-center justify-center">
+                                    <span className="
+                                    w-16
+                                    text-sm text-zinc-500">
+                                      PG 수수료
+                                    </span>
+                                    <span className="
+                                    w-14  text-end
+                                    text-sm text-zinc-500"
+                                      style={{
+                                        fontFamily: 'monospace',
+                                      }}>
+                                      {Number(item.store.settlementFeePercent ? item.store.settlementFeePercent : 0.3).toFixed(2)}%
+                                    </span>
+                                  </div>
+                                  */}
 
                                 </div>
                               )}
-                            </>
-                          )}
+
+
+
+                              {item?.settlement ? (
+
+
+                                <button
+                                  className="
+                                  w-48
+                                  flex flex-col gap-2 items-center justify-center
+                                  bg-purple-500 text-white px-2 py-1 rounded-md hover:bg-purple-600
+                                  text-sm
+                                  transition duration-300 ease-in-out
+                                  transform hover:scale-105
+                                  hover:shadow-lg
+                                  hover:shadow-purple-500/50
+                                  hover:cursor-pointer
+                                  hover:transition-transform
+                                  hover:duration-300
+                                  hover:ease-in-out
+
+                                  "
+
+                                  onClick={() => {
+                                    window.open(
+                                      `https://polygonscan.com/tx/${item.settlement.txid}`,
+                                      '_blank'
+                                    );
+                                  }}
+                                >
+
+
+                                  <div className="flex flex-col gap-2 items-end justify-center"
+                                    style={{
+                                      fontFamily: 'monospace',
+                                    }}
+                                  >
+
+                                    <span>
+                                      {item?.settlement?.settlementAmount?.toLocaleString() + ' USDT'}
+                                      {' '}
+                                      {
+                                        item?.settlement?.settlementWalletAddress &&
+                                      item?.settlement?.settlementWalletAddress?.slice(0, 5) + '...'}
+                                    </span>
+                                    {/*
+                                    <span>
+                                      {
+                                        item?.settlement?.agentFeeAmount ?
+                                        item?.settlement?.agentFeeAmount?.toLocaleString() + ' USDT'
+                                        : '0 USDT'
+                                      }
+                                      {' '}
+                                      {
+                                        item?.settlement?.agentFeeWalletAddress &&
+                                      item?.settlement?.agentFeeWalletAddress?.slice(0, 5) + '...'}
+                                    </span>
+                                    <span>
+                                      {item?.settlement?.feeAmount?.toLocaleString() + ' USDT'}
+                                      {' '}
+                                      {
+                                        item?.settlement?.feeWalletAddress &&
+                                      item?.settlement?.feeWalletAddress?.slice(0, 5) + '...'}
+                                    </span>
+                                    */}
+
+                                  </div>
+
+                                </button>
+
+                              ) : (
+                                <>
+                                  {item.status === 'paymentConfirmed'
+                                  && item?.transactionHash !== '0x'
+                                  && (
+                                    <div className="flex flex-row gap-2 items-center justify-center">
+
+                                      {item.storecode === 'admin' ? (
+
+                                        <div className="flex flex-row gap-2 items-center justify-center">
+                                          일반 회원 구매
+                                        </div>
+
+                                      ) : (
+                                      
+                                        <div className="flex flex-col gap-2 items-center justify-center">
+
+                                          <div className="flex flex-row gap-2 items-center justify-center">
+                                            <Image
+                                              src="/icon-settlement.png"
+                                              alt="Settlement"
+                                              width={20}
+                                              height={20}
+                                              className="animate-spin"
+                                            />
+                                            <span className="text-sm font-semibold text-zinc-500">
+                                              가맹점 결제 및 정산중...
+                                            </span>
+                                          </div>
+
+                                          <div className="flex flex-row gap-2 items-center justify-center">
+                                            <Image
+                                              src={item.store?.storeLogo || '/icon-store.png'}
+                                              alt="Store Logo"
+                                              width={20}
+                                              height={20}
+                                              className="rounded-lg w-6 h-6"
+                                            />
+                                            <span className="text-sm font-semibold text-zinc-500">
+                                              {item.store?.storeName}
+                                            </span>
+                                          </div>
+
+                                          <span className="text-lg font-semibold text-green-600"
+                                            style={{
+                                              fontFamily: 'monospace',
+                                            }}
+                                          >
+                                            {item.usdtAmount}{' '}USDT
+                                          </span>
+
+
+
+                                        </div>
+
+                                      )}
+
+
+                                    </div>
+                                  )}
+                                </>
+                              )}
+
+
+                            </div>
+
+                          </div>
+
                         </td>
 
 
