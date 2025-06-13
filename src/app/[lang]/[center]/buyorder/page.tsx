@@ -4072,7 +4072,7 @@ export default function Index({ params }: any) {
                                 height={20}
                                 className="w-5 h-5"
                               />
-                              <span className="text-lg text-green-600"
+                              <span className="text-lg text-green-600 font-semibold"
                                 style={{
                                   fontFamily: 'monospace',
                                 }}
