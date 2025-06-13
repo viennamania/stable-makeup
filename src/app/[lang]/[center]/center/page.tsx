@@ -2139,13 +2139,13 @@ export default function Index({ params }: any) {
                     </p>
                   </div>
                   <div className="flex flex-col items-center justify-center gap-2">
-                    <h2 className="text-lg font-semibold">총 구매금액</h2>
+                    <h2 className="text-lg font-semibold">총 구매금액(원)</h2>
                     <p className="text-lg text-zinc-500">
                       {Number(storeSummary.totalBuyKrwAmount)?.toLocaleString()} 원
                     </p>
                   </div>
                   <div className="flex flex-col items-center justify-center gap-2">
-                    <h2 className="text-lg font-semibold">총 구매량</h2>
+                    <h2 className="text-lg font-semibold">총 구매량(USDT)</h2>
 
                     <div className="flex flex-row items-center justify-center gap-2">
                       <Image
@@ -2320,13 +2320,13 @@ export default function Index({ params }: any) {
                       </p>
                     </div>
                     <div className="flex flex-col items-center justify-center gap-2">
-                      <h2 className="text-lg font-semibold">총 정산금액</h2>
+                      <h2 className="text-lg font-semibold">총 정산금액(원)</h2>
                       <p className="text-lg text-zinc-500">
                         {Number(storeSummary.totalSettlementAmountKRW)?.toLocaleString()} 원
                       </p>
                     </div>
                     <div className="flex flex-col items-center justify-center gap-2">
-                      <h2 className="text-lg font-semibold">총 정산량</h2>
+                      <h2 className="text-lg font-semibold">총 정산량(USDT)</h2>
                       <div className="flex flex-row items-center justify-center gap-2">
                         <Image
                           src="/icon-tether.png"
