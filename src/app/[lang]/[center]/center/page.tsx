@@ -2146,9 +2146,20 @@ export default function Index({ params }: any) {
                   </div>
                   <div className="flex flex-col items-center justify-center gap-2">
                     <h2 className="text-lg font-semibold">총 구매량</h2>
-                    <p className="text-lg text-zinc-500">
-                      {Number(storeSummary.totalBuyUsdtAmount)?.toLocaleString()} USDT
-                    </p>
+
+                    <div className="flex flex-row items-center justify-center gap-2">
+                      <Image
+                        src="/icon-tether.png"
+                        alt="Tether"
+                        width={20}
+                        height={20}
+                        className="rounded-lg w-4 h-4"
+                      />
+                      <p className="text-lg text-green-600">
+                        {Number(storeSummary.totalBuyUsdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      </p>
+                    </div>
+
                   </div>
                 </div>
 
@@ -2170,7 +2181,22 @@ export default function Index({ params }: any) {
                         <tr key={index} className="border-b">
                           <td className="px-4 py-2">#{order.tradeId}</td>
                           <td className="px-4 py-2">{Number(order.krwAmount)?.toLocaleString()} 원</td>
-                          <td className="px-4 py-2">{Number(order.usdtAmount)?.toLocaleString()} USDT</td>
+                          
+                          <td className="px-4 py-2">
+                            <div className="flex flex-row items-center justify-start gap-2">
+                              <Image
+                                src="/icon-tether.png"
+                                alt="Tether"
+                                width={20}
+                                height={20}
+                                className="rounded-lg w-4 h-4"
+                              />
+                              <span className="text-green-600">
+                                {Number(order.usdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                              </span>
+                            </div>
+                          </td>
+
                           <td className="px-4 py-2">
 
                             {order.status === 'ordered' && (
@@ -2256,16 +2282,27 @@ export default function Index({ params }: any) {
                       </p>
                     </div>
                     <div className="flex flex-col items-center justify-center gap-2">
-                      <h2 className="text-lg font-semibold">총 거래금액</h2>
+                      <h2 className="text-lg font-semibold">총 거래금액(원)</h2>
                       <p className="text-lg text-zinc-500">
                         {Number(storeSummary.totalTradeKrwAmount)?.toLocaleString()} 원
                       </p>
                     </div>
                     <div className="flex flex-col items-center justify-center gap-2">
-                      <h2 className="text-lg font-semibold">총 거래량</h2>
-                      <p className="text-lg text-zinc-500">
-                        {Number(storeSummary.totalTradeUsdtAmount)?.toLocaleString()} USDT
-                      </p>
+                      <h2 className="text-lg font-semibold">총 거래량(USDT)</h2>
+
+                      <div className="flex flex-row items-center justify-center gap-2">
+                        <Image
+                          src="/icon-tether.png"
+                          alt="Tether"
+                          width={20}
+                          height={20}
+                          className="rounded-lg w-4 h-4"
+                        />
+                        <p className="text-lg text-green-600">
+                          {Number(storeSummary.totalTradeUsdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        </p>
+                      </div>
+
                     </div>
                   </div>
 
@@ -2290,9 +2327,18 @@ export default function Index({ params }: any) {
                     </div>
                     <div className="flex flex-col items-center justify-center gap-2">
                       <h2 className="text-lg font-semibold">총 정산량</h2>
-                      <p className="text-lg text-zinc-500">
-                        {Number(storeSummary.totalSettlementAmount)?.toLocaleString()} USDT
-                      </p>
+                      <div className="flex flex-row items-center justify-center gap-2">
+                        <Image
+                          src="/icon-tether.png"
+                          alt="Tether"
+                          width={20}
+                          height={20}
+                          className="rounded-lg w-4 h-4"
+                        />
+                        <p className="text-lg text-green-600">
+                          {Number(storeSummary.totalSettlementAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        </p>
+                      </div>
                     </div>
                   </div>
  
@@ -2317,7 +2363,22 @@ export default function Index({ params }: any) {
                           <tr key={index} className="border-b">
                             <td className="px-4 py-2">#{trade.tradeId}</td>
                             <td className="px-4 py-2">{Number(trade.krwAmount)?.toLocaleString()} 원</td>
-                            <td className="px-4 py-2">{Number(trade.usdtAmount)?.toLocaleString()} USDT</td>
+                            
+                            <td className="px-4 py-2">
+                              <div className="flex flex-row items-center justify-start gap-2">
+                                <Image
+                                  src="/icon-tether.png"
+                                  alt="Tether"
+                                  width={20}
+                                  height={20}
+                                  className="rounded-lg w-4 h-4"
+                                />
+                                <span className="text-green-600">
+                                  {Number(trade.usdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                </span>
+                              </div>
+                            </td>
+
                             <td className="px-4 py-2">{new Date(trade.createdAt).toLocaleDateString()}</td>
                           </tr>
                         ))}
@@ -2380,16 +2441,25 @@ export default function Index({ params }: any) {
                       </p>
                     </div>
                     <div className="flex flex-col items-center justify-center gap-2">
-                      <h2 className="text-lg font-semibold">총 판매금액</h2>
+                      <h2 className="text-lg font-semibold">총 판매금액(원)</h2>
                       <p className="text-lg text-zinc-500">
                         {Number(storeSummary.totalClearanceKrwAmount)?.toLocaleString()} 원
                       </p>
                     </div>
                     <div className="flex flex-col items-center justify-center gap-2">
-                      <h2 className="text-lg font-semibold">총 판매량</h2>
-                      <p className="text-lg text-zinc-500">
-                        {Number(storeSummary.totalClearanceUsdtAmount)?.toLocaleString()} USDT
-                      </p>
+                      <h2 className="text-lg font-semibold">총 판매량(USDT)</h2>
+                      <div className="flex flex-row items-center justify-center gap-2">
+                        <Image
+                          src="/icon-tether.png"
+                          alt="Tether"
+                          width={20}
+                          height={20}
+                          className="rounded-lg w-4 h-4"
+                        />
+                        <p className="text-lg text-green-600">
+                          {Number(storeSummary.totalClearanceUsdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        </p>
+                      </div>
                     </div>
                   </div>
 
@@ -2416,7 +2486,23 @@ export default function Index({ params }: any) {
                           <tr key={index} className="border-b">
                             <td className="px-4 py-2">#{trade.tradeId}</td>
                             <td className="px-4 py-2">{Number(trade.krwAmount)?.toLocaleString()} 원</td>
-                            <td className="px-4 py-2">{Number(trade.usdtAmount)?.toLocaleString()} USDT</td>
+
+                            <td className="px-4 py-2">
+                              <div className="flex flex-row items-center justify-start gap-2">
+                                <Image
+                                  src="/icon-tether.png"
+                                  alt="Tether"
+                                  width={20}
+                                  height={20}
+                                  className="rounded-lg w-4 h-4"
+                                />
+                                <span className="text-green-600">
+                                  {Number(trade.usdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                </span>
+
+                              </div>
+                            </td>
+
                             <td className="px-4 py-2">
                               {trade.status === 'paymentConfirmed' && (
                                 <span className="text-sm text-green-500 font-semibold">

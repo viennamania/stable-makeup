@@ -3337,7 +3337,9 @@ export default function Index({ params }: any) {
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 정산량(USDT)</div>
                   <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalSettlementAmount?.toLocaleString()} USDT
+                    {tradeSummary.totalSettlementAmount
+                    && tradeSummary.totalSettlementAmount.toFixed(2)
+                    .toLocaleString()} USDT
                   </div>
                 </div>
 
