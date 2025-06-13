@@ -143,7 +143,10 @@ export async function getStoreByStorecode(
         storeDescription: 1,
         settlementFeePercent: 1,
         settlementFeeWalletAddress: 1,
+        
         sellerWalletAddress: 1,
+        escrowAmountUSDT: 1,
+
         adminWalletAddress: 1,
         settlementWalletAddress: 1,
         agentFeePercent: 1,
@@ -1040,6 +1043,36 @@ export async function updateStoreAgentFeePercent(
 
 
 
+// updateStoreEscrowAmountUSDT
+export async function updateStoreEscrowAmountUSDT(
+  {
+    storecode,
+    escrowAmountUSDT,
+  }: {
+    storecode: string;
+    escrowAmountUSDT: number;
+  }
+): Promise<boolean> {
 
+  console.log('updateStoreEscrowAmountUSDT', storecode, escrowAmountUSDT);
+
+  if (escrowAmountUSDT < 0) {
+    throw new Error('escrowAmountUSDT must be greater than or equal to 0');
+  }
+
+  const client = await clientPromise;
+  const collection = client.db('ultraman').collection('stores');
+
+  // update storecode
+  const result = await collection.updateOne(
+    { storecode: storecode },
+    { $set: { escrowAmountUSDT: escrowAmountUSDT } }
+  );
+  if (result) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 
