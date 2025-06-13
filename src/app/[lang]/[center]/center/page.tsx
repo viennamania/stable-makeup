@@ -2365,7 +2365,7 @@ export default function Index({ params }: any) {
                             <td className="px-4 py-2">{Number(trade.krwAmount)?.toLocaleString()} 원</td>
                             
                             <td className="px-4 py-2">
-                              <div className="flex flex-row items-center justify-start gap-2">
+                              <div className="w-20 flex flex-row items-center justify-between gap-2">
                                 <Image
                                   src="/icon-tether.png"
                                   alt="Tether"
@@ -2378,6 +2378,7 @@ export default function Index({ params }: any) {
                                 </span>
                               </div>
                             </td>
+
 
                             <td className="px-4 py-2">{new Date(trade.createdAt).toLocaleDateString()}</td>
                           </tr>

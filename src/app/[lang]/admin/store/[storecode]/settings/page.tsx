@@ -2857,8 +2857,9 @@ export default function SettingsPage({ params }: any) {
                                             className="w-5 h-5"
                                         />
                                         <span className="text-lg text-zinc-500">
-                                            {store && store.escrowAmountUSDT
-                                            .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                            {store && store.escrowAmountUSDT &&
+                                            store.escrowAmountUSDT.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                            || 0.00}
                                         </span>
                                     </div>
                                     <input
