@@ -875,17 +875,17 @@ export default function Index({ params }: any) {
 
 
 
-    // limit number
-    const [limitValue, setLimitValue] = useState(limit || 20);
-    useEffect(() => {
-      setLimitValue(limit || 20);
-    }, [limit]);
-  
-    // page number
-    const [pageValue, setPageValue] = useState(page || 1);
-    useEffect(() => {
-      setPageValue(page || 1);
-    }, [page]);
+  // limit number
+  const [limitValue, setLimitValue] = useState(limit || 20);
+  useEffect(() => {
+    setLimitValue(limit || 20);
+  }, [limit]);
+
+  // page number
+  const [pageValue, setPageValue] = useState(page || 1);
+  useEffect(() => {
+    setPageValue(page || 1);
+  }, [page]);
   
 
 

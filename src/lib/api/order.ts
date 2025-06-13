@@ -5914,15 +5914,28 @@ export async function getCollectOrdersForSeller(
     page,
     walletAddress,
     searchMyOrders,
+
+    fromDate,
+    toDate,
   }: {
     storecode: string;
     limit: number;
     page: number;
     walletAddress: string;
     searchMyOrders: boolean;
+
+    fromDate?: string;
+    toDate?: string;
   }
 
 ): Promise<ResultProps> {
+
+  console.log('getCollectOrdersForSeller fromDate: ' + fromDate);
+  console.log('getCollectOrdersForSeller toDate: ' + toDate);
+
+  const fromDateValue = fromDate ? fromDate + 'T00:00:00Z' : '1970-01-01T00:00:00Z';
+  const toDateValue = toDate ? toDate + 'T23:59:59Z' : new Date().toISOString();
+  
 
   const client = await clientPromise;
 
@@ -5960,6 +5973,7 @@ export async function getCollectOrdersForSeller(
         'storecode':  storecode,
         'walletAddress': walletAddress,
 
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
 
       }
     
@@ -5995,6 +6009,9 @@ export async function getCollectOrdersForSeller(
         storecode: storecode,
 
         privateSale: true,
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
+
       },
       
       //{ projection: { _id: 0, emailVerified: 0 } }
@@ -6006,6 +6023,8 @@ export async function getCollectOrdersForSeller(
       {
         storecode: storecode,
         privateSale: true,
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
       }
     );
 

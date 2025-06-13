@@ -865,10 +865,43 @@ export default function Index({ params }: any) {
 
 
   // limit number
-  //const [limit, setLimit] = useState(20);
+  const [limitValue, setLimitValue] = useState(limit || 20);
+  useEffect(() => {
+    setLimitValue(limit || 20);
+  }, [limit]);
 
   // page number
-  //const [page, setPage] = useState(1);
+  const [pageValue, setPageValue] = useState(page || 1);
+  useEffect(() => {
+    setPageValue(page || 1);
+  }, [page]);
+
+
+
+// search form date to date
+  const [searchFromDate, setSearchFormDate] = useState("");
+  // set today's date in YYYY-MM-DD format
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+    setSearchFormDate(formattedDate);
+  }, []);
+
+
+
+
+  const [searchToDate, setSearchToDate] = useState("");
+
+  // set today's date in YYYY-MM-DD format
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+    setSearchToDate(formattedDate);
+  }, []);
+
+
+
+
 
 
   const [totalCount, setTotalCount] = useState(0);
@@ -2138,6 +2171,9 @@ export default function Index({ params }: any) {
               page: Number(page),
               walletAddress: address,
               searchMyOrders: searchMyOrders,
+
+              fromDate: searchFromDate,
+              toDate: searchToDate,
             }
 
         ),
@@ -2234,6 +2270,10 @@ export default function Index({ params }: any) {
 
     latestBuyOrder,
     //playSong,
+
+    params.center,
+    searchFromDate,
+    searchToDate,
 ]);
 
 
@@ -2409,6 +2449,9 @@ const [tradeSummary, setTradeSummary] = useState({
         //searchDepositName: searchDepositName,
 
         //searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+        fromDate: searchFromDate,
+        toDate: searchToDate,
       })
     });
     if (!response.ok) {
@@ -2443,7 +2486,8 @@ const [tradeSummary, setTradeSummary] = useState({
     }, 10000);
     return () => clearInterval(interval);
 
-  } , [address, searchMyOrders, params.storecode,]);
+  } , [address, searchMyOrders, params.center,
+    searchFromDate, searchToDate]);
 
 
 
@@ -3185,138 +3229,6 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
 
-            {/* trade summary */}
-
-            <div className="flex flex-col xl:flex-row items-center justify-between gap-2
-              w-full
-              bg-zinc-100/50
-              p-4 rounded-lg shadow-md
-              ">
-
-              <div className="w-full xl:w-1/3 flex flex-row items-start justify-center gap-2">
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 거래수(건)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalCount?.toLocaleString()} 건
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 거래금액(원)</div>
-                  <div className="text-sm font-semibold text-zinc-500">
-                    <span className="text-xl text-yellow-600"
-                      style={{ fontFamily: 'monospace' }}
-                    >
-                      {tradeSummary.totalKrwAmount?.toLocaleString()}
-                    </span>{' '}원
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 거래량(USDT)</div>
-                  <div className="text-sm font-semibold text-zinc-500">
-                    <span className="text-xl text-green-600"
-                      style={{ fontFamily: 'monospace' }}
-                    >
-                      {tradeSummary.totalUsdtAmount?.toLocaleString()}
-                    </span>{' '}
-                      USDT
-                  </div>
-                </div>
-              </div>
-
-              {/* divider */}
-              <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
-              <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
-
-              <div className="w-full xl:w-1/3
-                flex flex-row items-start justify-center gap-2">
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 정산수(건)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalSettlementCount?.toLocaleString()} 건
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 정산금액(원)</div>
-                  <div className="text-sm font-semibold text-zinc-500">
-                    <span className="text-xl text-yellow-600"
-                      style={{ fontFamily: 'monospace' }}
-                    >
-                      {tradeSummary.totalSettlementAmountKRW?.toLocaleString()}
-                    </span>{' '}
-                      원
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 정산량(USDT)</div>
-                  <div className="text-sm font-semibold text-zinc-500">
-                    <span className="text-xl text-green-600"
-                      style={{ fontFamily: 'monospace' }}
-                    >
-                      {tradeSummary.totalSettlementAmount?.toLocaleString()}
-                    </span>{' '}
-                      USDT
-                  </div>
-                </div>
-
-                {/*
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 수수료금액(원)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalFeeAmountKRW?.toLocaleString()} 원
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 수수료수량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalFeeAmount?.toLocaleString()} USDT
-                  </div>
-                </div>
-                */}
-
-              </div>
-
-
-              {/* divider */}
-              <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
-              <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
-
-              <div className="w-full xl:w-1/3
-                flex flex-row items-start justify-center gap-2">
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 판매주문수(건)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalClearanceCount?.toLocaleString()} 건
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 판매금액(원)</div>
-                  <div className="text-sm font-semibold text-zinc-500">
-                    <span className="text-xl text-yellow-600"
-                      style={{ fontFamily: 'monospace' }}
-                    >
-                      {tradeSummary.totalClearanceAmount?.toLocaleString()}
-                    </span>{' '}
-                      원
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 판매량(USDT)</div>
-                  <div className="text-sm font-semibold text-zinc-500">
-                    <span className="text-xl text-green-600"
-                      style={{ fontFamily: 'monospace' }}
-                    >
-                      {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()}
-                    </span>{' '}
-                      USDT
-                  </div>
-                </div>
-              </div>
-              
-            </div>
 
 
 
@@ -3514,14 +3426,14 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
 
-                          <div className="flex flex-row items-start justify-center gap-2">
+                          <div className="w-full flex flex-row items-start justify-between gap-2">
 
                             <Image
-                              src="/icon-escrow.jpeg"
+                              src="/icon-escrow.png"
                               alt="Escrow"
                               width={100}
                               height={100}
-                              className="w-18 h-18 rounded-lg"
+                              className="w-12 h-12 rounded-lg shadow-md"
                             />
 
                             <div className="flex flex-col items-center justify-center gap-2">
@@ -3537,7 +3449,7 @@ const [tradeSummary, setTradeSummary] = useState({
                                       className="w-6 h-6"
                                   />
                                   <span className="text-sm text-zinc-500">
-                                    가맹점 보유금
+                                    가맹점 보유(에스크로) 수량
                                   </span>
                               </div>
 
@@ -3736,13 +3648,16 @@ const [tradeSummary, setTradeSummary] = useState({
 
                     <div className="flex flex-row items-start gap-5">
 
-
+                      {/*
                       <div className="flex flex-col gap-2 items-center">
                         <div className="text-sm">{Total}</div>
                         <div className="text-xl font-semibold text-zinc-500">
                           {buyOrders.length} 
                         </div>
                       </div>
+                      */}
+
+                      {/* total count of buy orders */}
 
 
 
@@ -3757,6 +3672,7 @@ const [tradeSummary, setTradeSummary] = useState({
                       </div>
                       */}
 
+                      {/*
                       <div className="flex flex-col gap-2 items-center">
                         <div className="text-sm">{Trades}</div>
                         <div className="text-xl font-semibold text-zinc-500">
@@ -3768,6 +3684,9 @@ const [tradeSummary, setTradeSummary] = useState({
 
                         </div>
                       </div>
+                      */}
+
+                      {/* total count of buy orders with status 'paymentRequested' */}
 
                       {/* buy order status */}
                       <div className="flex flex-col gap-2 items-center">
@@ -3786,6 +3705,192 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
                 </div>
+
+
+
+
+              <div className="mt-5 selection:w-full flex flex-col xl:flex-row items-center justify-between gap-3">
+
+
+
+                {/* serach fromDate and toDate */}
+                {/* DatePicker for fromDate and toDate */}
+                <div className="flex flex-col xl:flex-row items-center gap-2">
+                  <div className="flex flex-row items-center gap-2">
+                    <Image
+                      src="/icon-calendar.png"
+                      alt="Calendar"
+                      width={20}
+                      height={20}
+                      className="rounded-lg w-5 h-5"
+                    />
+                    <input
+                      type="date"
+                      value={searchFromDate}
+                      onChange={(e) => setSearchFormDate(e.target.value)}
+                      className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                    />
+                  </div>
+
+                  <span className="text-sm text-zinc-500">~</span>
+
+                  <div className="flex flex-row items-center gap-2">
+                    <Image
+                      src="/icon-calendar.png"
+                      alt="Calendar"
+                      width={20}
+                      height={20}
+                      className="rounded-lg w-5 h-5"
+                    />
+                    <input
+                      type="date"
+                      value={searchToDate}
+                      onChange={(e) => setSearchToDate(e.target.value)}
+                      className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                    />
+                  </div>
+                </div>
+
+              </div>
+
+
+
+
+
+                {/* trade summary */}
+
+                <div className="flex flex-col xl:flex-row items-center justify-between gap-2
+                  w-full
+                  bg-zinc-100/50
+                  p-4 rounded-lg shadow-md
+                  ">
+
+                  <div className="w-full xl:w-1/3 flex flex-row items-start justify-between gap-2 pl-4 pr-4">
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">총 거래수(건)</div>
+                      <div className="text-xl font-semibold text-zinc-500">
+                        {tradeSummary.totalCount?.toLocaleString()} 건
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">총 거래금액(원)</div>
+                      <div className="text-sm font-semibold text-zinc-500">
+                        <span className="text-xl text-yellow-600"
+                          style={{ fontFamily: 'monospace' }}
+                        >
+                          {tradeSummary.totalKrwAmount?.toLocaleString()}
+                        </span>{' '}원
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">총 거래량(USDT)</div>
+                      <div className="text-sm font-semibold text-zinc-500">
+                        <span className="text-xl text-green-600"
+                          style={{ fontFamily: 'monospace' }}
+                        >
+                          {tradeSummary.totalUsdtAmount?.toLocaleString()}
+                        </span>{' '}
+                          USDT
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* divider */}
+                  <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
+                  <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
+
+                  <div className="w-full xl:w-1/3
+                    flex flex-row items-start justify-between gap-2 pl-4 pr-4">
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">총 정산수(건)</div>
+                      <div className="text-xl font-semibold text-zinc-500">
+                        {tradeSummary.totalSettlementCount?.toLocaleString()} 건
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">총 정산금액(원)</div>
+                      <div className="text-sm font-semibold text-zinc-500">
+                        <span className="text-xl text-yellow-600"
+                          style={{ fontFamily: 'monospace' }}
+                        >
+                          {tradeSummary.totalSettlementAmountKRW?.toLocaleString()}
+                        </span>{' '}
+                          원
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">총 정산량(USDT)</div>
+                      <div className="text-sm font-semibold text-zinc-500">
+                        <span className="text-xl text-green-600"
+                          style={{ fontFamily: 'monospace' }}
+                        >
+                          {tradeSummary.totalSettlementAmount?.toLocaleString()}
+                        </span>{' '}
+                          USDT
+                      </div>
+                    </div>
+
+                    {/*
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">총 수수료금액(원)</div>
+                      <div className="text-xl font-semibold text-zinc-500">
+                        {tradeSummary.totalFeeAmountKRW?.toLocaleString()} 원
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">총 수수료수량(USDT)</div>
+                      <div className="text-xl font-semibold text-zinc-500">
+                        {tradeSummary.totalFeeAmount?.toLocaleString()} USDT
+                      </div>
+                    </div>
+                    */}
+
+                  </div>
+
+
+                  {/* divider */}
+                  <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
+                  <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
+
+                  <div className="w-full xl:w-1/3
+                    flex flex-row items-start justify-between gap-2 pl-4 pr-4">
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">총 판매주문수(건)</div>
+                      <div className="text-xl font-semibold text-zinc-500">
+                        {tradeSummary.totalClearanceCount?.toLocaleString()} 건
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">총 판매금액(원)</div>
+                      <div className="text-sm font-semibold text-zinc-500">
+                        <span className="text-xl text-yellow-600"
+                          style={{ fontFamily: 'monospace' }}
+                        >
+                          {tradeSummary.totalClearanceAmount?.toLocaleString()}
+                        </span>{' '}
+                          원
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">총 판매량(USDT)</div>
+                      <div className="text-sm font-semibold text-zinc-500">
+                        <span className="text-xl text-green-600"
+                          style={{ fontFamily: 'monospace' }}
+                        >
+                          {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()}
+                        </span>{' '}
+                          USDT
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+
+
 
 
 
@@ -3808,10 +3913,20 @@ const [tradeSummary, setTradeSummary] = useState({
                           <th className="p-2">{TID}</th>
                           <th className="p-2">{Buy_Order_Opened}</th>
 
-                          <th className="p-2">{Deposit_Name} / {Buyer}</th>
+                          <th className="p-2">{Buyer}</th>
 
                           <th className="p-2">
-                            판매금액 / 판매량 / 환율
+                            <div className="flex flex-col items-center">
+                              <span>
+                                판매금액
+                              </span>
+                              <span>
+                                판매량
+                              </span>
+                              <span>
+                                환율
+                              </span>
+                            </div>
                           </th>
                           <th className="p-2">결제통장</th>
                           {/*
@@ -3851,7 +3966,7 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
                             <td className="p-2">
-                              <div className="flex flex-row items-center gap-2">
+                              <div className="flex flex-col items-center gap-2">
 
                                 {
                                   new Date(item.createdAt).toLocaleDateString(params.lang, {
@@ -3937,20 +4052,32 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
                             <td className="p-2">
-                              <div className="flex flex-row gap-2 items-center justify-center">
-                                <span className="text-lg text-yellow-600 font-semibold"
+                              <div className="flex flex-col gap-2 items-end justify-start">
+
+                                <span className="text-xl text-yellow-600 font-semibold"
                                   style={{ fontFamily: 'monospace' }}
                                 >
                                   {Number(item.krwAmount)?.toLocaleString()}{' '}원
                                 </span>
-                                <span className="text-lg text-green-600 font-semibold"
-                                  style={{ fontFamily: 'monospace' }}
-                                >
-                                  {item.usdtAmount}{' '}USDT
-                                </span>
+
+                                <div className="flex flex-row gap-2 items-center justify-center">
+                                  <Image
+                                    src="/icon-tether.png"
+                                    alt="Tether"
+                                    width={20}
+                                    height={20}
+                                    className="w-5 h-5"
+                                  />
+                                  <span className="text-xl text-green-600 font-semibold"
+                                    style={{ fontFamily: 'monospace' }}
+                                  >
+                                    {item.usdtAmount.toFixed(2)}
+                                  </span>
+                                </div>
+
                                 <span className="text-sm text-zinc-500">
                                   {
-                                    Number(item.rate).toFixed(2)
+                                    Number(item.rate)
                                     //Number(item.krwAmount / item.usdtAmount).toFixed(2)
                                   }
                                 </span>
@@ -3959,14 +4086,14 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
                             <td className="p-2">
-                              <div className="flex flex-row gap-2 items-center justify-center">
-                                <div className="text-sm font-semibold text-zinc-500">
+                              <div className="flex flex-col gap-2 items-center justify-center">
+                                <div className="text-lg font-semibold text-zinc-500">
                                   {item.seller?.bankInfo?.bankName}
                                 </div>
-                                <div className="text-sm font-semibold text-zinc-500">
+                                <div className="text-lg font-semibold text-zinc-500">
                                   {item.seller?.bankInfo?.accountNumber}
                                 </div>
-                                <div className="text-sm font-semibold text-zinc-500">
+                                <div className="text-lg font-semibold text-zinc-500">
                                   {item.seller?.bankInfo?.accountHolder}
                                 </div>
                               </div>
@@ -5414,22 +5541,36 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
               <div className="flex flex-row items-center gap-2">
-                  <select
-                    value={limit}
-                    onChange={(e) =>
-                      
-                      router.push(`/${params.lang}/${params.center}/clearance-history?limit=${Number(e.target.value)}&page=${page}&wallet=${wallet}&searchMyOrders=${searchMyOrders}`)
+                <select
+                  value={limit}
+                  onChange={(e) =>
+                    
+                    router.push(`/${params.lang}/${params.center}/clearance-history?limit=${Number(e.target.value)}&page=${page}&wallet=${wallet}&searchMyOrders=${searchMyOrders}`)
 
-                    }
+                  }
 
-                    className="text-sm bg-zinc-800 text-zinc-200 px-2 py-1 rounded-md"
-                  >
-                    <option value={10}>10</option>
-                    <option value={20}>20</option>
-                    <option value={50}>50</option>
-                    <option value={100}>100</option>
-                  </select>
-                </div>
+                  className="text-sm bg-zinc-800 text-zinc-200 px-2 py-1 rounded-md"
+                >
+                  <option value={10}>10</option>
+                  <option value={20}>20</option>
+                  <option value={50}>50</option>
+                  <option value={100}>100</option>
+                </select>
+              </div>
+
+              {/* 처음으로 */}
+              <button
+                disabled={Number(page) <= 1}
+                className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
+                onClick={() => {
+                  
+                  router.push(`/${params.lang}/${params.center}/clearance-history?limit=${Number(limit)}&page=1`);
+
+                }
+              }
+              >
+                처음
+              </button>
 
 
               <button
@@ -5461,6 +5602,20 @@ const [tradeSummary, setTradeSummary] = useState({
               >
                 다음
               </button>
+
+              {/* 마지막 */}
+              <button
+                disabled={Number(page) >= Math.ceil(Number(totalCount) / Number(limit))}
+                className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
+                onClick={() => {
+                  
+                  router.push(`/${params.lang}/${params.center}/clearance-history?limit=${Number(limit)}&page=${Math.ceil(Number(totalCount) / Number(limit))}`);
+
+                }}
+              >
+                마지막
+              </button>
+
 
             </div>
 
