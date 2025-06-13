@@ -2140,9 +2140,14 @@ export default function Index({ params }: any) {
                   </div>
                   <div className="flex flex-col items-center justify-center gap-2">
                     <h2 className="text-lg font-semibold">총 구매금액(원)</h2>
-                    <p className="text-lg text-zinc-500">
-                      {Number(storeSummary.totalBuyKrwAmount)?.toLocaleString()} 원
-                    </p>
+                    <div className="flex flex-row items-center justify-end gap-2">
+                      <p className="text-lg text-yellow-600">
+                        {Number(storeSummary.totalBuyKrwAmount)?.toLocaleString()}
+                      </p>
+                      <span className="text-lg text-zinc-500">
+                        원
+                      </span>
+                    </div>
                   </div>
                   <div className="flex flex-col items-center justify-center gap-2">
                     <h2 className="text-lg font-semibold">총 구매량(USDT)</h2>
@@ -2180,10 +2185,21 @@ export default function Index({ params }: any) {
                       {storeSummary.latestOrders.map((order, index) => (
                         <tr key={index} className="border-b">
                           <td className="px-4 py-2">#{order.tradeId}</td>
-                          <td className="px-4 py-2">{Number(order.krwAmount)?.toLocaleString()} 원</td>
+                          <td className="px-4 py-2">
+                            <div className="flex flex-row items-center justify-end gap-2">
+                              <span className="text-lg text-yellow-600">
+                                {Number(order.krwAmount)?.toLocaleString()}
+                              </span>
+                              <span className="text-lg text-zinc-500">
+                                원
+                              </span>
+                            </div>
+                          </td>
                           
                           <td className="px-4 py-2">
-                            <div className="flex flex-row items-center justify-start gap-2">
+                            <div className="
+                              w-20
+                              flex flex-row items-center justify-between gap-2">
                               <Image
                                 src="/icon-tether.png"
                                 alt="Tether"
@@ -2191,7 +2207,7 @@ export default function Index({ params }: any) {
                                 height={20}
                                 className="rounded-lg w-4 h-4"
                               />
-                              <span className="text-green-600">
+                              <span className="text-lg text-green-600">
                                 {Number(order.usdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                               </span>
                             </div>
@@ -2283,9 +2299,14 @@ export default function Index({ params }: any) {
                     </div>
                     <div className="flex flex-col items-center justify-center gap-2">
                       <h2 className="text-lg font-semibold">총 거래금액(원)</h2>
-                      <p className="text-lg text-zinc-500">
-                        {Number(storeSummary.totalTradeKrwAmount)?.toLocaleString()} 원
-                      </p>
+                      <div className="flex flex-row items-center justify-end gap-2">
+                        <p className="text-lg text-yellow-600">
+                          {Number(storeSummary.totalTradeKrwAmount)?.toLocaleString()}
+                        </p>
+                        <span className="text-lg text-zinc-500">
+                          원
+                        </span>
+                      </div>
                     </div>
                     <div className="flex flex-col items-center justify-center gap-2">
                       <h2 className="text-lg font-semibold">총 거래량(USDT)</h2>
@@ -2321,9 +2342,14 @@ export default function Index({ params }: any) {
                     </div>
                     <div className="flex flex-col items-center justify-center gap-2">
                       <h2 className="text-lg font-semibold">총 정산금액(원)</h2>
-                      <p className="text-lg text-zinc-500">
-                        {Number(storeSummary.totalSettlementAmountKRW)?.toLocaleString()} 원
-                      </p>
+                      <div className="flex flex-row items-center justify-end gap-2">
+                        <p className="text-lg text-yellow-600">
+                          {Number(storeSummary.totalSettlementAmountKRW)?.toLocaleString()}
+                        </p>
+                        <span className="text-lg text-zinc-500">
+                          원
+                        </span>
+                      </div>
                     </div>
                     <div className="flex flex-col items-center justify-center gap-2">
                       <h2 className="text-lg font-semibold">총 정산량(USDT)</h2>
@@ -2353,8 +2379,8 @@ export default function Index({ params }: any) {
                       <thead>
                         <tr>
                           <th className="px-4 py-2 text-left">거래번호</th>
-                          <th className="px-4 py-2 text-left">거래금액</th>
-                          <th className="px-4 py-2 text-left">거래량</th>
+                          <th className="px-4 py-2 text-left">거래금액(원)</th>
+                          <th className="px-4 py-2 text-left">거래량(USDT)</th>
                           <th className="px-4 py-2 text-left">거래일시</th>
                         </tr>
                       </thead>
@@ -2362,7 +2388,18 @@ export default function Index({ params }: any) {
                         {storeSummary.latestTrades.map((trade, index) => (
                           <tr key={index} className="border-b">
                             <td className="px-4 py-2">#{trade.tradeId}</td>
-                            <td className="px-4 py-2">{Number(trade.krwAmount)?.toLocaleString()} 원</td>
+                            <td className="px-4 py-2">
+                              <div className="
+                                w-20
+                                flex flex-row items-center justify-end gap-2">
+                                <span className="text-lg text-yellow-600">
+                                  {Number(trade.krwAmount)?.toLocaleString()}
+                                </span>
+                                <span className="text-sm text-zinc-500">
+                                  원
+                                </span>
+                              </div>
+                            </td>
                             
                             <td className="px-4 py-2">
                               <div className="w-20 flex flex-row items-center justify-between gap-2">
@@ -2373,7 +2410,7 @@ export default function Index({ params }: any) {
                                   height={20}
                                   className="rounded-lg w-4 h-4"
                                 />
-                                <span className="text-green-600">
+                                <span className="text-lg text-green-600">
                                   {Number(trade.usdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 </span>
                               </div>
@@ -2443,9 +2480,14 @@ export default function Index({ params }: any) {
                     </div>
                     <div className="flex flex-col items-center justify-center gap-2">
                       <h2 className="text-lg font-semibold">총 판매금액(원)</h2>
-                      <p className="text-lg text-zinc-500">
-                        {Number(storeSummary.totalClearanceKrwAmount)?.toLocaleString()} 원
-                      </p>
+                      <div className="flex flex-row items-center justify-end gap-2">
+                        <p className="text-lg text-yellow-600">
+                          {Number(storeSummary.totalClearanceKrwAmount)?.toLocaleString()}
+                        </p>
+                        <span className="text-lg text-zinc-500">
+                          원
+                        </span>
+                      </div>
                     </div>
                     <div className="flex flex-col items-center justify-center gap-2">
                       <h2 className="text-lg font-semibold">총 판매량(USDT)</h2>
@@ -2476,8 +2518,8 @@ export default function Index({ params }: any) {
                       <thead>
                         <tr>
                           <th className="px-4 py-2 text-left">판매번호</th>
-                          <th className="px-4 py-2 text-left">판매금액</th>
-                          <th className="px-4 py-2 text-left">판매량</th>
+                          <th className="px-4 py-2 text-left">판매금액(원)</th>
+                          <th className="px-4 py-2 text-left">판매량(USDT)</th>
                           <th className="px-4 py-2 text-left">판매상태</th>
                           <th className="px-4 py-2 text-left">판매일시</th>
                         </tr>
@@ -2486,10 +2528,21 @@ export default function Index({ params }: any) {
                         {storeSummary?.latestClearances?.map((trade, index) => (
                           <tr key={index} className="border-b">
                             <td className="px-4 py-2">#{trade.tradeId}</td>
-                            <td className="px-4 py-2">{Number(trade.krwAmount)?.toLocaleString()} 원</td>
+                            <td className="px-4 py-2">
+                              <div className="w-20 flex flex-row items-center justify-end gap-2">
+                                <span className="text-lg text-yellow-600">
+                                  {Number(trade.krwAmount)?.toLocaleString()}
+                                </span>
+                                <span className="text-sm text-zinc-500">
+                                  원
+                                </span>
+                              </div>
+                            </td>
 
                             <td className="px-4 py-2">
-                              <div className="flex flex-row items-center justify-start gap-2">
+                              <div className="
+                                w-20
+                                flex flex-row items-center justify-between gap-2">
                                 <Image
                                   src="/icon-tether.png"
                                   alt="Tether"
@@ -2497,7 +2550,7 @@ export default function Index({ params }: any) {
                                   height={20}
                                   className="rounded-lg w-4 h-4"
                                 />
-                                <span className="text-green-600">
+                                <span className="text-lg text-green-600">
                                   {Number(trade.usdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 </span>
 
@@ -2639,7 +2692,7 @@ export default function Index({ params }: any) {
                         <span className="text-sm text-zinc-600">
                           {My_Balance}
                         </span>
-                        <div className="text-4xl font-semibold text-zinc-800">
+                        <div className="text-4xl font-semibold text-green-600">
                           {Number(balance).toFixed(2)}
                         </div>
                         <p className="text-sm text-zinc-800">USDT</p>
