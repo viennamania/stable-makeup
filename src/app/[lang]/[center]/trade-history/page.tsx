@@ -2965,11 +2965,16 @@ const fetchBuyOrders = async () => {
                       </div>
 
                       <div className="hidden flex-row items-center justify-end  gap-2">
-                          <span className="text-2xl xl:text-4xl font-semibold text-green-600">
-                              {Number(balance).toFixed(2)}
-                          </span>
-                          {' '}
-                          <span className="text-sm">USDT</span>
+                        <Image
+                            src="/icon-wallet.png"
+                            alt="Wallet"
+                            width={100}
+                            height={100}
+                            className="w-6 h-6"
+                        />
+                        <span className="text-2xl xl:text-4xl font-semibold text-green-600">
+                            {Number(balance).toFixed(2)}
+                        </span>
                       </div>
 
 
@@ -3141,7 +3146,7 @@ const fetchBuyOrders = async () => {
                 p-4 rounded-lg shadow-md
                 ">
 
-                <div className="w-full xl:w-1/4 flex flex-row items-center justify-center gap-2">
+                <div className="w-full xl:w-1/4 flex flex-row items-center justify-between gap-2 pl-4 pr-4">
                   <div className="flex flex-col gap-2 items-center">
                     <div className="text-sm">총 거래수(건)</div>
                     <div className="text-xl font-semibold text-zinc-500">
@@ -3151,15 +3156,32 @@ const fetchBuyOrders = async () => {
 
                   <div className="flex flex-col gap-2 items-center">
                     <div className="text-sm">총 거래금액(원)</div>
-                    <div className="text-xl font-semibold text-zinc-500">
-                      {tradeSummary.totalKrwAmount?.toLocaleString()} 원
+                    <div className="flex flex-row items-center gap-1">
+                      <span className="text-xl font-semibold text-yellow-500">
+                        {tradeSummary.totalKrwAmount?.toLocaleString()}
+                      </span>
+                      <span className="text-sm text-yellow-600">
+                        원
+                      </span>
                     </div>
                   </div>
 
                   <div className="flex flex-col gap-2 items-center">
                     <div className="text-sm">총 거래량(USDT)</div>
-                    <div className="text-xl font-semibold text-zinc-500">
-                      {tradeSummary.totalUsdtAmount?.toLocaleString()} USDT
+                    <div className="flex flex-row items-center gap-1">
+                      <Image
+                        src="/icon-tether.png"
+                        alt="Tether"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
+                      <span className="text-xl font-semibold text-green-600">
+                        {Number(tradeSummary.totalUsdtAmount
+                          ? tradeSummary.totalUsdtAmount
+                          : 0
+                        ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -3169,7 +3191,7 @@ const fetchBuyOrders = async () => {
                 <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
                 <div className="w-full xl:w-1/2
-                  flex flex-row items-center justify-center gap-2">
+                  flex flex-row items-center justify-between gap-2 pl-4 pr-4">
 
                   
                   <div className="flex flex-col gap-2 items-center">
@@ -3181,28 +3203,58 @@ const fetchBuyOrders = async () => {
 
                   <div className="flex flex-col gap-2 items-center">
                     <div className="text-sm">총 정산금액(원)</div>
-                    <div className="text-xl font-semibold text-zinc-500">
-                      {tradeSummary.totalSettlementAmountKRW?.toLocaleString()} 원
+                    <div className="flex flex-row items-center gap-1">
+                      <span className="text-xl font-semibold text-yellow-600">
+                        {tradeSummary.totalSettlementAmountKRW?.toLocaleString()}
+                      </span>
+                      <span className="text-sm text-zinc-500">원</span>
                     </div>
                   </div>
 
                   <div className="flex flex-col gap-2 items-center">
                     <div className="text-sm">총 정산량(USDT)</div>
-                    <div className="text-xl font-semibold text-zinc-500">
-                      {tradeSummary.totalSettlementAmount?.toLocaleString()} USDT
+                    <div className="flex flex-row items-center gap-1">
+                      <Image
+                        src="/icon-tether.png"
+                        alt="Tether"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
+                      <span className="text-xl font-semibold text-green-600">
+                        {Number(tradeSummary.totalSettlementAmount
+                          ? tradeSummary.totalSettlementAmount
+                          : 0
+                        ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      </span>
                     </div>
                   </div>
 
                   <div className="flex flex-col gap-2 items-center">
                     <div className="text-sm">총 수수료금액(원)</div>
-                    <div className="text-xl font-semibold text-zinc-500">
-                      {tradeSummary.totalFeeAmountKRW?.toLocaleString()} 원
+                    <div className="flex flex-row items-center gap-1">
+                      <span className="text-xl font-semibold text-yellow-600">
+                        {tradeSummary.totalFeeAmountKRW?.toLocaleString()}
+                      </span>
+                      <span className="text-sm text-zinc-500">원</span>
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 items-center">
                     <div className="text-sm">총 수수료수량(USDT)</div>
-                    <div className="text-xl font-semibold text-zinc-500">
-                      {tradeSummary.totalFeeAmount?.toLocaleString()} USDT
+                    <div className="flex flex-row items-center gap-1">
+                      <Image
+                        src="/icon-tether.png"
+                        alt="Tether"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
+                      <span className="text-xl font-semibold text-green-600">
+                        {Number(tradeSummary.totalFeeAmount
+                          ? tradeSummary.totalFeeAmount
+                          : 0
+                        ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -3212,7 +3264,7 @@ const fetchBuyOrders = async () => {
                 <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
                 <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
-                <div className="w-full xl:w-1/4 flex flex-row items-center justify-center gap-2">
+                <div className="w-full xl:w-1/4 flex flex-row items-center justify-between gap-2 pl-4 pr-4">
                   <div className="flex flex-col gap-2 items-center">
                     <div className="text-sm">총 청산수(건)</div>
                     <div className="text-xl font-semibold text-zinc-500">
@@ -3222,14 +3274,29 @@ const fetchBuyOrders = async () => {
 
                   <div className="flex flex-col gap-2 items-center">
                     <div className="text-sm">총 청산금액(원)</div>
-                    <div className="text-xl font-semibold text-zinc-500">
-                      {tradeSummary.totalClearanceAmount?.toLocaleString()} 원
+                    <div className="flex flex-row items-center gap-1">
+                      <span className="text-xl font-semibold text-yellow-600">
+                        {tradeSummary.totalClearanceAmount?.toLocaleString()}
+                      </span>
+                      <span className="text-sm text-zinc-500">원</span>
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 items-center">
                     <div className="text-sm">총 청산수량(USDT)</div>
-                    <div className="text-xl font-semibold text-zinc-500">
-                      {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()} USDT
+                    <div className="flex flex-row items-center gap-1">
+                      <Image
+                        src="/icon-tether.png"
+                        alt="Tether"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
+                      <span className="text-xl font-semibold text-green-600">
+                        {Number(tradeSummary.totalClearanceAmountUSDT
+                          ? tradeSummary.totalClearanceAmountUSDT
+                          : 0
+                        ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -3659,13 +3726,25 @@ const fetchBuyOrders = async () => {
                                   >
                                     {Number(item.krwAmount)?.toLocaleString()}{' '}원
                                   </span>
-                                  <span className="text-lg text-green-600 font-semibold"
-                                    style={{
-                                      fontFamily: 'monospace',
-                                      }}
-                                    >
-                                    {item.usdtAmount}{' '}USDT
-                                  </span>
+                                  <div className="flex flex-row items-center gap-1">
+                                    <Image
+                                      src="/icon-tether.png"
+                                      alt="Tether"
+                                      width={20}
+                                      height={20}
+                                      className="w-5 h-5"
+                                    />
+                                    <span className="text-lg text-green-600 font-semibold"
+                                      style={{
+                                        fontFamily: 'monospace',
+                                        }}
+                                      >
+                                      {item.usdtAmount
+                                        ? Number(item.usdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                        : 0
+                                      }
+                                    </span>
+                                  </div>
                                 </div>
                                 <span className="text-sm text-zinc-500 font-semibold"
                                   style={{

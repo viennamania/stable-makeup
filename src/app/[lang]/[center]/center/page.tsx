@@ -2161,7 +2161,9 @@ export default function Index({ params }: any) {
                         className="rounded-lg w-4 h-4"
                       />
                       <p className="text-lg text-green-600">
-                        {Number(storeSummary.totalBuyUsdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        {Number(storeSummary.totalBuyUsdtAmount
+                          ? storeSummary.totalBuyUsdtAmount : 0
+                        ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                       </p>
                     </div>
 
