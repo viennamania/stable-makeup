@@ -2286,7 +2286,7 @@ export default function Index({ params }: any) {
                           p-2">
                           USDT통장
                         </th>
-                        <th className="p-2">충전금액</th>
+                        <th className="p-2">충전금액(원)</th>
                         <th className="p-2">결제페이지</th>
                         <th className="p-2">주문상태</th>
 
