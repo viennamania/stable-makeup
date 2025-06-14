@@ -133,7 +133,7 @@ interface BuyOrder {
   agentName: string;
   agentcode: string;
 
-
+  userStats: any;
 }
 
 
@@ -4055,17 +4055,29 @@ export default function Index({ params }: any) {
                             />
                             */}
                             
-                            <div className="flex flex-col gap-2 items-center justify-center">
+                            <div className="flex flex-col gap-2 items-start justify-start">
 
+                              <div className="flex flex-row items-center gap-2">     
+                                <Image
+                                  src={item?.buyer?.avatar || "/profile-default.png"}
+                                  alt="Avatar"
+                                  width={20}
+                                  height={20}
+                                  className="rounded-full w-5 h-5"
+                                  style={{
+                                    objectFit: 'cover',
+                                  }}
+                                />                         
+                                <span className="text-lg text-blue-600 font-bold">
+                                  {
+                                    item?.nickname?.length > 10 ?
+                                    item?.nickname?.substring(0, 10) + '...' :
+                                    item?.nickname
+                                  }
+                                </span>
+                              </div>
 
-
-                              <span className="text-lg text-blue-600 font-bold">
-                                {
-                                  item?.nickname?.length > 10 ?
-                                  item?.nickname?.substring(0, 10) + '...' :
-                                  item?.nickname
-                                }
-                              </span>
+                              {/* buyer info */}
 
 
                               <div className="flex flex-row items-center gap-2">
@@ -4111,6 +4123,38 @@ export default function Index({ params }: any) {
                               </button>
                             </div>
 
+
+                            {/* userStats */}
+                            {/* userStats.totalPaymentConfirmedCount */}
+                            {/* userStats.totalPaymentConfirmedKrwAmount */}
+                            <div className="flex flex-row items-center justify-center gap-2">
+                              <span className="text-sm text-zinc-500">
+                                {
+                                  item?.userStats?.totalPaymentConfirmedCount
+                                  ? item?.userStats?.totalPaymentConfirmedCount.toLocaleString() + ' 건' :
+                                  0 + ' 건'
+                                }
+                              </span>
+                              <span className="text-sm text-zinc-500">
+                                {
+                                  item?.userStats?.totalPaymentConfirmedKrwAmount &&
+                                  item?.userStats?.totalPaymentConfirmedKrwAmount.toLocaleString() + ' 원'
+                                }
+                              </span>
+
+                              {!item?.userStats?.totalPaymentConfirmedCount && (
+                                <Image
+                                  src="/icon-new-user.png"
+                                  alt="New User"
+                                  width={50}
+                                  height={50}
+                                  className="w-10 h-10"
+                                />
+                              )}
+                            </div>
+
+
+
                           </div>
 
                         </td>
@@ -4120,15 +4164,22 @@ export default function Index({ params }: any) {
                           <div className="
                             w-28
                             flex flex-col gap-2 items-end justify-start">
-                            <span className="text-lg text-yellow-600 font-semibold"
-                              style={{
-                                fontFamily: 'monospace',
-                              }}
-                            >
-                              {
-                                item.krwAmount?.toLocaleString() + ' 원'
-                              }
-                            </span>
+
+                            <div className="flex flex-row items-center justify-end gap-1">
+                              <span className="text-lg text-yellow-600 font-semibold"
+                                style={{
+                                  fontFamily: 'monospace',
+                                }}
+                              >
+                                {
+                                  item.krwAmount?.toLocaleString()
+                                }
+                              </span>
+                              <span className="text-sm text-zinc-500">
+                                원
+                              </span>
+                            </div>
+
 
                             <div className="flex flex-row items-center justify-end gap-2">
                               <Image
@@ -4657,12 +4708,17 @@ export default function Index({ params }: any) {
                               </div>
 
                               {/* paymentAmount */}
-                              <span className="text-lg text-yellow-600 font-semibold"
-                                style={{ fontFamily: 'monospace' }}>
-                                {
-                                  item.paymentAmount?.toLocaleString()
-                                }{' '}원
-                              </span>
+                              <div className="flex flex-row gap-1 items-center justify-center">
+                                <span className="text-lg text-yellow-600 font-semibold"
+                                  style={{ fontFamily: 'monospace' }}>
+                                  {
+                                    item.paymentAmount?.toLocaleString()
+                                  }
+                                </span>
+                                <span className="text-sm text-zinc-500">
+                                  원
+                                </span>
+                              </div>
                             
 
 
