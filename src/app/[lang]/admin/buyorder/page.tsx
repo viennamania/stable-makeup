@@ -2507,8 +2507,13 @@ const fetchBuyOrders = async () => {
       totalSettlementCount: 0,
       totalSettlementAmount: 0,
       totalSettlementAmountKRW: 0,
+      
       totalFeeAmount: 0,
       totalFeeAmountKRW: 0,
+
+      totalAgentFeeAmount: 0,
+      totalAgentFeeAmountKRW: 0,
+
       orders: [] as BuyOrder[],
 
       totalClearanceCount: 0,
@@ -2569,10 +2574,11 @@ const fetchBuyOrders = async () => {
       }
       const data = await response.json();
       
-      console.log('getTradeSummary data', data);
+      //console.log('getTradeSummary data', data);
 
 
       setTradeSummary(data.result);
+      
       setLoadingTradeSummary(false);
       return data.result;
     }
@@ -3335,31 +3341,73 @@ const fetchBuyOrders = async () => {
                 </div>
 
                 <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 수수료금액(원)</div>
-                  <div className="flex flex-row items-center justify-center gap-1">
-                    <span className="text-xl font-semibold text-yellow-600">
-                      {tradeSummary.totalFeeAmountKRW?.toLocaleString()}
-                    </span>
-                    <span className="text-sm text-zinc-500">원</span>
+
+                  <div className="flex flex-row gap-2 items-center">
+                    
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">총 PG 수수료(원)</div>
+                      <div className="w-full flex flex-row items-center justify-end gap-1">
+                        <span className="text-xl font-semibold text-yellow-600">
+                          {tradeSummary.totalFeeAmountKRW
+                            ? tradeSummary.totalFeeAmountKRW.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                            : '0'}
+                        </span>
+                        <span className="text-sm text-zinc-500">원</span>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">총 PG 수수료(USDT)</div>
+                      <div className="w-full flex flex-row items-center justify-end gap-1">
+                        <Image
+                          src="/icon-tether.png"
+                          alt="Tether"
+                          width={20}
+                          height={20}
+                          className="w-5 h-5"
+                        />
+                        <span className="text-xl font-semibold text-green-600">
+                          {tradeSummary.totalFeeAmount
+                            ? tradeSummary.totalFeeAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                            : '0.00'}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 수수료수량(USDT)</div>
-                  <div className="flex flex-row items-center justify-center gap-1">
-                    <Image
-                      src="/icon-tether.png"
-                      alt="Tether"
-                      width={20}
-                      height={20}
-                      className="w-5 h-5"
-                    />
-                    <span className="text-xl font-semibold text-green-600">
-                      {tradeSummary.totalFeeAmount
-                        ? tradeSummary.totalFeeAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                        : '0.00'}
-                    </span>
+
+                  <div className="flex flex-row gap-2 items-center">
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">총 AG 수수료(원)</div>
+                      <div className="w-full flex flex-row items-cneter justify-end gap-1">
+                        <span className="text-xl font-semibold text-yellow-600">
+                          {tradeSummary.totalAgentFeeAmountKRW
+                            ? tradeSummary.totalAgentFeeAmountKRW.toLocaleString()
+                            : '0'}
+                        </span>
+                        <span className="text-sm text-zinc-500">원</span>
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">총 AG 수수료(USDT)</div>
+                      <div className="w-full flex flex-row items-center justify-end gap-1">
+                        <Image
+                          src="/icon-tether.png"
+                          alt="Tether"
+                          width={20}
+                          height={20}
+                          className="w-5 h-5"
+                        />
+                        <span className="text-xl font-semibold text-green-600">
+                          {tradeSummary.totalAgentFeeAmount
+                            ? tradeSummary.totalAgentFeeAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                            : '0.00'}
+                        </span>
+                      </div>
+                    </div>
                   </div>
+
                 </div>
+
               </div>
 
               
