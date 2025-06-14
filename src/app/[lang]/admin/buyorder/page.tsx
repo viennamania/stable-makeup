@@ -2937,111 +2937,6 @@ const fetchBuyOrders = async () => {
 
 
 
-            {/* trade summary */}
-
-            <div className="flex flex-col xl:flex-row items-center justify-between gap-2
-              w-full
-              bg-zinc-100/50
-              p-4 rounded-lg shadow-md
-              ">
-
-              <div className="xl:w-1/4 flex flex-row items-center justify-center gap-2">
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 거래수(건)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalCount?.toLocaleString()} 건
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 거래금액(원)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalKrwAmount?.toLocaleString()} 원
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 거래량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalUsdtAmount?.toLocaleString()} USDT
-                  </div>
-                </div>
-              </div>
-
-              {/* divider */}
-              <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
-              <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
-
-              <div className="xl:w-1/2
-                flex flex-row items-center justify-center gap-2">
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 정산수(건)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalSettlementCount?.toLocaleString()} 건
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 정산금액(원)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalSettlementAmountKRW?.toLocaleString()} 원
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 정산량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalSettlementAmount?.toLocaleString()} USDT
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 수수료금액(원)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalFeeAmountKRW?.toLocaleString()} 원
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 수수료수량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalFeeAmount?.toLocaleString()} USDT
-                  </div>
-                </div>
-              </div>
-
-
-              {/* divider */}
-              <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
-              <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
-
-              <div className="xl:w-1/4 flex flex-row items-center justify-center gap-2">
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 청산수(건)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalClearanceCount?.toLocaleString()} 건
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 청산금액(원)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalClearanceAmount?.toLocaleString()} 원
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 청산수량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()} USDT
-                  </div>
-                </div>
-              </div>
-              
-            </div>
-
-
-
-
-
-
             {address && (
                 <div className="w-full flex flex-col xl:flex-row items-center justify-end gap-2">
 
@@ -3108,6 +3003,7 @@ const fetchBuyOrders = async () => {
               </div>
               */}
 
+                {/*
               <div className="flex flex-col gap-2 items-center">
                 <div className="text-sm">거래중</div>
                 <div className="text-xl font-semibold text-zinc-500">
@@ -3120,13 +3016,14 @@ const fetchBuyOrders = async () => {
                 </div>
               </div>
 
-              {/* buy order status */}
+            
               <div className="flex flex-col gap-2 items-center">
                 <div className="text-sm">전체</div>
                 <div className="text-xl font-semibold text-zinc-500">
                   {totalCount || 0}
                 </div>
               </div>
+              */}
 
             </div>
 
@@ -3352,8 +3249,151 @@ const fetchBuyOrders = async () => {
             )}
             */}
 
-            {/* table view or card view */}
-            
+            {/* trade summary */}
+
+            <div className="flex flex-col xl:flex-row items-center justify-between gap-2
+              w-full
+              bg-zinc-100/50
+              p-4 rounded-lg shadow-md
+              ">
+
+              <div className="xl:w-1/4 flex flex-row items-center justify-between gap-2">
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 거래수(건)</div>
+                  <div className="text-xl font-semibold text-zinc-500">
+                    {tradeSummary.totalCount?.toLocaleString()} 건
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 거래금액(원)</div>
+                  <div className="flex flex-row items-center justify-center gap-1">
+                    <span className="text-xl font-semibold text-yellow-600">
+                      {tradeSummary.totalKrwAmount?.toLocaleString()}
+                    </span>
+                    <span className="text-sm text-zinc-500">원</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 거래량(USDT)</div>
+                  <div className="flex flex-row items-center justify-center gap-1">
+                    <Image
+                      src="/icon-tether.png"
+                      alt="Tether"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5"
+                    />
+                    <span className="text-xl font-semibold text-green-600">
+                      {tradeSummary.totalUsdtAmount
+                       ? tradeSummary.totalUsdtAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                       : '0.00'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* divider */}
+              <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
+              <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
+
+              <div className="xl:w-1/2
+                flex flex-row items-center justify-between gap-2">
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 정산수(건)</div>
+                    <span className="text-xl font-semibold text-zinc-500">
+                      {tradeSummary.totalSettlementCount?.toLocaleString()} 건
+                    </span>
+                </div>
+
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 정산금액(원)</div>
+                  <div className="flex flex-row items-center justify-center gap-1">
+                    <span className="text-xl font-semibold text-yellow-600">
+                      {tradeSummary.totalSettlementAmountKRW?.toLocaleString()}
+                    </span>
+                    <span className="text-sm text-zinc-500">원</span>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 정산량(USDT)</div>
+                  <div className="flex flex-row items-center justify-center gap-1">
+                    <Image
+                      src="/icon-tether.png"
+                      alt="Tether"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5"
+                    />
+                    <span className="text-xl font-semibold text-green-600">
+                      {tradeSummary.totalSettlementAmount
+                        ? tradeSummary.totalSettlementAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                        : '0.00'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 수수료금액(원)</div>
+                  <div className="flex flex-row items-center justify-center gap-1">
+                    <span className="text-xl font-semibold text-yellow-600">
+                      {tradeSummary.totalFeeAmountKRW?.toLocaleString()}
+                    </span>
+                    <span className="text-sm text-zinc-500">원</span>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 수수료수량(USDT)</div>
+                  <div className="flex flex-row items-center justify-center gap-1">
+                    <Image
+                      src="/icon-tether.png"
+                      alt="Tether"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5"
+                    />
+                    <span className="text-xl font-semibold text-green-600">
+                      {tradeSummary.totalFeeAmount
+                        ? tradeSummary.totalFeeAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                        : '0.00'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              
+              {/* divider */}
+              {/*}
+              <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
+              <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
+
+              <div className="xl:w-1/4 flex flex-row items-center justify-center gap-2">
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 청산수(건)</div>
+                  <div className="text-xl font-semibold text-zinc-500">
+                    {tradeSummary.totalClearanceCount?.toLocaleString()} 건
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 청산금액(원)</div>
+                  <div className="text-xl font-semibold text-zinc-500">
+                    {tradeSummary.totalClearanceAmount?.toLocaleString()} 원
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2 items-center">
+                  <div className="text-sm">총 청산수량(USDT)</div>
+                  <div className="text-xl font-semibold text-zinc-500">
+                    {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()} USDT
+                  </div>
+                </div>
+              </div>
+              */}
+              
+            </div>
+
+
 
 
 
@@ -3384,7 +3424,7 @@ const fetchBuyOrders = async () => {
                       </th>
                       
                       <th className="p-2">
-                        구매금액(원)<br/>{Buy_Amount}(USDT)<br/>{Rate}
+                        구매금액(원)<br/>{Buy_Amount}(USDT)<br/>단가(환율)
                       </th>
                       {/*
                       <th className="p-2">{Payment_Amount}</th>
@@ -3688,15 +3728,25 @@ const fetchBuyOrders = async () => {
                             <div className="flex flex-col gap-2 items-center justify-center">
 
 
-
-                              <span className="text-lg text-blue-600 font-bold">
-                                {
-                                  item?.nickname?.length > 10 ?
-                                  item?.nickname?.substring(0, 10) + '...' :
-                                  item?.nickname
-                                }
-                              </span>
-
+                              <div className="flex flex-row items-center gap-2">
+                                <Image
+                                  src={item?.buyer?.avatar || "/profile-default.png"}
+                                  alt="Avatar"
+                                  width={20}
+                                  height={20}
+                                  className="rounded-full w-5 h-5"
+                                  style={{
+                                    objectFit: 'cover',
+                                  }}
+                                />
+                                <span className="text-lg text-blue-600 font-bold">
+                                  {
+                                    item?.nickname?.length > 10 ?
+                                    item?.nickname?.substring(0, 10) + '...' :
+                                    item?.nickname
+                                  }
+                                </span>
+                              </div>
 
                               <div className="flex flex-row items-center gap-2">
                                 <span className="text-lg text-yellow-600 font-bold">
@@ -3778,15 +3828,21 @@ const fetchBuyOrders = async () => {
                           <div className="
                             w-28
                             flex flex-col gap-2 items-end justify-start">
-                            <span className="text-lg text-yellow-600 font-semibold"
-                              style={{
-                                fontFamily: 'monospace',
-                              }}
-                            >
-                              {
-                                item.krwAmount?.toLocaleString() + ' 원'
-                              }
-                            </span>
+
+                            <div className="flex flex-row items-center justify-end gap-1">
+                              <span className="text-xl text-yellow-600 font-semibold"
+                                style={{
+                                  fontFamily: 'monospace',
+                                }}
+                              >
+                                {
+                                  item.krwAmount?.toLocaleString()
+                                }
+                              </span>
+                              <span className="text-sm text-zinc-500">
+                                원
+                              </span>
+                            </div>
 
                             <div className="flex flex-row items-center justify-end gap-2">
                               <Image
@@ -3796,7 +3852,7 @@ const fetchBuyOrders = async () => {
                                 height={20}
                                 className="w-5 h-5"
                               />
-                              <span className="text-lg text-green-600 font-semibold"
+                              <span className="text-xl text-green-600 font-semibold"
                                 style={{
                                   fontFamily: 'monospace',
                                 }}
@@ -3898,9 +3954,9 @@ const fetchBuyOrders = async () => {
                                   <Image
                                     src="/icon-matching-completed.png"
                                     alt="Matching Completed"
-                                    width={50}
-                                    height={50}
-                                    className="w-8 h-8 rounded-full"
+                                    width={20}
+                                    height={20}
+                                    className="w-5 h-5 rounded-full"
                                   />
                                   <span className="text-sm text-zinc-500 font-semibold">
                                     매칭완료
@@ -4241,9 +4297,9 @@ const fetchBuyOrders = async () => {
                                 <Image
                                   src="/icon-payaction.png"
                                   alt="Bank Check"
-                                  width={50}
-                                  height={50}
-                                  className="w-8 h-8 rounded-full"
+                                  width={20}
+                                  height={20}
+                                  className="w-5 h-5 rounded-full"
                                 />
                                 <span className="text-sm font-semibold text-zinc-500">
                                   입금완료
@@ -4263,14 +4319,17 @@ const fetchBuyOrders = async () => {
                               </div>
 
                               {/* paymentAmount */}
-                              <span className="text-lg text-yellow-600 font-semibold"
-                                style={{ fontFamily: 'monospace' }}>
-                                {
-                                  item.paymentAmount?.toLocaleString()
-                                }{' '}원
-                              </span>
-                            
-
+                              <div className="flex flex-row items-center justify-center gap-1">
+                                <span className="text-xl text-yellow-600 font-semibold"
+                                  style={{ fontFamily: 'monospace' }}>
+                                  {
+                                    item.paymentAmount?.toLocaleString()
+                                  }
+                                </span>
+                                <span className="text-sm text-zinc-500">
+                                  원
+                                </span>
+                              </div>
 
                             </div>
                           )}
@@ -5200,9 +5259,9 @@ const fetchBuyOrders = async () => {
                                 <Image
                                   src="/icon-settlement-completed.png"
                                   alt="Settlement Completed"
-                                  width={30}
-                                  height={30}
-                                  className="w-6 h-6 rounded-lg"
+                                  width={20}
+                                  height={20}
+                                  className="w-5 h-5"
                                 />
                                 <span className="text-sm font-semibold text-zinc-500">
                                   정산완료
