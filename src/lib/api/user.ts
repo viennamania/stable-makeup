@@ -729,6 +729,32 @@ export async function getOneByWalletAddress(
 
 
 
+// getOneByTelegramId
+export async function getOneByTelegramId(
+  telegramId: string,
+): Promise<UserProps | null> {
+
+  //console.log('getOneByTelegramId telegramId: ' + telegramId);
+
+  const client = await clientPromise;
+
+  const collection = client.db('ultraman').collection('users');
+
+  // id is number
+
+  const results = await collection.findOne<UserProps>(
+    { telegramId: telegramId },
+  );
+
+  //console.log('getOneByTelegramId results: ' + results);
+
+  return results;
+
+}
+
+
+
+
 // getOneByNickname
 export async function getOneByNickname(
   storecode: string,
