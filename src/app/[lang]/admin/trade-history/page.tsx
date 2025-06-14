@@ -2157,6 +2157,8 @@ const fetchBuyOrders = async () => {
       totalSettlementAmountKRW: 0,
       totalFeeAmount: 0,
       totalFeeAmountKRW: 0,
+      totalAgentFeeAmount: 0,
+      totalAgentFeeAmountKRW: 0,
       orders: [] as BuyOrder[],
 
       totalClearanceCount: 0,
