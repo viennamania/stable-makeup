@@ -2408,10 +2408,23 @@ export default function Index({ params }: any) {
   
           setFetchingStore(false);
       };
+
+      if (!params.center) {
+        return;
+      }
   
       fetchData();
+
+      // interval
+      const interval = setInterval(() => {
+        fetchData();
+      }
+      , 5000);
+      return () => clearInterval(interval);
   
     } , [params.center]);
+
+
 
 
 
