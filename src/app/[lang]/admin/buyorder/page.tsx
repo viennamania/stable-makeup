@@ -2578,7 +2578,7 @@ const fetchBuyOrders = async () => {
 
 
       setTradeSummary(data.result);
-      
+
       setLoadingTradeSummary(false);
       return data.result;
     }
@@ -3381,7 +3381,7 @@ const fetchBuyOrders = async () => {
                       <div className="w-full flex flex-row items-cneter justify-end gap-1">
                         <span className="text-xl font-semibold text-yellow-600">
                           {tradeSummary.totalAgentFeeAmountKRW
-                            ? tradeSummary.totalAgentFeeAmountKRW.toLocaleString()
+                            ? tradeSummary.totalAgentFeeAmountKRW.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                             : '0'}
                         </span>
                         <span className="text-sm text-zinc-500">원</span>

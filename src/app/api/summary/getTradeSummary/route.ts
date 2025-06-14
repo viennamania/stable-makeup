@@ -109,6 +109,9 @@ export async function POST(request: NextRequest) {
   const totalFeeAmount = trades?.totalFeeAmount || 0;
   const totalFeeAmountKRW = trades?.totalFeeAmountKRW || 0;
 
+  const totalAgentFeeAmount = trades?.totalAgentFeeAmount || 0;
+  const totalAgentFeeAmountKRW = trades?.totalAgentFeeAmountKRW || 0;
+
 
   const latestTrades = trades?.trades || [];
 
@@ -166,6 +169,8 @@ export async function POST(request: NextRequest) {
 
     totalFeeAmount,
     totalFeeAmountKRW,
+    totalAgentFeeAmount,
+    totalAgentFeeAmountKRW,
 
     latestTrades,
 
