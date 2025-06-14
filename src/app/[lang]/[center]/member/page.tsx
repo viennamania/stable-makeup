@@ -2063,63 +2063,124 @@ export default function Index({ params }: any) {
             ></div>
 
 
+            <div className="w-full flex flex-col xl:flex-row items-end justify-end gap-5
+            border-b border-zinc-300 pb-2">
+
+              <div className="flex flex-row gap-2 items-center">
+                <Image
+                  src="/icon-escrow.png"
+                  alt="Escrow"
+                  width={20}
+                  height={20}
+                  className="w-5 h-5"
+                />
+                <span className="text-lg font-semibold text-zinc-500">
+                  가맹점 보유금
+                </span>
+              </div>
+
+              <div className="flex flex-row items-center gap-2">
+                <Image
+                  src="/icon-tether.png"
+                  alt="Tether"
+                  width={20}
+                  height={20}
+                  className="w-5 h-5"
+                />
+                <span className="text-lg text-green-600 font-semibold"
+                  style={{ fontFamily: 'monospace' }}
+                >
+                  {
+                    //////(item.totalUsdtAmountClearanceBalance ? item.totalUsdtAmountClearanceBalance : 0)?.toLocaleString('us-US')
+                  
+
+                    //Number(item?.totalSettlementAmount - item?.totalUsdtAmountClearance || 0)
+                    Number(store?.totalUsdtAmountClearance - store?.totalSettlementAmount || 0)
+                    .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+
+                  }
+                </span>
+              </div>
+
+              <div className="flex flex-row gap-1 items-center">
+                <span className="text-lg text-yellow-600 font-semibold"
+                  style={{ fontFamily: 'monospace' }}
+                >
+                  {
+                    //Number(item.totalKrwAmountClearanceBalance ? item.totalKrwAmountClearanceBalance : 0)
+                    //  ?.toLocaleString('ko-KR')
+
+                    //Number(item?.totalSettlementAmountKRW - item?.totalKrwAmountClearance || 0)
+                    Number(store?.totalKrwAmountClearance - store?.totalSettlementAmountKRW || 0)
+                    .toLocaleString('ko-KR')
+
+
+                  }
+                </span>
+                <span className="text-sm text-zinc-500">
+                  원
+                </span>
+              </div>
+
+
+            </div>
 
 
 
-          <div className="grid grid-cols-2 xl:grid-cols-4 gap-2 mb-4">
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-2 mb-4">
 
 
-                <div className='flex w-32 items-center justify-center gap-2
-                  bg-yellow-500 text-[#3167b4] text-sm rounded-lg p-2'>
-                    <Image
-                      src="/icon-buyer.png"
-                      alt="Trade"
-                      width={35}
-                      height={35}
-                      className="w-4 h-4"
-                    />
-                    <div className="text-sm font-semibold">
-                      회원관리
-                    </div>
-                </div>
+                  <div className='flex w-32 items-center justify-center gap-2
+                    bg-yellow-500 text-[#3167b4] text-sm rounded-lg p-2'>
+                      <Image
+                        src="/icon-buyer.png"
+                        alt="Trade"
+                        width={35}
+                        height={35}
+                        className="w-4 h-4"
+                      />
+                      <div className="text-sm font-semibold">
+                        회원관리
+                      </div>
+                  </div>
 
-                <button
-                    onClick={() => router.push('/' + params.lang + '/' + params.center + '/buyorder')}
-                    className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                    hover:bg-[#3167b4]/80
-                    hover:cursor-pointer
-                    hover:scale-105
-                    transition-transform duration-200 ease-in-out
-                    ">
-                    구매주문관리
-                </button>
+                  <button
+                      onClick={() => router.push('/' + params.lang + '/' + params.center + '/buyorder')}
+                      className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                      hover:bg-[#3167b4]/80
+                      hover:cursor-pointer
+                      hover:scale-105
+                      transition-transform duration-200 ease-in-out
+                      ">
+                      구매주문관리
+                  </button>
 
-                <button
-                    onClick={() => router.push('/' + params.lang + '/' + params.center + '/trade-history')}
-                    className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                    hover:bg-[#3167b4]/80
-                    hover:cursor-pointer
-                    hover:scale-105
-                    transition-transform duration-200 ease-in-out
-                    ">
-                    거래내역
-                </button>
-
-
-                <button
-                    onClick={() => router.push('/' + params.lang + '/' + params.center + '/clearance-history')}
-                    className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                    hover:bg-[#3167b4]/80
-                    hover:cursor-pointer
-                    hover:scale-105
-                    transition-transform duration-200 ease-in-out
-                    ">
-                    판매(거래소)
-                </button>
+                  <button
+                      onClick={() => router.push('/' + params.lang + '/' + params.center + '/trade-history')}
+                      className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                      hover:bg-[#3167b4]/80
+                      hover:cursor-pointer
+                      hover:scale-105
+                      transition-transform duration-200 ease-in-out
+                      ">
+                      거래내역
+                  </button>
 
 
+                  <button
+                      onClick={() => router.push('/' + params.lang + '/' + params.center + '/clearance-history')}
+                      className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                      hover:bg-[#3167b4]/80
+                      hover:cursor-pointer
+                      hover:scale-105
+                      transition-transform duration-200 ease-in-out
+                      ">
+                      판매(거래소)
+                  </button>
 
-          </div>
+
+
+            </div>
 
 
 
