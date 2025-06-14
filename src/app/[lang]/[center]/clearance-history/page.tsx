@@ -3442,7 +3442,7 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
 
-                  {false && (
+                  {false && address && (
                       <div className="
                       mt-4 mb-2
                       w-full flex flex-col xl:flex-row items-start justify-start gap-5
