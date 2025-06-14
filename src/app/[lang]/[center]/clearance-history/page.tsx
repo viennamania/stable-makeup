@@ -2474,7 +2474,7 @@ const [tradeSummary, setTradeSummary] = useState({
 
   useEffect(() => {
 
-    if (!address) {
+    if (!address || !params.center || !searchFromDate || !searchToDate) {
       return;
     }
 

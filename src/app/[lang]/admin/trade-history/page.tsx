@@ -2224,7 +2224,7 @@ const fetchBuyOrders = async () => {
 
     useEffect(() => {
 
-      if (!address) {
+      if (!address || !searchFromDate || !searchToDate) {
         return;
       }
 
