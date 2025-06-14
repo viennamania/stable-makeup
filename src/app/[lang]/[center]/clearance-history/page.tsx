@@ -2116,6 +2116,7 @@ export default function Index({ params }: any) {
 
 
 
+  const [fetchingBuyOrders, setFetchingBuyOrders] = useState(false);
 
   const [latestBuyOrder, setLatestBuyOrder] = useState<BuyOrder | null>(null);
 
@@ -2157,6 +2158,7 @@ export default function Index({ params }: any) {
 
 
       
+      setFetchingBuyOrders(true);
 
       const response = await fetch('/api/order/getAllCollectOrdersForSeller', {
           method: 'POST',
@@ -2180,9 +2182,13 @@ export default function Index({ params }: any) {
       });
 
       if (!response.ok) {
+        console.error('Failed to fetch buy orders');
+        setFetchingBuyOrders(false);
+        toast.error('주문을 불러오는 데 실패했습니다');
         return;
       }
 
+      setFetchingBuyOrders(false);
 
 
       const data = await response.json();
@@ -2231,6 +2237,11 @@ export default function Index({ params }: any) {
       
 
 
+    }
+
+
+    if (!address || !searchFromDate || !searchToDate) {
+      return;
     }
 
 
@@ -3758,12 +3769,15 @@ const [tradeSummary, setTradeSummary] = useState({
                       {/* total count of buy orders with status 'paymentRequested' */}
 
                       {/* buy order status */}
+                      {/*
                       <div className="flex flex-col gap-2 items-center">
                         <div className="text-sm">{Buy_Order_Opened}</div>
                         <div className="text-xl font-semibold text-zinc-500">
                           {totalCount}
                         </div>
                       </div>
+                      */}
+
 
                     </div>
 
@@ -3819,6 +3833,21 @@ const [tradeSummary, setTradeSummary] = useState({
                     />
                   </div>
                 </div>
+
+                {fetchingBuyOrders ? (
+                  <div className="flex flex-row items-center justify-center gap-2">
+                    <Image
+                      src="/loading.png"
+                      alt="Loading"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5 animate-spin"
+                    />
+                    <span className="text-sm text-zinc-500">로딩중...</span>
+                  </div>
+                ) : (
+                  <>  </>
+                )}
 
               </div>
 

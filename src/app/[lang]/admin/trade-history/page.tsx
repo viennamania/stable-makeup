@@ -2030,6 +2030,14 @@ export default function Index({ params }: any) {
     }
 
 
+    if (!address || !searchFromDate || !searchToDate) {
+      setBuyOrders([]);
+      setTotalCount(0);
+      setFetchingBuyOrders(false);
+      return;
+    }
+
+
     fetchBuyOrders();
 
     
