@@ -202,8 +202,41 @@ export async function POST(request: NextRequest) {
 
   });
 
-  console.log("confirmPayment response", response);
+  //console.log("confirmPayment response", response);
   
+
+
+  // sendMessageByUseridAndStorecode
+  // api
+  // https://dubai-telegram.vercel.app/api/telegram/sendMessageByUseridAndStorecode
+  // POST
+
+  /*
+    const {
+    center,
+    userid,
+    storecode,
+    message,
+  } = body;
+   */
+
+  // center = 'place69_bot'
+  // userid = 'mcmcmo'
+  // storecode = storecode
+
+  await fetch("https://dubai-telegram.vercel.app/api/telegram/sendMessageByUseridAndStorecode", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      center: "place69_bot",
+      userid: "mcmcmo",
+      storecode: storecode,
+      message: `주문이 완료되었습니다. 주문번호: ${orderId}, 결제금액: ${paymentAmount}원`,
+    }),
+  });
+
   
 
 
