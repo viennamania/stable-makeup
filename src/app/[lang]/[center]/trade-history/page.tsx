@@ -2143,6 +2143,12 @@ export default function Index({ params }: any) {
     }
 
 
+    if (!address || !params.center || !searchFromDate || !searchToDate) {
+      setBuyOrders([]);
+
+      return;
+    }
+
     fetchBuyOrders();
 
     
@@ -2183,6 +2189,7 @@ export default function Index({ params }: any) {
     limitValue,
     pageValue,
 
+    params.center,
     searchFromDate,
     searchToDate,
 ]);
@@ -2251,36 +2258,36 @@ const fetchBuyOrders = async () => {
   
 
 
-    // check table view or card view
-    const [tableView, setTableView] = useState(true);
+  // check table view or card view
+  const [tableView, setTableView] = useState(true);
 
 
 
 
-    const [storeCodeNumber, setStoreCodeNumber] = useState('');
+  const [storeCodeNumber, setStoreCodeNumber] = useState('');
 
-    useEffect(() => {
-  
-      const fetchStoreCode = async () => {
-  
-        const response = await fetch('/api/order/getStoreCodeNumber', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-  
-        const data = await response.json();
-  
-        //console.log('getStoreCodeNumber data', data);
-  
-        setStoreCodeNumber(data?.storeCodeNumber);
-  
-      }
-  
-      fetchStoreCode();
-  
-    } , []);
+  useEffect(() => {
+
+    const fetchStoreCode = async () => {
+
+      const response = await fetch('/api/order/getStoreCodeNumber', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const data = await response.json();
+
+      //console.log('getStoreCodeNumber data', data);
+
+      setStoreCodeNumber(data?.storeCodeNumber);
+
+    }
+
+    fetchStoreCode();
+
+  } , []);
     
 
 
@@ -2289,153 +2296,168 @@ const fetchBuyOrders = async () => {
   const [storeList, setStoreList] = useState([] as any[]);
 
 
-    const [storeAdminWalletAddress, setStoreAdminWalletAddress] = useState("");
+  const [storeAdminWalletAddress, setStoreAdminWalletAddress] = useState("");
 
-    const [fetchingStore, setFetchingStore] = useState(false);
-    const [store, setStore] = useState(null) as any;
-  
-    useEffect(() => {
-  
-  
-      setFetchingStore(true);
-  
-      const fetchData = async () => {
-          const response = await fetch("/api/store/getOneStore", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                storecode: params.center,
-                ////walletAddress: address,
-              }),
-          });
-  
-          const data = await response.json();
-  
-          //console.log("data", data);
-  
-          if (data.result) {
-  
-            setStore(data.result);
-  
-            setStoreAdminWalletAddress(data.result?.adminWalletAddress);
-  
-        } else {
-          // get store list
-          const response = await fetch("/api/store/getAllStores", {
+  const [fetchingStore, setFetchingStore] = useState(false);
+  const [store, setStore] = useState(null) as any;
+
+  useEffect(() => {
+
+
+    setFetchingStore(true);
+
+    const fetchData = async () => {
+        const response = await fetch("/api/store/getOneStore", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+              storecode: params.center,
+              ////walletAddress: address,
             }),
-          });
-          const data = await response.json();
-          //console.log("getStoreList data", data);
-          setStoreList(data.result.stores);
-          setStore(null);
-          setStoreAdminWalletAddress("");
-        }
-  
-          setFetchingStore(false);
-      };
+        });
 
-      if (!params.center) {
-        return;
+        const data = await response.json();
+
+        //console.log("data", data);
+
+        if (data.result) {
+
+          setStore(data.result);
+
+          setStoreAdminWalletAddress(data.result?.adminWalletAddress);
+
+      } else {
+        // get store list
+        const response = await fetch("/api/store/getAllStores", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+          }),
+        });
+        const data = await response.json();
+        //console.log("getStoreList data", data);
+        setStoreList(data.result.stores);
+        setStore(null);
+        setStoreAdminWalletAddress("");
       }
-  
+
+        setFetchingStore(false);
+    };
+
+    if (!params.center) {
+      return;
+    }
+
+    fetchData();
+
+    // interval to fetch store data every 10 seconds
+    const interval = setInterval(() => {
       fetchData();
+    }
+    , 5000);
+    return () => clearInterval(interval);
 
-      // interval to fetch store data every 10 seconds
-      const interval = setInterval(() => {
-        fetchData();
-      }
-      , 5000);
-      return () => clearInterval(interval);
-  
-    } , [params.center]);
+  } , [params.center]);
 
 
 
 
 
-   const [tradeSummary, setTradeSummary] = useState({
-       totalCount: 0,
-       totalKrwAmount: 0,
-       totalUsdtAmount: 0,
-       totalSettlementCount: 0,
-       totalSettlementAmount: 0,
-       totalSettlementAmountKRW: 0,
-       totalFeeAmount: 0,
-       totalFeeAmountKRW: 0,
-       orders: [] as BuyOrder[],
- 
-       totalClearanceCount: 0,
-       totalClearanceAmount: 0,
-       totalClearanceAmountUSDT: 0,
-     });
-     const [loadingTradeSummary, setLoadingTradeSummary] = useState(false);
- 
- 
-     const getTradeSummary = async () => {
-       if (!address) {
-         return;
-       }
-       setLoadingTradeSummary(true);
-       const response = await fetch('/api/summary/getTradeSummary', {
-         method: 'POST',
-         headers: {
-           'Content-Type': 'application/json'
-         },
-         body: JSON.stringify({
-           storecode: params.center,
-           walletAddress: address,
-           searchMyOrders: searchMyOrders,
-           searchOrderStatusCompleted: true,
-           //searchBuyer: searchBuyer,
-           //searchDepositName: searchDepositName,
- 
-           //searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+  const [tradeSummary, setTradeSummary] = useState({
+    totalCount: 0,
+    totalKrwAmount: 0,
+    totalUsdtAmount: 0,
+    totalSettlementCount: 0,
+    totalSettlementAmount: 0,
+    totalSettlementAmountKRW: 0,
+    totalFeeAmount: 0,
+    totalFeeAmountKRW: 0,
+    orders: [] as BuyOrder[],
 
-            fromDate: searchFromDate,
-            toDate: searchToDate,
-         })
-       });
-       if (!response.ok) {
-         setLoadingTradeSummary(false);
-         toast.error('Failed to fetch trade summary');
-         return;
-       }
-       const data = await response.json();
-       
-       console.log('getTradeSummary data', data);
- 
- 
-       setTradeSummary(data.result);
-       setLoadingTradeSummary(false);
-       return data.result;
-     }
- 
- 
- 
- 
-     useEffect(() => {
- 
-       if (!address) {
-         return;
-       }
- 
-       getTradeSummary();
- 
-       // fetch trade summary every 10 seconds
-       const interval = setInterval(() => {
-         getTradeSummary();
-       }, 10000);
-       return () => clearInterval(interval);
- 
-     } , [address, searchMyOrders, params.center, searchFromDate, searchToDate,]);
- 
+    totalClearanceCount: 0,
+    totalClearanceAmount: 0,
+    totalClearanceAmountUSDT: 0,
+  });
+  const [loadingTradeSummary, setLoadingTradeSummary] = useState(false);
+
+
+  const getTradeSummary = async () => {
+    if (!address) {
+      return;
+    }
+    setLoadingTradeSummary(true);
+    const response = await fetch('/api/summary/getTradeSummary', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        storecode: params.center,
+        walletAddress: address,
+        searchMyOrders: searchMyOrders,
+        searchOrderStatusCompleted: true,
+        //searchBuyer: searchBuyer,
+        //searchDepositName: searchDepositName,
+
+        //searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+        fromDate: searchFromDate,
+        toDate: searchToDate,
+      })
+    });
+    if (!response.ok) {
+      setLoadingTradeSummary(false);
+      toast.error('Failed to fetch trade summary');
+      return;
+    }
+    const data = await response.json();
+    
+    console.log('getTradeSummary data', data);
+
+
+    setTradeSummary(data.result);
+    setLoadingTradeSummary(false);
+    return data.result;
+  }
+
+
+
+
+  useEffect(() => {
+
+    if (!address || !params.center || !searchFromDate || !searchToDate) {
+      setTradeSummary({
+        totalCount: 0,
+        totalKrwAmount: 0,
+        totalUsdtAmount: 0,
+        totalSettlementCount: 0,
+        totalSettlementAmount: 0,
+        totalSettlementAmountKRW: 0,
+        totalFeeAmount: 0,
+        totalFeeAmountKRW: 0,
+        orders: [] as BuyOrder[],
+
+        totalClearanceCount: 0,
+        totalClearanceAmount: 0,
+        totalClearanceAmountUSDT: 0,
+      });
+      return;
+    }
+
+    getTradeSummary();
+
+    // fetch trade summary every 10 seconds
+    const interval = setInterval(() => {
+      getTradeSummary();
+    }, 10000);
+    return () => clearInterval(interval);
+
+  } , [address, searchMyOrders, params.center, searchFromDate, searchToDate,]);
+
 
 
   
