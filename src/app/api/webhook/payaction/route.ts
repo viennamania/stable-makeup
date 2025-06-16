@@ -265,7 +265,9 @@ export async function POST(request: NextRequest) {
 
         //const userid = user.nickname;
 
-        const userid = user.id;
+        //const userid = user.id;
+        // toString()으로 변환하여 사용
+        const userid = user.id.toString();
 
 
 
