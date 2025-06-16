@@ -273,19 +273,22 @@ export async function POST(request: NextRequest) {
             // 입금자명: "홍길동",
             // 입금액: 10,000원
 
+            /*
             message:
             '주문번호: ' + order_number + '\n' +
             '입금시간: ' + processing_date + '\n' +
             '회원아이디: ' + buyerNickname + '\n' +
             '입금자명: ' + buyerDepositName + '\n' +
             '입금액: ' + paymentAmount.toLocaleString() + '원',
+            */
+            message: `주문번호: ${order_number}, 입금시간: ${processing_date}, 회원아이디: ${buyerNickname}, 입금자명: ${buyerDepositName}, 입금액: ${paymentAmount.toLocaleString()}원`,
 
           }),
         });
 
       }
 
-      
+
     } else {
       console.log("No users found for storecode:", storecode);
     }
