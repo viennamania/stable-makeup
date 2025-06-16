@@ -290,6 +290,10 @@ export async function POST(request: NextRequest) {
             
             message:
             '주문번호: ' + '#' + order_number + '\n' +
+
+
+
+            /*
             '입금시간: ' + (new Date(processing_date)).toLocaleString('ko-KR', {
               year: 'numeric',
               month: '2-digit',
@@ -299,6 +303,10 @@ export async function POST(request: NextRequest) {
               second: '2-digit',
               hour12: false,
             }) + '\n' +
+            */
+
+            '입금시간: ' + processing_date.replace('T', ' ').replace('+09:00', '') + '\n' +
+
             '회원아이디: ' + buyerNickname + '\n' +
             '입금자명: ' + buyerDepositName + '\n' +
             '입금액: ' + paymentAmount.toLocaleString() + '원',
