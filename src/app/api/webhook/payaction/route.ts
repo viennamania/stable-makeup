@@ -263,7 +263,11 @@ export async function POST(request: NextRequest) {
         const user = users[i];
 
 
-        const userid = user.nickname;
+        //const userid = user.nickname;
+
+        const userid = user.id;
+
+
 
         const response = await fetch("https://dubai-telegram.vercel.app/api/telegram/sendMessageByUseridAndStorecode", {
           method: "POST",
