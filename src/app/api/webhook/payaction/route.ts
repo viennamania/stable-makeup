@@ -253,11 +253,17 @@ export async function POST(request: NextRequest) {
 
     if (users && users.length > 0) {
 
-      for (const user of users) {
+
+      //for (const user of users) {
+
+
+      for (let i = 0; i < users.length; i++) {
+        const user = users[i];
+
 
         const userid = user.nickname;
 
-        await fetch("https://dubai-telegram.vercel.app/api/telegram/sendMessageByUseridAndStorecode", {
+        const response = await fetch("https://dubai-telegram.vercel.app/api/telegram/sendMessageByUseridAndStorecode", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -285,6 +291,13 @@ export async function POST(request: NextRequest) {
 
           }),
         });
+
+        if (!response.ok) {
+          console.error("Failed to send Telegram message for user:", userid, "with status:", response.status);
+          continue; // Skip to the next user if sending fails
+        }
+        const data = await response.json();
+        console.log("Telegram message sent for user:", userid, "with response:", data);
 
       }
 
