@@ -224,20 +224,26 @@ export async function POST(request: NextRequest) {
   // userid = 'mcmcmo'
   // storecode = storecode
 
-  await fetch("https://dubai-telegram.vercel.app/api/telegram/sendMessageByUseridAndStorecode", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      center: "place69_bot",
-      userid: "mcmcmo",
-      storecode: storecode,
-      message: `주문이 완료되었습니다. 주문번호: ${orderId}, 결제금액: ${paymentAmount}원`,
-    }),
-  });
+  try {
 
-  
+    await fetch("https://dubai-telegram.vercel.app/api/telegram/sendMessageByUseridAndStorecode", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        center: "place69_bot",
+        userid: "mcmcmo",
+        storecode: storecode,
+        message: `주문이 완료되었습니다. 주문번호: ${orderId}, 결제금액: ${paymentAmount}원`,
+      }),
+    });
+    
+  } catch (error) {
+    console.error("Error sending Telegram message:", error);
+  }
+
+
 
 
   
