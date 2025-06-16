@@ -1,5 +1,13 @@
 import { NextResponse, type NextRequest } from "next/server";
 
+
+// getAllUsersByStorecode
+import {
+  getAllUsersByStorecode,
+} from "@lib/api/user";
+
+
+
 import {
   UserProps,
 	acceptBuyOrder,
@@ -186,6 +194,9 @@ export async function POST(request: NextRequest) {
   const queueId = "0x";
   const transactionHash = "0x";
 
+  const buyerDepositName = buyOrder?.buyer?.DepositName || "익명";
+  const buyerNickname = buyOrder?.buyer?.nickname || "익명";
+
 
   
   const response = await buyOrderConfirmPayment({
@@ -226,19 +237,53 @@ export async function POST(request: NextRequest) {
 
   try {
 
-    await fetch("https://dubai-telegram.vercel.app/api/telegram/sendMessageByUseridAndStorecode", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        center: "place69_bot",
-        userid: "mcmcmo",
-        storecode: storecode,
-        message: `주문이 완료되었습니다. 주문번호: ${orderId}, 결제금액: ${paymentAmount}원`,
-      }),
+
+    // get all users by storecode
+    const response = await getAllUsersByStorecode({
+      storecode: storecode,
+      limit: 1000,
+      page: 1,
     });
-    
+
+    const users = response?.users || [];
+
+
+    if (users && users.length > 0) {
+
+      for (const user of users) {
+        const userid = user.nickname;
+
+        await fetch("https://dubai-telegram.vercel.app/api/telegram/sendMessageByUseridAndStorecode", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            center: "place69_bot",
+            userid: userid,
+            storecode: storecode,
+            //message: `주문이 완료되었습니다. 주문번호: ${orderId}, 결제금액: ${paymentAmount}원`,
+
+            // 주문번호: tradeId,
+            // 입금시간: '2025년 5월 21일 15시 31분 06초',
+            // 입금자명: "홍길동",
+            // 입금액: 10,000원
+
+            message:
+            '주문번호: ' + order_number + '\n' +
+            '입금시간: ' + processing_date + '\n' +
+            '회원아이디: ' + buyerNickname + '\n' +
+            '입금자명: ' + buyerDepositName + '\n' +
+            '입금액: ' + paymentAmount.toLocaleString() + '원',
+
+          }),
+        });
+
+      }
+    } else {
+      console.log("No users found for storecode:", storecode);
+    }
+
   } catch (error) {
     console.error("Error sending Telegram message:", error);
   }
