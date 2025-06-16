@@ -247,10 +247,14 @@ export async function POST(request: NextRequest) {
 
     const users = response?.users || [];
 
+    console.log("getAllUsersByStorecode response", response);
+    console.log("getAllUsersByStorecode users", users);
+
 
     if (users && users.length > 0) {
 
       for (const user of users) {
+
         const userid = user.nickname;
 
         await fetch("https://dubai-telegram.vercel.app/api/telegram/sendMessageByUseridAndStorecode", {
@@ -280,6 +284,8 @@ export async function POST(request: NextRequest) {
         });
 
       }
+
+      
     } else {
       console.log("No users found for storecode:", storecode);
     }
