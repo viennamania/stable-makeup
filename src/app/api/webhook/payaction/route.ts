@@ -178,6 +178,8 @@ export async function POST(request: NextRequest) {
     });
   }
 
+  console.log("buyOrder", buyOrder);
+
   
   if (buyOrder?.status !== "paymentRequested") {
     console.log("buyOrder status is not requestPayment");
@@ -194,8 +196,8 @@ export async function POST(request: NextRequest) {
   const queueId = "0x";
   const transactionHash = "0x";
 
-  const buyerDepositName = buyOrder?.buyer?.DepositName || "익명";
-  const buyerNickname = buyOrder?.buyer?.nickname || "익명";
+  const buyerDepositName = buyOrder?.buyer?.depositName || "익명";
+  const buyerNickname = buyOrder?.nickname || "익명";
 
 
   
@@ -279,15 +281,23 @@ export async function POST(request: NextRequest) {
             // 입금자명: "홍길동",
             // 입금액: 10,000원
 
-            /*
+            
             message:
-            '주문번호: ' + order_number + '\n' +
-            '입금시간: ' + processing_date + '\n' +
+            '주문번호: ' + '#' + order_number + '\n' +
+            '입금시간: ' + (new Date(processing_date)).toLocaleString('ko-KR', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+              hour12: false,
+            }) + '\n' +
             '회원아이디: ' + buyerNickname + '\n' +
             '입금자명: ' + buyerDepositName + '\n' +
             '입금액: ' + paymentAmount.toLocaleString() + '원',
-            */
-            message: `주문번호: ${order_number}, 입금시간: ${processing_date}, 회원아이디: ${buyerNickname}, 입금자명: ${buyerDepositName}, 입금액: ${paymentAmount.toLocaleString()}원`,
+            
+            //message: `주문번호: ${order_number}, 입금시간: ${processing_date}, 회원아이디: ${buyerNickname}, 입금자명: ${buyerDepositName}, 입금액: ${paymentAmount.toLocaleString()}원`,
 
           }),
         });
