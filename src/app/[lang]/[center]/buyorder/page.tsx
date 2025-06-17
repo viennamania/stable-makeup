@@ -4746,9 +4746,9 @@ export default function Index({ params }: any) {
                                   {Completed}
                                 </button>
                                 {/* new window */}
-                                {/* https://www.cryptopay.beauty/ */}
+                                {/* https://www.cryptoss.beauty/ */}
                                 <a
-                                  href={`https://www.cryptopay.beauty/ko/${item?.storecode}/pay-usdt-reverse/${item?._id}`}
+                                  href={`https://www.cryptoss.beauty/ko/${item?.storecode}/pay-usdt-reverse/${item?._id}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="text-sm text-blue-600 font-semibold hover:underline"
@@ -7024,7 +7024,7 @@ const UserPaymentPage = (
       
       {/* iframe */}
       <iframe
-        src={`https://cryptopay.beauty/kr/${selectedItem?.storecode}/pay-usdt-reverse/${selectedItem?._id}`}
+        src={`https://cryptoss.beauty/kr/${selectedItem?.storecode}/pay-usdt-reverse/${selectedItem?._id}`}
 
         
           

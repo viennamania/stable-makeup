@@ -3397,11 +3397,11 @@ export default function Index({ params }: any) {
 /*
 selectedItem?.buyer?.depositBankName
 selectedItem?.buyer?.depositName
-'https://cryptopay.beauty/' + params.lang + '/' + selectedItem.agentcode + '/payment?'
+'https://cryptoss.beauty/' + params.lang + '/' + selectedItem.agentcode + '/payment?'
 'agentUser=' + selectedItem.nickname + '&depositBankName=' + selectedItem?.buyer?.depositBankName + '&depositName=' + selectedItem?.buyer?.depositName
 
 
-'https://cryptopay.beauty/' + params.lang + '/' + item.agentcode + '/payment?'
+'https://cryptoss.beauty/' + params.lang + '/' + item.agentcode + '/payment?'
                                     + 'agentUser=' + item.nickname + '&depositBankName=' + item?.buyer?.depositBankName + '&depositName=' + item?.buyer?.depositName
 */
 
@@ -3420,7 +3420,7 @@ const UserHomePage = (
       
       {/* iframe */}
       <iframe
-        src={`https://cryptopay.beauty/kr/${selectedItem?.agentcode}/payment?`
+        src={`https://cryptoss.beauty/kr/${selectedItem?.agentcode}/payment?`
           + 'agentUser=' + selectedItem?.nickname
           + '&depositBankName=' + selectedItem?.buyer?.depositBankName
           + '&depositBankAccountNumber=' + selectedItem?.buyer?.depositBankAccountNumber

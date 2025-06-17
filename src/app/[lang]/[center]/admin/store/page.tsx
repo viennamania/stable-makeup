@@ -1391,14 +1391,14 @@ export default function Index({ params }: any) {
                 </div>
 
                 {/* link new window */}
-                {/* https://cryptopay.beauty/ko/[storecode] */}
+                {/* https://cryptoss.beauty/ko/[storecode] */}
                 <button
                   onClick={() => {
-                    window.open(`https://cryptopay.beauty/ko/${store?.storecode}`, '_blank');
+                    window.open(`https://cryptoss.beauty/ko/${store?.storecode}`, '_blank');
                   }}
                   className="text-sm text-zinc-500 underline"
                 >
-                  가맹점 링크: https://cryptopay.beauty/ko/{store?.storecode}
+                  가맹점 링크: https://cryptoss.beauty/ko/{store?.storecode}
                 </button>
 
             </div>
@@ -1765,7 +1765,7 @@ export default function Index({ params }: any) {
 
                             <a
                               href={
-                                'https://cryptopay.beauty/' + params.lang + '/' + item.storecode + '/payment?'
+                                'https://cryptoss.beauty/' + params.lang + '/' + item.storecode + '/payment?'
                                 + 'storeUser=' + item.nickname + '&depositBankName=' + item?.buyer?.depositBankName + '&depositName=' + item?.buyer?.depositName
                               }
                               target="_blank"
