@@ -186,25 +186,27 @@ export async function POST(request: NextRequest) {
             center: "place69_bot",
             userid: userid,
             storecode: storecode,
-            //message: `주문이 완료되었습니다. 주문번호: ${orderId}, 결제금액: ${paymentAmount}원`,
-
-            // 주문번호: tradeId,
-            // 입금시간: '2025년 5월 21일 15시 31분 06초',
-            // 입금자명: "홍길동",
-            // 입금액: 10,000원
-
-            
+    
+            /*
+            "deposited" (입금) 또는 "withdrawn" (출금)
+            입금자명
+            */
             message:
 
-            '입금자명: ' + transaction_name + '\n' +
-            '입금액: ' + amount.toLocaleString() + '원' + '\n' +
-            '입금계좌: ' + bank_account_number + '\n' +
-            '입금은행: ' + bank_code + '\n' +
-            '거래유형: ' + transaction_type + '\n' +
             '거래일시: ' + transaction_date.replace('T', ' ').replace('+09:00', '') + '\n' +
-            '잔액: ' + balance.toLocaleString() + '원' + '\n'
-            
-            //message: `주문번호: ${order_number}, 입금시간: ${processing_date}, 회원아이디: ${buyerNickname}, 입금자명: ${buyerDepositName}, 입금액: ${paymentAmount.toLocaleString()}원`,
+            '잔액: ' + balance.toLocaleString() + '원' + '\n' +
+
+            (transaction_type === 'deposited' ? '입금' : '출금') + ' 알림\n' +
+
+            (transaction_type === 'deposited' ? '입금자명: ' : '출금자명: ') + transaction_name + '\n' +
+    
+            (transaction_type === 'deposited' ? '입금액: ' : '출금액: ') + amount.toLocaleString() + '원' + '\n' +
+
+            (transaction_type === 'deposited' ? '입금계좌: ' : '출금계좌: ') + bank_account_id + '\n' +
+
+            (transaction_type === 'deposited' ? '입금계좌번호: ' : '출금계좌번호: ') + bank_account_number + '\n' +
+    
+            (transaction_type === 'deposited' ? '입금은행: ' : '출금은행: ') + bank_code + '\n'
 
           }),
         });
