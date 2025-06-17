@@ -125,7 +125,7 @@ export async function POST(request: NextRequest) {
 
 
   console.log("payaction transaction_type", transaction_type);
-  console.log("payaction bank_account_id", bank_account_id);
+  console.log("payaction bank_account_id", bank_account_id); // 1746688005960x805860620824215600
   console.log("payaction bank_account_number", bank_account_number);
   console.log("payaction bank_code", bank_code);
   console.log("payaction amount", amount);
@@ -202,7 +202,7 @@ export async function POST(request: NextRequest) {
     
             (transaction_type === 'deposited' ? '입금액: ' : '출금액: ') + amount.toLocaleString() + '원' + '\n' +
 
-            (transaction_type === 'deposited' ? '입금계좌: ' : '출금계좌: ') + bank_account_id + '\n' +
+            //(transaction_type === 'deposited' ? '입금계좌: ' : '출금계좌: ') + bank_account_id + '\n' +
 
             (transaction_type === 'deposited' ? '입금계좌번호: ' : '출금계좌번호: ') + bank_account_number + '\n' +
     
