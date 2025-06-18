@@ -300,7 +300,8 @@ export async function POST(request: NextRequest) {
           `금액: <b>${amount.toLocaleString()}</b>원\n` +
           `이름: ${transaction_name}\n` +
           `시간: ${transaction_date.replace('T', ' ').replace('+09:00', '')}\n` +
-          `계좌: ${bankName} ${bank_account_number}`;
+          `계좌: ${bankName} ${bank_account_number}\n` +
+          `잔액: ${balance.toLocaleString()}원`;
 
         
 
