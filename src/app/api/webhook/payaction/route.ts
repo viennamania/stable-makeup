@@ -237,6 +237,9 @@ export async function POST(request: NextRequest) {
   // userid = 'mcmcmo'
   // storecode = storecode
 
+
+  /*
+
   try {
 
 
@@ -293,17 +296,6 @@ export async function POST(request: NextRequest) {
 
 
 
-            /*
-            '입금시간: ' + (new Date(processing_date)).toLocaleString('ko-KR', {
-              year: 'numeric',
-              month: '2-digit',
-              day: '2-digit',
-              hour: '2-digit',
-              minute: '2-digit',
-              second: '2-digit',
-              hour12: false,
-            }) + '\n' +
-            */
 
             '입금시간: ' + processing_date.replace('T', ' ').replace('+09:00', '') + '\n' +
 
@@ -334,7 +326,7 @@ export async function POST(request: NextRequest) {
     console.error("Error sending Telegram message:", error);
   }
 
-
+  */
 
 
   
