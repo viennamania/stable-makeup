@@ -226,7 +226,7 @@ function ChatPageContent() {
 
   return (
 
-      <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
+      <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-sm mx-auto">
 
 
 
