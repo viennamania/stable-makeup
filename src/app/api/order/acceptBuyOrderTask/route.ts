@@ -225,6 +225,54 @@ export async function POST(request: NextRequest) {
 
     ////console.log("acceptBuyOrder result", result);
 
+    if (result) {
+
+      //console.log("acceptBuyOrder result", result);
+
+
+
+      const APPLICATION_ID = 'CCD67D05-55A6-4CA2-A6B1-187A5B62EC9D';
+
+      const apiToken = process.env.SENDBIRD_API_TOKEN;
+
+      if (apiToken) {
+  
+        const url = `https://api-${APPLICATION_ID}.sendbird.com/v3/open_channels`;
+
+        try {
+          const result = await fetch(url, {
+            method: 'POST',
+
+            headers: {
+              'Content-Type': 'application/json',
+              'Api-Token': apiToken,
+            },
+
+            body: JSON.stringify({
+              name: buyorder.tradeId,
+              channel_url: buyorder._id,
+              cover_url: 'https://stable.makeup/icon-trade.png',
+              custom_type: 'trade',
+
+            }),
+          });
+
+          const data = await result.json();
+
+        } catch (error) {
+          console.error('Error creating Sendbird channel:', error);
+        }
+
+      }
+
+
+
+
+    }
+
+
+
+
 
   }
 

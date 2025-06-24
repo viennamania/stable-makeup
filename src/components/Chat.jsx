@@ -2,9 +2,6 @@ import { App as SendbirdApp } from '@sendbird/uikit-react';
 
 import {router} from 'next/navigation';
 
-const APP_ID = "CCD67D05-55A6-4CA2-A6B1-187A5B62EC9D";
-
-///const USER_ID = "sendbirdian-200720";
 
 
 
@@ -21,6 +18,11 @@ import { GroupChannelProvider, useGroupChannelContext } from '@sendbird/uikit-re
 
 
 import OpenChannel from '@sendbird/uikit-react/OpenChannel';
+
+
+const APP_ID = "CCD67D05-55A6-4CA2-A6B1-187A5B62EC9D";
+
+
 
 const ChannelSettingsPage = () => {
 
@@ -133,6 +135,7 @@ export default function Chat(
         <SendbirdProvider
             appId={APP_ID}
             userId={userId}
+            nickname={nickname}
             profileUrl={profileUrl}
         >
 

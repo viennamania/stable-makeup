@@ -1,8 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import {
-  UserProps,
 	acceptBuyOrder,
+  getTradeId,
 } from '@lib/api/order';
 
 // Download the helper library from https://www.twilio.com/docs/node/install
@@ -17,14 +17,16 @@ export async function POST(request: NextRequest) {
   const {
     lang,
     storecode,
+    
     orderId,
+
     sellerWalletAddress,
     sellerStorecode,
     sellerMemo,
     //sellerNickname, sellerAvatar, sellerMobile, seller
   } = body;
 
-  console.log("acceptBuyOrder body", body);
+  ///console.log("acceptBuyOrder body", body);
 
 
   /*
@@ -57,6 +59,54 @@ export async function POST(request: NextRequest) {
   });
 
   //console.log("result", result);
+
+  if (result) {
+    
+    //console.log("acceptBuyOrder result", result);
+
+    const tradeId = getTradeId({
+      orderId: orderId,
+    });
+
+
+    const APPLICATION_ID = 'CCD67D05-55A6-4CA2-A6B1-187A5B62EC9D';
+
+    const apiToken = process.env.SENDBIRD_API_TOKEN;
+
+    if (apiToken) {
+ 
+      const url = `https://api-${APPLICATION_ID}.sendbird.com/v3/open_channels`;
+
+      try {
+        const result = await fetch(url, {
+          method: 'POST',
+
+          headers: {
+            'Content-Type': 'application/json',
+            'Api-Token': apiToken,
+          },
+
+          body: JSON.stringify({
+            name: tradeId,
+            channel_url: orderId,
+            cover_url: 'https://stable.makeup/icon-trade.png',
+            custom_type: 'trade',
+
+          }),
+        });
+
+        const data = await result.json();
+
+      } catch (error) {
+        console.error('Error creating Sendbird channel:', error);
+      }
+
+    }
+
+
+
+
+  }
 
 
   /*
