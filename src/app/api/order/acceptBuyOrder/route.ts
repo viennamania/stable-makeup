@@ -2,7 +2,6 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import {
 	acceptBuyOrder,
-  getTradeId,
 } from '@lib/api/order';
 
 // Download the helper library from https://www.twilio.com/docs/node/install
@@ -24,6 +23,8 @@ export async function POST(request: NextRequest) {
     sellerStorecode,
     sellerMemo,
     //sellerNickname, sellerAvatar, sellerMobile, seller
+
+    tradeId,
   } = body;
 
   ///console.log("acceptBuyOrder body", body);
@@ -61,13 +62,6 @@ export async function POST(request: NextRequest) {
   //console.log("result", result);
 
   if (result) {
-    
-    //console.log("acceptBuyOrder result", result);
-
-    const tradeId = getTradeId({
-      orderId: orderId,
-    });
-
 
     const APPLICATION_ID = 'CCD67D05-55A6-4CA2-A6B1-187A5B62EC9D';
 

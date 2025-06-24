@@ -6149,10 +6149,16 @@ export async function getTradeId(
   const client = await clientPromise;
   const collection = client.db('ultraman').collection('buyorders');
   // get tradeId
-  const result = await collection.findOne<UserProps>(
+  const result = await collection.findOne<any>(
     { _id: new ObjectId(orderId) },
     { projection: { tradeId: 1 } }
   );
+
+
+  console.log('getTradeId result: ' + JSON.stringify(result));
+
+  
+
   if (result && result.tradeId) {
     return result.tradeId;
   } else {
