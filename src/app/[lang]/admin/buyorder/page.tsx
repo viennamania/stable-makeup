@@ -2663,6 +2663,62 @@ const fetchBuyOrders = async () => {
 
 
 
+    const APPLICATION_ID = 'CCD67D05-55A6-4CA2-A6B1-187A5B62EC9D';
+
+    const API_TOKEN = 'e3533d34c77b439839a20c1c31de3b8b500d83c1';
+
+
+    const  goChat = async (
+      orderId: string,
+      tradeId: string
+    ) => {
+
+
+      //const url = 'https://api-CC1B09FC-0FEF-4C9C-96D0-E5D464ADF155.sendbird.com/v3/open_channels';
+
+      const url = `https://api-${APPLICATION_ID}.sendbird.com/v3/open_channels`;
+
+
+      try {
+        const result = await fetch(url, {
+          method: 'POST',
+
+          headers: {
+            'Content-Type': 'application/json',
+            'Api-Token': API_TOKEN,
+          },
+
+          body: JSON.stringify({
+            name: tradeId,
+            channel_url: orderId,
+            cover_url: 'https://stable.makeup/icon-trade.png',
+            custom_type: 'trade',
+
+          }),
+        });
+
+        const data = await result.json();
+
+        console.log('data', data);
+
+
+
+      } catch (error) {
+        console.error('Error creating chat channel:', error);
+
+      }
+          
+
+      console.log('Go Chat');
+
+   
+      router.push(`/chat?channel=${orderId}`);
+
+      //router.push(`/${params.lang}/chat/${orderId}`);
+
+
+
+    }
 
 
 
@@ -3989,6 +4045,10 @@ const fetchBuyOrders = async () => {
                               </div>
                             )}
 
+
+
+                       
+
                             {item.status === 'ordered' ? (
                               <span className="text-sm text-zinc-500 font-semibold">
                                 
@@ -4583,6 +4643,36 @@ const fetchBuyOrders = async () => {
                               xl:w-72  
                               flex flex-col xl:flex-row gap-2 items-sart justify-start
                               `}>
+
+
+
+                              <button
+                                onClick={() => {
+                                  
+                                  goChat(item._id, item.tradeId);
+                                }}
+                                className="w-20 h-20
+                                flex items-center justify-center
+                                bg-white rounded-lg shadow-md
+                                hover:bg-gray-100
+                                transition-all duration-200 ease-in-out
+                                hover:scale-105
+                                hover:shadow-lg
+                                hover:shadow-blue-500/50
+                                cursor-pointer
+                                p-2
+
+                                "
+                              >
+                                <Image
+                                  src="/icon-chat.png"
+                                  alt="Chat"
+                                  width={24}
+                                  height={24}
+                                />
+                              </button>
+
+
 
                               
                               <div className="

@@ -123,7 +123,7 @@ export async function POST(request: NextRequest) {
 
  
 
-
+  /*
   console.log("payaction transaction_type", transaction_type);
   console.log("payaction bank_account_id", bank_account_id); // 1746688005960x805860620824215600
   console.log("payaction bank_account_number", bank_account_number);
@@ -133,7 +133,7 @@ export async function POST(request: NextRequest) {
   console.log("payaction transaction_name", transaction_name);
   console.log("payaction balance", balance);
   console.log("payaction processing_date", processing_date);
-
+  */
 
 
 

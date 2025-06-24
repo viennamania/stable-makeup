@@ -1,23 +1,31 @@
 'use client';
 
-//import { Session, Chatbox } from "@talkjs/react";
-
-
-import dynamic from "next/dynamic";
+import { toast } from 'react-hot-toast';
 
 import '@sendbird/uikit-react/dist/index.css';
 
-import {
 
+import { client } from "../client";
+
+import {
+  ConnectButton,
   useActiveWallet,
   
 } from "thirdweb/react";
+
+import {
+  inAppWallet,
+  createWallet,
+} from "thirdweb/wallets";
+
+import { polygon } from "thirdweb/chains";
 
 import { balanceOf, transfer } from "thirdweb/extensions/erc20";
  
 
 import { useSearchParams } from 'next/navigation'
 
+import Image from 'next/image';
 
 // parameters for dynamic import
 // userId parameter is required
@@ -50,9 +58,40 @@ import React, { useEffect, useState, Suspense } from 'react';
 // /chat?tradeId=
 // get parameter from url
 
-/*
-export default function ChatPage(
-*/
+
+
+
+
+
+const wallets = [
+  inAppWallet({
+    auth: {
+      options: [
+        "google",
+        "discord",
+        "email",
+        "x",
+        "passkey",
+        "phone",
+        "facebook",
+        "line",
+        "apple",
+        "coinbase",
+      ],
+    },
+  }),
+  createWallet("com.coinbase.wallet"),
+  createWallet("me.rainbow"),
+  createWallet("io.rabby"),
+  createWallet("io.zerion.wallet"),
+  createWallet("io.metamask"),
+  createWallet("com.bitget.web3"),
+  createWallet("com.trustwallet.app"),
+  createWallet("com.okex.wallet"),
+
+];
+
+
 
 export default function ChatPage() {
 
@@ -68,6 +107,10 @@ export default function ChatPage() {
 function ChatPageContent() {
   
   const searchParams = useSearchParams()
+
+  
+  //const storecode = searchParams.get('storecode')
+
  
   const channel = searchParams.get('channel')
  
@@ -149,7 +192,8 @@ function ChatPageContent() {
                   "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                  walletAddress: address,
+                storecode: "admin", // storecode,
+                walletAddress: address,
               }),
           });
 
@@ -169,7 +213,8 @@ function ChatPageContent() {
           }
       };
 
-      fetchData();
+      if (address )  // only fetch data if address and storecode are available
+        fetchData();
 
   }, [address]);
 
@@ -180,18 +225,123 @@ function ChatPageContent() {
 
   return (
 
-    <main className="p-4 pb-10 min-h-[100vh] flex items-center justify-center mx-auto">
+      <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
 
 
 
         <div className="py-20 w-full h-full">
   
-          {/* goto home button using go back icon
-          history back
-          */}
-  
-          <div className="flex justify-start space-x-4 mb-10">
-              <button onClick={() => window.history.back()} className="text-zinc-100 font-semibold underline">Go Back</button>
+          <div className="w-full flex flex-row items-center justify-between gap-2 mb-4"
+          >
+              {/* go back button */}
+              <div className="flex justify-start items-center gap-2">
+                  <button
+                      onClick={() => window.history.back()}
+                      className="flex items-center justify-center
+                      p-2 bg-zinc-100 hover:bg-zinc-200 rounded-lg transition-colors duration-200"
+                  >
+                      <div className='flex flex-row items-center justify-center gap-2'>
+                          <Image
+                              src="/icon-back.png"
+                              alt="Back"
+                              width={20}
+                              height={20}
+                              className="rounded-full"
+                          />
+                          <span className="text-sm text-gray-500 font-semibold">
+                              돌아가기
+                          </span>
+                      </div>
+                  </button>
+              </div>
+
+              {!address && (
+                <ConnectButton
+                  client={client}
+                  wallets={wallets}
+
+                  /*
+                  accountAbstraction={{
+                    chain: polygon,
+                    sponsorGas: true
+                  }}
+                  */
+                  
+                  theme={"light"}
+
+                  // button color is dark skyblue convert (49, 103, 180) to hex
+                  connectButton={{
+                    style: {
+                      backgroundColor: "#3167b4", // dark skyblue
+
+                      color: "#f3f4f6", // gray-300 
+                      padding: "2px 2px",
+                      borderRadius: "10px",
+                      fontSize: "14px",
+                      //width: "40px",
+                      height: "38px",
+                    },
+                    label: "원클릭 로그인",
+                  }}
+
+                  connectModal={{
+                    size: "wide", 
+                    //size: "compact",
+                    titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
+                    showThirdwebBranding: false,
+                  }}
+
+                  locale={"ko_KR"}
+                  //locale={"en_US"}
+                />
+
+              )}
+
+
+              {address && (
+                  <div className="hidden w-full flex-col items-end justify-center gap-2">
+
+                      <div className="flex flex-row items-center justify-center gap-2">
+
+                          <button
+                              className="text-lg text-zinc-600 underline"
+                              onClick={() => {
+                                  navigator.clipboard.writeText(address);
+                                  toast.success('주소가 클립보드에 복사되었습니다.', {
+                                      duration: 2000,
+                                      position: 'top-center',
+                                      style: { background: '#f3f4f6', color: '#111827' },
+                                      iconTheme: {
+                                          primary: '#4ade80', // green-400
+                                          secondary: '#111827', // gray-900
+                                      },
+                                  });
+                              } }
+                          >
+                              {address.substring(0, 6)}...{address.substring(address.length - 4)}
+                          </button>
+                          
+                          <Image
+                              src="/icon-shield.png"
+                              alt="Wallet"
+                              width={100}
+                              height={100}
+                              className="w-6 h-6"
+                          />
+
+                      </div>
+
+                      <div className="flex flex-row items-center justify-end  gap-2">
+                          <span className="text-2xl xl:text-4xl font-semibold text-green-600">
+                              {Number(balance).toFixed(2)}
+                          </span>
+                          {' '}
+                          <span className="text-sm">USDT</span>
+                      </div>
+
+                  </div>
+              )}
+
           </div>
 
 
