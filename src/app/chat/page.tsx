@@ -54,6 +54,7 @@ import Chat from "../../components/Chat";
 
 
 import React, { useEffect, useState, Suspense } from 'react';
+import { add } from 'thirdweb/extensions/farcaster/keyGateway';
 
 // /chat?tradeId=
 // get parameter from url
@@ -355,9 +356,9 @@ function ChatPageContent() {
 
               channel={channel}
 
-              userId={ nickname }
+              userId={ address }
 
-              nickname={  nickname }
+              nickname={ nickname }
 
               profileUrl={ avatar }
             />
