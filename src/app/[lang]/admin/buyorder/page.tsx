@@ -967,6 +967,7 @@ export default function Index({ params }: any) {
       smsNumber: string,
 
       tradeId: string,
+      walletAddress: string,
     ) => {
 
         if (!address) {
@@ -1012,6 +1013,7 @@ export default function Index({ params }: any) {
                 seller: user?.seller,
 
                 tradeId: tradeId,
+                buyerWalletAddress: walletAddress,
 
             }),
         })
@@ -4477,7 +4479,7 @@ const fetchBuyOrders = async () => {
                                       hover:shadow-blue-500/50
                                     "
                                     onClick={() => {
-                                      acceptBuyOrder(index, item._id, smsReceiverMobileNumber, item.tradeId)
+                                      acceptBuyOrder(index, item._id, smsReceiverMobileNumber, item.tradeId, item.walletAddress)
                                     }}
                                   >
                                     <div className="flex flex-row gap-2 items-center justify-center">
@@ -6472,7 +6474,7 @@ const fetchBuyOrders = async () => {
                                                 `}
                                               onClick={() => {
     
-                                                  acceptBuyOrder(index, item._id, smsReceiverMobileNumber, item.tradeId)
+                                                  acceptBuyOrder(index, item._id, smsReceiverMobileNumber, item.tradeId, item.walletAddress)
                                             
 
                                               }}

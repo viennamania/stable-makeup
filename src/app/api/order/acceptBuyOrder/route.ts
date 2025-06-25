@@ -25,6 +25,7 @@ export async function POST(request: NextRequest) {
     //sellerNickname, sellerAvatar, sellerMobile, seller
 
     tradeId,
+    buyerWalletAddress,
   } = body;
 
   ///console.log("acceptBuyOrder body", body);
@@ -63,12 +64,18 @@ export async function POST(request: NextRequest) {
 
   if (result) {
 
+
+
+
+
+
     const APPLICATION_ID = 'CCD67D05-55A6-4CA2-A6B1-187A5B62EC9D';
 
     const apiToken = process.env.SENDBIRD_API_TOKEN;
 
     if (apiToken) {
  
+      /*
       const url = `https://api-${APPLICATION_ID}.sendbird.com/v3/open_channels`;
 
       try {
@@ -94,6 +101,43 @@ export async function POST(request: NextRequest) {
       } catch (error) {
         console.error('Error creating Sendbird channel:', error);
       }
+      */
+
+
+      // group_channels
+      const url = `https://api-${APPLICATION_ID}.sendbird.com/v3/group_channels`;
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Api-Token': apiToken,
+          },
+          body: JSON.stringify({
+            name: "거래번호: #" + tradeId,
+            channel_url: orderId,
+            cover_url: 'https://stable.makeup/icon-trade.png',
+            custom_type: 'trade',
+            user_ids: [buyerWalletAddress, sellerWalletAddress],
+            data: JSON.stringify({
+              tradeId: tradeId,
+              buyerWalletAddress: buyerWalletAddress,
+              sellerWalletAddress: sellerWalletAddress,
+              sellerStorecode: sellerStorecode,
+            }),
+            
+          }),
+        });
+
+        const data = await response.json();
+        //console.log('Sendbird group channel created:', data);
+
+      } catch (error) {
+        console.error('Error creating Sendbird group channel:', error);
+      }
+
+
 
     }
 
