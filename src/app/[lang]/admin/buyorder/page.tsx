@@ -4524,6 +4524,38 @@ const fetchBuyOrders = async () => {
 
 
 
+                          {item?.seller?.walletAddress === address && (
+
+                              <button
+                                onClick={() => {
+                                  
+                                  router.push(`/chat?channel=${item._id}`);
+
+
+                                }}
+                                className="w-8 h-8
+                                flex items-center justify-center
+                                bg-white rounded-lg shadow-md
+                                hover:bg-gray-100
+                                transition-all duration-200 ease-in-out
+                                hover:scale-105
+                                hover:shadow-lg
+                                hover:shadow-blue-500/50
+                                cursor-pointer
+                                p-1
+
+                                "
+                              >
+                                <Image
+                                  src="/icon-chat.png"
+                                  alt="Chat"
+                                  width={24}
+                                  height={24}
+                                />
+                              </button>
+
+
+                          )}
 
 
 
@@ -4585,37 +4617,6 @@ const fetchBuyOrders = async () => {
                               xl:w-72  
                               flex flex-col xl:flex-row gap-2 items-sart justify-start
                               `}>
-
-
-
-                              <button
-                                onClick={() => {
-                                  
-                                  router.push(`/chat?channel=${item._id}`);
-
-
-                                }}
-                                className="w-20 h-20
-                                flex items-center justify-center
-                                bg-white rounded-lg shadow-md
-                                hover:bg-gray-100
-                                transition-all duration-200 ease-in-out
-                                hover:scale-105
-                                hover:shadow-lg
-                                hover:shadow-blue-500/50
-                                cursor-pointer
-                                p-2
-
-                                "
-                              >
-                                <Image
-                                  src="/icon-chat.png"
-                                  alt="Chat"
-                                  width={24}
-                                  height={24}
-                                />
-                              </button>
-
 
 
                               
@@ -4695,7 +4696,9 @@ const fetchBuyOrders = async () => {
                                 )}
 
                                 {item.status === 'cancelled' && (
-                                  <div className="text-sm text-red-600">
+                                  <div className="
+                                  flex flex-col gap-2 items-center justify-center
+                                  text-sm text-red-600">
                                     {item.cancelTradeReason ? item.cancelTradeReason :
                                       "거래취소사유 없음"
                                     }
