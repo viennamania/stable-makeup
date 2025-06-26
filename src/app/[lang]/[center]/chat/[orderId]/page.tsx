@@ -752,7 +752,7 @@ export default function Index({ params }: any) {
 
 
 
-
+    /*
     const fetchWalletAddress = async (
       paramNickname: string
     ) => {
@@ -794,9 +794,10 @@ export default function Index({ params }: any) {
 
 
     }
+    */
 
  
-
+    /*
     useEffect(() => {
 
 
@@ -851,7 +852,7 @@ export default function Index({ params }: any) {
 
     } , [nickname]);
 
-
+    */
 
 
 
@@ -981,7 +982,7 @@ export default function Index({ params }: any) {
 
               setBuyOrders(data.result.orders);
 
-              setAddress(data.result.orders[0]?.walletAddress);
+              //////////////setAddress(data.result.orders[0]?.walletAddress);
 
               ////setNickname(data.result.orders[0].buyer.nickname);
 
@@ -1337,7 +1338,7 @@ export default function Index({ params }: any) {
       
       //window.location.reload();
 
-      setAddress(data.walletAddress);
+      //setAddress(data.walletAddress);
 
 
       /*
@@ -1955,7 +1956,7 @@ export default function Index({ params }: any) {
 
 
                       
-                  
+                    {/*
                     <button
                       ///onClick={setUserWithoutWalletAddress}
                       
@@ -1968,6 +1969,7 @@ export default function Index({ params }: any) {
                     >
                       {Make_Wallet_Address}
                     </button>
+                    */}
 
                 </div>
 
