@@ -4533,7 +4533,7 @@ const fetchBuyOrders = async () => {
                                   
                                   //router.push(`/chat?channel=${item._id}`);
 
-                                  router.push(`https://cryptoss.beauty/${params.lang}/${item.storecode}/pay-usdt-reverse/${item._id}`);
+                                  router.push(`/${params.lang}/${item.storecode}/chat/${item._id}`);
 
 
                                 }}
