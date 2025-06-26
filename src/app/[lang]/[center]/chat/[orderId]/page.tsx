@@ -712,7 +712,7 @@ export default function Index({ params }: any) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                storecode: params.center, // storecode is center
+                storecode: "admin",
                 walletAddress: address,
             }),
         })
@@ -732,7 +732,7 @@ export default function Index({ params }: any) {
 
         setLoadingUser(false);
 
-    } , [address, params.center]);
+    } , [address]);
 
 
 
