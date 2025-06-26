@@ -4531,7 +4531,9 @@ const fetchBuyOrders = async () => {
                               <button
                                 onClick={() => {
                                   
-                                  router.push(`/chat?channel=${item._id}`);
+                                  //router.push(`/chat?channel=${item._id}`);
+
+                                  router.push(`https://cryptoss.beauty/${params.lang}/${item.storecode}/pay-usdt-reverse/${item._id}`);
 
 
                                 }}
