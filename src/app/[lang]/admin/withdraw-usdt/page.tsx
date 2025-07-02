@@ -753,17 +753,16 @@ export default function SendUsdt({ params }: any) {
                 </span>
             </div>
 
+            
+            {/*
             {!address && (
+            */}
+
+
+
                 <ConnectButton
                 client={client}
                 wallets={wallets}
-
-                /*
-                accountAbstraction={{
-                    chain: polygon,
-                    sponsorGas: true
-                }}
-                */
                 
                 theme={"light"}
 
@@ -791,7 +790,14 @@ export default function SendUsdt({ params }: any) {
                 locale={"ko_KR"}
                 //locale={"en_US"}
                 />
+
+            {/*
             )}
+            */}
+
+
+
+
 
             {address && (
                 <div className="w-full flex flex-col items-end justify-center gap-2">
