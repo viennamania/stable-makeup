@@ -1878,7 +1878,7 @@ export default function Index({ params }: any) {
                       <span className="text-2xl xl:text-4xl font-semibold text-green-600">
                           {
                             (Number(sellerWalletBalance || 0).toFixed(2))
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                            .toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                           }
                       </span>
                       {' '}
@@ -2083,18 +2083,24 @@ export default function Index({ params }: any) {
                                 <div className="flex flex-row items-center gap-2">
                                   <span className="text-2xl xl:text-4xl font-semibold text-green-600">
                                       {
-                                        (Number(tradeSummary.totalClearanceAmountUSDT - tradeSummary.totalSettlementAmount).toFixed(2))
-                                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                        // if minus value, then show 0
+                                        (Number(tradeSummary.totalClearanceAmountUSDT - tradeSummary.totalSettlementAmount) < 0
+                                          ? 0
+                                          : Number(tradeSummary.totalClearanceAmountUSDT - tradeSummary.totalSettlementAmount).toFixed(2))
+
                                       }
                                   </span>
+
                                   <span className="text-sm">USDT</span>
                                 </div>
 
                                 <div className="flex flex-row items-center gap-2">
                                   <span className="text-2xl xl:text-4xl font-semibold text-yellow-600">
                                       {
-                                        (Number(tradeSummary.totalClearanceAmount - tradeSummary.totalSettlementAmountKRW).toFixed(0))
-                                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                        // if minus value, then show 0
+                                        (Number(tradeSummary.totalClearanceAmount - tradeSummary.totalSettlementAmountKRW) < 0
+                                          ? 0
+                                          : Number(tradeSummary.totalClearanceAmount - tradeSummary.totalSettlementAmountKRW).toFixed(0))
                                       }
                                   </span>
                                   <span className="text-sm">원</span>

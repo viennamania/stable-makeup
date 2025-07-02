@@ -2000,6 +2000,10 @@ export default function Index({ params }: any) {
                   
 
                     //Number(item?.totalSettlementAmount - item?.totalUsdtAmountClearance || 0)
+
+                    // if minus is negative, return 0
+                    Number(store?.totalUsdtAmountClearance - store?.totalSettlementAmount || 0)
+                    < 0 ? 0 :
                     Number(store?.totalUsdtAmountClearance - store?.totalSettlementAmount || 0)
                     .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
@@ -2016,6 +2020,10 @@ export default function Index({ params }: any) {
                     //  ?.toLocaleString('ko-KR')
 
                     //Number(item?.totalSettlementAmountKRW - item?.totalKrwAmountClearance || 0)
+
+                    // if minus is negative, return 0
+                    Number(store?.totalKrwAmountClearance - store?.totalSettlementAmountKRW || 0)
+                    < 0 ? 0 :
                     Number(store?.totalKrwAmountClearance - store?.totalSettlementAmountKRW || 0)
                     .toLocaleString('ko-KR')
 

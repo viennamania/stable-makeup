@@ -3123,6 +3123,9 @@ const fetchBuyOrders = async () => {
                     
 
                       //Number(item?.totalSettlementAmount - item?.totalUsdtAmountClearance || 0)
+                      // if minus value, show 0
+                      Number(store?.totalUsdtAmountClearance - store?.totalSettlementAmount || 0)
+                      < 0 ? 0 :
                       Number(store?.totalUsdtAmountClearance - store?.totalSettlementAmount || 0)
                       .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
@@ -3139,6 +3142,8 @@ const fetchBuyOrders = async () => {
                       //  ?.toLocaleString('ko-KR')
 
                       //Number(item?.totalSettlementAmountKRW - item?.totalKrwAmountClearance || 0)
+                      // if minus value, show 0
+                      Number(store?.totalKrwAmountClearance - store?.totalSettlementAmountKRW || 0) < 0 ? 0 :
                       Number(store?.totalKrwAmountClearance - store?.totalSettlementAmountKRW || 0)
                       .toLocaleString('ko-KR')
 
