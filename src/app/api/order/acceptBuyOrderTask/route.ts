@@ -20,10 +20,11 @@ import {
 import twilio from "twilio";
 import { idCounter } from "thirdweb/extensions/farcaster/idRegistry";
 
+
 export async function POST(request: NextRequest) {
 
 
-///export async function GET(request: NextRequest) {
+//export async function GET(request: NextRequest) {
 
 
   const buyordersResult = await getAllBuyOrdersForMatching({
@@ -37,7 +38,7 @@ export async function POST(request: NextRequest) {
 
 
 
-  console.log("buyordersResult", buyordersResult);
+  //console.log("buyordersResult", buyordersResult);
 
 
   const buyorders = buyordersResult?.orders || [];
