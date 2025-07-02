@@ -3035,6 +3035,11 @@ export default function Index({ params }: any) {
                                           //  ?.toLocaleString('ko-KR')
 
                                           //Number(item?.totalSettlementAmountKRW - item?.totalKrwAmountClearance || 0)
+
+                                          // if minus is negative, show 0
+                                          Number(item?.totalKrwAmountClearance - item?.totalSettlementAmountKRW || 0)
+                                          < 0 ? 0 :
+
                                           Number(item?.totalKrwAmountClearance - item?.totalSettlementAmountKRW || 0)
                                           .toLocaleString('ko-KR')
 
@@ -3057,6 +3062,9 @@ export default function Index({ params }: any) {
                                           
 
                                             //Number(item?.totalSettlementAmount - item?.totalUsdtAmountClearance || 0)
+                                            // if minus is negative, show 0
+                                            Number(item?.totalUsdtAmountClearance - item?.totalSettlementAmount || 0)
+                                            < 0 ? 0 :
                                             Number(item?.totalUsdtAmountClearance - item?.totalSettlementAmount || 0)
                                             .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
