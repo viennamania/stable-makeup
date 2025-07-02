@@ -1121,6 +1121,11 @@ export default function Index({ params }: any) {
 
 
 
+  const [searchBuyer, setSearchBuyer] = useState("");
+  
+  const [searchDepositName, setSearchDepositName] = useState("");
+  
+
   // fetch all buyer user 
   const [fetchingAllBuyer, setFetchingAllBuyer] = useState(false);
   const [allBuyer, setAllBuyer] = useState([] as any[]);
@@ -1130,7 +1135,11 @@ export default function Index({ params }: any) {
       return;
     }
     setFetchingAllBuyer(true);
-    const response = await fetch('/api/user/getAllBuyersByStorecode', {
+    
+    //const response = await fetch('/api/user/getAllBuyersByStorecode', {
+    const response = await fetch('/api/user/getAllBuyers', {
+
+
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
@@ -1138,6 +1147,10 @@ export default function Index({ params }: any) {
       body: JSON.stringify(
         {
           storecode: params.center,
+
+          search: searchBuyer,
+          depositName: searchDepositName,
+
           limit: Number(limitValue),
           page: Number(pageValue),
         }
@@ -2579,29 +2592,63 @@ export default function Index({ params }: any) {
 
 
 
-                {/* search bar */}
-                {/* search nickname */}
                 <div className="flex flex-row items-center gap-2">
-                  <input
-                    type="text"
-                    value={searchNickname}
-                    onChange={(e) => setSearchNickname(e.target.value)}
-                    placeholder="회원 검색"
-                    className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
-                  />
 
-                  <button
-                    onClick={() => {
-                      setPageValue(1);
-                      fetchAllBuyer();
-                    }}
-                    className="bg-[#3167b4] text-white px-4 py-2 rounded-lg w-full"
 
-                    disabled={fetchingAllBuyer}
-                  >
-                    {fetchingAllBuyer ? '검색중...' : '검색'}
-                  </button>
+                  <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
+                    {/* search nickname */}
+                    <div className="flex flex-row items-center gap-2">
+                      <input
+                        type="text"
+                        value={searchBuyer}
+                        onChange={(e) => setSearchBuyer(e.target.value)}
+                        placeholder="회원아이디"
+                        className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                      />
 
+                    </div>
+
+                    <div className="flex flex-row items-center gap-2">
+                      <input
+                        type="text"
+                        value={searchDepositName}
+                        onChange={(e) => setSearchDepositName(e.target.value)}
+                        placeholder="입금자명"
+                        className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                      />
+
+                    </div>
+                  </div>
+
+
+                  {/* 검색 버튼 */}
+                  <div className="
+                  w-32
+                  flex flex-row items-center gap-2">
+                    <button
+                      onClick={() => {
+                        setPageValue(1);
+                        fetchAllBuyer();
+                      }}
+                      className="bg-[#3167b4] text-white px-4 py-2 rounded-lg w-full"
+                      disabled={fetchingAllBuyer}
+                    >
+                      <div className="flex flex-row items-center justify-between gap-2">
+                        <Image
+                          src="/icon-search.png"
+                          alt="Search"
+                          width={20}
+                          height={20}
+                          className="rounded-lg w-5 h-5"
+                        />
+                        <span className="text-sm">
+                          {fetchingAllBuyer ? '검색중...' : '검색'}
+                        </span>
+                      </div>
+
+                    </button>
+                  </div>
+                  
                 </div>
 
 

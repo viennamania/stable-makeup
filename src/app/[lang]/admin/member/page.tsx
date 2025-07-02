@@ -1322,7 +1322,7 @@ export default function Index({ params }: any) {
     });
     if (!response.ok) {
       setInsertingUserCode(false);
-      toast.error('회원 아이디 추가에 실패했습니다.');
+      toast.error('회원아이디 추가에 실패했습니다.');
       return;
     }
 
@@ -1333,7 +1333,7 @@ export default function Index({ params }: any) {
     //console.log('setBuyerWithoutWalletAddressByStorecode data', data);
 
     if (data.result) {
-      toast.success('회원 아이디가 추가되었습니다.');
+      toast.success('회원아이디가 추가되었습니다.');
       setUserCode('');
       setUserPassword('');
       setUserName('');
@@ -1346,7 +1346,7 @@ export default function Index({ params }: any) {
       // fetch all buyer user
       fetchAllBuyer();
     } else {
-      toast.error('회원 아이디 추가에 실패했습니다.');
+      toast.error('회원아이디 추가에 실패했습니다.');
     }
 
 
@@ -1901,7 +1901,7 @@ export default function Index({ params }: any) {
                         setUserCode(e.target.value);
 
                       } }
-                      placeholder="회원 아이디"
+                      placeholder="회원아이디"
                       className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
 
@@ -2136,11 +2136,6 @@ export default function Index({ params }: any) {
 
               
 
-
-
-
-
-                {/* search depositName */}
                 <div className="flex flex-row items-center gap-2">
 
 
@@ -2151,24 +2146,9 @@ export default function Index({ params }: any) {
                         type="text"
                         value={searchBuyer}
                         onChange={(e) => setSearchBuyer(e.target.value)}
-                        placeholder="회원 아이디"
+                        placeholder="회원아이디"
                         className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
                       />
-
-                      {/*
-                      <button
-                        onClick={() => {
-                          setPageValue(1);
-                          //fetchAllStore();
-                          fetchAllBuyer();
-                        }}
-                        className="bg-[#3167b4] text-white px-4 py-2 rounded-lg w-full"
-
-                        disabled={fetchingAllBuyer}
-                      >
-                        {fetchingAllBuyer ? '검색중...' : '검색'}
-                      </button>
-                      */}
 
                     </div>
 
@@ -2181,20 +2161,6 @@ export default function Index({ params }: any) {
                         className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
                       />
 
-                      {/*
-                      <button
-                        onClick={() => {
-                          setPageValue(1);
-                          //fetchAllStore();
-                          fetchAllBuyer();
-                        }}
-                        className="bg-[#3167b4] text-white px-4 py-2 rounded-lg w-full"
-
-                        disabled={fetchingAllBuyer}
-                      >
-                        {fetchingAllBuyer ? '검색중...' : '검색'}
-                      </button>
-                      */}
                     </div>
                   </div>
 
@@ -2226,6 +2192,7 @@ export default function Index({ params }: any) {
 
                     </button>
                   </div>
+
                 </div>
 
 
