@@ -2820,6 +2820,24 @@ export default function Index({ params }: any) {
                                 링크 복사
                               </button>
 
+                              {/* copy javascript code */}
+                              {/*
+                                <a href={`https://cryptoss.beauty/${params.lang}/${item.storecode}/payment?storeUser=${item.nickname}&depositBankName=${item?.buyer?.depositBankName}&depositBankAccountNumber=${item?.buyer?.depositBankAccountNumber}&depositName=${item?.buyer?.depositName}&depositAmountKrw=${depositAmountKrw[index]}`} target="_blank" rel="noopener noreferrer">스크립트 복사</a>
+                              */}
+                              <button
+                                onClick={() => {
+                                  navigator.clipboard.writeText(
+                                    `<script src="https://cryptoss.beauty/${params.lang}/${item.storecode}/payment?storeUser=${item.nickname}&depositBankName=${item?.buyer?.depositBankName}&depositBankAccountNumber=${item?.buyer?.depositBankAccountNumber}&depositName=${item?.buyer?.depositName}&depositAmountKrw=${depositAmountKrw[index]}">결제하기</script>`
+                                  );
+                                  toast.success('회원 결제페이지 스크립트가 복사되었습니다.');
+                                }}
+                                className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                  hover:bg-[#3167b4]/80"
+                              >
+                                스크립트 복사
+                              </button>
+                                    
+
 
                               {/* 새창 열기 버튼 */}
                               <button

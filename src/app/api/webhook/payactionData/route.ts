@@ -141,7 +141,10 @@ export async function POST(request: NextRequest) {
   // userid = 'mcmcmo'
   // storecode = storecode
 
-  const storecode = "gjdzwxes"; // 예시로 storecode를 지정합니다. 실제로는 mallId나 다른 방법으로 가져와야 합니다.
+  //const storecode = "gjdzwxes"; // 예시로 storecode를 지정합니다. 실제로는 mallId나 다른 방법으로 가져와야 합니다.
+
+
+  const storecode = "ixryqqtw"; // upbet
 
   try {
 
