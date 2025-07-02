@@ -259,18 +259,28 @@ export default function SendUsdt({ params }: any) {
 
       ///console.log('getBalance address', address);
 
+      const contractUsdt = getContract({
+        client,
+        chain: polygon,
+        address: contractAddress,
+      });
+
       
       const result = await balanceOf({
-        contract,
+        //contract,
+        contract: contractUsdt,
         address: address || "",
       });
 
   
-      //console.log(result);
+      console.log("balanceOf address", address);
+      console.log("balanceOf result", result);
+
+
   
       setBalance( Number(result) / 10 ** 6 );
 
-
+      /*
       await fetch('/api/user/getBalanceByWalletAddress', {
         method: 'POST',
         headers: {
@@ -288,7 +298,7 @@ export default function SendUsdt({ params }: any) {
           setNativeBalance(data.result?.displayValue);
       });
 
-
+      */
 
     };
 
@@ -296,11 +306,15 @@ export default function SendUsdt({ params }: any) {
 
     const interval = setInterval(() => {
       if (address) getBalance();
-    } , 1000);
+    } , 5000);
 
     return () => clearInterval(interval);
 
-  } , [address, contract, params.center]);
+  //} , [address, contract, params.center]);
+
+  } , [address]);
+
+
 
 
 
@@ -761,34 +775,36 @@ export default function SendUsdt({ params }: any) {
 
 
                 <ConnectButton
-                client={client}
-                wallets={wallets}
+                  client={client}
+                  wallets={wallets}
+                  chain={polygon}
+
                 
-                theme={"light"}
+                  theme={"light"}
 
-                // button color is dark skyblue convert (49, 103, 180) to hex
-                connectButton={{
-                    style: {
-                        backgroundColor: "#3167b4", // dark skyblue
-                        color: "#f3f4f6", // gray-300
-                        padding: "2px 10px",
-                        borderRadius: "10px",
-                        fontSize: "14px",
-                        width: "60x",
-                        height: "38px",
-                    },
-                    label: "원클릭 로그인",
-                }}
+                  // button color is dark skyblue convert (49, 103, 180) to hex
+                  connectButton={{
+                      style: {
+                          backgroundColor: "#3167b4", // dark skyblue
+                          color: "#f3f4f6", // gray-300
+                          padding: "2px 10px",
+                          borderRadius: "10px",
+                          fontSize: "14px",
+                          width: "60x",
+                          height: "38px",
+                      },
+                      label: "원클릭 로그인",
+                  }}
 
-                connectModal={{
-                    size: "wide", 
-                    //size: "compact",
-                    titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
-                    showThirdwebBranding: false,
-                }}
+                  connectModal={{
+                      size: "wide", 
+                      //size: "compact",
+                      titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
+                      showThirdwebBranding: false,
+                  }}
 
-                locale={"ko_KR"}
-                //locale={"en_US"}
+                  locale={"ko_KR"}
+                  //locale={"en_US"}
                 />
 
             {/*
