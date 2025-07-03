@@ -2214,8 +2214,14 @@ export async function getBuyOrders(
     //const toDateValue = toDate ? toDate + 'T23:59:59Z' : new Date().toISOString();
     // korean timezone is UTC+9, so we need to convert to UTC time
 
-    const fromDateValue = fromDate ? fromDate + 'T00:00:00Z' : '1970-01-01T00:00:00Z';
-    const toDateValue = toDate ? toDate + 'T23:59:59Z' : new Date().toISOString();
+    //const fromDateValue = fromDate ? fromDate + 'T00:00:00Z' : '1970-01-01T00:00:00Z';
+
+    const fromDateValue = fromDate ? new Date(fromDate + 'T00:00:00+09:00').toISOString() : '1970-01-01T00:00:00Z';
+
+    //const toDateValue = toDate ? toDate + 'T23:59:59Z' : new Date().toISOString();
+
+    const toDateValue = toDate ? new Date(toDate + 'T23:59:59+09:00').toISOString() : new Date().toISOString();
+
     
     
     console.log('getBuyOrders fromDateValue: ' + fromDateValue);
@@ -4143,8 +4149,13 @@ export async function getAllTradesByAdmin(
 
 ): Promise<any> {
 
-  const fromDateValue = fromDate ? fromDate + 'T00:00:00.000Z' : new Date(0).toISOString();
-  const toDateValue = toDate ? toDate + 'T23:59:59.999Z' : new Date().toISOString();
+  //const fromDateValue = fromDate ? fromDate + 'T00:00:00.000Z' : new Date(0).toISOString();
+
+  const fromDateValue = fromDate ? new Date(fromDate + 'T00:00:00+09:00').toISOString() : '1970-01-01T00:00:00Z';
+
+  //const toDateValue = toDate ? toDate + 'T23:59:59.999Z' : new Date().toISOString();
+  const toDateValue = toDate ? new Date(toDate + 'T23:59:59+09:00').toISOString() : new Date().toISOString();
+
 
   console.log('getAllTradesByAdmin fromDateValue: ' + fromDateValue);
   console.log('getAllTradesByAdmin toDateValue: ' + toDateValue);
@@ -4683,8 +4694,12 @@ export async function getAllTradesByAdmin(
 
 ): Promise<any> {
 
-  const fromDateValue = fromDate ? fromDate + 'T00:00:00.000Z' : new Date(0).toISOString();
-  const toDateValue = toDate ? toDate + 'T23:59:59.999Z' : new Date().toISOString();
+  //const fromDateValue = fromDate ? fromDate + 'T00:00:00.000Z' : new Date(0).toISOString();
+  const fromDateValue = fromDate ? new Date(fromDate + 'T00:00:00+09:00').toISOString() : '1970-01-01T00:00:00Z';
+
+
+  //const toDateValue = toDate ? toDate + 'T23:59:59.999Z' : new Date().toISOString();
+  const toDateValue = toDate ? new Date(toDate + 'T23:59:59+09:00').toISOString() : new Date().toISOString();
 
 
   /*
@@ -6149,8 +6164,11 @@ export async function getCollectOrdersForSeller(
   console.log('getCollectOrdersForSeller fromDate: ' + fromDate);
   console.log('getCollectOrdersForSeller toDate: ' + toDate);
 
-  const fromDateValue = fromDate ? fromDate + 'T00:00:00Z' : '1970-01-01T00:00:00Z';
-  const toDateValue = toDate ? toDate + 'T23:59:59Z' : new Date().toISOString();
+  //const fromDateValue = fromDate ? fromDate + 'T00:00:00Z' : '1970-01-01T00:00:00Z';
+  const fromDateValue = fromDate ? new Date(fromDate + 'T00:00:00+09:00').toISOString() : '1970-01-01T00:00:00Z';
+
+  //const toDateValue = toDate ? toDate + 'T23:59:59Z' : new Date().toISOString();
+  const toDateValue = toDate ? new Date(toDate + 'T23:59:59+09:00').toISOString() : new Date().toISOString();
   
 
   const client = await clientPromise;
@@ -6250,8 +6268,14 @@ export async function getCollectOrdersForUser(
   console.log('getCollectOrdersForUser fromDate: ' + fromDate);
   console.log('getCollectOrdersForUser toDate: ' + toDate);
 
-  const fromDateValue = fromDate ? fromDate + 'T00:00:00Z' : '1970-01-01T00:00:00Z';
-  const toDateValue = toDate ? toDate + 'T23:59:59Z' : new Date().toISOString();
+  //const fromDateValue = fromDate ? fromDate + 'T00:00:00Z' : '1970-01-01T00:00:00Z';
+  // fromDate is korean date
+  // then convert to UTC date
+  const fromDateValue = fromDate ? new Date(fromDate + 'T00:00:00+09:00').toISOString() : '1970-01-01T00:00:00Z';
+
+  // toDate is korean date
+  //const toDateValue = toDate ? toDate + 'T23:59:59Z' : new Date().toISOString();
+  const toDateValue = toDate ? new Date(toDate + 'T23:59:59+09:00').toISOString() : new Date().toISOString();
   
 
   const client = await clientPromise;
