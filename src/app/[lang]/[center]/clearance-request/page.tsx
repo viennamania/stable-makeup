@@ -4656,23 +4656,41 @@ const [tradeSummary, setTradeSummary] = useState({
 
                             <td className="p-2">
 
-                              <div className="flex flex-row items-center gap-2 justify-center">
-                                <div className="text-lg font-semibold text-yellow-600">
-                                  {item.buyer?.nickname}
+                              {item?.buyer?.nickname ? (
+
+                                <div className="flex flex-row items-center gap-2 justify-center">
+                                  <div className="text-lg font-semibold text-yellow-600">
+                                    {item.buyer?.nickname}
+                                  </div>
+
+                                  <div className="flex flex-col gap-2 items-center justify-center">
+                                    <div className="text-lg font-semibold text-zinc-500">
+                                      {item.buyer?.depositBankName}
+                                    </div>
+                                    <div className="text-lg font-semibold text-zinc-500">
+                                      {item.buyer?.depositBankAccountNumber}
+                                    </div>
+                                    <div className="text-lg font-semibold text-zinc-500">
+                                      {item.buyer?.depositName}
+                                    </div>
+                                  </div>
                                 </div>
+
+                              ) : (
 
                                 <div className="flex flex-col gap-2 items-center justify-center">
                                   <div className="text-lg font-semibold text-zinc-500">
-                                    {item.buyer?.depositBankName}
+                                    {item.seller?.bankInfo?.bankName}
                                   </div>
                                   <div className="text-lg font-semibold text-zinc-500">
-                                    {item.buyer?.depositBankAccountNumber}
+                                    {item.seller?.bankInfo?.accountNumber}
                                   </div>
                                   <div className="text-lg font-semibold text-zinc-500">
-                                    {item.buyer?.depositName}
+                                    {item.seller?.bankInfo?.accountHolder}
                                   </div>
                                 </div>
-                              </div>
+
+                              )}
 
                             </td>
 

@@ -6192,7 +6192,8 @@ export async function getCollectOrdersForSeller(
     const results = await collection.find<UserProps>(
       {
         // walletAddress is not equal to walletAddress
-        walletAddress: { $ne: walletAddress },
+        //walletAddress: { $ne: walletAddress },
+
 
         //status: 'ordered',
   
@@ -6213,7 +6214,8 @@ export async function getCollectOrdersForSeller(
 
     const totalCount = await collection.countDocuments(
       {
-        walletAddress: { $ne: walletAddress },
+        //walletAddress: { $ne: walletAddress },
+
 
         storecode: storecode,
         privateSale: true,
@@ -6296,7 +6298,7 @@ export async function getCollectOrdersForUser(
 
     const results = await collection.find<UserProps>(
       {
-        walletAddress: walletAddress,
+        //walletAddress: walletAddress,
 
 
         //status: 'ordered',
@@ -6318,7 +6320,7 @@ export async function getCollectOrdersForUser(
 
     const totalCount = await collection.countDocuments(
       {
-        walletAddress: walletAddress,
+        //walletAddress: walletAddress,
 
         storecode: storecode,
         privateSale: true,
