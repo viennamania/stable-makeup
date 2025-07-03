@@ -79,6 +79,7 @@ import { get } from "http";
 
 import { useSearchParams } from 'next/navigation';
 import { N } from "ethers";
+import { getAllUsersForSettlementOfStore } from "@/lib/api/user";
 
 
 
@@ -2144,6 +2145,122 @@ export default function Index({ params }: any) {
 
 
 
+  // settlement
+ 
+  // array of settlement
+
+  const [loadingSettlement, setLoadingSettlement] = useState([] as boolean[]);
+  for (let i = 0; i < 100; i++) {
+    loadingSettlement.push(false);
+  }
+
+  // settlement check box
+  const [settlementCheck, setSettlementCheck] = useState([] as boolean[]);
+  for (let i = 0; i < 100; i++) {
+    settlementCheck.push(false);
+  }
+
+  const settlementRequest = async (index: number, orderId: string) => {
+    // settlement
+
+    if (loadingSettlement[index]) {
+      return;
+    }
+
+    setLoadingSettlement(
+      loadingSettlement.map((item, idx) => idx === index ? true : item)
+    );
+
+    // api call to settlement
+    try {
+      const response = await fetch('/api/order/buyOrderSettlement', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          lang: params.lang,
+          storecode: "admin",
+          orderId: orderId,
+          ///isSmartAccount: activeWallet === inAppConnectWallet ? false : true,
+          isSmartAccount: false,
+        })
+      });
+      const data = await response.json();
+
+      //console.log('data', data);
+
+      if (data.result) {
+
+        toast.success('Settlement has been completed');
+
+        playSong();
+
+        // fetch Buy Orders
+        await fetch('/api/order/getAllBuyOrders', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(
+            {
+              storecode: searchStorecode,
+              limit: Number(limitValue),
+              page: Number(pageValue),
+              walletAddress: address,
+              searchMyOrders: searchMyOrders,
+              searchOrderStatusCancelled: searchOrderStatusCancelled,
+              searchOrderStatusCompleted: searchOrderStatusCompleted,
+
+              searchStoreName: searchStoreName,
+
+              fromDate: searchFormDate,
+              toDate: searchToDate,
+            }
+          ),
+        })
+        .then(response => response.json())
+        .then(data => {
+            ///console.log('data', data);
+            setBuyOrders(data.result.orders);
+
+            setTotalCount(data.result.totalCount);
+        })
+
+      } else {
+        toast.error('Settlement has been failed');
+      }
+
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('Settlement has been failed');
+    }
+
+
+    setLoadingSettlement(
+      loadingSettlement.map((item, idx) => idx === index ? false : item)
+    );
+
+    setSettlementCheck(
+      settlementCheck.map((item, idx) => idx === index ? false : item)
+    );
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // transfer escrow balance to seller wallet address
 
   const [amountOfEscrowBalance, setAmountOfEscrowBalance] = useState("");
@@ -2424,8 +2541,8 @@ const fetchBuyOrders = async () => {
 
 
 
-    // check table view or card view
-    const [tableView, setTableView] = useState(true);
+  // check table view or card view
+  const [tableView, setTableView] = useState(true);
 
 
     /*
@@ -2461,7 +2578,7 @@ const fetchBuyOrders = async () => {
 
 
 
-    const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
     
 
 
@@ -5540,6 +5657,61 @@ const fetchBuyOrders = async () => {
                                           >
                                             {item.usdtAmount}{' '}USDT
                                           </span>
+
+                                          {/*
+                                            if item.paymentConfirmedAt (2025-07-03T09:26:37.818Z)
+                                             is last 1 hour, show button to settlement
+                                          */}
+
+                                          {item.transactionHash &&
+                                            new Date().getTime() - new Date(item.paymentConfirmedAt).getTime() > 1000 * 60 * 60 && (
+
+                                            <div className="flex flex-row gap-2 items-center justify-center">
+                                              {/* checkbox to confirm settlement */}
+                                              <input
+                                                disabled={settlementCheck[index]}
+                                                type="checkbox"
+                                                checked={settlementCheck[index]}
+                                                onChange={(e) => {
+                                                  setSettlementCheck(
+                                                    settlementCheck.map((item, idx) => {
+                                                      if (idx === index) {
+                                                        return e.target.checked;
+                                                      }
+                                                      return item;
+                                                    })
+                                                  );
+                                                }}
+                                                className="w-5 h-5 rounded-md border border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                              />
+
+                                              <button
+                                                disabled={settlementCheck[index]}
+                                                className={`
+                                                  ${settlementCheck[index] ? 'bg-gray-500' : 'bg-blue-500'}
+                                                  w-full
+                                                  flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md
+                                                  hover:bg-blue-600
+                                                  hover:shadow-lg
+                                                  hover:shadow-blue-500/50
+                                                  transition-all duration-200 ease-in-out
+                                                  ${settlementCheck[index] ? 'cursor-not-allowed' : 'cursor-pointer'}
+                                                `}
+                                                
+                                                onClick={() => {
+                                                
+                                                  settlementRequest(
+                                                    index,
+                                                    item._id,
+                                                  );
+                                                  
+
+                                                }}
+                                              >
+                                                수동으로 정산하기
+                                              </button>
+                                            </div>
+                                          )}
 
 
 
