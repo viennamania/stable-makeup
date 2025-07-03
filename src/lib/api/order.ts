@@ -6466,3 +6466,32 @@ export async function getTradeId(
     return null;
   }
 }
+
+
+
+
+// updateBuyOrderSettlement
+export async function updateBuyOrderSettlement(
+  {
+    orderId,
+    settlement,
+  }: {
+    orderId: string;
+    settlement: any;
+  }
+): Promise<boolean> {
+  const client = await clientPromise;
+  const collection = client.db('ultraman').collection('buyorders');
+  // update buyorder
+  const result = await collection.updateOne(
+    { _id: new ObjectId(orderId) },
+    { $set: {
+      settlement: settlement,
+    } }
+  );
+  if (result.modifiedCount === 1) {
+    return true;
+  } else {
+    return false;
+  }
+}

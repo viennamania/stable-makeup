@@ -2193,7 +2193,7 @@ export default function Index({ params }: any) {
 
       if (data.result) {
 
-        toast.success('Settlement has been completed');
+        toast.success('정산이 완료되었습니다.');
 
         playSong();
 
@@ -5688,7 +5688,10 @@ const fetchBuyOrders = async () => {
                                               />
 
                                               <button
-                                                disabled={!settlementCheck[index]}
+                                                disabled={
+                                                  !settlementCheck[index]
+                                                  || loadingSettlement[index]
+                                                }
                                                 className={`
                                                   ${settlementCheck[index] ? 'bg-blue-500' : 'bg-gray-500'}
                                                   w-full
@@ -5697,7 +5700,8 @@ const fetchBuyOrders = async () => {
                                                   hover:shadow-lg
                                                   hover:shadow-blue-500/50
                                                   transition-all duration-200 ease-in-out
-                                                  ${!settlementCheck[index] ? 'cursor-not-allowed' : 'cursor-pointer'}
+                                                  ${!settlementCheck[index] || loadingSettlement[index]
+                                                  ? 'cursor-not-allowed' : 'cursor-pointer'}
                                                 `}
 
                                                 onClick={() => {
@@ -5710,7 +5714,18 @@ const fetchBuyOrders = async () => {
 
                                                 }}
                                               >
-                                                수동으로 정산하기
+                                                <div className="flex flex-row gap-2 items-center justify-center">
+                                                  {loadingSettlement[index] ? (
+                                                    <span className="text-sm">
+                                                      정산중...
+                                                    </span>
+                                                  ) : (
+                                                    <span className="text-sm">
+                                                      수동으로 정산하기
+                                                    </span>
+                                                  )}
+                                                </div>
+
                                               </button>
                                             </div>
                                           )}
