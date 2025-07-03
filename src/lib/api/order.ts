@@ -1863,6 +1863,181 @@ export async function insertBuyOrderForClearance(data: any) {
 
 
 
+export async function insertBuyOrderForUser(data: any) {
+
+
+  if (!data.storecode || !data.walletAddress || !data.usdtAmount || !data.krwAmount || !data.rate) {
+    
+    console.log('insertBuyOrderForUser data is null: ' + JSON.stringify(data));
+
+    /*
+    {
+    "walletAddress":"0x1eba71B17AA4beE24b54dC10cA32AAF0789b8D9A",
+    "nickname":"",
+    "usdtAmount":7.25,
+    "krwAmount":10000,"rate":1380,
+    "privateSale":true,
+    "buyer":{"depositBankName":"","depositName":""}
+    }
+    */
+    
+    return null;
+  }
+
+
+  const nickname = data.nickname || '';
+
+
+  const client = await clientPromise;
+
+
+  const storeCollection = client.db('ultraman').collection('stores');
+  const store = await storeCollection.findOne<any>(
+    { storecode: data.storecode },
+    { projection:
+      { _id: 1,
+        agentcode: 1,
+        storecode: 1,
+        storeName: 1,
+        storeType: 1,
+        storeUrl: 1,
+        storeDescription: 1,
+        storeLogo: 1,
+        totalBuyerCount: 1,
+        sellerWalletAddress: 1,
+        adminWalletAddress: 1,
+        settlementWalletAddress: 1,
+        settlementFeeWalletAddress: 1,
+        settlementFeePercent: 1,
+        bankInfo: 1,
+        agentFeePercent: 1,
+
+        totalSettlementAmount: 1,
+        totalUsdtAmountClearance: 1,
+      }
+    }
+  );
+
+  if (!store) {
+
+    console.log('insertBuyOrderForUser storecode is not valid: ' + data.storecode);
+    return null;
+  }
+
+
+
+  // get agent by storecode
+
+  const agentcode = store.agentcode || '';
+
+
+  if (!agentcode) {
+    console.log('insertBuyOrderForUser agentcode is null: ' + agentcode);
+    return null;
+  }
+
+
+  const agentCollection = client.db('ultraman').collection('agents');
+  const agent = await agentCollection.findOne<any>(
+    { agentcode: agentcode },
+  );
+
+  if (!agent) {
+    console.log('insertBuyOrderForUser agent is null: ' + JSON.stringify(agent));
+    return null;
+  }
+
+
+
+  const tradeId = Math.floor(Math.random() * 90000000) + 10000000 + '';
+
+  ///console.log('insertBuyOrder tradeId: ' + tradeId);
+
+
+
+  const collection = client.db('ultraman').collection('buyorders');
+
+  const mobile = '';
+  const avatar = '';
+ 
+  const result = await collection.insertOne(
+
+    {
+      lang: data.lang,
+      agentcode: agentcode,
+      agent: agent,
+      storecode: data.storecode,
+      store: store,
+      walletAddress: data.walletAddress,
+      nickname: nickname,
+      mobile: mobile,
+      avatar: avatar,
+      
+      //seller: seller,
+
+      usdtAmount: data.usdtAmount,
+      krwAmount: data.krwAmount,
+      rate: data.rate,
+      createdAt: new Date().toISOString(),
+      status: 'ordered',
+      privateSale: data.privateSale,
+      
+      buyer: data.buyer,
+
+      tradeId: tradeId,
+    }
+  );
+
+  
+  
+  ///console.log('insertBuyOrder result: ' + JSON.stringify(result));
+
+
+  if (result) {
+
+
+    // update user collection buyOrderStatus to "ordered"
+
+    await userCollection.updateOne(
+      {
+        walletAddress: data.walletAddress,
+        storecode: data.storecode,
+      },
+      { $set: { buyOrderStatus: 'ordered' } }
+    );
+
+
+
+    const updated = await collection.findOne<UserProps>(
+      { _id: result.insertedId }
+    );
+
+    return {
+
+      _id: result.insertedId,
+
+      walletAddress: data.walletAddress,
+      
+    };
+
+
+    
+  } else {
+    return null;
+  }
+  
+
+}
+
+
+
+
+
+
+
+
+
+
 // get buy orders order by createdAt desc
 export async function getBuyOrders(
   {

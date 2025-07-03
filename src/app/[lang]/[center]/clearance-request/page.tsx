@@ -2529,6 +2529,219 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
 
+
+
+
+  const [nickname, setNickname] = useState(user?.nickname || '');
+
+  const [usdtAmount, setUsdtAmount] = useState(0);
+  const [krwAmount, setKrwAmount] = useState(0);
+  const [rate, setRate] = useState(1380);
+
+
+
+  const [buyOrdering, setBuyOrdering] = useState(false);
+
+  const [agreementPlaceOrder, setAgreementPlaceOrder] = useState(false);
+
+
+  // check input krw amount at sell order
+  const [checkInputKrwAmount, setCheckInputKrwAmount] = useState(true);
+
+  const clearanceRequest = async () => {
+    // api call
+    // set sell order
+
+    if (buyOrdering) {
+      return;
+    }
+
+    if (agreementPlaceOrder === false) {
+      toast.error('You must agree to the terms and conditions');
+      return;
+    }
+
+
+    setBuyOrdering(true);
+
+
+    let orderUsdtAmount = usdtAmount;
+
+    if (checkInputKrwAmount) {
+      orderUsdtAmount = parseFloat(Number(krwAmount / rate).toFixed(2));
+    }
+    
+
+    const response = await fetch('/api/order/setBuyOrderForUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify({
+        lang: params.lang,
+        
+        
+        ////////////////////////////////////storecode: params.storecode,
+
+        storecode: params.center,
+
+
+
+        walletAddress: address,
+
+
+
+        nickname: nickname,
+        //storecode: storecode,
+        usdtAmount: orderUsdtAmount,
+        krwAmount: krwAmount,
+        rate: rate,
+        privateSale: true,
+        buyer: {
+          depositBankName: "",
+          depositName: "",
+        }
+      })
+
+
+
+
+    });
+
+    console.log('buyOrder response', response);
+
+    if (!response.ok) {
+      setBuyOrdering(false);
+      toast.error('주문을 처리하는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      return;
+    }
+
+
+
+
+    const data = await response.json();
+
+    //console.log('data', data);
+
+    if (data.result) {
+
+      toast.success(
+        '주문이 성공적으로 접수되었습니다'
+      );
+
+      setUsdtAmount(0);
+
+      setKrwAmount(0);
+
+
+      setAgreementPlaceOrder(false);
+    
+
+
+
+      setFetchingBuyOrders(true);
+
+      const response = await fetch('/api/order/getAllCollectOrdersForUser', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(
+
+            {
+              storecode: params.center,
+              limit: Number(limit),
+              page: Number(page),
+              walletAddress: address,
+              searchMyOrders: searchMyOrders,
+
+              fromDate: searchFromDate,
+              toDate: searchToDate,
+            }
+
+        ),
+      });
+
+      if (!response.ok) {
+        console.error('Failed to fetch buy orders');
+        setFetchingBuyOrders(false);
+        toast.error('주문을 불러오는 데 실패했습니다');
+        return;
+      }
+
+      setFetchingBuyOrders(false);
+
+
+      const data = await response.json();
+
+      //console.log('data', data);
+
+
+      // if data.result is different from buyOrders
+      // check neweset order is different from buyOrders
+      // then toasts message
+      //console.log('data.result.orders[0]', data.result.orders?.[0]);
+      //console.log('buyOrders[0]', buyOrders);
+
+
+      //console.log('buyOrders[0]', buyOrders?.[0]);
+
+      if (data.result.orders?.[0]?._id !== latestBuyOrder?._id) {
+
+        setLatestBuyOrder(data.result.orders?.[0] || null);
+
+   
+        
+        //toast.success(Newest_order_has_been_arrived);
+        toast.success('새로운 주문이 도착했습니다');
+
+
+
+
+        // <audio src="/racing.mp3" typeof="audio/mpeg" autoPlay={soundStatus} muted={!soundStatus} />
+        // audio play
+
+        //setSoundStatus(true);
+
+        // audio ding play
+
+        playSong();
+
+        // Uncaught (in promise) NotAllowedError: play() failed because the user didn't interact with the document first.
+
+
+      }
+
+      setBuyOrders(data.result.orders);
+
+      setTotalCount(data.result.totalCount);
+
+
+
+
+
+    } else {
+      toast.error('Order has been failed');
+    }
+
+    setBuyOrdering(false);
+
+    
+
+  };
+
+
+
+
+
+
+
+
+
+
+
+
   if (fetchingStore) {
     return (
       <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-2xl mx-auto">
@@ -3436,7 +3649,7 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
 
-                <div className="w-full flex flex-col xl:flex-row items-start justify-between gap-5">
+                <div className="w-full flex flex-col xl:flex-row items-center justify-between gap-5">
 
          
                   <div className="hidden flex-row items-start gap-3">
@@ -3617,6 +3830,167 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
 
+                <article
+                  className={` ${checkInputKrwAmount ? 'block' : 'hidden'}
+                      bg-white shadow-md rounded-lg p-4 border border-gray-300`}
+                >
+                    
+                    <div className="
+                    flex flex-col xl:flex-row gap-5 xl:gap-20 items-center ">
+                        
+                        <div className="flex flex-col gap-2 items-start">
+
+                          <p className="mt-4 text-xl font-bold text-zinc-400">1 USDT = {
+                            // currency format
+                            Number(rate)?.toLocaleString('ko-KR', {
+                              style: 'currency',
+                              currency: 'KRW'
+                            })
+                          }</p>
+
+                          <div className=" flex flex-col items-center gap-2">
+                            
+                            <div className="flex flex-row items-center gap-2">
+
+                              <span className="text-xl text-blue-500 font-bold ">
+                                지급금액
+                              </span>
+
+                              <input 
+                                type="number"
+                                className="
+                                  text-xl text-blue-500 font-bold
+                                  w-40 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
+                                placeholder={Price}
+                                value={krwAmount}
+                                onChange={(e) => {
+                                  // check number
+                                  e.target.value = e.target.value.replace(/[^0-9.]/g, '');
+                                  
+                                  // if prefix 0, then remove 0
+                                  if (e.target.value.startsWith('0')) {
+                                    e.target.value = e.target.value.substring(1);
+                                  }
+
+
+                                  /*
+                                  if (e.target.value === '') {
+                                    setKrwAmount(0);
+                                    return;
+                                  }
+                                  */
+
+
+                                  parseFloat(e.target.value) < 0 ? setKrwAmount(0) : setKrwAmount(parseFloat(e.target.value));
+
+                                  parseFloat(e.target.value) > 100000000 ? setKrwAmount(1000) : setKrwAmount(parseFloat(e.target.value));
+
+                                  //setUsdtAmount(Number((krwAmount / rate).toFixed(2)));
+                                
+                                
+                                } }
+                              />
+
+                              <span className="text-xl text-zinc-400 font-bold">
+                                원  
+                              </span>
+
+                            </div>
+                            {/* 매입수량 */}
+                            <span className="text-lg font-semibold text-zinc-400">
+                              매입수량(USDT)
+                            </span>
+
+                            <p className=" text-xl text-zinc-400 font-bold">
+                              
+
+
+                              = {
+                              krwAmount === 0 ? '0' :
+                              
+                              (krwAmount / rate).toFixed(2) === 'NaN' ? '0' : (krwAmount / rate).toFixed(2)
+
+                              }{' '}USDT
+                            </p>
+
+                          </div>
+
+                        </div>
+
+
+                      <div className="mt-4 flex flex-col gap-2">
+
+                        <div className="flex flex-row items-center gap-2">
+                          <input
+                            // disable mouse scroll up and down
+                            //
+                            
+                            onWheel={(e) => e.preventDefault()}
+
+
+
+                            disabled={!address || krwAmount === 0 || buyOrdering}
+                            type="checkbox"
+                            checked={agreementPlaceOrder}
+                            onChange={(e) => setAgreementPlaceOrder(e.target.checked)}
+                          />
+                
+                          {buyOrdering ? (
+
+                            <div className="flex flex-row items-center gap-2">
+                                <div className="
+                                  w-6 h-6
+                                  border-2 border-zinc-800
+                                  rounded-full
+                                  animate-spin
+                                ">
+                                  <Image
+                                    src="/loading.png"
+                                    alt="loading"
+                                    width={24}
+                                    height={24}
+                                  />
+                                </div>
+                                <div className="text-zinc-400">
+                                  신청중...
+                                </div>
+                  
+                            </div>
+                          ) : (
+                              <button
+                                  disabled={krwAmount === 0 || agreementPlaceOrder === false}
+                                  className={`text-lg text-white  px-4 py-2 rounded-md ${krwAmount === 0 || agreementPlaceOrder === false ? 'bg-gray-500' : 'bg-green-500'}`}
+
+
+                                  onClick={() => {
+                                      console.log('Buy USDT');
+                                      // open trade detail
+                                      // open modal of trade detail
+                                      ///openModal();
+
+                                      clearanceRequest();
+                                  }}
+                              >
+                                출금신청
+                              </button>
+                          )}
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                </article>
+
+
+
+
+
+
+
+
+
               <div className="mt-5 selection:w-full flex flex-col xl:flex-row items-center justify-between gap-3">
 
 
@@ -3775,6 +4149,7 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
                   {/* divider */}
+                  {/*
                   <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
                   <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
@@ -3810,6 +4185,7 @@ const [tradeSummary, setTradeSummary] = useState({
                       </div>
                     </div>
                   </div>
+                  */}
                   
                 </div>
 

@@ -2661,30 +2661,18 @@ export default function Index({ params }: any) {
 
                             </div>
 
-                          {/*
-                          <div className="mt-4 flex flex-col gap-2 items-start">
-                            <div className="flex flex-row items-center gap-2">
-                              <div className="h-2 w-2 bg-zinc-400 rounded-full inline-block mr-2"></div>
-                              <span className="text-sm text-zinc-400">
-                                SMS: {phoneNumber}
-                              </span>
-                            </div>
-                           
-                            <div className="flex flex-row items-center gap-2">
-                              <div className="h-2 w-2 bg-zinc-400 rounded-full inline-block mr-2"></div>
-                              <span className="text-sm text-zinc-400">
-                                 {Buy_Order_SMS_will_be_sent_to_your_mobile_number}
-                              </span>
-                            </div>
-
-                          </div>
-                          */}
-
 
                           <div className="mt-4 flex flex-col gap-2">
 
                             <div className="flex flex-row items-center gap-2">
                               <input
+                                // disable mouse scroll up and down
+                                //
+                                
+                                onWheel={(e) => e.preventDefault()}
+
+
+
                                 disabled={!address || krwAmount === 0 || buyOrdering}
                                 type="checkbox"
                                 checked={agreementPlaceOrder}
