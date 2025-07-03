@@ -2180,11 +2180,7 @@ export default function Index({ params }: any) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          lang: params.lang,
-          storecode: "admin",
           orderId: orderId,
-          ///isSmartAccount: activeWallet === inAppConnectWallet ? false : true,
-          isSmartAccount: false,
         })
       });
       const data = await response.json();
