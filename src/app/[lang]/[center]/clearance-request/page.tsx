@@ -1805,19 +1805,19 @@ export default function Index({ params }: any) {
       } else {
 
 
-        // transfer my wallet to buyer wallet address
+        // transfer my wallet to seller wallet address
 
         
-        //const buyerWalletAddress = buyOrders[index].walletAddress;
-        const buyerWalletAddress = buyOrders[index].store.sellerWalletAddress;
+        const sellerWalletAddress = buyOrders[index].store.sellerWalletAddress;
 
+        console.log('sellerWalletAddress', sellerWalletAddress);
 
 
         const usdtAmount = buyOrders[index].usdtAmount;
 
         const transaction = transfer({
           contract,
-          to: buyerWalletAddress,
+          to: sellerWalletAddress,
           amount: usdtAmount,
         });
 
@@ -4809,7 +4809,13 @@ const [tradeSummary, setTradeSummary] = useState({
 
                                 {/* if status is accepted, show payment request button */}
                                 {item.status === 'paymentConfirmed' && (
-                                  <div className="flex flex-row gap-2 items-center justify-center">
+                                  <div className="flex flex-col gap-2 items-center justify-center">
+
+                                    <div className="text-sm text-zinc-500">
+                                      {
+                                        item.store.sellerWalletAddress.slice(0, 6) + '...' + item.store.sellerWalletAddress.slice(-4)
+                                      }
+                                    </div>
 
 
                                     <span className="text-sm font-semibold text-yellow-500">
