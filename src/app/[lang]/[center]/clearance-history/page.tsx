@@ -4244,13 +4244,22 @@ const [tradeSummary, setTradeSummary] = useState({
                                 {item.status === 'paymentConfirmed' && (
                                   <div className="flex flex-row gap-2 items-center justify-center">
 
-                                    <span className="text-sm font-semibold text-zinc-500">
-                                      {item.seller?.nickname}
-                                    </span>
 
                                     <span className="text-sm font-semibold text-yellow-500">
                                       {Completed}
                                     </span>
+
+                                    {/* noew window open */}
+                                    {/* polyscan explorer */}
+                                    <a
+                                      href={`https://polygonscan.com/tx/${item.transactionHash}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-sm text-blue-500 underline"
+                                    >
+                                      폴리스캔에서 거래내역 보기
+                                    </a>
+                                      
 
 
                                   </div>
