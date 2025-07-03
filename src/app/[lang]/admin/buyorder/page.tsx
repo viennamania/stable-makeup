@@ -849,8 +849,8 @@ export default function Index({ params }: any) {
 
 
 
-  const [searchOrderStatusCancelled, setSearchOrderStatusCancelled] = useState(false);
-  const [searchOrderStatusCompleted, setSearchOrderStatusCompleted] = useState(false);
+  const [searchOrderStatusCancelled, setSearchOrderStatusCancelled] = useState(true);
+  const [searchOrderStatusCompleted, setSearchOrderStatusCompleted] = useState(true);
 
 
   const [searchMyOrders, setSearchMyOrders] = useState(false);
