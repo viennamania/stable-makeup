@@ -237,10 +237,9 @@ export async function POST(request: NextRequest) {
         agentFeeWalletAddress: agentFeeWalletAddress,
         agentFeePercent: agentFeePercent,
 
-
-
-        dealerAmount: agentFeeAmountUSDT,
-        dealerAmountKRW: agentFeeAmountKRW,
+ 
+        agentFeeAmount: agentFeeAmountUSDT,
+        agentFeeAmountKRW: agentFeeAmountKRW,
 
 
         status: "paymentSettled",
