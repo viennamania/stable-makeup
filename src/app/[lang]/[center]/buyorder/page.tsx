@@ -878,6 +878,8 @@ export default function Index({ params }: any) {
 
 
 
+  const [searchOrderStatusCancelled, setSearchOrderStatusCancelled] = useState(true);
+  const [searchOrderStatusCompleted, setSearchOrderStatusCompleted] = useState(true);
 
 
   const [searchMyOrders, setSearchMyOrders] = useState(false);
@@ -1045,8 +1047,8 @@ export default function Index({ params }: any) {
                     walletAddress: address,
                     searchMyOrders: searchMyOrders,
 
-                    //searchOrderStatusCancelled: searchOrderStatusCancelled,
-                    //searchOrderStatusCompleted: searchOrderStatusCompleted,
+                    searchOrderStatusCancelled: searchOrderStatusCancelled,
+                    searchOrderStatusCompleted: searchOrderStatusCompleted,
 
                     //searchStoreName: searchStoreName,
 
@@ -1181,8 +1183,8 @@ export default function Index({ params }: any) {
               walletAddress: address,
               searchMyOrders: searchMyOrders,
 
-              ///searchOrderStatusCancelled: searchOrderStatusCancelled,
-              ///searchOrderStatusCompleted: searchOrderStatusCompleted,
+              searchOrderStatusCancelled: searchOrderStatusCancelled,
+              searchOrderStatusCompleted: searchOrderStatusCompleted,
 
               ///searchStoreName: searchStoreName,
             }
@@ -1450,8 +1452,9 @@ export default function Index({ params }: any) {
                   page: Number(pageValue),
                   walletAddress: address,
                   searchMyOrders: searchMyOrders,
-                  //searchOrderStatusCancelled: searchOrderStatusCancelled,
-                  //searchOrderStatusCompleted: searchOrderStatusCompleted,
+
+                  searchOrderStatusCancelled: searchOrderStatusCancelled,
+                  searchOrderStatusCompleted: searchOrderStatusCompleted,
 
                   //searchStoreName: searchStoreName,
                 }
@@ -1566,8 +1569,9 @@ export default function Index({ params }: any) {
                 page: Number(pageValue),
                 walletAddress: address,
                 searchMyOrders: searchMyOrders,
-                //searchOrderStatusCancelled: searchOrderStatusCancelled,
-                //searchOrderStatusCompleted: searchOrderStatusCompleted,
+
+                searchOrderStatusCancelled: searchOrderStatusCancelled,
+                searchOrderStatusCompleted: searchOrderStatusCompleted,
 
                 //searchStoreName: searchStoreName,
               }
@@ -1770,8 +1774,8 @@ export default function Index({ params }: any) {
                 walletAddress: address,
                 searchMyOrders: searchMyOrders,
 
-                //searchOrderStatusCancelled: searchOrderStatusCancelled,
-                //searchOrderStatusCompleted: searchOrderStatusCompleted,
+                searchOrderStatusCancelled: searchOrderStatusCancelled,
+                searchOrderStatusCompleted: searchOrderStatusCompleted,
 
                 //searchStoreName: searchStoreName,
               }
@@ -1862,8 +1866,8 @@ export default function Index({ params }: any) {
                     walletAddress: address,
                     searchMyOrders: searchMyOrders,
 
-                    //searchOrderStatusCancelled: searchOrderStatusCancelled,
-                    //searchOrderStatusCompleted: searchOrderStatusCompleted,
+                    searchOrderStatusCancelled: searchOrderStatusCancelled,
+                    searchOrderStatusCompleted: searchOrderStatusCompleted,
 
                     //searchStoreName: searchStoreName,
                   }
@@ -2036,8 +2040,8 @@ export default function Index({ params }: any) {
               walletAddress: address,
               searchMyOrders: searchMyOrders,
 
-              //searchOrderStatusCancelled: searchOrderStatusCancelled,
-              //searchOrderStatusCompleted: searchOrderStatusCompleted,
+              searchOrderStatusCancelled: searchOrderStatusCancelled,
+              searchOrderStatusCompleted: searchOrderStatusCompleted,
 
               //searchStoreName: searchStoreName,
             }
@@ -2202,8 +2206,8 @@ export default function Index({ params }: any) {
               walletAddress: address,
               searchMyOrders: searchMyOrders,
 
-              //searchOrderStatusCancelled: searchOrderStatusCancelled,
-              //searchOrderStatusCompleted: searchOrderStatusCompleted,
+              searchOrderStatusCancelled: searchOrderStatusCancelled,
+              searchOrderStatusCompleted: searchOrderStatusCompleted,
 
               //searchStoreName: searchStoreName,
             }
@@ -2305,6 +2309,9 @@ export default function Index({ params }: any) {
     params.center,
     limitValue,
     pageValue,
+
+    searchOrderStatusCancelled,
+    searchOrderStatusCompleted,
 ]);
 
 
@@ -3506,8 +3513,10 @@ export default function Index({ params }: any) {
                         <span className="text-sm text-zinc-500">
                             잔액
                         </span>
-                        <span className="text-2xl xl:text-4xl font-semibold text-green-600">
-                            {Number(balance).toFixed(2)}
+                        <span className="text-2xl xl:text-4xl font-semibold text-green-600"
+                            style={{ fontFamily: 'monospace' }}
+                        >
+                            {Number(balance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </span>
                         {' '}
                         <span className="text-sm">USDT</span>
@@ -3634,7 +3643,7 @@ export default function Index({ params }: any) {
 
 
 
-                {/*
+                
                 <div className="flex flex-row items-center gap-2">
 
                   <div className="flex flex-row items-center gap-2">
@@ -3644,7 +3653,7 @@ export default function Index({ params }: any) {
                       onChange={(e) => {
                         setSearchOrderStatusCancelled(e.target.checked);
                         setPageValue(1);
-                        fetchBuyOrders();
+                        //fetchBuyOrders();
                       }}
                       className="w-5 h-5"
                     />
@@ -3657,14 +3666,15 @@ export default function Index({ params }: any) {
                       onChange={(e) => {
                         setSearchOrderStatusCompleted(e.target.checked);
                         setPageValue(1);
-                        fetchBuyOrders();
+                        //fetchBuyOrders();
                       }}
                       className="w-5 h-5"
                     />
                     <label className="text-sm text-zinc-500">거래완료</label>
                   </div>
                 </div>
-                */}
+                
+                
 
 
 
@@ -3737,7 +3747,8 @@ export default function Index({ params }: any) {
               p-4 rounded-lg shadow-md
               ">
 
-              <div className="w-full xl:w-1/4 flex flex-row items-center justify-between gap-2 pl-4 pr-4">
+              <div className="w-full xl:w-1/3 flex flex-row items-center justify-between gap-2 pl-4 pr-4">
+                
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 거래수(건)</div>
                   <div className="text-xl font-semibold text-zinc-500">

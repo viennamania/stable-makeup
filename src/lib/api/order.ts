@@ -2120,10 +2120,12 @@ export async function getBuyOrders(
 
         storecode: storecode || { $ne: null },
         walletAddress: walletAddress,
+        
         status: (searchOrderStatusCancelled && searchOrderStatusCompleted ? { $in: ['cancelled', 'paymentConfirmed'] }
           : (searchOrderStatusCancelled ? 'cancelled'
           : (searchOrderStatusCompleted ? 'paymentConfirmed'
           : { $ne: 'nothing' }))),
+
         privateSale: privateSale || { $ne: true },
         "store.storeName": { $regex: searchStoreName, $options: 'i' },
         nickname: { $regex: searchBuyer, $options: 'i' },
@@ -2158,6 +2160,7 @@ export async function getBuyOrders(
         storecode: storecode || { $ne: null },
         
         walletAddress: walletAddress,
+
         status: (searchOrderStatusCancelled && searchOrderStatusCompleted ? { $in: ['cancelled', 'paymentConfirmed'] }
           : (searchOrderStatusCancelled ? 'cancelled'
           : (searchOrderStatusCompleted ? 'paymentConfirmed'
@@ -2388,12 +2391,16 @@ export async function getBuyOrdersForSeller(
     page,
     walletAddress,
     searchMyOrders,
+    searchOrderStatusCancelled,
+    searchOrderStatusCompleted,
   }: {
     storecode: string;
     limit: number;
     page: number;
     walletAddress: string;
     searchMyOrders: boolean;
+    searchOrderStatusCancelled: boolean;
+    searchOrderStatusCompleted: boolean;
   }
 
 ): Promise<ResultProps> {
@@ -2440,9 +2447,12 @@ export async function getBuyOrdersForSeller(
       {
         storecode:  storecode,
         walletAddress: walletAddress,
-
-
         privateSale: { $ne: true },
+
+        status: (searchOrderStatusCancelled && searchOrderStatusCompleted ? { $in: ['cancelled', 'paymentConfirmed'] }
+          : (searchOrderStatusCancelled ? 'cancelled'
+          : (searchOrderStatusCompleted ? 'paymentConfirmed'
+          : { $ne: 'nothing' }))),
       }
     
 
@@ -2457,6 +2467,13 @@ export async function getBuyOrdersForSeller(
       {
         storecode: storecode,
         walletAddress: walletAddress,
+
+        privateSale: { $ne: true },
+
+        status: (searchOrderStatusCancelled && searchOrderStatusCompleted ? { $in: ['cancelled', 'paymentConfirmed'] }
+          : (searchOrderStatusCancelled ? 'cancelled'
+          : (searchOrderStatusCompleted ? 'paymentConfirmed'
+          : { $ne: 'nothing' }))),
       }
     );
 
@@ -2468,6 +2485,8 @@ export async function getBuyOrdersForSeller(
 
   } else {
 
+
+
     const results = await collection.find<UserProps>(
       {
         //status: 'ordered',
@@ -2477,6 +2496,12 @@ export async function getBuyOrdersForSeller(
         storecode: storecode,
         // exclude private sale
         privateSale: { $ne: true },
+
+        status: (searchOrderStatusCancelled && searchOrderStatusCompleted ? { $in: ['cancelled', 'paymentConfirmed'] }
+          : (searchOrderStatusCancelled ? 'cancelled'
+          : (searchOrderStatusCompleted ? 'paymentConfirmed'
+          : { $ne: 'nothing' }))),
+
       },
       
       //{ projection: { _id: 0, emailVerified: 0 } }
@@ -2488,6 +2513,12 @@ export async function getBuyOrdersForSeller(
       {
         storecode: storecode,
         privateSale: { $ne: true },
+
+        status: (searchOrderStatusCancelled && searchOrderStatusCompleted ? { $in: ['cancelled', 'paymentConfirmed'] }
+          : (searchOrderStatusCancelled ? 'cancelled'
+          : (searchOrderStatusCompleted ? 'paymentConfirmed'
+          : { $ne: 'nothing' }))),
+
       }
     );
 

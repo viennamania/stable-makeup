@@ -16,6 +16,8 @@ export async function POST(request: NextRequest) {
     page,
     walletAddress,
     searchMyOrders,
+    searchOrderStatusCancelled,
+    searchOrderStatusCompleted,
   } = body;
 
 
@@ -26,6 +28,8 @@ export async function POST(request: NextRequest) {
     page: page || 1,
     walletAddress,
     searchMyOrders,
+    searchOrderStatusCancelled,
+    searchOrderStatusCompleted,
   });
 
  

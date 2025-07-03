@@ -3032,37 +3032,6 @@ const [tradeSummary, setTradeSummary] = useState({
                 {address && !loadingUser && (
                     <div className="w-full flex flex-row items-center justify-end gap-2">
 
-                      <div className="hidden flex-row items-center justify-center gap-2">
-
-                          <button
-                              className="text-lg text-zinc-600 underline"
-                              onClick={() => {
-                                  navigator.clipboard.writeText(address);
-                                  toast.success(Copied_Wallet_Address);
-                              } }
-                          >
-                              {address.substring(0, 6)}...{address.substring(address.length - 4)}
-                          </button>
-                          
-                          <Image
-                              src="/icon-shield.png"
-                              alt="Wallet"
-                              width={100}
-                              height={100}
-                              className="w-6 h-6"
-                          />
-
-                      </div>
-
-                      <div className="hidden flex-row items-center justify-end  gap-2">
-                          <span className="text-2xl xl:text-4xl font-semibold text-green-600">
-                              {Number(balance).toFixed(2)}
-                          </span>
-                          {' '}
-                          <span className="text-sm">USDT</span>
-                      </div>
-
-
                       <button
                         onClick={() => {
                           router.push('/' + params.lang + '/' + params.center + '/profile-settings');
@@ -3602,7 +3571,9 @@ const [tradeSummary, setTradeSummary] = useState({
                               <span className="text-sm text-zinc-500">
                                   잔액
                               </span>
-                              <span className="text-2xl xl:text-4xl font-semibold text-green-600">
+                              <span className="text-2xl xl:text-4xl font-semibold text-green-600"
+                                  style={{ fontFamily: 'monospace' }}
+                              >
                                   {
                                     Number(balance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                                   }

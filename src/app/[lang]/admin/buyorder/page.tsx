@@ -3155,17 +3155,6 @@ const fetchBuyOrders = async () => {
                 </div>
 
 
-
-
-
-
-
-                
-
-
-
-
-
                 <div className="flex flex-row items-center gap-2">
                   {/* checkbox for searchOrderStatus is 'cancelled' */}
                   {/* 거래취소 */}
@@ -3178,7 +3167,7 @@ const fetchBuyOrders = async () => {
                       onChange={(e) => {
                         setSearchOrderStatusCancelled(e.target.checked);
                         setPageValue(1);
-                        fetchBuyOrders();
+                        //fetchBuyOrders();
                       }}
                       className="w-5 h-5"
                     />
@@ -3191,7 +3180,8 @@ const fetchBuyOrders = async () => {
                       onChange={(e) => {
                         setSearchOrderStatusCompleted(e.target.checked);
                         setPageValue(1);
-                        fetchBuyOrders();
+                        
+                        //fetchBuyOrders();
                       }}
                       className="w-5 h-5"
                     />
