@@ -597,6 +597,8 @@ export async function cancelTradeByBuyer(
 
 ) {
 
+  console.log('cancelTradeByBuyer orderId: ' + orderId);
+
   const client = await clientPromise;
   const collection = client.db('ultraman').collection('orders');
 
@@ -620,8 +622,12 @@ export async function cancelTradeByBuyer(
 
   // update status to 'cancelled'
 
+  
   const result = await collection.updateOne(
-    { _id: new ObjectId(orderId), 'buyer.walletAddress': walletAddress, status: 'paymentRequested' },
+    {
+      _id: new ObjectId(orderId + ''),
+      status: 'paymentRequested'
+    },
     { $set: {
       status: 'cancelled',
       cancelTradeReason: cancelTradeReason,
@@ -629,7 +635,11 @@ export async function cancelTradeByBuyer(
     } }
   );
 
+
   console.log('cancelTradeByBuyer result: ' + JSON.stringify(result));
+  /*
+  cancelTradeByBuyer result: {"acknowledged":true,"modifiedCount":0,"upsertedId":null,"upsertedCount":0,"matchedCount":0}
+  */
 
   const updated = await collection.findOne<UserProps>(
     { _id: new ObjectId(orderId) }

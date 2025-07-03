@@ -2960,7 +2960,7 @@ export default function Index({ params }: any) {
                            
                               <td>
 
-                                {item?.buyer ? (
+                                {item?.buyer?.nickname ? (
                                   <div className="flex flex-col items-start justify-center gap-1">
 
                                   {/* 
