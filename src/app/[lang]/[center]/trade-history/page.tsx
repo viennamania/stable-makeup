@@ -3511,7 +3511,8 @@ const fetchBuyOrders = async () => {
                 p-4 rounded-lg shadow-md
                 ">
 
-                <div className="w-full xl:w-1/4 flex flex-row items-center justify-between gap-2 pl-4 pr-4">
+                <div className="w-full xl:w-1/3 flex flex-row items-center justify-between gap-2 pl-4 pr-4">
+                  
                   <div className="flex flex-col gap-2 items-center">
                     <div className="text-sm">총 거래수(건)</div>
                     <div className="text-xl font-semibold text-zinc-500">
@@ -3522,7 +3523,10 @@ const fetchBuyOrders = async () => {
                   <div className="flex flex-col gap-2 items-center">
                     <div className="text-sm">총 거래금액(원)</div>
                     <div className="flex flex-row items-center gap-1">
-                      <span className="text-xl font-semibold text-yellow-600">
+                      <span className="text-xl font-semibold text-yellow-600"
+                        style={{ fontFamily: 'monospace' }}
+                      >
+                      
                         {tradeSummary.totalKrwAmount?.toLocaleString()}
                       </span>
                       <span className="text-sm text-zinc-500">
@@ -3541,7 +3545,9 @@ const fetchBuyOrders = async () => {
                         height={20}
                         className="w-5 h-5"
                       />
-                      <span className="text-xl font-semibold text-green-600">
+                      <span className="text-xl font-semibold text-green-600"
+                        style={{ fontFamily: 'monospace' }}
+                      >
                         {Number(tradeSummary.totalUsdtAmount
                           ? tradeSummary.totalUsdtAmount
                           : 0
@@ -3569,7 +3575,9 @@ const fetchBuyOrders = async () => {
                   <div className="flex flex-col gap-2 items-center">
                     <div className="text-sm">총 정산금액(원)</div>
                     <div className="flex flex-row items-center gap-1">
-                      <span className="text-xl font-semibold text-yellow-600">
+                      <span className="text-xl font-semibold text-yellow-600"
+                        style={{ fontFamily: 'monospace' }}
+                      >
                         {tradeSummary.totalSettlementAmountKRW?.toLocaleString()}
                       </span>
                       <span className="text-sm text-zinc-500">원</span>
@@ -3586,7 +3594,9 @@ const fetchBuyOrders = async () => {
                         height={20}
                         className="w-5 h-5"
                       />
-                      <span className="text-xl font-semibold text-green-600">
+                      <span className="text-xl font-semibold text-green-600"
+                        style={{ fontFamily: 'monospace' }}
+                      >
                         {Number(tradeSummary.totalSettlementAmount
                           ? tradeSummary.totalSettlementAmount
                           : 0
@@ -3598,7 +3608,9 @@ const fetchBuyOrders = async () => {
                   <div className="flex flex-col gap-2 items-center">
                     <div className="text-sm">총 수수료금액(원)</div>
                     <div className="flex flex-row items-center gap-1">
-                      <span className="text-xl font-semibold text-yellow-600">
+                      <span className="text-xl font-semibold text-yellow-600"
+                        style={{ fontFamily: 'monospace' }}
+                      >
                         {tradeSummary.totalFeeAmountKRW?.toLocaleString()}
                       </span>
                       <span className="text-sm text-zinc-500">원</span>
@@ -3614,7 +3626,9 @@ const fetchBuyOrders = async () => {
                         height={20}
                         className="w-5 h-5"
                       />
-                      <span className="text-xl font-semibold text-green-600">
+                      <span className="text-xl font-semibold text-green-600"
+                        style={{ fontFamily: 'monospace' }}
+                      >
                         {Number(tradeSummary.totalFeeAmount
                           ? tradeSummary.totalFeeAmount
                           : 0
@@ -3820,7 +3834,7 @@ const fetchBuyOrders = async () => {
                             
 
                             <div className="
-                              w-32
+                              w-28
                               flex flex-row gap-2 items-center justify-start">
                               
                               <Image
@@ -4034,7 +4048,7 @@ const fetchBuyOrders = async () => {
 
                           <td className="p-2">
                             <div className="
-                              w-28 
+                              w-32
                               flex flex-col items-end justify-center gap-2">
 
                                 {item?.autoConfirmPayment ? (
@@ -4080,7 +4094,7 @@ const fetchBuyOrders = async () => {
 
                                 {item.status === 'accepted' && (
 
-                                  <div className="flex flex-row gap-2 items-center justify-center">
+                                  <div className="flex flex-row gap-2 items-center justify-center gap-1">
                                     <div className="text-sm text-green-500">
                                       {Trade_Started}
                                     </div>
