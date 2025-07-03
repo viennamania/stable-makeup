@@ -1348,21 +1348,19 @@ export default function Index({ params }: any) {
         try {
 
 
-          /*
-          const transactionResult = await sendAndConfirmTransaction({
-              account: smartAccount as any,
-              transaction: transaction,
-          });
+          
+
 
           //console.log("transactionResult===", transactionResult);
-          */
-
-          const { transactionHash } = await sendTransaction({
+          
+          
+          const { transactionHash } = await sendAndConfirmTransaction({
             
             account: activeAccount as any,
 
             transaction,
           });
+          
 
           console.log("transactionHash===", transactionHash);
 
