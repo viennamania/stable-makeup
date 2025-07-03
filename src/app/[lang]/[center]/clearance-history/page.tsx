@@ -898,7 +898,7 @@ export default function Index({ params }: any) {
   useEffect(() => {
     const today = new Date();
     today.setHours(today.getHours() + 9); // Adjust for Korean timezone (UTC+9)
-    
+
     const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
     setSearchToDate(formattedDate);
   }, []);
@@ -3776,12 +3776,13 @@ const [tradeSummary, setTradeSummary] = useState({
 
                 {/* trade summary */}
 
-                <div className="flex flex-col xl:flex-row items-center justify-between gap-2
+                <div className="flex flex-col xl:flex-row items-center justify-end gap-2
                   w-full
                   bg-zinc-100/50
                   p-4 rounded-lg shadow-md
                   ">
 
+                  {/*
                   <div className="w-full xl:w-1/3 flex flex-row items-start justify-between gap-2 pl-4 pr-4">
                     <div className="flex flex-col gap-2 items-center">
                       <div className="text-sm">총 거래수(건)</div>
@@ -3814,7 +3815,6 @@ const [tradeSummary, setTradeSummary] = useState({
                     </div>
                   </div>
 
-                  {/* divider */}
                   <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
                   <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
@@ -3850,27 +3850,11 @@ const [tradeSummary, setTradeSummary] = useState({
                       </div>
                     </div>
 
-                    {/*
-                    <div className="flex flex-col gap-2 items-center">
-                      <div className="text-sm">총 수수료금액(원)</div>
-                      <div className="text-xl font-semibold text-zinc-500">
-                        {tradeSummary.totalFeeAmountKRW?.toLocaleString()} 원
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-2 items-center">
-                      <div className="text-sm">총 수수료수량(USDT)</div>
-                      <div className="text-xl font-semibold text-zinc-500">
-                        {tradeSummary.totalFeeAmount?.toLocaleString()} USDT
-                      </div>
-                    </div>
-                    */}
-
                   </div>
 
-
-                  {/* divider */}
                   <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
                   <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
+                  */}
 
                   <div className="w-full xl:w-1/3
                     flex flex-row items-start justify-between gap-2 pl-4 pr-4">
