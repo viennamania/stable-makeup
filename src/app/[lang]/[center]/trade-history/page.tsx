@@ -3311,7 +3311,16 @@ const fetchBuyOrders = async () => {
                     판매(거래소)
                 </button>
 
-     
+                <button
+                  onClick={() => router.push('/' + params.lang + '/' + params.center + '/clearance-request')}
+                  className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                  hover:bg-[#3167b4]/80
+                  hover:cursor-pointer
+                  hover:scale-105
+                  transition-transform duration-200 ease-in-out
+                  ">
+                    출금(회원)
+                </button>     
 
 
             </div>

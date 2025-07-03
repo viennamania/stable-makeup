@@ -3322,18 +3322,29 @@ const [tradeSummary, setTradeSummary] = useState({
 
                 <div className='flex w-32 items-center justify-center gap-2
                   bg-yellow-500 text-[#3167b4] text-sm rounded-lg p-2'>
-                    <Image
-                      src="/icon-clearance.png"
-                      alt="Trade"
-                      width={35}
-                      height={35}
-                      className="w-4 h-4"
-                    />
-                    <div className="text-sm font-semibold">
-                      판매(거래소)
-                    </div>
+                  <Image
+                    src="/icon-clearance.png"
+                    alt="Trade"
+                    width={35}
+                    height={35}
+                    className="w-4 h-4"
+                  />
+                  <div className="text-sm font-semibold">
+                    판매(거래소)
                   </div>
+                </div>
 
+
+                <button
+                  onClick={() => router.push('/' + params.lang + '/' + params.center + '/clearance-request')}
+                  className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                  hover:bg-[#3167b4]/80
+                  hover:cursor-pointer
+                  hover:scale-105
+                  transition-transform duration-200 ease-in-out
+                  ">
+                    출금(회원)
+                </button>
 
             </div>
 
