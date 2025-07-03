@@ -5956,55 +5956,13 @@ export async function getCollectOrdersForSeller(
   // if storecode is not empty, get orders by storecode and wallet address
 
 
-  if (searchMyOrders) {
 
-    const results = await collection.find<UserProps>(
-
-      /*
-      {
-        'storecode': storecode,
-        'walletAddress': walletAddress,
-
-        
-        //status: { $ne: 'paymentConfirmed' },
-
-      },
-      */
-
-      
-      {
-        'storecode':  storecode,
-        'walletAddress': walletAddress,
-
-        createdAt: { $gte: fromDateValue, $lt: toDateValue },
-
-      }
-    
-
-
-      
-      //{ projection: { _id: 0, emailVerified: 0 } }
-
-    ).sort({ createdAt: -1 }).limit(limit).skip((page - 1) * limit).toArray();
-
-
-    const totalCount = await collection.countDocuments(
-      {
-        'storecode': storecode,
-        walletAddress: walletAddress,
-      }
-    );
-
-
-    return {
-      totalCount: totalCount,
-      orders: results,
-    };
-
-  } else {
 
     const results = await collection.find<UserProps>(
       {
+        // walletAddress is not equal to walletAddress
+        walletAddress: { $ne: walletAddress },
+
         //status: 'ordered',
   
         //status: { $ne: 'paymentConfirmed' },
@@ -6024,6 +5982,8 @@ export async function getCollectOrdersForSeller(
 
     const totalCount = await collection.countDocuments(
       {
+        walletAddress: { $ne: walletAddress },
+
         storecode: storecode,
         privateSale: true,
 
@@ -6036,10 +5996,112 @@ export async function getCollectOrdersForSeller(
       orders: results,
     };
 
-  }
+
 
 
 }
+
+
+
+
+
+
+
+
+
+
+export async function getCollectOrdersForUser(
+
+  {
+    storecode,
+    limit,
+    page,
+    walletAddress,
+    searchMyOrders,
+
+    fromDate,
+    toDate,
+  }: {
+    storecode: string;
+    limit: number;
+    page: number;
+    walletAddress: string;
+    searchMyOrders: boolean;
+
+    fromDate?: string;
+    toDate?: string;
+  }
+
+): Promise<ResultProps> {
+
+  console.log('getCollectOrdersForUser fromDate: ' + fromDate);
+  console.log('getCollectOrdersForUser toDate: ' + toDate);
+
+  const fromDateValue = fromDate ? fromDate + 'T00:00:00Z' : '1970-01-01T00:00:00Z';
+  const toDateValue = toDate ? toDate + 'T23:59:59Z' : new Date().toISOString();
+  
+
+  const client = await clientPromise;
+
+  const collection = client.db('ultraman').collection('buyorders');
+
+
+  // status is not 'paymentConfirmed'
+
+
+  // if searchMyOrders is true, get orders by buyer wallet address is walletAddress
+  // else get all orders except paymentConfirmed
+
+  // if storecode is empty, get all orders by wallet address
+
+  // if storecode is not empty, get orders by storecode and wallet address
+
+
+    const results = await collection.find<UserProps>(
+      {
+        walletAddress: walletAddress,
+
+
+        //status: 'ordered',
+  
+        //status: { $ne: 'paymentConfirmed' },
+  
+        storecode: storecode,
+
+        privateSale: true,
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
+
+      },
+      
+      //{ projection: { _id: 0, emailVerified: 0 } }
+  
+    ).sort({ createdAt: -1 }).limit(limit).skip((page - 1) * limit).toArray();
+  
+
+    const totalCount = await collection.countDocuments(
+      {
+        walletAddress: walletAddress,
+
+        storecode: storecode,
+        privateSale: true,
+
+        createdAt: { $gte: fromDateValue, $lt: toDateValue },
+      }
+    );
+
+    return {
+      totalCount: totalCount,
+      orders: results,
+    };
+
+
+
+
+}
+
+
+
 
 
 

@@ -2164,7 +2164,7 @@ export default function Index({ params }: any) {
       
       setFetchingBuyOrders(true);
 
-      const response = await fetch('/api/order/getAllCollectOrdersForSeller', {
+      const response = await fetch('/api/order/getAllCollectOrdersForUser', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -3833,8 +3833,8 @@ const [tradeSummary, setTradeSummary] = useState({
                         }}
                       >
                         <tr>
-                          <th className="p-2">{TID}</th>
-                          <th className="p-2">{Buy_Order_Opened}</th>
+                          <th className="p-2">#{TID}</th>
+                          <th className="p-2">출금신청시간</th>
 
                           <th className="p-2">{Buyer}</th>
 
@@ -3880,8 +3880,13 @@ const [tradeSummary, setTradeSummary] = useState({
                           `}>
                           
 
-
-                            <td className="text-zinc-500 p-2">
+                            {/* monospace font for tradeId */}
+                            <td className="text-zinc-500
+                              text-sm font-semibold
+                              p-2"
+                              style={{ fontFamily: 'monospace' }}
+                            >
+                              
                               {
                                 "#" + item.tradeId
                               }
