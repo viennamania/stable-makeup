@@ -14,6 +14,7 @@ export async function POST(request: NextRequest) {
 
   const {
     orderId,
+    transactionHash,
   } = body;
 
 
@@ -194,7 +195,12 @@ export async function POST(request: NextRequest) {
 
 
 
-    const txid = "0x";
+    let txid = "0x";
+
+    if (transactionHash) {
+      txid = transactionHash; // Use the provided transaction hash
+    }
+
     const krwRate = buyOrder.rate;
     const paymentAmount = buyOrder.krwAmount; // Assuming paymentAmount is in KRW
     const settlementWalletAddress = buyOrder.store.settlementWalletAddress;
