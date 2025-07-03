@@ -5669,7 +5669,6 @@ const fetchBuyOrders = async () => {
                                             <div className="flex flex-row gap-2 items-center justify-center">
                                               {/* checkbox to confirm settlement */}
                                               <input
-                                                disabled={settlementCheck[index]}
                                                 type="checkbox"
                                                 checked={settlementCheck[index]}
                                                 onChange={(e) => {
@@ -5682,22 +5681,24 @@ const fetchBuyOrders = async () => {
                                                     })
                                                   );
                                                 }}
-                                                className="w-5 h-5 rounded-md border border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                className="w-5 h-5
+                                                rounded-md"
+
                                               />
 
                                               <button
-                                                disabled={settlementCheck[index]}
+                                                disabled={!settlementCheck[index]}
                                                 className={`
-                                                  ${settlementCheck[index] ? 'bg-gray-500' : 'bg-blue-500'}
+                                                  ${settlementCheck[index] ? 'bg-blue-500' : 'bg-gray-500'}
                                                   w-full
                                                   flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md
                                                   hover:bg-blue-600
                                                   hover:shadow-lg
                                                   hover:shadow-blue-500/50
                                                   transition-all duration-200 ease-in-out
-                                                  ${settlementCheck[index] ? 'cursor-not-allowed' : 'cursor-pointer'}
+                                                  ${!settlementCheck[index] ? 'cursor-not-allowed' : 'cursor-pointer'}
                                                 `}
-                                                
+
                                                 onClick={() => {
                                                 
                                                   settlementRequest(

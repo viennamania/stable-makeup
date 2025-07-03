@@ -506,7 +506,7 @@ export default function Index({ params }: any) {
       });
 
   
-      //console.log(result);
+      console.log('getBalance result', result);
   
       setBalance( Number(result) / 10 ** 6 );
 
