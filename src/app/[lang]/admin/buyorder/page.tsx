@@ -5575,11 +5575,9 @@ const fetchBuyOrders = async () => {
                                       fontFamily: 'monospace',
                                     }}
                                   >
-
-
-                                    
+              
                                     <span>
-                                      {item?.settlement?.settlementAmount?.toLocaleString() + ' USDT'}
+                                      {item?.settlement?.settlementAmount?.toLocaleString()}
                                       {' '}
                                       {
                                         item?.settlement?.settlementWalletAddress &&
@@ -5588,8 +5586,8 @@ const fetchBuyOrders = async () => {
                                     <span>
                                       {
                                         item?.settlement?.agentFeeAmount ?
-                                        item?.settlement?.agentFeeAmount?.toLocaleString() + ' USDT'
-                                        : '0 USDT'
+                                        item?.settlement?.agentFeeAmount?.toLocaleString()
+                                        : '0'
                                       }
                                       {' '}
                                       {
@@ -5597,7 +5595,7 @@ const fetchBuyOrders = async () => {
                                       item?.settlement?.agentFeeWalletAddress?.slice(0, 5) + '...'}
                                     </span>
                                     <span>
-                                      {item?.settlement?.feeAmount?.toLocaleString() + ' USDT'}
+                                      {item?.settlement?.feeAmount?.toLocaleString()}
                                       {' '}
                                       {
                                         item?.settlement?.feeWalletAddress &&
@@ -5670,6 +5668,7 @@ const fetchBuyOrders = async () => {
                                             <div className="flex flex-row gap-2 items-center justify-center">
                                               {/* checkbox to confirm settlement */}
                                               <input
+                                                disabled={loadingSettlement[index]}
                                                 type="checkbox"
                                                 checked={settlementCheck[index]}
                                                 onChange={(e) => {
