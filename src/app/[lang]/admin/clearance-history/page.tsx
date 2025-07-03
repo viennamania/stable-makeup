@@ -3145,11 +3145,11 @@ const fetchBuyOrders = async () => {
 
                                   {item?.autoConfirmPayment ? (
                                     <span className="text-sm text-green-500 font-semibold">
-                                      자동입금처리
+                                      자동처리
                                     </span>
                                   ) : (
                                     <span className="text-sm text-red-500 font-semibold">
-                                      수동입금처리
+                                      수동처리
                                     </span>
                                   )}
                                
