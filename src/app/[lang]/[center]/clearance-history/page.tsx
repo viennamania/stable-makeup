@@ -1707,15 +1707,19 @@ export default function Index({ params }: any) {
       toast.error('Please connect your wallet');
       return;
     }
+
+    /*
     if (isWithoutEscrow && balance < paymentAmountUsdt) {
       toast.error(Insufficient_balance);
       return;
     }
+    
 
     if (!isWithoutEscrow && escrowBalance < paymentAmountUsdt) {
       toast.error(Escrow_balance_is_less_than_payment_amount);
       return;
     }
+    */
 
     if (confirmingPayment[index]) {
       return;
