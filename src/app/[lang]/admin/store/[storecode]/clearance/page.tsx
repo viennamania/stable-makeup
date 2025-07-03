@@ -2844,7 +2844,7 @@ export default function Index({ params }: any) {
                     >
                       <tr>
 
-                          <th className="p-2 text-left">신청번호</th>
+                          <th className="p-2 text-left">#신청번호</th>
 
                           <th className="p-2 text-left ">신청시간</th>
 
@@ -2876,8 +2876,14 @@ export default function Index({ params }: any) {
                           }
                         `}>
 
+                              {/* monospace font */}
+                              <td className="p-2 text-lg text-zinc-600 font-semibold"
+                                style={{
+                                  fontFamily: 'monospace',
+                                }}
+                              >
+                            
 
-                              <td className="p-2 text-lg text-zinc-600 font-semibold">
                                 #{item.tradeId}
                               </td>
 
@@ -2920,7 +2926,11 @@ export default function Index({ params }: any) {
 
                               <td>
                                 <div className="flex flex-col items-end justify-center gap-1 mr-5">
-                                  <span className="text-xl text-yellow-600 font-semibold">
+                                  <span className="text-xl text-yellow-600 font-semibold"
+                                    style={{
+                                      fontFamily: 'monospace',
+                                    }}
+                                  >
                                     {Number(item.krwAmount)?.toLocaleString() + ' 원'}
                                   </span>
                                 
@@ -2932,7 +2942,11 @@ export default function Index({ params }: any) {
                                       height={20}
                                       className="w-5 h-5"
                                     />
-                                    <span className="text-xl text-green-600 font-semibold">
+                                    <span className="text-xl text-green-600 font-semibold"
+                                      style={{
+                                        fontFamily: 'monospace',
+                                      }}
+                                    >
                                       {item.usdtAmount && item.usdtAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                     </span>
                                   </div>
@@ -3007,7 +3021,8 @@ export default function Index({ params }: any) {
                                     <input
                                       disabled={true}
                                       type="number"
-                                      className="w-24 px-2 py-1 border border-gray-300 rounded-md text-lg text-black"
+                                      className="w-36
+                                      px-2 py-1 border border-gray-300 rounded-md text-lg text-black"
                                       placeholder="Amount"
                                       value={paymentAmounts[index]}
                                       onChange={(e) => {

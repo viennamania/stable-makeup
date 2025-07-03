@@ -895,6 +895,9 @@ export default function Index({ params }: any) {
   // set today's date in YYYY-MM-DD format
   useEffect(() => {
     const today = new Date();
+    today.setHours(today.getHours() + 9); // Adjust for Korean timezone (UTC+9)
+
+
     const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
     setSearchFormDate(formattedDate);
   }, []);
@@ -907,6 +910,8 @@ export default function Index({ params }: any) {
   // set today's date in YYYY-MM-DD format
   useEffect(() => {
     const today = new Date();
+    today.setHours(today.getHours() + 9); // Adjust for Korean timezone (UTC+9)
+
     const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
     setSearchToDate(formattedDate);
   }, []);
