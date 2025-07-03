@@ -4768,10 +4768,12 @@ const [tradeSummary, setTradeSummary] = useState({
                                 )}
 
                                 {item.status === 'paymentRequested' && (
-                                  <div className="flex flex-row gap-2 items-center justify-center">
+                                  <div className="flex flex-col gap-2 items-center justify-center">
                                     
                                     <div className="text-sm text-zinc-500">
-                                      {item.seller?.nickname}
+                                      {
+                                        item.store.sellerWalletAddress.slice(0, 6) + '...' + item.store.sellerWalletAddress.slice(-4)
+                                      }
                                     </div>
                                     
                                     <div className="text-sm text-green-600">
