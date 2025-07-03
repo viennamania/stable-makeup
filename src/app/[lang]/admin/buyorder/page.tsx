@@ -1869,17 +1869,18 @@ export default function Index({ params }: any) {
 
 
 
-          /*
+          
           const { transactionHash } = await sendTransaction({
             account: activeAccount as any,
             transaction,
           });
-          */
+          
+          /*
           const { transactionHash } = await sendAndConfirmTransaction({
             account: activeAccount as any,
             transaction: transaction,
           });
-          
+          */
 
 
           console.log("transactionHash===", transactionHash);
