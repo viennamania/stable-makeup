@@ -920,12 +920,8 @@ export default function Index({ params }: any) {
     const [agreementPlaceOrder, setAgreementPlaceOrder] = useState(false);
 
 
-
-
     // check input krw amount at sell order
     const [checkInputKrwAmount, setCheckInputKrwAmount] = useState(true);
-
-
 
     const buyOrder = async () => {
       // api call
