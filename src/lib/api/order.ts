@@ -1979,10 +1979,16 @@ export async function insertBuyOrderForUser(data: any) {
       krwAmount: data.krwAmount,
       rate: data.rate,
       createdAt: new Date().toISOString(),
-      status: 'ordered',
+      
+      //status: 'ordered',
+      status: 'paymentRequested',
+      paymentRequestedAt: new Date().toISOString(),
+
       privateSale: data.privateSale,
       
       buyer: data.buyer,
+
+      seller: data.seller,
 
       tradeId: tradeId,
     }
@@ -1995,22 +2001,6 @@ export async function insertBuyOrderForUser(data: any) {
 
   if (result) {
 
-
-    // update user collection buyOrderStatus to "ordered"
-
-    await userCollection.updateOne(
-      {
-        walletAddress: data.walletAddress,
-        storecode: data.storecode,
-      },
-      { $set: { buyOrderStatus: 'ordered' } }
-    );
-
-
-
-    const updated = await collection.findOne<UserProps>(
-      { _id: result.insertedId }
-    );
 
     return {
 

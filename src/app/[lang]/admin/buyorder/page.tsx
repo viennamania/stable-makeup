@@ -3093,74 +3093,74 @@ const fetchBuyOrders = async () => {
 
 
 
-            {/* select storecode */}
-            <div className="flex flex-row items-center gap-2">
-              {fetchingAllStores ? (
-                <Image
-                  src="/loading.png"
-                  alt="Loading"
-                  width={20}
-                  height={20}
-                  className="animate-spin"
-                />
-              ) : (
+                {/* select storecode */}
                 <div className="flex flex-row items-center gap-2">
+                  {fetchingAllStores ? (
+                    <Image
+                      src="/loading.png"
+                      alt="Loading"
+                      width={20}
+                      height={20}
+                      className="animate-spin"
+                    />
+                  ) : (
+                    <div className="flex flex-row items-center gap-2">
 
-                  
-                  <Image
-                    src="/icon-store.png"
-                    alt="Store"
-                    width={20}
-                    height={20}
-                    className="rounded-lg w-5 h-5"
-                  />
+                      
+                      <Image
+                        src="/icon-store.png"
+                        alt="Store"
+                        width={20}
+                        height={20}
+                        className="rounded-lg w-5 h-5"
+                      />
 
-                  <span className="
-                    w-32
-                    text-sm font-semibold">
-                    가맹점선택
-                  </span>
-
-
-                  <select
-                    value={searchStorecode}
-                    
-                    //onChange={(e) => setSearchStorecode(e.target.value)}
-
-                    // storecode parameter is passed to fetchBuyOrders
-                    onChange={(e) => {
-                      router.push('/' + params.lang + '/admin/buyorder?storecode=' + e.target.value);
-                    }}
-
+                      <span className="
+                        w-32
+                        text-sm font-semibold">
+                        가맹점선택
+                      </span>
 
 
-                    className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
-                  >
-                    <option value="">전체</option>
-                    {allStores && allStores.map((item, index) => (
-                      <option key={index} value={item.storecode}
-                        className="flex flex-row items-center justify-start gap-2"
-                      >
+                      <select
+                        value={searchStorecode}
                         
-                        {item.storeName}{' '}({item.storecode})
+                        //onChange={(e) => setSearchStorecode(e.target.value)}
 
-                      </option>
-                    ))}
-                  </select>
+                        // storecode parameter is passed to fetchBuyOrders
+                        onChange={(e) => {
+                          router.push('/' + params.lang + '/admin/buyorder?storecode=' + e.target.value);
+                        }}
 
 
+
+                        className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                      >
+                        <option value="">전체</option>
+                        {allStores && allStores.map((item, index) => (
+                          <option key={index} value={item.storecode}
+                            className="flex flex-row items-center justify-start gap-2"
+                          >
+                            
+                            {item.storeName}{' '}({item.storecode})
+
+                          </option>
+                        ))}
+                      </select>
+
+
+                    </div>
+
+                  )}
                 </div>
 
-              )}
-            </div>
 
 
 
 
 
 
-
-            
+                
 
 
 
@@ -3197,7 +3197,9 @@ const fetchBuyOrders = async () => {
                     />
                     <label className="text-sm text-zinc-500">거래완료</label>
                   </div>
+                  
                 </div>
+
 
               </div>
 
@@ -3443,6 +3445,16 @@ const fetchBuyOrders = async () => {
             </div>
 
 
+            {/* totalCount */}
+            <div className="w-full flex flex-row items-center justify-between gap-2 mt-4">
+              
+              <div className="flex flex-col items-start">
+                <span className="text-sm text-zinc-500">
+                  결색결과: {totalCount || 0} 건
+                </span>
+              </div>
+
+            </div>
 
 
 

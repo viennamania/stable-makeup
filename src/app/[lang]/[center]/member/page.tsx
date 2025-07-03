@@ -1367,7 +1367,7 @@ export default function Index({ params }: any) {
     // interval
     const interval = setInterval(() => {
       fetchAllUsers();
-    } , 1000);
+    } , 5000);
     return () => clearInterval(interval);
   } , [address]);
 

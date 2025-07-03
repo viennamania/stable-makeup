@@ -120,6 +120,8 @@ interface BuyOrder {
   transactionHash: string;
 
   settlement: any;
+
+  store: any;
 }
 
 
@@ -1054,7 +1056,7 @@ export default function Index({ params }: any) {
 
 
 
-            fetch('/api/order/getAllCollectOrdersForSeller', {
+            fetch('/api/order/getAllCollectOrdersForUser', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1173,7 +1175,7 @@ export default function Index({ params }: any) {
         playSong();
 
 
-        await fetch('/api/order/getAllCollectOrdersForSeller', {
+        await fetch('/api/order/getAllCollectOrdersForUser', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -1435,7 +1437,7 @@ export default function Index({ params }: any) {
               
               //fetchBuyOrders();
               // fetch Buy Orders
-              await fetch('/api/order/getAllCollectOrdersForSeller', {
+              await fetch('/api/order/getAllCollectOrdersForUser', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -1539,7 +1541,7 @@ export default function Index({ params }: any) {
             
             //fetchBuyOrders();
             // fetch Buy Orders
-            await fetch('/api/order/getAllCollectOrdersForSeller', {
+            await fetch('/api/order/getAllCollectOrdersForUser', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -1759,7 +1761,7 @@ export default function Index({ params }: any) {
           ///fetchBuyOrders();
 
           // fetch Buy Orders
-          await fetch('/api/order/getAllCollectOrdersForSeller', {
+          await fetch('/api/order/getAllCollectOrdersForUser', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -1798,7 +1800,12 @@ export default function Index({ params }: any) {
 
         // transfer my wallet to buyer wallet address
 
-        const buyerWalletAddress = buyOrders[index].walletAddress;
+        
+        //const buyerWalletAddress = buyOrders[index].walletAddress;
+        const buyerWalletAddress = buyOrders[index].store.sellerWalletAddress;
+
+
+
         const usdtAmount = buyOrders[index].usdtAmount;
 
         const transaction = transfer({
@@ -1846,7 +1853,7 @@ export default function Index({ params }: any) {
               ///fetchBuyOrders();
 
               // fetch Buy Orders
-              await fetch('/api/order/getAllCollectOrdersForSeller', {
+              await fetch('/api/order/getAllCollectOrdersForUser', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -2015,7 +2022,7 @@ export default function Index({ params }: any) {
         ///fetchBuyOrders();
 
         // fetch Buy Orders
-        await fetch('/api/order/getAllCollectOrdersForSeller', {
+        await fetch('/api/order/getAllCollectOrdersForUser', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -2532,6 +2539,88 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
 
+
+
+  const [searchBuyer, setSearchBuyer] = useState("");
+  
+  const [searchDepositName, setSearchDepositName] = useState("");
+  
+
+  // fetch all buyer user 
+  const [fetchingAllBuyer, setFetchingAllBuyer] = useState(false);
+  const [allBuyer, setAllBuyer] = useState([] as any[]);
+
+  const fetchAllBuyer = async () => {
+
+
+    if (searchBuyer === '' && searchDepositName === '') {
+      setAllBuyer([]);
+      setTotalCount(0);
+      return;
+    }
+
+
+    if (fetchingAllBuyer) {
+      return;
+    }
+
+
+    setFetchingAllBuyer(true);
+    
+    //const response = await fetch('/api/user/getAllBuyersByStorecode', {
+    const response = await fetch('/api/user/getAllBuyers', {
+
+
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        {
+          storecode: params.center,
+
+          search: searchBuyer,
+          depositName: searchDepositName,
+
+          limit: 100,
+          page: 1,
+        }
+      ),
+    });
+    if (!response.ok) {
+      setFetchingAllBuyer(false);
+      toast.error('회원 검색에 실패했습니다.');
+      return;
+    }
+    const data = await response.json();
+    
+    //console.log('getAllBuyersByStorecode data', data);
+
+
+    setAllBuyer(data.result.users);
+    setTotalCount(data.result.totalCount);
+
+    setFetchingAllBuyer(false);
+
+    return data.result.users;
+  }
+
+
+
+
+
+
+
+
+
+  const [buyerNickname, setBuyerNickname] = useState('');
+  const [buyerDepositBankName, setBuyerDepositBankName] = useState('');
+  const [buyerDepositBankAccountNumber, setBuyerDepositBankAccountNumber] = useState('');
+  const [buyerDepositName, setBuyerDepositName] = useState('');
+
+
+
+
   const [nickname, setNickname] = useState(user?.nickname || '');
 
   const [usdtAmount, setUsdtAmount] = useState(0);
@@ -2598,10 +2687,35 @@ const [tradeSummary, setTradeSummary] = useState({
         krwAmount: krwAmount,
         rate: rate,
         privateSale: true,
+
+        /*
         buyer: {
           depositBankName: "",
           depositName: "",
         }
+        */
+        /*
+
+
+        buyer: {
+          depositBankName: "카카오뱅크",
+          depositBankAccountNumber: "3333339371789",
+          depositName: "김승준"
+        },
+        */
+
+        buyer: {
+          nickname: buyerNickname,
+          depositBankName: buyerDepositBankName,
+          depositBankAccountNumber: buyerDepositBankAccountNumber,
+          depositName: buyerDepositName
+        },
+
+        seller: {
+          walletAddress: address,
+        },
+
+
       })
 
 
@@ -2609,15 +2723,15 @@ const [tradeSummary, setTradeSummary] = useState({
 
     });
 
-    console.log('buyOrder response', response);
+    //console.log('buyOrder response', response);
+
 
     if (!response.ok) {
+      console.error('Failed to place buy order');
       setBuyOrdering(false);
-      toast.error('주문을 처리하는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      toast.error('주문 접수에 실패했습니다');
       return;
     }
-
-
 
 
     const data = await response.json();
@@ -3828,10 +3942,121 @@ const [tradeSummary, setTradeSummary] = useState({
                 </div>
 
 
+              <div className="w-full flex flex-col xl:flex-row items-center justify-center gap-5 mt-4">
+
+
+                <div className="flex flex-col gap-2 items-start">
+
+                  <div className="flex flex-row items-center gap-2">
+
+                    <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
+                      {/* search nickname */}
+                      <div className="flex flex-row items-center gap-2">
+                        <input
+                          type="text"
+                          value={searchBuyer}
+                          onChange={(e) => setSearchBuyer(e.target.value)}
+                          placeholder="회원아이디"
+                          className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                        />
+
+                      </div>
+
+                      {/*}
+                      <div className="flex flex-row items-center gap-2">
+                        <input
+                          type="text"
+                          value={searchDepositName}
+                          onChange={(e) => setSearchDepositName(e.target.value)}
+                          placeholder="입금자명"
+                          className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                        />
+                      </div>
+                      */}
+
+                    </div>
+
+
+                    {/* 검색 버튼 */}
+                    <div className="
+                    w-32
+                    flex flex-row items-center gap-2">
+                      <button
+                        onClick={() => {
+                          setPageValue(1);
+                          fetchAllBuyer();
+                        }}
+                        className="bg-[#3167b4] text-white px-4 py-2 rounded-lg w-full"
+                        disabled={fetchingAllBuyer}
+                      >
+                        <div className="flex flex-row items-center justify-between gap-2">
+                          <Image
+                            src="/icon-search.png"
+                            alt="Search"
+                            width={20}
+                            height={20}
+                            className="rounded-lg w-5 h-5"
+                          />
+                          <span className="text-sm">
+                            {fetchingAllBuyer ? '검색중...' : '검색'}
+                          </span>
+                        </div>
+
+                      </button>
+                    </div>
+                    
+                  </div>                
+
+                  {/* 검색된 회원목록 */}
+                  <div className="mt-2 w-full max-h-[300px] overflow-y-auto
+                    border border-zinc-300 rounded-lg p-2 bg-white shadow-md">
+                    {allBuyer.length > 0 ? (
+                      allBuyer.map((buyer, index) => (
+                        <div
+                          key={index}
+                          className="flex flex-row items-center justify-between gap-2 p-2 hover:bg-zinc-100 cursor-pointer"
+                          onClick={() => {
+                            setBuyerNickname(buyer.nickname);
+                            setBuyerDepositName(buyer.buyer.depositName);
+                            setBuyerDepositBankName(buyer.buyer.depositBankName);
+                            setBuyerDepositBankAccountNumber(buyer.buyer.depositBankAccountNumber);
+
+
+                            setKrwAmount(0);
+
+                          }}
+                        >
+                          <div className="flex flex-col">
+                            <span className="text-sm text-green-600">
+                              {buyer.nickname}
+                            </span>
+                            <span className="text-sm font-semibold text-zinc-800">
+                              {buyer.buyer.depositName}
+                            </span>
+                            <span className="text-sm text-zinc-500">
+                              {buyer.buyer.depositBankName}
+                            </span>
+                            <span className="text-sm text-zinc-500">
+                              {buyer.buyer.depositBankAccountNumber}
+                            </span>
+                          </div>
+
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-sm text-zinc-500">
+                        검색된 회원이 없습니다.
+                      </div>
+                    )}
+                  </div>
+
+
+
+                </div>
 
 
                 <article
-                  className={` ${checkInputKrwAmount ? 'block' : 'hidden'}
+                  className={` w-full max-w-2xl
                       bg-white shadow-md rounded-lg p-4 border border-gray-300`}
                 >
                     
@@ -3839,6 +4064,24 @@ const [tradeSummary, setTradeSummary] = useState({
                     flex flex-col xl:flex-row gap-5 xl:gap-20 items-center ">
                         
                         <div className="flex flex-col gap-2 items-start">
+
+                          {/* 선택된 회원 정보 */}
+                          <div className="flex flex-row items-center gap-2">
+                            <span className="text-lg font-semibold text-zinc-500">
+                              {buyerNickname || '출금할 회원을 선택해주세요'}
+                            </span>
+                            {buyerNickname && (
+                              <div className="flex flex-row items-center gap-2">
+                                <span className="text-sm text-zinc-400">
+                                  ({buyerDepositName})
+                                </span>
+                                <span className="text-sm text-zinc-400">
+                                  {buyerDepositBankName} {buyerDepositBankAccountNumber}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+
 
                           <p className="mt-4 text-xl font-bold text-zinc-400">1 USDT = {
                             // currency format
@@ -3958,8 +4201,12 @@ const [tradeSummary, setTradeSummary] = useState({
                             </div>
                           ) : (
                               <button
-                                  disabled={krwAmount === 0 || agreementPlaceOrder === false}
-                                  className={`text-lg text-white  px-4 py-2 rounded-md ${krwAmount === 0 || agreementPlaceOrder === false ? 'bg-gray-500' : 'bg-green-500'}`}
+                                  disabled={krwAmount === 0 || agreementPlaceOrder === false
+                                    || !buyerNickname
+                                  }
+                                  className={`text-lg text-white  px-4 py-2 rounded-md ${krwAmount === 0 || agreementPlaceOrder === false
+                                    || !buyerNickname
+                                     ? 'bg-gray-500' : 'bg-green-500'}`}
 
 
                                   onClick={() => {
@@ -3985,7 +4232,7 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
 
-
+              </div>
 
 
 
@@ -4227,7 +4474,7 @@ const [tradeSummary, setTradeSummary] = useState({
                               </span>
                             </div>
                           </th>
-                          <th className="p-2">결제통장</th>
+                          <th className="p-2">회원아이디 / 회원통장</th>
                           {/*
                           <th className="p-2">{Payment_Amount}</th>
                           */}
@@ -4395,17 +4642,25 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
                             <td className="p-2">
-                              <div className="flex flex-col gap-2 items-center justify-center">
-                                <div className="text-lg font-semibold text-zinc-500">
-                                  {item.seller?.bankInfo?.bankName}
+
+                              <div className="flex flex-row items-center gap-2 justify-center">
+                                <div className="text-lg font-semibold text-yellow-600">
+                                  {item.buyer?.nickname}
                                 </div>
-                                <div className="text-lg font-semibold text-zinc-500">
-                                  {item.seller?.bankInfo?.accountNumber}
-                                </div>
-                                <div className="text-lg font-semibold text-zinc-500">
-                                  {item.seller?.bankInfo?.accountHolder}
+
+                                <div className="flex flex-col gap-2 items-center justify-center">
+                                  <div className="text-lg font-semibold text-zinc-500">
+                                    {item.buyer?.depositBankName}
+                                  </div>
+                                  <div className="text-lg font-semibold text-zinc-500">
+                                    {item.buyer?.depositBankAccountNumber}
+                                  </div>
+                                  <div className="text-lg font-semibold text-zinc-500">
+                                    {item.buyer?.depositName}
+                                  </div>
                                 </div>
                               </div>
+
                             </td>
 
                             {/*
