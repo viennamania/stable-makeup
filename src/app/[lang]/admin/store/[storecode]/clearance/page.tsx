@@ -1176,6 +1176,14 @@ export default function Index({ params }: any) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
+            body: JSON.stringify({
+            lang: params.lang,
+            storecode: params.storecode,
+            //storecode: "admin",
+            walletAddress: address,
+            searchMyOrders: searchMyOrders,
+            privateSale: true,
+        })
           })
         }).then(async (response) => {
           const data = await response.json();
@@ -2937,6 +2945,36 @@ export default function Index({ params }: any) {
 
                            
                               <td>
+
+                                {item?.buyer ? (
+                                  <div className="flex flex-col items-start justify-center gap-1">
+
+                                  {/* 
+                                    nickname
+                                    "matoto44"
+                                    depositBankName
+                                    "카카오뱅크"
+                                    depositBankAccountNumber
+                                    "3333338246503"
+                                    depositName
+                                    "허경수"
+                                    */}
+
+                                    <span className="text-sm text-zinc-400">
+                                      {item.buyer?.nickname}
+                                    </span>
+                                    <span className="text-sm text-zinc-400">
+                                      {item.buyer?.depositBankName}
+                                    </span>
+                                    <span className="text-sm text-zinc-400">
+                                      {item.buyer?.depositBankAccountNumber}
+                                    </span>
+                                    <span className="text-sm text-zinc-400">
+                                      {item.buyer?.depositName}
+                                    </span>
+
+                                  </div>
+                                ) : (
                                 <div className="flex flex-col items-start justify-center gap-1">
                                   <span className="text-sm text-zinc-400">
                                     {item.seller?.bankInfo?.bankName}
@@ -2948,6 +2986,9 @@ export default function Index({ params }: any) {
                                     {item.seller?.bankInfo?.accountHolder}
                                     </span>
                                 </div>
+                              )}
+
+
                               </td>
 
 

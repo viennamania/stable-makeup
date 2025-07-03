@@ -602,12 +602,17 @@ export async function cancelTradeByBuyer(
 
   // check orderId is valid ObjectId
   if (!ObjectId.isValid(orderId)) {
+
+    console.log('cancelTradeByBuyer invalid orderId: ' + orderId);
+
     return false;
   }
 
   // check walletAddress is valid
 
   if (!walletAddress) {
+
+    console.log('cancelTradeByBuyer invalid walletAddress: ' + walletAddress);
     return false;
   }
 
@@ -616,13 +621,15 @@ export async function cancelTradeByBuyer(
   // update status to 'cancelled'
 
   const result = await collection.updateOne(
-    { _id: new ObjectId(orderId), 'buyer.walletAddress': walletAddress, status: 'accepted' },
+    { _id: new ObjectId(orderId), 'buyer.walletAddress': walletAddress, status: 'paymentRequested' },
     { $set: {
       status: 'cancelled',
       cancelTradeReason: cancelTradeReason,
       cancelledAt: new Date().toISOString(),
     } }
   );
+
+  console.log('cancelTradeByBuyer result: ' + JSON.stringify(result));
 
   const updated = await collection.findOne<UserProps>(
     { _id: new ObjectId(orderId) }

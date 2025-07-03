@@ -41,11 +41,11 @@ export async function POST(request: NextRequest) {
 
 
 
-
+    /*
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
     const authToken = process.env.TWILIO_AUTH_TOKEN;
     const client = twilio(accountSid, authToken);
-
+    
 
 
     let message = null;
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
     } catch (e) {
       console.error('Error sending SMS', e);
     }
-
+    */
 
 
 
