@@ -233,8 +233,11 @@ export async function POST(request: NextRequest) {
         feeAmount: settlementFeeAmountUSDT,
         feeAmountKRW: settlementFeeAmountKRW,
 
-        agentWalletAddress: agentFeeWalletAddress,
+
+        agentFeeWalletAddress: agentFeeWalletAddress,
         agentFeePercent: agentFeePercent,
+
+
 
         dealerAmount: agentFeeAmountUSDT,
         dealerAmountKRW: agentFeeAmountKRW,
