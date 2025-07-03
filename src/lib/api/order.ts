@@ -6475,9 +6475,11 @@ export async function updateBuyOrderSettlement(
   {
     orderId,
     settlement,
+    storecode,
   }: {
     orderId: string;
     settlement: any;
+    storecode: string;
   }
 ): Promise<boolean> {
   const client = await clientPromise;
@@ -6490,6 +6492,70 @@ export async function updateBuyOrderSettlement(
     } }
   );
   if (result.modifiedCount === 1) {
+
+
+
+
+
+    const collectionBuyorders = client.db('ultraman').collection('buyorders');
+    const collectionStore = client.db('ultraman').collection('stores');
+
+
+    // totalSettlementCount is count of all buyorders with settlement and storecode
+    const totalSettlementCount = await collectionBuyorders.countDocuments({
+        storecode: storecode,
+        settlement: {$exists: true}
+    });
+    console.log("totalSettlementCount", totalSettlementCount);
+    const totalSettlementAmountResult = await collectionBuyorders.aggregate([
+        {
+            $match: {
+                storecode: storecode,
+                settlement: {$exists: true}
+            }
+        },
+        {
+            $group: {
+                _id: null,
+                totalSettlementAmount: { $sum: "$settlement.settlementAmount" },
+
+                totalSettlementAmountKRW: { $sum: { $toDouble: "$settlement.settlementAmountKRW" } },
+
+
+                totalFeeAmount: { $sum: "$settlement.feeAmount" },
+
+                totalFeeAmountKRW: { $sum: { $toDouble: "$settlement.feeAmountKRW" } },
+            }
+        }
+    ]).toArray();
+
+    const totalSettlementAmount = totalSettlementAmountResult[0].totalSettlementAmount;
+
+    const totalSettlementAmountKRW = totalSettlementAmountResult[0].totalSettlementAmountKRW;
+
+    const totalFeeAmount = totalSettlementAmountResult[0].totalFeeAmount;
+
+    const totalFeeAmountKRW = totalSettlementAmountResult[0].totalFeeAmountKRW;
+
+    // update store
+    const resultStore = await collectionStore.updateOne(
+        { storecode: storecode },
+        {
+            $set: {
+                totalSettlementCount: totalSettlementCount,
+                totalSettlementAmount: totalSettlementAmount,
+                totalSettlementAmountKRW: totalSettlementAmountKRW,
+                totalFeeAmount: totalFeeAmount,
+                totalFeeAmountKRW: totalFeeAmountKRW,
+            },
+        }
+    );
+
+
+
+
+
+
     return true;
   } else {
     return false;

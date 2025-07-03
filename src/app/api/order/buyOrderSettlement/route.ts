@@ -253,6 +253,7 @@ export async function POST(request: NextRequest) {
   const result = await updateBuyOrderSettlement({
     orderId: orderId,
     settlement: settlement,
+    storecode: buyOrder.store.storecode, // Assuming storecode is available in the buyOrder
   });
 
 
