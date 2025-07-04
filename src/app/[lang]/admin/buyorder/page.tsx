@@ -1690,8 +1690,10 @@ export default function Index({ params }: any) {
 
     index: number,
     orderId: string,
-    paymentAmount: number,
-    paymentAmountUsdt: number,
+    //paymentAmount: number,
+    krwAmount: number,
+    //paymentAmountUsdt: number,
+    usdtAmount: number,
 
     buyerWalletAddress: string,
 
@@ -1708,7 +1710,7 @@ export default function Index({ params }: any) {
 
     // check balance
     // if balance is less than paymentAmount, then return
-    if (balance < paymentAmountUsdt) {
+    if (balance < usdtAmount) {
       toast.error(Insufficient_balance);
       return;
     }
@@ -1735,7 +1737,7 @@ export default function Index({ params }: any) {
         const transaction = transfer({
           contract,
           to: buyerWalletAddress,
-          amount: paymentAmountUsdt,
+          amount: usdtAmount,
         });
 
 
@@ -1799,7 +1801,7 @@ export default function Index({ params }: any) {
                 lang: params.lang,
                 storecode: storecode,
                 orderId: orderId,
-                paymentAmount: paymentAmount,
+                paymentAmount: krwAmount,
                 transactionHash: transactionHash,
                 ///isSmartAccount: activeWallet === inAppConnectWallet ? false : true,
                 isSmartAccount: false,
@@ -1871,6 +1873,10 @@ export default function Index({ params }: any) {
 
 
 
+
+
+
+  
   
   // array of rollbackingPayment
   const [rollbackingPayment, setRollbackingPayment] = useState([] as boolean[]);
@@ -5162,11 +5168,11 @@ const fetchBuyOrders = async () => {
                                               index,
                                               item._id,
                                               
-                                              paymentAmounts[index],
+                                              //paymentAmounts[index],
+                                              item.krwAmount,
 
-  
-
-                                              paymentAmountsUsdt[index],
+                                              //paymentAmountsUsdt[index],
+                                              item.usdtAmount,
 
 
                                               item.walletAddress,
