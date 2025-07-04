@@ -1784,6 +1784,7 @@ export default function Index({ params }: any) {
         
       try {
 
+          /*
           const transactionResult = await sendTransaction({
             transaction: transaction,
             account: activeAccount as any,
@@ -1792,6 +1793,15 @@ export default function Index({ params }: any) {
           const receipt = await waitForReceipt(transactionResult);
 
           const transactionHash = receipt.transactionHash;
+          */
+
+
+          const { transactionHash } = await sendAndConfirmTransaction({
+            transaction: transaction,
+            account: activeAccount as any,
+          });
+
+
 
 
 
@@ -2787,6 +2797,7 @@ const fetchBuyOrders = async () => {
               <ConnectButton
                 client={client}
                 wallets={wallets}
+                chain={polygon}
 
                 /*
                 accountAbstraction={{
