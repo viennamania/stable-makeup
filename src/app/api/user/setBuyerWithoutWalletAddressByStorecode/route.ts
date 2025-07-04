@@ -134,6 +134,7 @@ export async function POST(request: NextRequest) {
         result: "User already exists",
         walletAddress: user.walletAddress,
         storecode: user?.storecode,
+        buyOrderStatus: user?.buyOrderStatus,
       });
     }
 
