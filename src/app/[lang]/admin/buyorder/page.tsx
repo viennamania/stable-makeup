@@ -1747,7 +1747,7 @@ export default function Index({ params }: any) {
         const transaction = transfer({
           contract,
           to: buyerWalletAddress,
-          amount: usdtAmount,
+          amount: paymentAmountUsdt,
         });
 
 
@@ -1776,20 +1776,20 @@ export default function Index({ params }: any) {
 
 
 
-        /*
+        
         const { transactionHash } = await sendTransaction({
           account: activeAccount as any,
           transaction,
         });
-        */
+        
       
         
-        
+        /*
         const { transactionHash } = await sendAndConfirmTransaction({
           account: activeAccount as any,
           transaction: transaction,
         });
-        
+        */
         
 
 
@@ -1856,7 +1856,7 @@ export default function Index({ params }: any) {
 
             toast.success(Payment_has_been_confirmed);
             playSong();
-            
+
           } else {
             toast.error('결제확인이 실패했습니다.');
           }
