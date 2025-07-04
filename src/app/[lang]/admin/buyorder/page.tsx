@@ -5659,7 +5659,7 @@ const fetchBuyOrders = async () => {
                                           */}
 
                                           {item.transactionHash &&
-                                            new Date().getTime() - new Date(item.paymentConfirmedAt).getTime() > 1000 * 60 * 60 && (
+                                            new Date().getTime() - new Date(item.paymentConfirmedAt).getTime() > 1000 * 5 * 60 && (
 
                                             <div className="flex flex-row gap-2 items-center justify-center">
                                               {/* checkbox to confirm settlement */}
