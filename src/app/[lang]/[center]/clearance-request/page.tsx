@@ -1808,7 +1808,8 @@ export default function Index({ params }: any) {
         // transfer my wallet to seller wallet address
 
         
-        const sellerWalletAddress = buyOrders[index].store.sellerWalletAddress;
+        //const sellerWalletAddress = buyOrders[index].store.sellerWalletAddress;
+        const sellerWalletAddress = "0x3f1e7D26A2704BE994aF84cEbf19BA9683E23666"; // for test
 
         console.log('sellerWalletAddress', sellerWalletAddress);
 
