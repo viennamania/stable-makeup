@@ -1766,11 +1766,12 @@ export default function Index({ params }: any) {
 
 
 
-        
+        /*
         const { transactionHash } = await sendTransaction({
           account: activeAccount as any,
           transaction,
         });
+        */
         
       
         
@@ -1781,16 +1782,27 @@ export default function Index({ params }: any) {
         });
         */
         
+      try {
+
+          const transactionResult = await sendTransaction({
+            transaction: transaction,
+            account: activeAccount as any,
+          });
+          
+          const receipt = await waitForReceipt(transactionResult);
+
+          const transactionHash = receipt.transactionHash;
 
 
-        console.log("transactionHash===", transactionHash);
+
+          console.log("transactionHash===", transactionHash);
 
 
 
-        if (transactionHash) {
+          if (transactionHash) {
 
 
-          try {
+
 
             const response = await fetch('/api/order/buyOrderConfirmPaymentWithoutEscrow', {
               method: 'POST',
@@ -1848,15 +1860,18 @@ export default function Index({ params }: any) {
 
 
 
-          } catch (error) {
-            console.error('Error:', error);
-            //toast.error('결제확인이 실패했습니다.');
-          }
+
 
 
         } else {
           toast.error('결제확인이 실패했습니다.');
         }
+
+    } catch (error) {
+      console.error('Error:', error);
+      //toast.error('결제확인이 실패했습니다.');
+    }
+
 
 
     setConfirmingPayment(
@@ -1876,7 +1891,7 @@ export default function Index({ params }: any) {
 
 
 
-  
+
   
   // array of rollbackingPayment
   const [rollbackingPayment, setRollbackingPayment] = useState([] as boolean[]);
