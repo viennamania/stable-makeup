@@ -99,9 +99,6 @@ import {
     useSearchParams,
 } from "next//navigation";
 
-import { N } from 'ethers';
-
-
 
 export default function SettingsPage({ params }: any) {
 

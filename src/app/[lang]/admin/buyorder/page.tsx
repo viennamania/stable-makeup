@@ -27,6 +27,8 @@ import {
   sendTransaction,
   waitForReceipt,
   sendBatchTransaction,
+
+  readContract,
 } from "thirdweb";
 
 
@@ -78,7 +80,7 @@ import { get } from "http";
 
 
 import { useSearchParams } from 'next/navigation';
-import { N } from "ethers";
+
 import { getAllUsersForSettlementOfStore } from "@/lib/api/user";
 
 
@@ -546,18 +548,25 @@ export default function Index({ params }: any) {
     // get the balance
     const getBalance = async () => {
 
+      if (!address) {
+        setBalance(0);
+        return;
+      }
+
       ///console.log('getBalance address', address);
 
       
       const result = await balanceOf({
         contract,
-        address: address || "",
+        address: address,
       });
 
   
-      //console.log(result);
+      console.log('getBalance result', result);
   
       setBalance( Number(result) / 10 ** 6 );
+
+
 
 
     };
@@ -565,12 +574,13 @@ export default function Index({ params }: any) {
 
     if (address) getBalance();
 
+    
     const interval = setInterval(() => {
       if (address) getBalance();
     } , 5000);
 
-
     return () => clearInterval(interval);
+    
 
   } , [address, contract]);
 
@@ -1734,6 +1744,10 @@ export default function Index({ params }: any) {
         //const buyerWalletAddress = buyOrders[index].walletAddress;
 
 
+      try {
+
+
+
         const transaction = transfer({
           contract,
           to: buyerWalletAddress,
@@ -1782,7 +1796,7 @@ export default function Index({ params }: any) {
         });
         */
         
-      try {
+
 
           /*
           const transactionResult = await sendTransaction({
@@ -1800,10 +1814,6 @@ export default function Index({ params }: any) {
             transaction: transaction,
             account: activeAccount as any,
           });
-
-
-
-
 
           console.log("transactionHash===", transactionHash);
 

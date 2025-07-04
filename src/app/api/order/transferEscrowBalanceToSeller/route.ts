@@ -56,7 +56,7 @@ import {
 
 } from "thirdweb/extensions/erc20";
 import { stat } from "fs";
-import { N } from "ethers";
+
 
 
 

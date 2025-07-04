@@ -11,7 +11,7 @@ import {
 
 
 
-import { ethers } from "ethers";
+//import { ethers } from "ethers";
 
 import {
   createThirdwebClient,
@@ -23,6 +23,11 @@ import {
 
 
 } from "thirdweb";
+
+import { ethers } from "ethers";
+
+
+
 
 //import { polygonAmoy } from "thirdweb/chains";
 import {

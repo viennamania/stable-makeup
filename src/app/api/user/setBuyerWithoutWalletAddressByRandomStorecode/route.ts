@@ -12,7 +12,7 @@ import {
 
 
 
-import { ethers } from "ethers";
+//import { ethers } from "ethers";
 
 import {
   createThirdwebClient,
@@ -37,7 +37,9 @@ import {
   getWalletBalance,
   
  } from "thirdweb/wallets";
-import { get } from "http";
+
+import { ethers } from "ethers";
+
 
 
  if (!process.env.THIRDWEB_ENGINE_URL) {

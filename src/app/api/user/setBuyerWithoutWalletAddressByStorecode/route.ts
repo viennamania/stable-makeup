@@ -13,6 +13,8 @@ import {
 
 import { ethers } from "ethers";
 
+
+
 import {
   createThirdwebClient,
   eth_getTransactionByHash,
@@ -38,6 +40,8 @@ import {
  } from "thirdweb/wallets";
 
 
+ /*
+
  if (!process.env.THIRDWEB_ENGINE_URL) {
   throw new Error("THIRDWEB_ENGINE_URL is not defined");
 }
@@ -45,7 +49,7 @@ import {
 if (!process.env.THIRDWEB_ENGINE_ACCESS_TOKEN) {
   throw new Error("THIRDWEB_ENGINE_ACCESS_TOKEN is not defined");
 }
-
+*/
 
 export async function POST(request: NextRequest) {
 
@@ -137,6 +141,9 @@ export async function POST(request: NextRequest) {
     
     const userWalletPrivateKey = ethers.Wallet.createRandom().privateKey;
 
+
+
+
     //console.log("escrowWalletPrivateKey", escrowWalletPrivateKey);
 
     if (!userWalletPrivateKey) {
@@ -188,11 +195,12 @@ export async function POST(request: NextRequest) {
         result: null,
       });
     }
+    
 
 
     const userWalletAddress = account.address;
 
-
+    
 
 
 

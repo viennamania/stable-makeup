@@ -9,7 +9,7 @@ import {
 } from '@lib/api/user';
 
 
-import { ethers } from "ethers";
+//import { ethers } from "ethers";
 
 import {
   createThirdwebClient,
@@ -50,6 +50,7 @@ import {
 
 //import { Engine } from "@thirdweb-dev/engine";
 
+/*
 if (!process.env.THIRDWEB_ENGINE_URL) {
   throw new Error("THIRDWEB_ENGINE_URL is not defined");
 }
@@ -57,6 +58,7 @@ if (!process.env.THIRDWEB_ENGINE_URL) {
 if (!process.env.THIRDWEB_ENGINE_ACCESS_TOKEN) {
   throw new Error("THIRDWEB_ENGINE_ACCESS_TOKEN is not defined");
 }
+*/
 
 /*
 const engine = new Engine({
@@ -119,6 +121,7 @@ export async function POST(request: NextRequest) {
 
     let escrowWalletPrivateKey = '';
 
+    /*
     if (!isSmartAccount) {
 
 
@@ -147,14 +150,6 @@ export async function POST(request: NextRequest) {
       //console.log("resultCreateWallet", resultCreateWallet);
 
 
-      /*
-      {
-        "result": {
-          "walletAddress": "0x....",
-          "status": "success"
-        }
-      }
-      */
 
       if (!resultCreateWallet) {
         return NextResponse.json({
@@ -236,7 +231,7 @@ export async function POST(request: NextRequest) {
       escrowWalletAddress = account.address;
 
     }
-
+    */
 
 
     const result = await setEscrowWalletAddressByWalletAddress(
