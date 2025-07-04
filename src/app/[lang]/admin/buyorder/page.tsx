@@ -1693,7 +1693,7 @@ export default function Index({ params }: any) {
     paymentAmount: number,
     paymentAmountUsdt: number,
 
-    //storecode: string,
+    buyerWalletAddress: string,
 
   ) => {
     // confirm payment
@@ -1705,18 +1705,6 @@ export default function Index({ params }: any) {
     //console.log('escrowBalance', escrowBalance);
     //console.log('paymentAmountUsdt', paymentAmountUsdt);
     
-    /*
-    if (escrowBalance < paymentAmountUsdt) {
-      toast.error(Escrow_balance_is_less_than_payment_amount);
-      return;
-    }
-    
-    // if escrowNativeBalance is less than 0.1, then return
-    if (escrowNativeBalance < 0.1) {
-      toast.error('POL balance is less than 0.1');
-      return;
-    }
-      */
 
     // check balance
     // if balance is less than paymentAmount, then return
@@ -1741,8 +1729,8 @@ export default function Index({ params }: any) {
 
         // transfer my wallet to buyer wallet address
 
-        const buyerWalletAddress = buyOrders[index].walletAddress;
-        const usdtAmount = buyOrders[index].usdtAmount;
+        //const buyerWalletAddress = buyOrders[index].walletAddress;
+
 
         const transaction = transfer({
           contract,
@@ -1799,29 +1787,28 @@ export default function Index({ params }: any) {
 
         if (transactionHash) {
 
-          const response = await fetch('/api/order/buyOrderConfirmPaymentWithoutEscrow', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              lang: params.lang,
-              storecode: storecode,
-              orderId: orderId,
-              paymentAmount: paymentAmount,
-              transactionHash: transactionHash,
-              ///isSmartAccount: activeWallet === inAppConnectWallet ? false : true,
-              isSmartAccount: false,
-            })
-          });
 
-          const data = await response.json();
+          try {
 
-          //console.log('data', data);
+            const response = await fetch('/api/order/buyOrderConfirmPaymentWithoutEscrow', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                lang: params.lang,
+                storecode: storecode,
+                orderId: orderId,
+                paymentAmount: paymentAmount,
+                transactionHash: transactionHash,
+                ///isSmartAccount: activeWallet === inAppConnectWallet ? false : true,
+                isSmartAccount: false,
+              })
+            });
 
-          if (data.result) {
-            
-            ///fetchBuyOrders();
+            const data = await response.json();
+
+            //console.log('data', data);
 
             await fetch('/api/order/getAllBuyOrders', {
               method: 'POST',
@@ -1857,8 +1844,11 @@ export default function Index({ params }: any) {
             toast.success(Payment_has_been_confirmed);
             playSong();
 
-          } else {
-            toast.error('결제확인이 실패했습니다.');
+
+
+          } catch (error) {
+            console.error('Error:', error);
+            //toast.error('결제확인이 실패했습니다.');
           }
 
 
@@ -4946,7 +4936,8 @@ const fetchBuyOrders = async () => {
                                             item._id,
                                             paymentAmounts[index],
                                             paymentAmountsUsdt[index],
-                                            //item.storecode,
+                                            
+                                            item.walletAddress,
                                           );
                                         }}
 
@@ -5170,9 +5161,15 @@ const fetchBuyOrders = async () => {
                                             confirmPayment(
                                               index,
                                               item._id,
+                                              
                                               paymentAmounts[index],
+
+  
+
                                               paymentAmountsUsdt[index],
-                                              //item.storecode,
+
+
+                                              item.walletAddress,
                                             );
                                           }}
 
