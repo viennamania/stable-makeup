@@ -69,7 +69,7 @@ import { add } from "thirdweb/extensions/farcaster/keyGateway";
 
 import AppBarComponent from "@/components/Appbar/AppBar";
 import { getDictionary } from "../../../../dictionaries";
-import Chat from "@/components/Chat";
+//import Chat from "@/components/Chat";
 import { ClassNames } from "@emotion/react";
 
 

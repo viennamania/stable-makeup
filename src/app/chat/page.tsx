@@ -2,8 +2,6 @@
 
 import { toast } from 'react-hot-toast';
 
-import '@sendbird/uikit-react/dist/index.css';
-
 
 import { client } from "../client";
 
@@ -48,8 +46,6 @@ const DynamicAppWithNoSSR = dynamic(() => import("../../components/Chat"), {
 
 });
 */
-
-import Chat from "../../components/Chat";
 
 
 
@@ -346,23 +342,6 @@ function ChatPageContent() {
           </div>
 
 
-          {/*
-          <DynamicAppWithNoSSR
-          />
-          */}
-
-          {channel && address && nickname && avatar && (
-            <Chat
-
-              channel={channel}
-
-              userId={ address }
-
-              nickname={ nickname }
-
-              profileUrl={ avatar }
-            />
-          )}
 
 
 

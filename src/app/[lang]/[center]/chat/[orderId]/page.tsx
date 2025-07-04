@@ -60,7 +60,7 @@ import AppBarComponent from "@/components/Appbar/AppBar";
 import { getDictionary } from "../../../../dictionaries";
 
 
-//import Chat from "@/components/Chat";
+////import Chat from "@/components/Chat";
 
 
 // dynamic import for chat
@@ -77,8 +77,8 @@ const Chat = dynamic(() => import('@/components/Chat'), {
 
 
 
-import SendbirdProvider from "@sendbird/uikit-react/SendbirdProvider";
-import OpenChannel from '@sendbird/uikit-react/OpenChannel';
+//import SendbirdProvider from "@sendbird/uikit-react/SendbirdProvider";
+//import OpenChannel from '@sendbird/uikit-react/OpenChannel';
 
 
 import { add } from 'thirdweb/extensions/farcaster/keyGateway';
@@ -131,15 +131,6 @@ interface SellOrder {
 
 
 
-
-const APP_ID = "CCD67D05-55A6-4CA2-A6B1-187A5B62EC9D";
-
-
-
-let Chat = dynamic(() => import('@/components/Chat'), {
-  ssr: false,
-  loading: () => <div className="w-full h-full flex items-center justify-center">Loading...</div>,
-});
 
 
 
@@ -1575,21 +1566,6 @@ export default function Index({ params }: any) {
     }, [params.center]);
 
 
-
-  useEffect(() => {
-
-    if (!orderId || !address || !user ) {
-      return;
-    }
-
-    // Dynamically load Chat component
-    Chat = dynamic(() => import('@/components/Chat'), {
-      ssr: false,
-      loading: () => <div className="w-full h-full flex items-center justify-center">Loading...</div>,
-    });
-
-
-  }, [orderId, address, user]);
 
 
 
@@ -3503,33 +3479,6 @@ export default function Index({ params }: any) {
 
 
                       </div>
-
-
-                    
-                      {address && orderId && user && (
-
-                        <div className=' w-full flex items-center justify-center mt-4
-                        bg-white shadow-lg rounded-lg p-4
-                        border border-gray-200'>
-
-                      
-                            
-                            <Chat
-
-                              channel={orderId}
-
-                              userId={ address}
-
-                              nickname={ user?.nickname }
-
-                              profileUrl={ user?.avatar }
-                            />
-                            
-                          
-                        </div>
-
-                      )}
-
 
 
                     

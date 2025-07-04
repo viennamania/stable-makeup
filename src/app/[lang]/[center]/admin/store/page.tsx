@@ -66,18 +66,12 @@ import { add } from "thirdweb/extensions/farcaster/keyGateway";
 
 import AppBarComponent from "@/components/Appbar/AppBar";
 import { getDictionary } from "../../../../dictionaries";
-import Chat from "@/components/Chat";
-import { ClassNames } from "@emotion/react";
 
 
 import useSound from 'use-sound';
-import { it } from "node:test";
-import { get } from "http";
 
 
 import { useSearchParams } from 'next/navigation';
-import { N } from "ethers";
-
 
 
 

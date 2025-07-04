@@ -59,9 +59,6 @@ import { add } from "thirdweb/extensions/farcaster/keyGateway";
 
 import AppBarComponent from "@/components/Appbar/AppBar";
 import { getDictionary } from "../../../dictionaries";
-import Chat from "@/components/Chat";
-
-
 
 
 interface SellOrder {

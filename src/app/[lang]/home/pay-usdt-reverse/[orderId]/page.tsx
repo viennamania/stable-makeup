@@ -61,7 +61,7 @@ import { getDictionary } from "../../../../dictionaries";
 import { Pay } from 'twilio/lib/twiml/VoiceResponse';
 
 
-import Chat from "@/components/Chat";
+//import Chat from "@/components/Chat";
 import { add } from 'thirdweb/extensions/farcaster/keyGateway';
 
 
@@ -3509,21 +3509,6 @@ export default function Index({ params }: any) {
                       ))}
 
                   </div>
-
-                  {orderId && address && user && user.nickname && buyOrders.length > 0 && buyOrders[0].status !== 'paymentConfirmed' && buyOrders[0].status !== 'ordered' && (
-                    <div className=' w-full hidden'>
-                      <Chat
-
-                        channel={orderId}
-
-                        userId={ user.nickname }
-
-                        nickname={ user.nickname }
-
-                        profileUrl={ user.avatar }
-                      />
-                    </div>
-                  )}
 
 
 

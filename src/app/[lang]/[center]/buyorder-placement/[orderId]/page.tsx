@@ -65,8 +65,6 @@ import { getDictionary } from "../../../../dictionaries";
 import { Pay } from 'twilio/lib/twiml/VoiceResponse';
 
 
-import Chat from "@/components/Chat";
-
 
 
 
@@ -2737,20 +2735,6 @@ export default function Index({ params }: any) {
 
                 </div>
 
-                {orderId && address && user && user.nickname && user.avatar && (
-                  <div className=' w-full '>
-                    <Chat
-
-                      channel={orderId}
-
-                      userId={ user.nickname }
-
-                      nickname={ user.nickname }
-
-                      profileUrl={ user.avatar }
-                    />
-                  </div>
-                )}
 
 
 
