@@ -54,7 +54,7 @@ import {
 
 
 
-
+/*
 if (!process.env.THIRDWEB_ENGINE_URL) {
   throw new Error("THIRDWEB_ENGINE_URL is not defined");
 }
@@ -62,11 +62,14 @@ if (!process.env.THIRDWEB_ENGINE_URL) {
 if (!process.env.THIRDWEB_ENGINE_ACCESS_TOKEN) {
   throw new Error("THIRDWEB_ENGINE_ACCESS_TOKEN is not defined");
 }
-
+*/
 
 
 // nextjs-app
+/*
 export const maxDuration = 60; // This function can run for a maximum of 5 seconds
+*/
+
 
 //nextjs /pages/api
 /*
@@ -178,6 +181,7 @@ export async function POST(request: NextRequest) {
     let queueId = "";
 
 
+    /*
     if (isSmartAccount) {
 
       const escrowWalletPrivateKey = user.escrowWalletPrivateKey;
@@ -283,18 +287,10 @@ export async function POST(request: NextRequest) {
           currencyAddress: tokenContractAddressUSDT,
           amount: sendAmountToStore,
 
-          /// queue error
-          /*
-          txOverrides: {
-            gas: "530000",
-            maxFeePerGas: "1000000000",
-            maxPriorityFeePerGas: "1000000000",
-            value: "10000000000",
-          },
-          */
 
         }),
       });
+
           
 
 
@@ -317,12 +313,7 @@ export async function POST(request: NextRequest) {
 
     }
 
-
-
-
-
-    console.log("Sent successfully!");
-
+    */
 
 
     const result = await buyOrderRollbackPayment({

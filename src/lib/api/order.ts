@@ -3390,7 +3390,7 @@ export async function buyOrderRollbackPayment(data: any) {
     
 
 
-    const updated = await collection.findOne<UserProps>(
+    const updated = await collection.findOne<any>(
       { _id: new ObjectId(data.orderId+'') }
     );
 
@@ -3507,12 +3507,20 @@ export async function cancelTradeBySeller(
 
   if (result) {
 
+    const order = await collection.findOne<any>(
+      { _id: new ObjectId(orderId) },
+      { projection: { storecode: 1, walletAddress: 1 } }
+    );
+
 
     // update user status to 'cancelled'
     const userCollection = client.db('ultraman').collection('users');
 
     await userCollection.updateOne(
-      { walletAddress: walletAddress, storecode: storecode },
+      {
+        walletAddress: order.walletAddress,
+        storecode: order.storecode,
+      },
       { $set: { buyOrderStatus: 'cancelled' } }
     );
 
