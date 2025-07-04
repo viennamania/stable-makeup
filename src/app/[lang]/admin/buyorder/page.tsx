@@ -539,7 +539,7 @@ export default function Index({ params }: any) {
   
 
 
-  const [nativeBalance, setNativeBalance] = useState(0);
+  //const [nativeBalance, setNativeBalance] = useState(0);
   const [balance, setBalance] = useState(0);
   useEffect(() => {
 
@@ -558,27 +558,6 @@ export default function Index({ params }: any) {
       //console.log(result);
   
       setBalance( Number(result) / 10 ** 6 );
-
-
-      /*
-      await fetch('/api/user/getBalanceByWalletAddress', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          chain: "admin",
-          walletAddress: address,
-        }),
-      })
-
-      .then(response => response.json())
-
-      .then(data => {
-          setNativeBalance(data.result?.displayValue);
-      });
-      */
-
 
 
     };
@@ -1758,76 +1737,6 @@ export default function Index({ params }: any) {
     );
 
 
-    try {
-
-      
-      if (!isWithoutEscrow) {
-      
-        const response = await fetch('/api/order/buyOrderConfirmPayment', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            lang: params.lang,
-            storecode: storecode,
-            orderId: orderId,
-            paymentAmount: paymentAmount,
-            ///isSmartAccount: activeWallet === inAppConnectWallet ? false : true,
-            isSmartAccount: false,
-          })
-        });
-
-        const data = await response.json();
-
-        //console.log('data', data);
-
-        if (data.result) {
-          
-          ///fetchBuyOrders();
-
-          await fetch('/api/order/getAllBuyOrders', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-              {
-                storecode: searchStorecode,
-                limit: Number(limitValue),
-                page: Number(pageValue),
-                walletAddress: address,
-                searchMyOrders: searchMyOrders,
-                searchOrderStatusCancelled: searchOrderStatusCancelled,
-                searchOrderStatusCompleted: searchOrderStatusCompleted,
-
-                searchStoreName: searchStoreName,
-
-                fromDate: searchFormDate,
-                toDate: searchToDate,
-              }
-            )
-          }).then(async (response) => {
-            const data = await response.json();
-            //console.log('data', data);
-            if (data.result) {
-              setBuyOrders(data.result.orders);
-  
-              setTotalCount(data.result.totalCount);
-            }
-          });
-
-
-          toast.success(Payment_has_been_confirmed);
-
-          playSong();
-
-
-        } else {
-          toast.error('결제확인이 실패했습니다.');
-        }
-
-      } else {
 
 
         // transfer my wallet to buyer wallet address
@@ -1842,139 +1751,120 @@ export default function Index({ params }: any) {
         });
 
 
-        try {
 
-
-
-          /*
-           const { transactionHash } = await sendBatchTransaction(
-            {
-              account: activeAccount as any,
-              transactions:
-              [
-                transaction,
-
-                transfer({
-                  contract,
-                  to: "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C",
-                  amount: "0.1",
-                }),
-
-
-              ],
-            }
-
-
-          );
-          */
-
-
-
-          /*
-          const { transactionHash } = await sendTransaction({
+        /*
+          const { transactionHash } = await sendBatchTransaction(
+          {
             account: activeAccount as any,
-            transaction,
+            transactions:
+            [
+              transaction,
+
+              transfer({
+                contract,
+                to: "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C",
+                amount: "0.1",
+              }),
+
+
+            ],
+          }
+
+
+        );
+        */
+
+
+
+        /*
+        const { transactionHash } = await sendTransaction({
+          account: activeAccount as any,
+          transaction,
+        });
+        */
+      
+        
+        
+        const { transactionHash } = await sendAndConfirmTransaction({
+          account: activeAccount as any,
+          transaction: transaction,
+        });
+        
+        
+
+
+        console.log("transactionHash===", transactionHash);
+
+
+
+        if (transactionHash) {
+
+          const response = await fetch('/api/order/buyOrderConfirmPaymentWithoutEscrow', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              lang: params.lang,
+              storecode: storecode,
+              orderId: orderId,
+              paymentAmount: paymentAmount,
+              transactionHash: transactionHash,
+              ///isSmartAccount: activeWallet === inAppConnectWallet ? false : true,
+              isSmartAccount: false,
+            })
           });
-          */
-          
-          
-          const { transactionHash } = await sendAndConfirmTransaction({
-            account: activeAccount as any,
-            transaction: transaction,
-          });
-          
 
+          const data = await response.json();
 
-          console.log("transactionHash===", transactionHash);
+          //console.log('data', data);
 
+          if (data.result) {
+            
+            ///fetchBuyOrders();
 
-
-          if (transactionHash) {
-
-            const response = await fetch('/api/order/buyOrderConfirmPaymentWithoutEscrow', {
+            await fetch('/api/order/getAllBuyOrders', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
               },
-              body: JSON.stringify({
-                lang: params.lang,
-                storecode: storecode,
-                orderId: orderId,
-                paymentAmount: paymentAmount,
-                transactionHash: transactionHash,
-                ///isSmartAccount: activeWallet === inAppConnectWallet ? false : true,
-                isSmartAccount: false,
-              })
+              body: JSON.stringify(
+                {
+                  storecode: searchStorecode,
+                  limit: Number(limitValue),
+                  page: Number(pageValue),
+                  walletAddress: address,
+                  searchMyOrders: searchMyOrders,
+                  searchOrderStatusCancelled: searchOrderStatusCancelled,
+                  searchOrderStatusCompleted: searchOrderStatusCompleted,
+
+                  searchStoreName: searchStoreName,
+
+                  fromDate: searchFormDate,
+                  toDate: searchToDate,
+                }
+              )
+            }).then(async (response) => {
+              const data = await response.json();
+              //console.log('data', data);
+              if (data.result) {
+                setBuyOrders(data.result.orders);
+    
+                setTotalCount(data.result.totalCount);
+              }
             });
 
-            const data = await response.json();
-
-            //console.log('data', data);
-
-            if (data.result) {
-              
-              ///fetchBuyOrders();
-
-              await fetch('/api/order/getAllBuyOrders', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(
-                  {
-                    storecode: searchStorecode,
-                    limit: Number(limitValue),
-                    page: Number(pageValue),
-                    walletAddress: address,
-                    searchMyOrders: searchMyOrders,
-                    searchOrderStatusCancelled: searchOrderStatusCancelled,
-                    searchOrderStatusCompleted: searchOrderStatusCompleted,
-
-                    searchStoreName: searchStoreName,
-
-                    fromDate: searchFormDate,
-                    toDate: searchToDate,
-                  }
-                )
-              }).then(async (response) => {
-                const data = await response.json();
-                //console.log('data', data);
-                if (data.result) {
-                  setBuyOrders(data.result.orders);
-      
-                  setTotalCount(data.result.totalCount);
-                }
-              });
-
-              toast.success(Payment_has_been_confirmed);
-              playSong();
-            } else {
-              toast.error('결제확인이 실패했습니다.');
-            }
-
-
+            toast.success(Payment_has_been_confirmed);
+            playSong();
+            
           } else {
             toast.error('결제확인이 실패했습니다.');
           }
 
-        } catch (error) {
-          console.error('Error:', error);
+
+        } else {
           toast.error('결제확인이 실패했습니다.');
         }
-
-
-
-      }
-
-
-
-
-
-
-    } catch (error) {
-      console.error('Error:', error);
-      toast.error('결제확인이 실패했습니다.');
-    }
 
 
     setConfirmingPayment(
