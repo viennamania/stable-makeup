@@ -3948,7 +3948,7 @@ const fetchBuyOrders = async () => {
                         <td className="p-2">
 
                           <div className="
-                            w-48
+                            w-52
                             flex flex-row items-center justify-center gap-2">
                             {/* status */}
                             {item.status === 'ordered' && (
@@ -4045,8 +4045,8 @@ const fetchBuyOrders = async () => {
                                   <span className="text-lg font-semibold text-zinc-500">
                                     {
                                       item.seller?.nickname &&
-                                      item.seller.nickname.length > 10 ?
-                                      item.seller.nickname.slice(0, 10) + '...' :
+                                      item.seller.nickname.length > 8 ?
+                                      item.seller.nickname.slice(0, 8) + '...' :
                                       item.seller?.nickname
                                     }
                                   </span>
