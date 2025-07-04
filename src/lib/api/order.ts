@@ -3367,11 +3367,13 @@ export async function buyOrderRollbackPayment(data: any) {
 
 
     // update user collection buyOrderStatus to "cancelled"
-    const order = await collection.findOne<UserProps>(
+    const order = await collection.findOne<any>(
       { _id: new ObjectId(data.orderId+'') },
       { projection: { storecode: 1, walletAddress: 1 } }
     );
+
     if (order) {
+      
       // update user collection buyOrderStatus to "cancelled"
       const userCollection = client.db('ultraman').collection('users');
       await userCollection.updateOne(
@@ -3381,6 +3383,7 @@ export async function buyOrderRollbackPayment(data: any) {
         },
         { $set: { buyOrderStatus: 'cancelled' } }
       );
+
     }
 
 
@@ -3507,6 +3510,7 @@ export async function cancelTradeBySeller(
 
     // update user status to 'cancelled'
     const userCollection = client.db('ultraman').collection('users');
+
     await userCollection.updateOne(
       { walletAddress: walletAddress, storecode: storecode },
       { $set: { buyOrderStatus: 'cancelled' } }
@@ -3514,7 +3518,8 @@ export async function cancelTradeBySeller(
 
 
 
-    console.log('cancelTradeBySeller result: ' + JSON.stringify(result));
+    //console.log('cancelTradeBySeller result: ' + JSON.stringify(result));
+
     const updated = await collection.findOne<UserProps>(
       { _id: new ObjectId(orderId) }
     );
