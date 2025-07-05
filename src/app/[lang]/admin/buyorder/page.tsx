@@ -3335,7 +3335,7 @@ const fetchBuyOrders = async () => {
               <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
               <div className="xl:w-2/3 w-full
-                flex flex-col xl:flex-row items-center justify-end gap-2">
+                flex flex-col xl:flex-row items-center justify-end gap-4">
 
                 <div className="flex flex-row items-center justify-center gap-2">
 
@@ -3379,7 +3379,8 @@ const fetchBuyOrders = async () => {
 
                 <div className="flex flex-col gap-2 items-center">
 
-                  <div className="flex flex-row gap-2 items-center">
+                  <div className="flex flex-row gap-2 items-center
+                    border-b border-zinc-300 pb-2">
                     
                     <div className="flex flex-col gap-2 items-center">
                       <div className="text-sm">총 PG 수수료(원)</div>
@@ -3412,9 +3413,12 @@ const fetchBuyOrders = async () => {
                         </span>
                       </div>
                     </div>
+
                   </div>
 
+
                   <div className="flex flex-row gap-2 items-center">
+
                     <div className="flex flex-col gap-2 items-center">
                       <div className="text-sm">총 AG 수수료(원)</div>
                       <div className="w-full flex flex-row items-cneter justify-end gap-1">
@@ -3445,6 +3449,7 @@ const fetchBuyOrders = async () => {
                         </span>
                       </div>
                     </div>
+
                   </div>
 
                 </div>
