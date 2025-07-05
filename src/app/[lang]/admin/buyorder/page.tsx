@@ -75,9 +75,6 @@ import { ClassNames } from "@emotion/react";
 
 
 import useSound from 'use-sound';
-import { it } from "node:test";
-import { get } from "http";
-
 
 import { useSearchParams } from 'next/navigation';
 
@@ -3008,14 +3005,18 @@ const fetchBuyOrders = async () => {
                     </div>
 
                     <div className="flex flex-row items-center justify-center  gap-2">
-                        <span className="text-sm text-zinc-500">
-                            잔액
+                        <Image
+                            src="/icon-tether.png"
+                            alt="USDT"
+                            width={100}
+                            height={100}
+                            className="w-6 h-6"
+                        />
+                        <span className="text-2xl xl:text-4xl font-semibold text-green-600"
+                          style={{ fontFamily: 'monospace' }}
+                        >
+                            {Number(balance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </span>
-                        <span className="text-2xl xl:text-4xl font-semibold text-green-600">
-                            {Number(balance).toFixed(2)}
-                        </span>
-                        {' '}
-                        <span className="text-sm">USDT</span>
                     </div>
 
                 </div>
