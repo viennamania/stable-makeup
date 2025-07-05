@@ -2978,20 +2978,17 @@ const fetchBuyOrders = async () => {
 
 
             {address && (
-                <div className="w-full flex flex-col xl:flex-row items-center justify-end gap-2">
+                <div className="w-full flex flex-col xl:flex-row items-center justify-end gap-4">
 
 
                     <div className="flex flex-row items-center justify-center gap-2">
                         <Image
                             src="/icon-shield.png"
                             alt="Wallet"
-                            width={100}
-                            height={100}
+                            width={50}
+                            height={50}
                             className="w-6 h-6"
                         />
-                        <span className="text-sm text-zinc-500">
-                          USDT통장
-                        </span>
                         <button
                             className="text-lg text-zinc-600 underline"
                             onClick={() => {
@@ -3008,8 +3005,8 @@ const fetchBuyOrders = async () => {
                         <Image
                             src="/icon-tether.png"
                             alt="USDT"
-                            width={100}
-                            height={100}
+                            width={50}
+                            height={50}
                             className="w-6 h-6"
                         />
                         <span className="text-2xl xl:text-4xl font-semibold text-green-600"
@@ -3293,7 +3290,8 @@ const fetchBuyOrders = async () => {
               p-4 rounded-lg shadow-md
               ">
 
-              <div className="xl:w-1/4 flex flex-row items-center justify-between gap-2">
+              <div className="xl:w-1/3 w-full
+                flex flex-row items-center justify-between gap-2">
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 거래수(건)</div>
                   <div className="text-xl font-semibold text-zinc-500">
@@ -3304,7 +3302,8 @@ const fetchBuyOrders = async () => {
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 거래금액(원)</div>
                   <div className="flex flex-row items-center justify-center gap-1">
-                    <span className="text-xl font-semibold text-yellow-600">
+                    <span className="text-xl font-semibold text-yellow-600"
+                      style={{ fontFamily: 'monospace' }}>
                       {tradeSummary.totalKrwAmount?.toLocaleString()}
                     </span>
                     <span className="text-sm text-zinc-500">원</span>
@@ -3321,7 +3320,8 @@ const fetchBuyOrders = async () => {
                       height={20}
                       className="w-5 h-5"
                     />
-                    <span className="text-xl font-semibold text-green-600">
+                    <span className="text-xl font-semibold text-green-600"
+                      style={{ fontFamily: 'monospace' }}>
                       {tradeSummary.totalUsdtAmount
                        ? tradeSummary.totalUsdtAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                        : '0.00'}
@@ -3334,39 +3334,46 @@ const fetchBuyOrders = async () => {
               <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
               <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
-              <div className="xl:w-1/2
-                flex flex-row items-center justify-between gap-2">
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 정산수(건)</div>
-                    <span className="text-xl font-semibold text-zinc-500">
-                      {tradeSummary.totalSettlementCount?.toLocaleString()} 건
-                    </span>
-                </div>
+              <div className="xl:w-2/3 w-full
+                flex flex-col xl:flex-row items-center justify-end gap-2">
 
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 정산금액(원)</div>
-                  <div className="flex flex-row items-center justify-center gap-1">
-                    <span className="text-xl font-semibold text-yellow-600">
-                      {tradeSummary.totalSettlementAmountKRW?.toLocaleString()}
-                    </span>
-                    <span className="text-sm text-zinc-500">원</span>
+                <div className="flex flex-row items-center justify-center gap-2">
+
+                  <div className="flex flex-col gap-2 items-center">
+                    <div className="text-sm">총 정산수(건)</div>
+                      <span className="text-xl font-semibold text-zinc-500">
+                        {tradeSummary.totalSettlementCount?.toLocaleString()} 건
+                      </span>
                   </div>
-                </div>
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 정산량(USDT)</div>
-                  <div className="flex flex-row items-center justify-center gap-1">
-                    <Image
-                      src="/icon-tether.png"
-                      alt="Tether"
-                      width={20}
-                      height={20}
-                      className="w-5 h-5"
-                    />
-                    <span className="text-xl font-semibold text-green-600">
-                      {tradeSummary.totalSettlementAmount
-                        ? tradeSummary.totalSettlementAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                        : '0.00'}
-                    </span>
+
+                  <div className="flex flex-col gap-2 items-center">
+                    <div className="text-sm">총 정산금액(원)</div>
+                    <div className="flex flex-row items-center justify-center gap-1">
+                      <span className="text-xl font-semibold text-yellow-600"
+                        style={{ fontFamily: 'monospace' }}>
+                        {tradeSummary.totalSettlementAmountKRW?.toLocaleString()}
+                      </span>
+                      <span className="text-sm text-zinc-500">원</span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2 items-center">
+                    <div className="text-sm">총 정산량(USDT)</div>
+                    <div className="flex flex-row items-center justify-center gap-1">
+                      <Image
+                        src="/icon-tether.png"
+                        alt="Tether"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
+                      <span className="text-xl font-semibold text-green-600"
+                        style={{ fontFamily: 'monospace' }}>
+                        {tradeSummary.totalSettlementAmount
+                          ? tradeSummary.totalSettlementAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          : '0.00'}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -3377,7 +3384,8 @@ const fetchBuyOrders = async () => {
                     <div className="flex flex-col gap-2 items-center">
                       <div className="text-sm">총 PG 수수료(원)</div>
                       <div className="w-full flex flex-row items-center justify-end gap-1">
-                        <span className="text-xl font-semibold text-yellow-600">
+                        <span className="text-xl font-semibold text-yellow-600"
+                          style={{ fontFamily: 'monospace' }}>
                           {tradeSummary.totalFeeAmountKRW
                             ? tradeSummary.totalFeeAmountKRW.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                             : '0'}
@@ -3396,7 +3404,8 @@ const fetchBuyOrders = async () => {
                           height={20}
                           className="w-5 h-5"
                         />
-                        <span className="text-xl font-semibold text-green-600">
+                        <span className="text-xl font-semibold text-green-600"
+                          style={{ fontFamily: 'monospace' }}>
                           {tradeSummary.totalFeeAmount
                             ? tradeSummary.totalFeeAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                             : '0.00'}
@@ -3409,7 +3418,8 @@ const fetchBuyOrders = async () => {
                     <div className="flex flex-col gap-2 items-center">
                       <div className="text-sm">총 AG 수수료(원)</div>
                       <div className="w-full flex flex-row items-cneter justify-end gap-1">
-                        <span className="text-xl font-semibold text-yellow-600">
+                        <span className="text-xl font-semibold text-yellow-600"
+                          style={{ fontFamily: 'monospace' }}>
                           {tradeSummary.totalAgentFeeAmountKRW
                             ? tradeSummary.totalAgentFeeAmountKRW.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                             : '0'}
@@ -3427,7 +3437,8 @@ const fetchBuyOrders = async () => {
                           height={20}
                           className="w-5 h-5"
                         />
-                        <span className="text-xl font-semibold text-green-600">
+                        <span className="text-xl font-semibold text-green-600"
+                          style={{ fontFamily: 'monospace' }}>
                           {tradeSummary.totalAgentFeeAmount
                             ? tradeSummary.totalAgentFeeAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                             : '0.00'}
@@ -3473,7 +3484,7 @@ const fetchBuyOrders = async () => {
 
 
             {/* totalCount */}
-            <div className="w-full flex flex-row items-center justify-between gap-2 mt-4">
+            <div className="w-full flex flex-row items-center justify-end gap-2 mt-4">
               
               <div className="flex flex-col items-start">
                 <span className="text-sm text-zinc-500">
