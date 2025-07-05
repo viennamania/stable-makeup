@@ -70,7 +70,8 @@ export async function POST(request: NextRequest) {
 
   //console.log("body", body);
 
-  const nickname = userCode;
+  //const nickname = userCode; // trim left and right spaces
+  const nickname = userCode.trim();
 
   const mobile = "+821012345678";
   const password = "12345678";

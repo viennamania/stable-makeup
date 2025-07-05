@@ -2729,9 +2729,12 @@ export default function Index({ params }: any) {
 
                           <td className="p-2">
                             <div className="flex flex-col items-end justify-center gap-1">
-                              {item?.buyer?.depositBankName}
-                              {' '}{item?.buyer?.depositBankAccountNumber}
-                              {' '}{item?.buyer?.depositName}
+                              <span className="text-sm text-zinc-500">
+                                {item?.buyer?.depositBankName}{' '}{item?.buyer?.depositBankAccountNumber}
+                              </span>
+                              <span className="text-sm text-zinc-500">
+                                {item?.buyer?.depositName}
+                              </span>
                             </div>
                           </td>
 
