@@ -1110,19 +1110,8 @@ export default function Index({ params }: any) {
                     height={35}
                     className="w-7 h-7"
                   />
-                  <h2 className="text-lg font-semibold">총 가맹점수</h2>
-                  <p className="text-lg text-zinc-500">
-                    {totalSummary.totalNumberOfStores} 개
-                  </p>
-                  {loadingSummary && (
-                    <Image
-                      src="/loading.png"
-                      alt="Loading"
-                      width={20}
-                      height={20}
-                      className="w-5 h-5 animate-spin"
-                    />
-                  )}
+                  <h2 className="text-lg font-semibold">가맹점</h2>
+
                 </div>
 
                 <div className="w-full flex flex-row items-center justify-end gap-2">
@@ -1141,11 +1130,25 @@ export default function Index({ params }: any) {
 
               {/* latest stores talble */}
               <div className="w-full mt-4">
+                
                 <div className="flex flex-row items-center justify-start gap-2">
                   {/* dot */}
                   <div className="w-2 h-2 bg-[#3167b4] rounded-full"></div>
-                  <h2 className="text-lg font-semibold">최근 등록 가맹점</h2>
+                  <h2 className="text-lg font-semibold">총 가맹점수</h2>
+                  <p className="text-lg text-zinc-500">
+                    {totalSummary.totalNumberOfStores} 개
+                  </p>
+                  {loadingSummary && (
+                    <Image
+                      src="/loading.png"
+                      alt="Loading"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5 animate-spin"
+                    />
+                  )}
                 </div>
+
                 <table className="min-w-full
                   border-collapse
                   border border-gray-300
@@ -1255,19 +1258,7 @@ export default function Index({ params }: any) {
                     height={35}
                     className="w-6 h-6"
                   />
-                  <h2 className="text-lg font-semibold">총 회원수</h2>
-                  <p className="text-lg text-zinc-500">
-                    {totalSummary.totalNumberOfBuyers} 명
-                  </p>
-                  {loadingSummary && (
-                    <Image
-                      src="/loading.png"
-                      alt="Loading"
-                      width={20}
-                      height={20}
-                      className="w-5 h-5 animate-spin"
-                    />
-                  )}
+                  <h2 className="text-lg font-semibold">구매회원</h2>
                 </div>
 
                 <div className="w-full flex flex-row items-center justify-end gap-2">
@@ -1291,7 +1282,20 @@ export default function Index({ params }: any) {
                 <div className="flex flex-row items-center justify-start gap-2">
                   {/* dot */}
                   <div className="w-2 h-2 bg-[#3167b4] rounded-full"></div>
-                  <h2 className="text-lg font-semibold">최근 구매회원</h2>
+                  <h2 className="text-lg font-semibold">총 회원수</h2>
+                  <p className="text-lg text-zinc-500">
+                    {totalSummary.totalNumberOfBuyers} 명
+                  </p>
+                  {loadingSummary && (
+                    <Image
+                      src="/loading.png"
+                      alt="Loading"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5 animate-spin"
+                    />
+                  )}
+
                 </div>
                 <table className="min-w-full
                   border-collapse
@@ -1369,19 +1373,7 @@ export default function Index({ params }: any) {
                     height={35}
                     className="w-6 h-6"
                   />
-                  <h2 className="text-lg font-semibold">총 거래수</h2>
-                  <p className="text-lg text-zinc-500">
-                    {totalSummary.totalNumberOfTrades} 건
-                  </p>
-                  {loadingSummary && (
-                    <Image
-                      src="/loading.png"
-                      alt="Loading"
-                      width={20}
-                      height={20}
-                      className="w-5 h-5 animate-spin"
-                    />
-                  )}
+                  <h2 className="text-lg font-semibold">거래내역</h2>
                 </div>
 
                 <div className="w-full flex flex-row items-center justify-end gap-2">
@@ -1391,7 +1383,7 @@ export default function Index({ params }: any) {
                     }}
                     className="bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
                   >
-                    거래내역
+                    거래내역관리
                   </button>
                 </div>
 
@@ -1446,7 +1438,19 @@ export default function Index({ params }: any) {
                   <div className="flex flex-row items-center justify-start gap-2">
                     {/* dot */}
                     <div className="w-2 h-2 bg-[#3167b4] rounded-full"></div>
-                    <h2 className="text-lg font-semibold">최근 거래</h2>
+                    <h2 className="text-lg font-semibold">총 거래수</h2>
+                    <p className="text-lg text-zinc-500">
+                      {totalSummary.totalNumberOfTrades} 건
+                    </p>
+                    {loadingSummary && (
+                      <Image
+                        src="/loading.png"
+                        alt="Loading"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5 animate-spin"
+                      />
+                    )}
                   </div>
 
                   <table className="min-w-full
@@ -1471,7 +1475,7 @@ export default function Index({ params }: any) {
                         <th className="
                           hidden xl:block
                           px-4 py-2 text-left">
-                          가맹점<br/>구매자
+                          구매자<br/>가맹점
                         </th>
                         <th className="px-4 py-2 text-left">거래금액(원)<br/>거래량(USDT)</th>
                         <th className="px-4 py-2 text-left">정산금액(원)<br/>정산량(USDT)</th>
@@ -1503,9 +1507,9 @@ export default function Index({ params }: any) {
                           <td className="
                             hidden xl:block
                             px-4 py-2">
-                            {trade?.store?.storeName}
-                            <br/>
                             {trade?.buyer?.depositName}
+                            <br/>
+                            {trade?.store?.storeName}
                           </td>
 
                           <td className="px-4 py-2">
