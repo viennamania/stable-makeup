@@ -116,7 +116,7 @@ export default function SendUsdt({ params }: any) {
   
   
     // the contract's address
-    ///address: contractAddress,
+    ///address: contractAddressArbitrum,
 
     address: params.center === "arbitrum" ? contractAddressArbitrum : contractAddress,
 
@@ -804,9 +804,9 @@ export default function SendUsdt({ params }: any) {
                       accountAbstraction={{   
                         chain: params.center === "arbitrum" ? arbitrum : polygon,
                         //
-                        //chain: polygon,
-
                         //chain: arbitrum,
+
+                        //chain: arbitrum,,
                         factoryAddress: "0x655934C0B4bD79f52A2f7e6E60714175D5dd319b", // polygon, arbitrum
                         gasless: true,
                       }}

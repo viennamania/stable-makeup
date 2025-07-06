@@ -182,14 +182,14 @@ export default function Index({ params }: any) {
     // the chain the contract is deployed on
     
     
-    chain: polygon,
+    chain: arbitrum,
   
   
   
     // the contract's address
-    ///address: contractAddress,
+    ///address: contractAddressArbitrum,
 
-    address: contractAddress,
+    address: contractAddressArbitrum,
 
 
     // OPTIONAL: the contract's abi
@@ -2075,7 +2075,7 @@ const fetchBuyOrders = async () => {
                 <ConnectButton
                   client={client}
                   wallets={wallets}
-                  chain={polygon}
+                  chain={arbitrum}
                   theme={"light"}
   
                   // button color is dark skyblue convert (49, 103, 180) to hex
@@ -3599,14 +3599,14 @@ const fetchBuyOrders = async () => {
                                         className="bg-white text-black px-2 py-2 rounded-md"
                                         onClick={() => {
                               
-                                            params.storecode === 'arbitrum' ? window.open(`https://arbiscan.io/tx/${item.escrowTransactionHash}`) : window.open(`https://polygonscan.com/tx/${item.escrowTransactionHash}`);
+                                            params.storecode === 'arbitrum' ? window.open(`https://arbiscan.io/tx/${item.escrowTransactionHash}`) : window.open(`https://arbiscan.io/tx/${item.escrowTransactionHash}`);
                                             
 
 
                                         }}
                                       >
                                         <Image
-                                          src={params.storecode === 'arbitrum' ? '/logo-arbitrum.png' : '/logo-polygon.png'}
+                                          src={params.storecode === 'arbitrum' ? '/logo-arbitrum.png' : '/logo-arbitrum.png'}
                                           alt="Chain"
                                           width={20}
                                           height={20}

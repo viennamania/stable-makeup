@@ -168,14 +168,14 @@ export default function Index({ params }: any) {
     // the chain the contract is deployed on
     
     
-    chain: polygon,
+    chain: arbitrum,
   
   
   
     // the contract's address
-    ///address: contractAddress,
+    ///address: contractAddressArbitrum,
 
-    address: contractAddress,
+    address: contractAddressArbitrum,
 
 
     // OPTIONAL: the contract's abi
@@ -365,7 +365,7 @@ export default function Index({ params }: any) {
       const result = await getWalletBalance({
         address: address,
         client: client,
-        chain: polygon,
+        chain: arbitrum,
       });
       //console.log("getWalletBalance", result);
       /*
@@ -961,7 +961,7 @@ export default function Index({ params }: any) {
 
               /*
               accountAbstraction={{
-                chain: polygon,
+                chain: arbitrum,
                 sponsorGas: true
               }}
               */
@@ -1860,14 +1860,14 @@ export default function Index({ params }: any) {
                       가스비용
                     </span>
                     <div className="text-xl font-semibold text-zinc-800">
-                      {Number(nativeBalance).toFixed(2)}
+                      {Number(nativeBalance).toFixed(8)}
                     </div>
-                    <p className="text-sm text-zinc-800">POL</p>
+                    <p className="text-sm text-zinc-800">ETH</p>
                   </div>
 
                   <div className="flex flex-row gap-2 justify-center items-center">
                     {/* if pol balance is 0, comment out the text */}
-                    {nativeBalance < 0.01 && (
+                    {nativeBalance <= 0.0000001 && (
                       <p className="text-sm text-red-500">
                         가스비용이 부족합니다.<br/>가스비용이 부족하면 입금은 가능하지만 출금은 불가능합니다.
                       </p>

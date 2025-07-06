@@ -117,9 +117,9 @@ export default function SettingsPage({ params }: any) {
         client,
         // the chain the contract is deployed on 
         
-        chain: polygon,
+        chain: arbitrum,
 
-        address: contractAddress,
+        address: contractAddressArbitrum,
     
     
         // OPTIONAL: the contract's abi
@@ -1043,7 +1043,7 @@ export default function SettingsPage({ params }: any) {
 
                         /*
                         accountAbstraction={{
-                            chain: polygon,
+                            chain: arbitrum,
                             sponsorGas: true
                         }}
                         */

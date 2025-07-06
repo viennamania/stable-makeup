@@ -17,6 +17,7 @@ import {
 
 import {
     polygon,
+    arbitrum,
 } from "thirdweb/chains";
 
 import {
@@ -53,6 +54,7 @@ const wallets = [
 
 
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // USDT on Arbitrum
 
 
 // get a contract
@@ -60,9 +62,9 @@ const contract = getContract({
     // the client you have created via `createThirdwebClient()`
     client,
     // the chain the contract is deployed on
-    chain: polygon,
+    chain: arbitrum,
     // the contract's address
-    address: contractAddress,
+    address: contractAddressArbitrum,
     // OPTIONAL: the contract's abi
     //abi: [...],
 });
@@ -381,8 +383,8 @@ export default function SettingsPage() {
                                 wallets={wallets}
                                 
                                 accountAbstraction={{        
-                                chain: polygon,
-                                //chain: arbitrum,
+                                chain: arbitrum,
+                                //chain: arbitrum,,
                                 factoryAddress: "0x655934C0B4bD79f52A2f7e6E60714175D5dd319b", // polygon, arbitrum
                                 gasless: true,
                                 }}

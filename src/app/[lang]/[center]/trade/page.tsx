@@ -184,7 +184,7 @@ export default function Index({ params }: any) {
   
   
     // the contract's address
-    ///address: contractAddress,
+    ///address: contractAddressArbitrum,
 
     address: params.center === "arbitrum" ? contractAddressArbitrum : contractAddress,
 
@@ -2124,7 +2124,7 @@ export default function Index({ params }: any) {
 
                   /*
                   accountAbstraction={{
-                    chain: polygon,
+                    chain: arbitrum,
                     sponsorGas: true
                   }}
                   */
@@ -3794,14 +3794,14 @@ export default function Index({ params }: any) {
                                         className="bg-white text-black px-2 py-2 rounded-md"
                                         onClick={() => {
                               
-                                            params.center === 'arbitrum' ? window.open(`https://arbiscan.io/tx/${item.escrowTransactionHash}`) : window.open(`https://polygonscan.com/tx/${item.escrowTransactionHash}`);
+                                            params.center === 'arbitrum' ? window.open(`https://arbiscan.io/tx/${item.escrowTransactionHash}`) : window.open(`https://arbiscan.io/tx/${item.escrowTransactionHash}`);
                                             
 
 
                                         }}
                                       >
                                         <Image
-                                          src={params.center === 'arbitrum' ? '/logo-arbitrum.png' : '/logo-polygon.png'}
+                                          src={params.center === 'arbitrum' ? '/logo-arbitrum.png' : '/logo-arbitrum.png'}
                                           alt="Chain"
                                           width={20}
                                           height={20}

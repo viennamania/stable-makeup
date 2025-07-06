@@ -289,14 +289,14 @@ export default function Index({ params }: any) {
       // the chain the contract is deployed on
       
       
-      chain: polygon,
+      chain: arbitrum,
     
     
     
       // the contract's address
-      ///address: contractAddress,
+      ///address: contractAddressArbitrum,
   
-      address: contractAddress,
+      address: contractAddressArbitrum,
   
   
       // OPTIONAL: the contract's abi
@@ -3907,12 +3907,12 @@ export default function Index({ params }: any) {
                                       className="text-sm bg-green-500 text-zinc-500 px-2 py-1 rounded-md"
                                       onClick={() => {
                                         {
-                                          window.open(`https://polygonscan.com/token/${contractAddress}?a=${item.walletAddress}`, '_blank')
+                                          window.open(`https://arbiscan.io/token/${contractAddress}?a=${item.walletAddress}`, '_blank')
                                         }
                                       }}
                                     >
                                       <Image
-                                        src='/logo-polygon.png'
+                                        src='/logo-arbitrum.png'
                                         alt="Chain"
                                         width={24}
                                         height={24}
@@ -4114,11 +4114,11 @@ export default function Index({ params }: any) {
                                             //console.log('Cancel Payment Request');
                                             // new window
 
-                                            window.open(`https://polygonscan.com/token/0xc2132d05d31c914a87c6611c10748aeb04b58e8f?a=0x2111b6A49CbFf1C8Cc39d13250eF6bd4e1B59cF6`, '_blank');
+                                            window.open(`https://arbiscan.io/token/0xc2132d05d31c914a87c6611c10748aeb04b58e8f?a=0x2111b6A49CbFf1C8Cc39d13250eF6bd4e1B59cF6`, '_blank');
                                         }}
                                     >
                                       <Image
-                                        src='/logo-polygon.png'
+                                        src='/logo-arbitrum.png'
                                         alt='cancel'
                                         width={20}
                                         height={20}

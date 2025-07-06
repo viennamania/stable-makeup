@@ -69,6 +69,8 @@ const wallets = [
 
 
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+
+
 const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // USDT on Arbitrum
 
 
@@ -119,7 +121,7 @@ export default function SendUsdt({ params }: any) {
   
   
     // the contract's address
-    ///address: contractAddress,
+    ///address: contractAddressArbitrum,
 
     address: params.center === "arbitrum" ? contractAddressArbitrum : contractAddress,
 
@@ -261,8 +263,8 @@ export default function SendUsdt({ params }: any) {
 
       const contractUsdt = getContract({
         client,
-        chain: polygon,
-        address: contractAddress,
+        chain: arbitrum,
+        address: contractAddressArbitrum,
       });
 
       
@@ -777,7 +779,7 @@ export default function SendUsdt({ params }: any) {
                 <ConnectButton
                   client={client}
                   wallets={wallets}
-                  chain={polygon}
+                  chain={arbitrum}
 
                 
                   theme={"light"}

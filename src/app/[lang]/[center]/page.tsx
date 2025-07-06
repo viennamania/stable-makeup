@@ -149,7 +149,7 @@ export default function Index({ params }: any) {
   const { connect, isConnecting } = useConnectModal();
   const handleConnect = async () => {
     await connect({
-      chain: polygon,
+      chain: arbitrum,
       client,
       wallets,
 
@@ -197,14 +197,14 @@ export default function Index({ params }: any) {
     // the chain the contract is deployed on
     
     
-    chain: polygon,
+    chain: arbitrum,
   
   
   
     // the contract's address
-    ///address: contractAddress,
+    ///address: contractAddressArbitrum,
 
-    address: contractAddress,
+    address: contractAddressArbitrum,
 
 
     // OPTIONAL: the contract's abi
@@ -407,7 +407,7 @@ export default function Index({ params }: any) {
       const result = await getWalletBalance({
         address: address,
         client: client,
-        chain: polygon,
+        chain: arbitrum,
       });
       //console.log("getWalletBalance", result);
       /*

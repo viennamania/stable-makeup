@@ -1,9 +1,5 @@
 'use client';
 
-import type { GetStaticProps, InferGetStaticPropsType } from 'next';
-
-
-
 import { useState, useEffect, use } from "react";
 
 
@@ -21,6 +17,7 @@ import {
 
 import {
     polygon,
+    arbitrum,
 } from "thirdweb/chains";
 
 import {
@@ -115,6 +112,8 @@ const wallets = [
 
 
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // USDT on Arbitrum
+
 
 
 // get a contract
@@ -122,9 +121,9 @@ const contract = getContract({
   // the client you have created via `createThirdwebClient()`
   client,
   // the chain the contract is deployed on
-  chain: polygon,
+  chain: arbitrum,
   // the contract's address
-  address: contractAddress,
+  address: contractAddressArbitrum,
   // OPTIONAL: the contract's abi
   //abi: [...],
 });
@@ -1021,8 +1020,8 @@ export default function Index({ params }: any) {
                             wallets={wallets}
                             
                             accountAbstraction={{        
-                            chain: polygon,
-                            //chain: arbitrum,
+                            chain: arbitrum,
+                            //chain: arbitrum,,
                             factoryAddress: "0x655934C0B4bD79f52A2f7e6E60714175D5dd319b", // polygon, arbitrum
                             gasless: true,
                             }}
@@ -1901,11 +1900,11 @@ export default function Index({ params }: any) {
                                   <button
                                     className="text-sm bg-green-500 text-white px-2 py-1 rounded-md"
                                     onClick={() => {
-                                      window.open(`https://polygonscan.com/tx/${item.escrowTransactionHash}`);
+                                      window.open(`https://arbiscan.io/tx/${item.escrowTransactionHash}`);
                                     }}
                                   >
                                     <Image
-                                      src="/logo-polygon.png"
+                                      src="/logo-arbitrum.png"
                                       alt="Polygon"
                                       width={24}
                                       height={24}
@@ -2053,11 +2052,11 @@ export default function Index({ params }: any) {
                                           //console.log('Cancel Payment Request');
                                           // new window
 
-                                          window.open(`https://polygonscan.com/token/0xc2132d05d31c914a87c6611c10748aeb04b58e8f?a=0x2111b6A49CbFf1C8Cc39d13250eF6bd4e1B59cF6`, '_blank');
+                                          window.open(`https://arbiscan.io/token/0xc2132d05d31c914a87c6611c10748aeb04b58e8f?a=0x2111b6A49CbFf1C8Cc39d13250eF6bd4e1B59cF6`, '_blank');
                                       }}
                                   >
                                     <Image
-                                      src='/logo-polygon.png'
+                                      src='/logo-arbitrum.png'
                                       alt='cancel'
                                       width={20}
                                       height={20}

@@ -192,14 +192,14 @@ export default function Index({ params }: any) {
     // the chain the contract is deployed on
     
     
-    chain: polygon,
+    chain: arbitrum,
   
   
   
     // the contract's address
-    ///address: contractAddress,
+    ///address: contractAddressArbitrum,
 
-    address: contractAddress,
+    address: contractAddressArbitrum,
 
 
     // OPTIONAL: the contract's abi
@@ -2412,7 +2412,7 @@ const fetchBuyOrders = async () => {
 
                 /*
                 accountAbstraction={{
-                  chain: polygon,
+                  chain: arbitrum,
                   sponsorGas: true
                 }}
                 */
@@ -3351,14 +3351,14 @@ const fetchBuyOrders = async () => {
                                     "
                                     onClick={() => {
                                       window.open(
-                                        `https://polygonscan.com/tx/${item.transactionHash}`,
+                                        `https://arbiscan.io/tx/${item.transactionHash}`,
                                         '_blank'
                                       );
                                     }}
                                   >
                                     <div className="flex flex-row gap-2 items-center justify-center">
                                       <Image
-                                        src="/logo-polygon.png"
+                                        src="/logo-arbitrum.png"
                                         alt="Polygon"
                                         width={20}
                                         height={20}
@@ -4401,14 +4401,14 @@ const fetchBuyOrders = async () => {
                                         className="bg-white text-black px-2 py-2 rounded-md"
                                         onClick={() => {
                               
-                                            params.center === 'arbitrum' ? window.open(`https://arbiscan.io/tx/${item.escrowTransactionHash}`) : window.open(`https://polygonscan.com/tx/${item.escrowTransactionHash}`);
+                                            params.center === 'arbitrum' ? window.open(`https://arbiscan.io/tx/${item.escrowTransactionHash}`) : window.open(`https://arbiscan.io/tx/${item.escrowTransactionHash}`);
                                             
 
 
                                         }}
                                       >
                                         <Image
-                                          src={params.center === 'arbitrum' ? '/logo-arbitrum.png' : '/logo-polygon.png'}
+                                          src={params.center === 'arbitrum' ? '/logo-arbitrum.png' : '/logo-arbitrum.png'}
                                           alt="Chain"
                                           width={20}
                                           height={20}

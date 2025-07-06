@@ -187,14 +187,14 @@ export default function Index({ params }: any) {
     // the chain the contract is deployed on
     
     
-    chain: polygon,
+    chain: arbitrum,
   
   
   
     // the contract's address
-    ///address: contractAddress,
+    ///address: contractAddressArbitrum,
 
-    address: contractAddress,
+    address: contractAddressArbitrum,
 
 
     // OPTIONAL: the contract's abi
@@ -2118,7 +2118,7 @@ const fetchBuyOrders = async () => {
                 <ConnectButton
                   client={client}
                   wallets={wallets}
-                  chain={polygon}
+                  chain={arbitrum}
                   theme={"light"}
 
                   // button color is dark skyblue convert (49, 103, 180) to hex

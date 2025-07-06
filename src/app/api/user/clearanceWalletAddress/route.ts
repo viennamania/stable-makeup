@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
 
 
 
-  const chainId = polygon.id;
+  const chainId = arbitrum.id;
 
   //   const url = process.env.THIRDWEB_ENGINE_URL + "/backend-wallet/" + chainId + "/" + walletAddress + "/get-balance";
 
@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
     }
 
     const wallet = smartWallet({
-        chain: polygon,
+        chain: arbitrum,
         ///factoryAddress: "0x655934C0B4bD79f52A2f7e6E60714175D5dd319b", // your own deployed account factory address
         sponsorGas: true,
     });
@@ -154,8 +154,8 @@ export async function POST(request: NextRequest) {
     const balance = await balanceOf({
         contract: getContract({
             client: thirdwebClient,
-            chain: polygon,
-            address: contractAddress,
+            chain: arbitrum,
+            address: contractAddressArbitrum,
         }),
         address: walletAddress,
     });
@@ -201,8 +201,8 @@ export async function POST(request: NextRequest) {
     const transactionSendToStore = transfer({
         contract: getContract({
             client: thirdwebClient,
-            chain: polygon,
-            address: contractAddress,
+            chain: arbitrum,
+            address: contractAddressArbitrum,
         }),
         to: sellerWalletAddress,
         amount: clearanceUSDTBalance,

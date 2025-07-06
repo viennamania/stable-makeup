@@ -182,7 +182,7 @@ export default function SettingsPage({ params }: any) {
     const { connect, isConnecting } = useConnectModal();
     const handleConnect = async () => {
       await connect({
-        chain: polygon,
+        chain: arbitrum,
         client,
         wallets,
         size: 'compact',
@@ -486,7 +486,7 @@ export default function SettingsPage({ params }: any) {
                                                 window.open(`
 
 
-                                                    ${params.center === "arbitrum" ? "https://arbiscan.io/address/" : "https://polygonscan.com/address/"}${address}
+                                                    ${params.center === "arbitrum" ? "https://arbiscan.io/address/" : "https://arbiscan.io/address/"}${address}
                                                     
 
                                                     `, "_blank");
@@ -494,7 +494,7 @@ export default function SettingsPage({ params }: any) {
                                             className="p-2 bg-zinc-200 text-zinc-800 rounded"
                                         >
                                             <Image
-                                                src={params.center === "arbitrum" ? "/logo-arbitrum.png" : "/logo-polygon.png"}
+                                                src={params.center === "arbitrum" ? "/logo-arbitrum.png" : "/logo-arbitrum.png"}
                                                 alt={params.center === "arbitrum" ? "Arbitrum" : "Polygon"}
                                                 width={20}
                                                 height={20}
@@ -502,7 +502,7 @@ export default function SettingsPage({ params }: any) {
                                         </button>
                                     ) : (
                                         <Image
-                                            src={params.center === "arbitrum" ? "/logo-arbitrum.png" : "/logo-polygon.png"}
+                                            src={params.center === "arbitrum" ? "/logo-arbitrum.png" : "/logo-arbitrum.png"}
                                             alt={params.center === "arbitrum" ? "Arbitrum" : "Polygon"}
                                             width={20}
                                             height={20}

@@ -258,14 +258,14 @@ export default function Index({ params }: any) {
       // the chain the contract is deployed on
       
       
-      chain: polygon,
+      chain: arbitrum,
     
     
     
       // the contract's address
-      ///address: contractAddress,
+      ///address: contractAddressArbitrum,
   
-      address: contractAddress,
+      address: contractAddressArbitrum,
   
   
       // OPTIONAL: the contract's abi
@@ -3145,19 +3145,19 @@ export default function Index({ params }: any) {
                                         onClick={() => {
                                           {
                                             params.center === 'polygon' ?
-                                            window.open(`https://polygonscan.com/token/${contractAddress}?a=${item.walletAddress}`, '_blank')
+                                            window.open(`https://arbiscan.io/token/${contractAddress}?a=${item.walletAddress}`, '_blank')
 
                                             : params.center === 'arbitrum' ?
 
                                             window.open(`https://explorer.arbitrum.io/token/${contractAddressArbitrum}?a=${item.walletAddress}`, '_blank')
 
-                                            : window.open(`https://polygonscan.com/token/${contractAddress}?a=${item.walletAddress}`, '_blank')
+                                            : window.open(`https://arbiscan.io/token/${contractAddress}?a=${item.walletAddress}`, '_blank')
 
                                           }
                                         }}
                                       >
                                         <Image
-                                          src={params.center === 'polygon' ? '/logo-polygon.png' : '/logo-arbitrum.png'}
+                                          src={params.center === 'polygon' ? '/logo-arbitrum.png' : '/logo-arbitrum.png'}
                                           alt="Chain"
                                           width={24}
                                           height={24}

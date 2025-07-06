@@ -10,6 +10,7 @@ import { client } from "../client";
 
 import {
     polygon,
+    arbitrum,
 } from "thirdweb/chains";
 
 import {
@@ -266,8 +267,8 @@ export default function SettingsPage() {
                             wallets={wallets}
                             
                             accountAbstraction={{        
-                            chain: polygon,
-                            //chain: arbitrum,
+                            chain: arbitrum,
+                            //chain: arbitrum,,
                             factoryAddress: "0x655934C0B4bD79f52A2f7e6E60714175D5dd319b", // polygon, arbitrum
                             gasless: true,
                             }}
@@ -318,13 +319,13 @@ export default function SettingsPage() {
                                         <button
                                             onClick={() => {
                                                 window.open(`
-                                                    https://polygonscan.com/address/${address}#tokentxns
+                                                    https://arbiscan.io/address/${address}#tokentxns
                                                     `, "_blank");
                                             }}
                                             className="p-2 bg-zinc-200 text-zinc-800 rounded"
                                         >
                                             <Image
-                                                src="/logo-polygon.png"
+                                                src="/logo-arbitrum.png"
                                                 alt="Polygon"
                                                 width={20}
                                                 height={20}
@@ -332,7 +333,7 @@ export default function SettingsPage() {
                                         </button>
                                     ) : (
                                         <Image
-                                            src="/logo-polygon.png"
+                                            src="/logo-arbitrum.png"
                                             alt="Polygon"
                                             width={20}
                                             height={20}

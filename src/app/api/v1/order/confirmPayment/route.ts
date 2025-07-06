@@ -262,7 +262,7 @@ export async function GET(request: NextRequest) {
 
       const wallet = smartWallet({
 
-        chain: polygon,
+        chain: arbitrum,
 
         //factoryAddress: "0x655934C0B4bD79f52A2f7e6E60714175D5dd319b", // your own deployed account factory address
         sponsorGas: true,
@@ -285,7 +285,7 @@ export async function GET(request: NextRequest) {
  
       const contract = getContract({
         client,
-        chain: polygon,
+        chain: arbitrum,
         address: tokenContractAddressUSDT, // erc20 contract from thirdweb.com/explore
       });
       
@@ -318,7 +318,7 @@ export async function GET(request: NextRequest) {
     } else {
 
 
-      const chainId = polygon.id;
+      const chainId = arbitrum.id;
       const url = process.env.THIRDWEB_ENGINE_URL + "/backend-wallet/" + chainId + "/transfer";
 
       ///console.log("url", url);

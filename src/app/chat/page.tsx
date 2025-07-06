@@ -16,7 +16,7 @@ import {
   createWallet,
 } from "thirdweb/wallets";
 
-import { polygon } from "thirdweb/chains";
+import { polygon, arbitrum } from "thirdweb/chains";
 
 import { balanceOf, transfer } from "thirdweb/extensions/erc20";
  
@@ -259,7 +259,7 @@ function ChatPageContent() {
 
                   /*
                   accountAbstraction={{
-                    chain: polygon,
+                    chain: arbitrum,
                     sponsorGas: true
                   }}
                   */

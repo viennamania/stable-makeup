@@ -199,7 +199,7 @@ export async function POST(request: NextRequest) {
 
 
 
-      const chainId = polygon.id;
+      const chainId = arbitrum.id;
       const url = process.env.THIRDWEB_ENGINE_URL + "/backend-wallet/" + chainId + "/transfer";
 
       ///console.log("url", url);

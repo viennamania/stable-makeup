@@ -178,7 +178,7 @@ export async function POST(request: NextRequest) {
 
     const contract = getContract({
       client,
-      chain: polygon,
+      chain: arbitrum,
       address: tokenContractAddressUSDT, // erc20 contract from thirdweb.com/explore
     });
   

@@ -167,14 +167,14 @@ export default function Index({ params }: any) {
     // the chain the contract is deployed on
     
     
-    chain: polygon,
+    chain: arbitrum,
   
   
   
     // the contract's address
-    ///address: contractAddress,
+    ///address: contractAddressArbitrum,
 
-    address: contractAddress,
+    address: contractAddressArbitrum,
 
 
     // OPTIONAL: the contract's abi
@@ -578,7 +578,7 @@ export default function Index({ params }: any) {
         const result = await getWalletBalance({
           address: address,
           client: client,
-          chain: polygon,
+          chain: arbitrum,
         });
         //console.log("getWalletBalance", result);
         /*
@@ -1450,7 +1450,7 @@ export default function Index({ params }: any) {
 
                   /*
                   accountAbstraction={{
-                    chain: polygon,
+                    chain: arbitrum,
                     sponsorGas: true
                   }}
                   */
@@ -3148,12 +3148,12 @@ export default function Index({ params }: any) {
                                       className="bg-white text-black px-2 py-2 rounded-md"
                                       onClick={() => {
                                           // new window for smart contract
-                                          ///window.open(`https://polygonscan.com/tx/${item.escrowTransactionHash}`);
+                                          ///window.open(`https://arbiscan.io/tx/${item.escrowTransactionHash}`);
 
 
                                           {
                                             params.center === 'polygon' ? (
-                                              window.open(`https://polygonscan.com/tx/${item.escrowTransactionHash}`)
+                                              window.open(`https://arbiscan.io/tx/${item.escrowTransactionHash}`)
                                             ) : (
                                               window.open(`https://etherscan.io/tx/${item.escrowTransactionHash}`)
                                             )
@@ -3163,7 +3163,7 @@ export default function Index({ params }: any) {
                                       }}
                                     >
                                       <Image
-                                        src="/logo-polygon.png"
+                                        src="/logo-arbitrum.png"
                                         alt="Polygon"
                                         width={20}
                                         height={20}
