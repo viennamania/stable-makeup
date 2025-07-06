@@ -1672,7 +1672,7 @@ export default function Index({ params }: any) {
     
     // if escrowNativeBalance is less than 0.1, then return
     if (escrowNativeBalance < 0.1) {
-      toast.error('POL balance is less than 0.1');
+      toast.error('ETH balance is less than 0.1');
       return;
     }
       */
@@ -1971,7 +1971,7 @@ export default function Index({ params }: any) {
 
     // if escrowNativeBalance is less than 0.1, then return
     if (escrowNativeBalance < 0.1) {
-      toast.error('POL balance is less than 0.1');
+      toast.error('ETH balance is less than 0.1');
       return;
     }
       */

@@ -3200,7 +3200,7 @@ export default function Index({ params }: any) {
                                 <span className="text-lg text-green-600"
                                   style={{ fontFamily: 'monospace' }}
                                 >
-                                  {item?.nativeBalance ? item?.nativeBalance.toFixed(2).toLocaleString('us-US') : 0}{' '}POL
+                                  {item?.nativeBalance ? item?.nativeBalance.toFixed(2).toLocaleString('us-US') : 0}{' '}ETH
                                 </span>
                               
                               </div>

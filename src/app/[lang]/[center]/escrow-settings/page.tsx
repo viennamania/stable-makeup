@@ -1706,11 +1706,11 @@ export default function SettingsPage({ params }: any) {
                                 <span className="text-sm font-semibold text-zinc-500">
                                     {Number(escrowNativeBalance).toFixed(2)}
                                 </span>{' '}
-                                <span className="text-sm">POL</span>
+                                <span className="text-sm">ETH</span>
                                     {/* if escrow balance is 0, comment this out */}
                                 
                                 <span className="pl-2 text-sm text-red-500">
-                                    에스크로 지갑에 가스비용(POL)을 0.1 이상 충전해주세요.
+                                    에스크로 지갑에 가스비용(ETH)을 0.1 이상 충전해주세요.
                                 </span>
                             
                             </div>
@@ -1786,7 +1786,7 @@ export default function SettingsPage({ params }: any) {
                             {/*
                             {activeWallet === inAppConnectWallet && (
                             <div className="flex flex-row items-center gap-2 text-xs ">
-                                {escrowNativeBalance && Number(escrowNativeBalance).toFixed(4)}{' '}POL
+                                {escrowNativeBalance && Number(escrowNativeBalance).toFixed(4)}{' '}ETH
                             </div>
                             )}
                             */}

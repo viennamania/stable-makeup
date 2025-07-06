@@ -1639,7 +1639,7 @@ export default function Index({ params }: any) {
 
                         {/*}
                         <div className="flex flex-row items-center gap-2 text-xs ">
-                          {nativeBalance && Number(nativeBalance).toFixed(4)}{' '}POL
+                          {nativeBalance && Number(nativeBalance).toFixed(4)}{' '}ETH
                         </div>
                         */}
                       
@@ -1761,7 +1761,7 @@ export default function Index({ params }: any) {
 
                        {/*
                         <div className="flex flex-row items-center gap-2 text-xs ">
-                          {escrowNativeBalance && Number(escrowNativeBalance).toFixed(4)}{' '}POL
+                          {escrowNativeBalance && Number(escrowNativeBalance).toFixed(4)}{' '}ETH
                         </div>
                         */}
                         
