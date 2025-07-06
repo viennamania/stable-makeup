@@ -2092,7 +2092,7 @@ export default function Index({ params }: any) {
 
     // api call to settlement
     try {
-      const response = await fetch('/api/order/buyOrderSettlement', {
+      const response = await fetch('/api/order/updateBuyOrderSettlement', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

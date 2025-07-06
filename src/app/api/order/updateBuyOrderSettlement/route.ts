@@ -14,8 +14,8 @@ export async function POST(request: NextRequest) {
 
   const {
     orderId,
-    //transactionHash,
-    settlement,
+    transactionHash,
+    //settlement,
   } = body;
 
 
@@ -191,7 +191,7 @@ export async function POST(request: NextRequest) {
 
 
 
-    /*
+    
     let txid = "0x";
 
     if (transactionHash) {
@@ -248,7 +248,7 @@ export async function POST(request: NextRequest) {
         status: "paymentSettled",
         createdAt: new Date().toISOString(),
     };
-    */
+    
 
 
 
@@ -271,7 +271,10 @@ export async function POST(request: NextRequest) {
 
     console.log("Settlement updated successfully for orderId:", orderId);
     return NextResponse.json({
-      result: result,
+      result: {
+        orderId: orderId,
+        settlement: settlement,
+      },
     });
   
 }
