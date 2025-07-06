@@ -1436,6 +1436,67 @@ export default function Index({ params }: any) {
 
 
 
+  const getBalanceOfWalletAddress = async (walletAddress: string) => {
+  
+
+    // get native balance of the store's settlement wallet address
+    // getWalletBalance
+    // getWalletBalance
+    /*
+    const result = await getWalletBalance({
+      address: address,
+      client: client,
+      chain: polygon,
+    });
+    */
+
+
+
+
+
+    const balance = await balanceOf({
+      contract,
+      address: store.settlementWalletAddress,
+    });
+    
+    //return Number(balance) / 10 ** 6; // Convert to USDT
+    /*
+    setAllStore((prev) => {
+      const newStore = [...prev];
+      const index = newStore.findIndex(s => s.storecode === storecode);
+      if (index !== -1) {
+        newStore[index] = {
+          ...newStore[index],
+          usdtBalance: Number(balance) / 10 ** 6,
+        };
+      }
+      return newStore;
+    } );
+    */
+    console.log('getBalanceOfWalletAddress', walletAddress, 'balance', balance);
+
+    setAllUsers((prev) => {
+      const newUsers = [...prev];
+      const index = newUsers.findIndex(u => u.walletAddress === walletAddress);
+      if (index !== -1) {
+        newUsers[index] = {
+          ...newUsers[index],
+          usdtBalance: Number(balance) / 10 ** 6,
+        };
+      }
+      return newUsers;
+    });
+
+    return Number(balance) / 10 ** 6; // Convert to USDT
+
+  };
+
+
+
+
+
+
+
   useEffect(() => {
     // Dynamically load the Binance widget script
     const script = document.createElement("script");
@@ -2695,6 +2756,7 @@ export default function Index({ params }: any) {
                         <th className="p-2">회원 결제페이지</th>
                         <th className="p-2">회원 USDT통장</th>
                         <th className="p-2">주문상태</th>
+                        <th className="p-2">잔고확인</th>
                       </tr>
                     </thead>
 
@@ -2928,7 +2990,49 @@ export default function Index({ params }: any) {
                             </div>
                           </td>
 
+                          {/* 잔고확인 버튼 */}
+                          {/* USDT 잔액 */}
+                          <td className="p-2">
+                            <div className="w-24
+                              flex flex-col items-between justify-between gap-2">
 
+
+                              <div className="w-full flex flex-col items-center justify-center gap-2">
+
+                                {/* USDT 잔액 표시 */}
+                                <span className="text-lg text-green-600"
+                                  style={{ fontFamily: 'monospace' }}
+                                >
+                                  {item?.usdtBalance ? item?.usdtBalance.toFixed(2).toLocaleString('us-US') : 0}{' '}USDT
+                                </span>
+
+                              
+                              </div>
+
+
+                              {/* button to getBalance of USDT */}
+                              <button
+                                //disabled={!isAdmin || insertingStore}
+                                onClick={() => {
+                                  //if (!isAdmin || insertingStore) return;
+                                  //getBalance(item.storecode);
+
+                                  getBalanceOfWalletAddress(item.walletAddress);
+          
+
+                                  toast.success('잔액을 가져왔습니다.');
+                                }}
+                                className={`
+                                  w-full mb-2
+                                  bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                  hover:bg-[#3167b4]/80
+                                `}
+                              >
+                                잔액 확인하기
+                              </button>
+
+                            </div>
+                          </td>
 
 
                         </tr>

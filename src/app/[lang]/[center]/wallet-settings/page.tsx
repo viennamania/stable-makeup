@@ -182,7 +182,7 @@ export default function SettingsPage({ params }: any) {
     const { connect, isConnecting } = useConnectModal();
     const handleConnect = async () => {
       await connect({
-        chain: params.center === "arbitrum" ? arbitrum : polygon,
+        chain: polygon,
         client,
         wallets,
         size: 'compact',
