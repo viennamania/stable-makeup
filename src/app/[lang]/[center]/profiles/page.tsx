@@ -96,14 +96,14 @@ export default function SettingsPage({ params }: any) {
         // the chain the contract is deployed on
         
         
-        chain: params.center === "arbitrum" ? arbitrum : polygon,
+        chain: arbitrum ,
       
       
       
         // the contract's address
         ///address: contractAddressArbitrum,
     
-        address: params.center === "arbitrum" ? contractAddressArbitrum : contractAddress,
+        address: contractAddressArbitrum,
     
     
         // OPTIONAL: the contract's abi
@@ -737,7 +737,7 @@ export default function SettingsPage({ params }: any) {
                             wallets={wallets}
 
                             accountAbstraction={{   
-                                chain: params.center === "arbitrum" ? arbitrum : polygon,
+                                chain: arbitrum ,
                                 //
                                 //chain: arbitrum,
 
