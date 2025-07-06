@@ -2517,19 +2517,22 @@ export default function Index({ params }: any) {
 
 
    const [tradeSummary, setTradeSummary] = useState({
-       totalCount: 0,
-       totalKrwAmount: 0,
-       totalUsdtAmount: 0,
-       totalSettlementCount: 0,
-       totalSettlementAmount: 0,
-       totalSettlementAmountKRW: 0,
-       totalFeeAmount: 0,
-       totalFeeAmountKRW: 0,
-       orders: [] as BuyOrder[],
- 
-       totalClearanceCount: 0,
-       totalClearanceAmount: 0,
-       totalClearanceAmountUSDT: 0,
+      totalCount: 0,
+      totalKrwAmount: 0,
+      totalUsdtAmount: 0,
+      totalSettlementCount: 0,
+      totalSettlementAmount: 0,
+      totalSettlementAmountKRW: 0,
+      totalFeeAmount: 0,
+      totalFeeAmountKRW: 0,
+      totalAgentFeeAmount: 0,
+      totalAgentFeeAmountKRW: 0,
+
+      orders: [] as BuyOrder[],
+
+      totalClearanceCount: 0,
+      totalClearanceAmount: 0,
+      totalClearanceAmountUSDT: 0,
      });
      const [loadingTradeSummary, setLoadingTradeSummary] = useState(false);
  
@@ -3839,7 +3842,10 @@ export default function Index({ params }: any) {
                   <div className="text-sm">총 수수료금액(원)</div>
                   <div className="flex flex-row items-center gap-1">
                     <span className="text-xl font-semibold text-yellow-600">
-                      {tradeSummary.totalFeeAmountKRW?.toLocaleString()}
+                      {
+                        (tradeSummary.totalFeeAmountKRW + tradeSummary.totalAgentFeeAmountKRW)
+                        .toLocaleString()
+                      }
                     </span>
                     <span className="text-sm text-zinc-500">원</span>
                   </div>
@@ -3855,7 +3861,11 @@ export default function Index({ params }: any) {
                       className="w-5 h-5"
                     />
                     <span className="text-xl font-semibold text-green-600">
-                      {tradeSummary.totalFeeAmount?.toLocaleString()}
+                      {
+                        (tradeSummary.totalFeeAmount + tradeSummary.totalAgentFeeAmount)
+                        .toFixed(2)
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                      }
                     </span>
                   </div>
                 </div>

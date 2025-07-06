@@ -2381,6 +2381,8 @@ const fetchBuyOrders = async () => {
     totalSettlementAmountKRW: 0,
     totalFeeAmount: 0,
     totalFeeAmountKRW: 0,
+    totalAgentFeeAmount: 0,
+    totalAgentFeeAmountKRW: 0,
     orders: [] as BuyOrder[],
 
     totalClearanceCount: 0,
@@ -3625,7 +3627,12 @@ const fetchBuyOrders = async () => {
                       <span className="text-xl font-semibold text-yellow-600"
                         style={{ fontFamily: 'monospace' }}
                       >
-                        {tradeSummary.totalFeeAmountKRW?.toLocaleString()}
+
+                        {
+                          (tradeSummary.totalFeeAmountKRW + tradeSummary.totalAgentFeeAmountKRW)
+                          .toLocaleString()
+                        }
+
                       </span>
                       <span className="text-sm text-zinc-500">원</span>
                     </div>
@@ -3643,10 +3650,11 @@ const fetchBuyOrders = async () => {
                       <span className="text-xl font-semibold text-green-600"
                         style={{ fontFamily: 'monospace' }}
                       >
-                        {Number(tradeSummary.totalFeeAmount
-                          ? tradeSummary.totalFeeAmount
-                          : 0
-                        ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      {
+                        (tradeSummary.totalFeeAmount + tradeSummary.totalAgentFeeAmount)
+                        .toFixed(2)
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                      }
                       </span>
                     </div>
                   </div>
