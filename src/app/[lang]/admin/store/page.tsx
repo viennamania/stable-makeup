@@ -2779,7 +2779,7 @@ export default function Index({ params }: any) {
 
                                   <div className="flex flex-col items-end gap-2">
 
-                                    <span className="text-lg text-yellow-600 font-semibold"
+                                    <span className="text-sm text-yellow-600"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2795,7 +2795,7 @@ export default function Index({ params }: any) {
                                         height={20}
                                         className="w-5 h-5"
                                       />
-                                      <span className="text-lg text-green-600 font-semibold"
+                                      <span className="text-sm text-green-600"
                                         style={{ fontFamily: 'monospace' }}
                                       >
                                         {
@@ -2854,7 +2854,7 @@ export default function Index({ params }: any) {
                                 <div className="w-full flex flex-row items-start justify-center gap-2">
 
                                   <div className="w-full flex flex-col items-end gap-2">
-                                    <span className="text-lg text-yellow-600 font-semibold"
+                                    <span className="text-sm text-yellow-600"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2870,7 +2870,7 @@ export default function Index({ params }: any) {
                                         height={20}
                                         className="w-5 h-5"
                                       />
-                                      <span className="text-lg text-green-600 font-semibold"
+                                      <span className="text-sm text-green-600"
                                         style={{ fontFamily: 'monospace' }}
                                       >
                                         {
@@ -2884,7 +2884,7 @@ export default function Index({ params }: any) {
 
                                   <div className="w-full flex flex-col items-end gap-2">
 
-                                    <span className="text-lg text-yellow-600 font-semibold"
+                                    <span className="text-sm text-yellow-600"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2900,7 +2900,7 @@ export default function Index({ params }: any) {
                                         height={20}
                                         className="w-5 h-5"
                                       />
-                                      <span className="text-lg text-green-600 font-semibold"
+                                      <span className="text-sm text-green-600"
                                         style={{ fontFamily: 'monospace' }}
                                       >
                                         {
@@ -2910,7 +2910,7 @@ export default function Index({ params }: any) {
                                       </span>
                                     </div>
 
-                                    <span className="text-lg text-yellow-600 font-semibold"
+                                    <span className="text-sm text-yellow-600"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -2926,7 +2926,7 @@ export default function Index({ params }: any) {
                                         height={20}
                                         className="w-5 h-5"
                                       />
-                                      <span className="text-lg text-green-600 font-semibold"
+                                      <span className="text-sm text-green-600"
                                         style={{ fontFamily: 'monospace' }}
                                       >
                                         {
@@ -2996,7 +2996,7 @@ export default function Index({ params }: any) {
 
                                   <div className="w-full flex flex-col items-end justify-center gap-2">
                         
-                                    <span className="text-lg text-yellow-600 font-semibold"
+                                    <span className="text-sm text-yellow-600"
                                       style={{ fontFamily: 'monospace' }}
                                     >
                                       {
@@ -3012,7 +3012,7 @@ export default function Index({ params }: any) {
                                         height={20}
                                         className="w-5 h-5"
                                       />
-                                      <span className="text-lg text-green-600 font-semibold"
+                                      <span className="text-sm text-green-600"
                                         style={{ fontFamily: 'monospace' }}
                                       >
                                         {
@@ -3027,7 +3027,7 @@ export default function Index({ params }: any) {
 
                                   <div className="w-full flex flex-col items-end justify-center gap-2">
 
-                                      <span className="text-lg text-yellow-600 font-semibold"
+                                      <span className="text-sm text-yellow-600"
                                         style={{ fontFamily: 'monospace' }}
                                       >
                                         {
@@ -3054,7 +3054,7 @@ export default function Index({ params }: any) {
                                           height={20}
                                           className="w-5 h-5"
                                         />
-                                        <span className="text-lg text-green-600 font-semibold"
+                                        <span className="text-sm text-green-600"
                                           style={{ fontFamily: 'monospace' }}
                                         >
                                           {
