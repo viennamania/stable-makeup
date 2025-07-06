@@ -51,6 +51,11 @@ import { client as thirdwebClient } from "../../../client";
 
 
 
+
+export const maxDuration = 300; // This function can run for a maximum of 300 seconds
+export const dynamic = 'force-dynamic';
+
+
 export async function POST(request: NextRequest) {
 
   const body = await request.json();
@@ -84,6 +89,9 @@ export async function POST(request: NextRequest) {
     const user = await getOneByWalletAddress(storecode, walletAddress);
 
     if (!user) {
+
+      console.log("User not found for storecode:", storecode, "and walletAddress:", walletAddress);
+
       return NextResponse.json({
         result: "error",
         error: "User not found"
@@ -128,8 +136,13 @@ export async function POST(request: NextRequest) {
 
 
     //get sellerWalletAddress from storecode
-    const store = await getStoreByStorecode(storecode);
+    const store = await getStoreByStorecode({
+        storecode: storecode,
+    } );
+
     if (!store) {
+      console.log("Store not found for storecode:", storecode);
+
       return NextResponse.json({
         result: "error",
         error: "Store not found"
@@ -155,6 +168,10 @@ export async function POST(request: NextRequest) {
     }
     const clearanceUSDTBalance = Number(balance) / 10 ** 6; // USDT has 6 decimals
 
+    console.log("clearanceUSDTBalance", clearanceUSDTBalance);
+
+
+
     if (clearanceUSDTBalance <= 0) {
         console.log("clearanceUSDTBalance is zero or negative");
         return NextResponse.json({
@@ -165,6 +182,20 @@ export async function POST(request: NextRequest) {
 
 
     const sellerWalletAddress = store.sellerWalletAddress;
+
+
+    console.log("sellerWalletAddress", sellerWalletAddress);
+
+    if (!sellerWalletAddress) {
+        console.log("sellerWalletAddress not found for storecode:", storecode);
+        return NextResponse.json({
+            result: "error",
+            error: "Seller wallet address not found"
+        });
+    }
+
+
+
 
     // transfer USDT to sellerWalletAddress
     const transactionSendToStore = transfer({
@@ -182,6 +213,8 @@ export async function POST(request: NextRequest) {
         transaction: transactionSendToStore,
     });
 
+    console.log("result", result);
+
     if (!result) {
         console.log("transaction failed");
         return NextResponse.json({
@@ -189,9 +222,6 @@ export async function POST(request: NextRequest) {
             error: "Transaction failed"
         });
     }
-
-
-
 
 
 

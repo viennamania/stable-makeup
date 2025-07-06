@@ -1434,47 +1434,26 @@ export default function Index({ params }: any) {
 
 
 
+  const [usdtBalance, setUsdtBalance] = useState([] as any[]);
+  allUsers.forEach((user) => {
+    usdtBalance.push(0);
+  });
+
 
 
   const getBalanceOfWalletAddress = async (walletAddress: string) => {
   
 
-    // get native balance of the store's settlement wallet address
-    // getWalletBalance
-    // getWalletBalance
-    /*
-    const result = await getWalletBalance({
-      address: address,
-      client: client,
-      chain: polygon,
-    });
-    */
-
-
-
-
-
     const balance = await balanceOf({
       contract,
-      address: store.settlementWalletAddress,
+      address: walletAddress,
     });
     
-    //return Number(balance) / 10 ** 6; // Convert to USDT
-    /*
-    setAllStore((prev) => {
-      const newStore = [...prev];
-      const index = newStore.findIndex(s => s.storecode === storecode);
-      if (index !== -1) {
-        newStore[index] = {
-          ...newStore[index],
-          usdtBalance: Number(balance) / 10 ** 6,
-        };
-      }
-      return newStore;
-    } );
-    */
     console.log('getBalanceOfWalletAddress', walletAddress, 'balance', balance);
 
+    toast.success(`잔액이 업데이트되었습니다. 잔액: ${(Number(balance) / 10 ** 6).toFixed(2)} USDT`);
+
+    /*
     setAllUsers((prev) => {
       const newUsers = [...prev];
       const index = newUsers.findIndex(u => u.walletAddress === walletAddress);
@@ -1486,6 +1465,19 @@ export default function Index({ params }: any) {
       }
       return newUsers;
     });
+    */
+    // update the usdtBalance of the user
+    setUsdtBalance((prev) => {
+      const newUsdtBalance = [...prev];
+      const index = allUsers.findIndex(u => u.walletAddress === walletAddress);
+      if (index !== -1) {
+        newUsdtBalance[index] = Number(balance) / 10 ** 6; // Convert to USDT
+      }
+      return newUsdtBalance;
+    });
+
+
+
 
     return Number(balance) / 10 ** 6; // Convert to USDT
 
@@ -1558,6 +1550,9 @@ export default function Index({ params }: any) {
     });
     return data.result;
   };
+
+
+
  
 
 
@@ -1895,11 +1890,14 @@ export default function Index({ params }: any) {
   // if store.adminWalletAddress is same as address, return "가맹점 관리자" else return "가맹점"
   // if user?.role is not "admin", return "가맹점"
 
-
+  
   if (
-    (address
+    (
+      address
     && store
+    
     &&  address !== store.adminWalletAddress
+
     && user?.role !== "admin")
     
 
@@ -1927,8 +1925,6 @@ export default function Index({ params }: any) {
           </div>
         </div>
 
-        {/* 회원가입한후 가맹점 관리자 등록신청을 하세요 */}
-        {/* 회원가입하러 가기 */}
         <div className="flex flex-row items-center justify-center gap-2">
           <button
             onClick={() => {
@@ -1940,7 +1936,7 @@ export default function Index({ params }: any) {
           </button>
         </div>
 
-        {/* 로그아웃 버튼 */}
+
         <button
           onClick={() => {
             confirm("로그아웃 하시겠습니까?") && activeWallet?.disconnect()
@@ -1974,6 +1970,7 @@ export default function Index({ params }: any) {
     );
 
   }
+
 
 
 
@@ -3061,18 +3058,18 @@ export default function Index({ params }: any) {
                             <div className="w-24
                               flex flex-col items-between justify-between gap-2">
 
-
+                              {/*
                               <div className="w-full flex flex-col items-center justify-center gap-2">
 
-                                {/* USDT 잔액 표시 */}
                                 <span className="text-lg text-green-600"
                                   style={{ fontFamily: 'monospace' }}
                                 >
-                                  {item?.usdtBalance ? item?.usdtBalance.toFixed(2).toLocaleString('us-US') : 0}{' '}USDT
+                                  {usdtBalance[index] ?
+                                    usdtBalance[index].toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'}{' USDT'}
                                 </span>
-
-                              
+         
                               </div>
+                              */}
 
 
                               {/* button to getBalance of USDT */}
@@ -3085,7 +3082,11 @@ export default function Index({ params }: any) {
                                   getBalanceOfWalletAddress(item.walletAddress);
           
 
-                                  toast.success('잔액을 가져왔습니다.');
+                                  //toast.success('잔액을 가져왔습니다.');
+
+                                  // toast usdtBalance[index] is updated
+                                  //toast.success(`잔액을 가져왔습니다. 현재 잔액: ${usdtBalance[index] ? usdtBalance[index].toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'} USDT`);
+
                                 }}
                                 className={`
                                   w-full mb-2
