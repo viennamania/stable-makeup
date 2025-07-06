@@ -1493,7 +1493,72 @@ export default function Index({ params }: any) {
 
 
 
+  // clearanceWalletAddress
+  const [clearanceingWalletAddress, setClearanceingWalletAddress] = useState([] as boolean[]);
+  for (let i = 0; i < 100; i++) {
+    clearanceingWalletAddress.push(false);
+  }
 
+  const clearanceWalletAddress = async (walletAddress: string) => {
+    
+    if (clearanceingWalletAddress.includes(true)) {
+      return;
+    }
+
+    // api call to clear the wallet address
+    setClearanceingWalletAddress((prev) => {
+      const newClearanceing = [...prev];
+      const index = newClearanceing.findIndex(u => u === false);
+      if (index !== -1) {
+        newClearanceing[index] = true;
+      }
+      return newClearanceing;
+    });
+
+    const response = await fetch('/api/user/clearanceWalletAddress', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        storecode: params.center,
+        walletAddress: walletAddress,
+      }),
+    });
+
+    if (!response.ok) {
+      setClearanceingWalletAddress((prev) => {
+        const newClearanceing = [...prev];
+        const index = newClearanceing.findIndex(u => u === true);
+        if (index !== -1) {
+          newClearanceing[index] = false;
+        }
+        return newClearanceing;
+      });
+      toast.error('지갑 주소 정산에 실패했습니다.');
+      return;
+    }
+
+    const data = await response.json();
+    //console.log('clearanceWalletAddress data', data);
+    if (data.result) {
+      toast.success('지갑 주소 정산이 완료되었습니다.');
+      // update the balance of the user
+      getBalanceOfWalletAddress(walletAddress);
+    } else {
+      toast.error('지갑 주소 정산에 실패했습니다.');
+    }
+    setClearanceingWalletAddress((prev) => {
+      const newClearanceing = [...prev];
+      const index = newClearanceing.findIndex(u => u === true);
+      if (index !== -1) {
+        newClearanceing[index] = false;
+      }
+      return newClearanceing;
+    });
+    return data.result;
+  };
+ 
 
 
 
@@ -2756,7 +2821,7 @@ export default function Index({ params }: any) {
                         <th className="p-2">회원 결제페이지</th>
                         <th className="p-2">회원 USDT통장</th>
                         <th className="p-2">주문상태</th>
-                        <th className="p-2">잔고확인</th>
+                        <th className="p-2">잔액확인</th>
                       </tr>
                     </thead>
 
@@ -3030,6 +3095,25 @@ export default function Index({ params }: any) {
                               >
                                 잔액 확인하기
                               </button>
+
+
+                              {/* function call button clearanceWalletAddress */}
+                              <button
+                                onClick={() => {
+                                  clearanceWalletAddress(item.walletAddress);
+                                  toast.success('잔액을 회수했습니다.');
+                                }}
+                                className={`
+                                  w-full mb-2
+                                  bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                  hover:bg-[#3167b4]/80
+                                `}
+                              >
+                                잔액 회수하기
+                              </button>
+
+
+
 
                             </div>
                           </td>
