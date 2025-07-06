@@ -1416,7 +1416,7 @@ export default function Index({ params }: any) {
                   walletAddress: address,
                   searchMyOrders: searchMyOrders,
 
-                  searchOrderStatusCompleted: true,
+                  //searchOrderStatusCompleted: true,
 
                   searchBuyer: searchBuyer,
                   searchDepositName: searchDepositName,
@@ -1631,7 +1631,7 @@ export default function Index({ params }: any) {
               walletAddress: address,
               searchMyOrders: searchMyOrders,
 
-              searchOrderStatusCompleted: true,
+              //searchOrderStatusCompleted: true,
 
               searchBuyer: searchBuyer,
               searchDepositName: searchDepositName,
@@ -1799,7 +1799,7 @@ export default function Index({ params }: any) {
               walletAddress: address,
               searchMyOrders: searchMyOrders,
 
-              searchOrderStatusCompleted: true,
+              //searchOrderStatusCompleted: true,
 
               searchBuyer: searchBuyer,
               searchDepositName: searchDepositName,
@@ -1962,7 +1962,7 @@ export default function Index({ params }: any) {
               walletAddress: address,
               searchMyOrders: searchMyOrders,
 
-              searchOrderStatusCompleted: true,
+              //earchOrderStatusCompleted: true,
 
               searchBuyer: searchBuyer,
               searchDepositName: searchDepositName,
@@ -2102,7 +2102,7 @@ const fetchBuyOrders = async () => {
         walletAddress: address,
         searchMyOrders: searchMyOrders,
 
-        searchOrderStatusCompleted: true,
+        //searchOrderStatusCompleted: true,
 
         searchBuyer: searchBuyer,
         searchDepositName: searchDepositName,
@@ -2558,15 +2558,15 @@ const fetchBuyOrders = async () => {
 
             <div className='flex flex-row items-center space-x-4'>
                 <Image
-                  src="/icon-trade.png"
-                  alt="Trade"
+                  src="/icon-clearance.png"
+                  alt="Clearance"
                   width={35}
                   height={35}
                   className="w-6 h-6"
                 />
 
                 <div className="text-xl font-semibold">
-                  거래내역
+                  청산내역
                 </div>
 
             </div>
@@ -2598,9 +2598,20 @@ const fetchBuyOrders = async () => {
 
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 거래량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalUsdtAmount?.toLocaleString()} USDT
+                  
+                  <div className="flex flex-row items-center justify-center gap-1">
+                    <Image
+                      src="/icon-tether.png"
+                      alt="Tether"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5"
+                    />
+                    <div className="text-xl font-semibold text-zinc-500">
+                      {tradeSummary.totalUsdtAmount?.toLocaleString()}
+                    </div>
                   </div>
+
                 </div>
               </div>
 
@@ -2625,9 +2636,20 @@ const fetchBuyOrders = async () => {
                 </div>
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 정산량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalSettlementAmount?.toLocaleString()} USDT
+
+                  <div className="flex flex-row items-center justify-center gap-1">
+                    <Image
+                      src="/icon-tether.png"
+                      alt="Tether"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5"
+                    />
+                    <div className="text-xl font-semibold text-zinc-500">
+                      {tradeSummary.totalSettlementAmount?.toLocaleString()}
+                    </div>
                   </div>
+
                 </div>
 
                 <div className="flex flex-col gap-2 items-center">
@@ -2638,8 +2660,17 @@ const fetchBuyOrders = async () => {
                 </div>
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 수수료수량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalFeeAmount?.toLocaleString()} USDT
+                  <div className="flex flex-row items-center justify-center gap-1">
+                    <Image
+                      src="/icon-tether.png"
+                      alt="Tether"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5"
+                    />
+                    <div className="text-xl font-semibold text-zinc-500">
+                      {tradeSummary.totalFeeAmount?.toLocaleString()}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2665,8 +2696,17 @@ const fetchBuyOrders = async () => {
                 </div>
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 청산수량(USDT)</div>
-                  <div className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()} USDT
+                  <div className="flex flex-row items-center justify-center gap-1">
+                    <Image
+                      src="/icon-tether.png"
+                      alt="Tether"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5"
+                    />
+                    <div className="text-xl font-semibold text-zinc-500">
+                      {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()} USDT
+                    </div>
                   </div>
                 </div>
               </div>
@@ -3062,7 +3102,9 @@ const fetchBuyOrders = async () => {
                             <td className="p-2">
                               <div className="flex flex-col gap-1">
                                 <span className="text-lg text-zinc-600">
-                                  {item.nickname || '익명'}
+                                  {item?.buyer?.nickname ?
+                                    item?.buyer?.nickname
+                                    : item?.nickname || '익명'}
                                 </span>
                                 <span className="text-lg text-zinc-400 font-semibold">
                                   {item.walletAddress.slice(0, 6) + '...' + item.walletAddress.slice(-4)}
@@ -3117,30 +3159,51 @@ const fetchBuyOrders = async () => {
                             </td>
 
 
-                            <td className="p-2">
-                              <div className="flex flex-col gap-2 items-center justify-center">
-                                <div className="text-sm font-semibold text-zinc-500">
-                                  {item?.seller?.bankInfo?.bankName}
-                                </div>
+                           <td className="p-2">
 
-                                {/* copy account number to clipboard */}
-                                <button
-                                  onClick={() => {
-                                    navigator.clipboard.writeText(item?.seller?.bankInfo?.accountNumber);
-                                    toast.success('입금통장번호가 복사되었습니다.');
-                                  }}
-                                  className="text-sm text-zinc-500 font-semibold
-                                    hover:text-blue-600 cursor-pointer
-                                    hover:underline"
-                                  title="입금통장번호 복사"
-                                >
-                                  {item?.seller?.bankInfo?.accountNumber}
-                                </button>
+                                {item?.buyer?.nickname ? (
+                                  <div className="flex flex-col items-start justify-center gap-1">
 
-                                <div className="text-sm font-semibold text-zinc-500">
-                                  {item?.seller?.bankInfo?.accountHolder}
-                                </div>
-                              </div>
+                                    <span className="text-lg text-zinc-400 font-semibold">
+                                      {item.buyer?.depositBankName}
+                                    </span>
+
+                                    <button
+                                      className="text-lg text-zinc-400 font-semibold hover:text-blue-500"
+                                      onClick={() => {
+                                        navigator.clipboard.writeText(item.buyer?.depositBankAccountNumber);
+                                        alert('계좌번호가 클립보드에 복사되었습니다.');
+                                      }}
+                                    >
+                                      {item.buyer?.depositBankAccountNumber}
+                                    </button>
+
+
+                                    <span className="text-lg text-zinc-400 font-semibold">
+                                      {item.buyer?.depositName}
+                                    </span>
+
+                                  </div>
+                                ) : (
+                                  <div className="flex flex-col items-start justify-center gap-1">
+                                    <span className="text-lg text-zinc-400 font-semibold">
+                                      {item.seller?.bankInfo?.bankName}
+                                    </span>
+                                    <button
+                                      className="text-lg text-zinc-400 font-semibold hover:text-blue-500"
+                                      onClick={() => {
+                                        navigator.clipboard.writeText(item.seller?.bankInfo?.accountNumber);
+                                        alert('계좌번호가 클립보드에 복사되었습니다.');
+                                      }}
+                                    >
+                                      {item.seller?.bankInfo?.accountNumber}
+                                    </button>
+                                    <span className="text-lg text-zinc-400 font-semibold">
+                                      {item.seller?.bankInfo?.accountHolder}
+                                      </span>
+                                  </div>
+                                )}
+
                             </td>
 
 
