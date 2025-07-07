@@ -899,6 +899,42 @@ export default function Index({ params }: any) {
 
 
 
+  // search form date to date
+  const [searchFromDate, setSearchFormDate] = useState("");
+  // set today's date in YYYY-MM-DD format
+  useEffect(() => {
+    const today = new Date();
+    today.setHours(today.getHours() + 9); // Adjust for Korean timezone (UTC+9)
+
+
+    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+    setSearchFormDate(formattedDate);
+  }, []);
+
+
+  const [searchToDate, setSearchToDate] = useState("");
+
+  // set today's date in YYYY-MM-DD format
+  useEffect(() => {
+    const today = new Date();
+    today.setHours(today.getHours() + 9); // Adjust for Korean timezone (UTC+9)
+
+    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+    setSearchToDate(formattedDate);
+  }, []);
+
+
+
+  const [searchBuyer, setSearchBuyer] = useState("");
+
+  const [searchDepositName, setSearchDepositName] = useState("");
+
+
+  // search store bank account number
+  const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState("");
+
+
+
 
   const [totalCount, setTotalCount] = useState(0);
     
@@ -1048,7 +1084,14 @@ export default function Index({ params }: any) {
                     searchOrderStatusCancelled: searchOrderStatusCancelled,
                     searchOrderStatusCompleted: searchOrderStatusCompleted,
 
-                    //searchStoreName: searchStoreName,
+                    searchBuyer: searchBuyer,
+                    searchDepositName: searchDepositName,
+
+                    searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+
+                    fromDate: searchFromDate,
+                    toDate: searchToDate,
 
                   }
                 ),
@@ -1168,7 +1211,7 @@ export default function Index({ params }: any) {
         playSong();
 
 
-        await fetch('/api/order/getAllBuyOrders', {
+        await fetch('/api/order/getAllBuyOrdersForSeller', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -1184,7 +1227,14 @@ export default function Index({ params }: any) {
               searchOrderStatusCancelled: searchOrderStatusCancelled,
               searchOrderStatusCompleted: searchOrderStatusCompleted,
 
-              ///searchStoreName: searchStoreName,
+              searchBuyer: searchBuyer,
+              searchDepositName: searchDepositName,
+
+              searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+
+              fromDate: searchFromDate,
+              toDate: searchToDate,
             }
           )
         }).then(async (response) => {
@@ -1438,7 +1488,7 @@ export default function Index({ params }: any) {
             
 
             
-            await fetch('/api/order/getAllBuyOrders', {
+            await fetch('/api/order/getAllBuyOrdersForSeller', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -1454,7 +1504,14 @@ export default function Index({ params }: any) {
                   searchOrderStatusCancelled: searchOrderStatusCancelled,
                   searchOrderStatusCompleted: searchOrderStatusCompleted,
 
-                  //searchStoreName: searchStoreName,
+                  searchBuyer: searchBuyer,
+                  searchDepositName: searchDepositName,
+
+                  searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+
+                  fromDate: searchFromDate,
+                  toDate: searchToDate,
                 }
               )
             }).then(async (response) => {
@@ -1555,7 +1612,7 @@ export default function Index({ params }: any) {
 
           playSong();
           
-          await fetch('/api/order/getAllBuyOrders', {
+          await fetch('/api/order/getAllBuyOrdersForSeller', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -1571,7 +1628,14 @@ export default function Index({ params }: any) {
                 searchOrderStatusCancelled: searchOrderStatusCancelled,
                 searchOrderStatusCompleted: searchOrderStatusCompleted,
 
-                //searchStoreName: searchStoreName,
+                searchBuyer: searchBuyer,
+                searchDepositName: searchDepositName,
+
+                searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+
+                fromDate: searchFromDate,
+                toDate: searchToDate,
               }
             )
           }).then(async (response) => {
@@ -1775,7 +1839,14 @@ export default function Index({ params }: any) {
                 searchOrderStatusCancelled: searchOrderStatusCancelled,
                 searchOrderStatusCompleted: searchOrderStatusCompleted,
 
-                //searchStoreName: searchStoreName,
+                searchBuyer: searchBuyer,
+                searchDepositName: searchDepositName,
+
+                searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+
+                fromDate: searchFromDate,
+                toDate: searchToDate,
               }
             ),
           })
@@ -1867,7 +1938,14 @@ export default function Index({ params }: any) {
                     searchOrderStatusCancelled: searchOrderStatusCancelled,
                     searchOrderStatusCompleted: searchOrderStatusCompleted,
 
-                    //searchStoreName: searchStoreName,
+                    searchBuyer: searchBuyer,
+                    searchDepositName: searchDepositName,
+
+                    searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+
+                    fromDate: searchFromDate,
+                    toDate: searchToDate,
                   }
                 ),
               })
@@ -2041,7 +2119,14 @@ export default function Index({ params }: any) {
               searchOrderStatusCancelled: searchOrderStatusCancelled,
               searchOrderStatusCompleted: searchOrderStatusCompleted,
 
-              //searchStoreName: searchStoreName,
+              searchBuyer: searchBuyer,
+              searchDepositName: searchDepositName,
+
+              searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+
+              fromDate: searchFromDate,
+              toDate: searchToDate,
             }
           ),
         })
@@ -2208,6 +2293,19 @@ export default function Index({ params }: any) {
               searchOrderStatusCompleted: searchOrderStatusCompleted,
 
               //searchStoreName: searchStoreName,
+
+
+              searchBuyer: searchBuyer,
+              searchDepositName: searchDepositName,
+
+              searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+
+              fromDate: searchFromDate,
+              toDate: searchToDate,
+
+
+
             }
 
         ),
@@ -2307,9 +2405,13 @@ export default function Index({ params }: any) {
     params.center,
     limitValue,
     pageValue,
+    searchFromDate,
+    searchToDate,
 
     searchOrderStatusCancelled,
     searchOrderStatusCompleted,
+
+
 ]);
 
 
@@ -2320,6 +2422,75 @@ export default function Index({ params }: any) {
 
 
   
+
+
+
+const [fetchingBuyOrders, setFetchingBuyOrders] = useState(false);
+
+const fetchBuyOrders = async () => {
+
+
+  if (fetchingBuyOrders) {
+    return;
+  }
+  setFetchingBuyOrders(true);
+
+  const response = await fetch('/api/order/getAllBuyOrdersForSeller', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(
+      {
+        storecode: params.center,
+        limit: Number(limitValue),
+        page: Number(pageValue),
+        walletAddress: address,
+        searchMyOrders: searchMyOrders,
+
+        searchOrderStatusCompleted: true,
+
+        searchBuyer: searchBuyer,
+        searchDepositName: searchDepositName,
+
+        searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+        fromDate: searchFromDate,
+        toDate: searchToDate,
+
+      }
+
+    ),
+  });
+
+  if (!response.ok) {
+    setFetchingBuyOrders(false);
+    toast.error('Failed to fetch buy orders');
+    return;
+  }
+  const data = await response.json();
+  //console.log('data', data);
+
+  setBuyOrders(data.result.orders);
+  setTotalCount(data.result.totalCount);
+  setFetchingBuyOrders(false);
+
+  return data.result.orders;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // check table view or card view
@@ -3748,6 +3919,156 @@ export default function Index({ params }: any) {
               </div>
             )}
             */}
+
+
+
+
+
+
+              <div className="w-full flex flex-col xl:flex-row items-center justify-between gap-3">
+
+
+
+                {/* serach fromDate and toDate */}
+                {/* DatePicker for fromDate and toDate */}
+                <div className="flex flex-col xl:flex-row items-center gap-2">
+                  <div className="flex flex-row items-center gap-2">
+                    <Image
+                      src="/icon-calendar.png"
+                      alt="Calendar"
+                      width={20}
+                      height={20}
+                      className="rounded-lg w-5 h-5"
+                    />
+                    <input
+                      type="date"
+                      value={searchFromDate}
+                      onChange={(e) => setSearchFormDate(e.target.value)}
+                      className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                    />
+                  </div>
+
+                  <span className="text-sm text-gray-500">~</span>
+
+                  <div className="flex flex-row items-center gap-2">
+                    <Image
+                      src="/icon-calendar.png"
+                      alt="Calendar"
+                      width={20}
+                      height={20}
+                      className="rounded-lg w-5 h-5"
+                    />
+                    <input
+                      type="date"
+                      value={searchToDate}
+                      onChange={(e) => setSearchToDate(e.target.value)}
+                      className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                    />
+                  </div>
+                </div>
+
+
+                {/* search depositName */}
+                <div className="flex flex-col items-center gap-2">
+
+
+                  <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
+                    {/* search nickname */}
+                    <div className="flex flex-row items-center gap-2">
+                      <input
+                        type="text"
+                        value={searchBuyer}
+                        onChange={(e) => setSearchBuyer(e.target.value)}
+                        placeholder="회원 아이디"
+                        className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                      />
+                    </div>
+
+                    <div className="flex flex-row items-center gap-2">
+                      <input
+                        type="text"
+                        value={searchDepositName}
+                        onChange={(e) => setSearchDepositName(e.target.value)}
+                        placeholder="입금자명"
+                        className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                      />
+                    </div>
+
+                    {/* searchStoreBankAccountNumber */}
+                    <div className="flex flex-row items-center gap-2">
+                      <input
+                        type="text"
+                        value={searchStoreBankAccountNumber}
+                        onChange={(e) => setSearchStoreBankAccountNumber(e.target.value)}
+                        placeholder="입금통장번호"
+                        className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                      /> 
+                    </div>
+
+
+
+                  
+
+
+                    {/* 검색 버튼 */}
+                    <div className="
+                      w-28  
+                      flex flex-row items-center gap-2">
+                      <button
+                        onClick={() => {
+                          setPageValue(1);
+                          
+                          fetchBuyOrders();
+
+                          getTradeSummary();
+                        }}
+                        //className="bg-[#3167b4] text-white px-4 py-2 rounded-lg w-full"
+                        className={`${
+                          fetchingBuyOrders ? 'bg-gray-400' : 'bg-[#3167b4]'
+                        }
+                        text-white px-4 py-2 rounded-lg w-full
+                        hover:bg-[#3167b4]/80
+                        hover:cursor-pointer
+                        hover:scale-105
+                        transition-transform duration-200 ease-in-out`}
+                        title="검색"
+
+                        disabled={fetchingBuyOrders}
+                      >
+                        <div className="flex flex-row items-center justify-between gap-2">
+                          <Image
+                            src="/icon-search.png"
+                            alt="Search"
+                            width={20}
+                            height={20}
+                            className="rounded-lg w-5 h-5"
+                          />
+                          <span className="text-sm">
+                            {fetchingBuyOrders ? '검색중...' : '검색'}
+                          </span>
+                        </div>
+
+                      </button>
+                    </div>
+
+                  </div>
+
+
+
+                </div>
+
+
+
+
+  
+
+              </div>
+
+
+
+
+
+            
 
 
 
