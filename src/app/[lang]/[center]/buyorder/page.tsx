@@ -5827,7 +5827,7 @@ export default function Index({ params }: any) {
                                   >
 
                                     <span>
-                                      {item?.settlement?.settlementAmount?.toLocaleString() + ' USDT'}
+                                      {item?.settlement?.settlementAmount?.toLocaleString()}
                                       {' '}
                                       {
                                         item?.settlement?.settlementWalletAddress &&
