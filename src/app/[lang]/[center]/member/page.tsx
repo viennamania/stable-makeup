@@ -2639,6 +2639,12 @@ export default function Index({ params }: any) {
                       <option value="농협" selected={userBankName === "농협"}>
                         농협
                       </option>
+                      <option value="신협" selected={userBankName === "신협"}>
+                        신협
+                      </option>
+                      <option value="우체국" selected={userBankName === "우체국"}>
+                        우체국
+                      </option>
                       <option value="기업은행" selected={userBankName === "기업은행"}>
                         기업은행
                       </option>
