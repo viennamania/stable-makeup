@@ -2865,24 +2865,30 @@ export default function Index({ params }: any) {
 
                       <div className="mt-5 flex flex-row gap-2 justify-center items-center">
                         <span className="text-sm text-zinc-600">
-                          {My_Balance}
+                          {My_Balance}(USDT)
                         </span>
+                        <Image
+                          src="/icon-tether.png"
+                          alt="Tether"
+                          width={35}
+                          height={35}
+                          className="rounded-lg w-6 h-6"
+                        />
                         <div className="text-4xl font-semibold text-green-600">
                           {Number(balance).toFixed(2)}
                         </div>
-                        <p className="text-sm text-zinc-800">USDT</p>
                       </div>
 
                       <div className="flex flex-row gap-2 justify-center items-center">
                         <div className="text-xl font-semibold text-zinc-800">
-                          {Number(nativeBalance).toFixed(2)}
+                          {Number(nativeBalance).toFixed(8)}
                         </div>
                         <p className="text-sm text-zinc-800">ETH</p>
                       </div>
 
                       <div className="flex flex-row gap-2 justify-center items-center">
                         {/* if pol balance is 0, comment out the text */}
-                        {nativeBalance < 0.01 && (
+                        {nativeBalance < 0.000001 && (
                           <p className="text-sm text-red-500">
                             가스비용이 부족합니다.<br/>가스비용이 부족하면 입금은 가능하지만 출금은 불가능합니다.
                           </p>
