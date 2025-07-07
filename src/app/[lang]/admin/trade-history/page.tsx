@@ -3072,7 +3072,7 @@ const fetchBuyOrders = async () => {
                       <th className="p-2">자동입금처리</th>
                       <th className="p-2">거래상태</th>
 
-                      <th className="p-2">자동결제 및 정산</th>
+                      <th className="p-2">자동결제 및 정산(USDT)</th>
 
                     </tr>
                   </thead>
@@ -3998,21 +3998,29 @@ const fetchBuyOrders = async () => {
 
                                   
                                   <span>
-                                    {item?.settlement?.settlementAmount?.toLocaleString() + ' USDT'}
+                                    {
+                                    item?.settlement?.settlementAmount &&
+                                    item?.settlement?.settlementAmount?.toLocaleString()
+                                    }
                                     {' '}
                                     {
                                       item?.settlement?.settlementWalletAddress &&
                                     item?.settlement?.settlementWalletAddress?.slice(0, 5) + '...'}
                                   </span>
                                   <span>
-                                    {item?.settlement?.agentFeeAmount?.toLocaleString() + ' USDT'}
+                                    {
+                                      item?.settlement?.agentFeeAmount &&
+                                    item?.settlement?.agentFeeAmount?.toLocaleString()
+                                    }
                                     {' '}
                                     {
                                       item?.settlement?.agentFeeWalletAddress &&
                                     item?.settlement?.agentFeeWalletAddress?.slice(0, 5) + '...'}
                                   </span>
                                   <span>
-                                    {item?.settlement?.feeAmount?.toLocaleString() + ' USDT'}
+                                    {
+                                      item?.settlement?.feeAmount &&
+                                    item?.settlement?.feeAmount?.toLocaleString()}
                                     {' '}
                                     {
                                       item?.settlement?.feeWalletAddress &&

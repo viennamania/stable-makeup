@@ -3761,7 +3761,7 @@ const fetchBuyOrders = async () => {
                         <th className="p-2">{Status}</th>
                         {/*<th className="p-2">{Trades}</th>*/}
 
-                        <th className="p-2">자동결제 및 정산</th>
+                        <th className="p-2">자동결제 및 정산(USDT)</th>
 
                       </tr>
                     </thead>
@@ -4648,7 +4648,9 @@ const fetchBuyOrders = async () => {
 
                                     
                                     <span>
-                                      {item?.settlement?.settlementAmount?.toLocaleString() + ' USDT'}
+                                      {
+                                        item?.settlement?.settlementAmount &&
+                                      item?.settlement?.settlementAmount?.toLocaleString()}
                                       {' '}
                                       {
                                         item?.settlement?.settlementWalletAddress &&

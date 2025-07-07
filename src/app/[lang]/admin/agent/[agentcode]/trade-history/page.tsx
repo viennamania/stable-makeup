@@ -2932,7 +2932,7 @@ const fetchBuyOrders = async () => {
                           <th className="p-2">{Status}</th>
                           {/*<th className="p-2">{Trades}</th>*/}
                           <th className="p-2">판매자</th>
-                          <th className="p-2">자동결제 및 정산</th>
+                          <th className="p-2">자동결제 및 정산(USDT)</th>
 
                         </tr>
                       </thead>
