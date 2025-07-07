@@ -1068,7 +1068,7 @@ export default function Index({ params }: any) {
 
 
 
-            fetch('/api/order/getAllBuyOrdersForSeller', {
+            fetch('/api/order/getAllBuyOrders', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1211,7 +1211,7 @@ export default function Index({ params }: any) {
         playSong();
 
 
-        await fetch('/api/order/getAllBuyOrdersForSeller', {
+        await fetch('/api/order/getAllBuyOrders', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -1488,7 +1488,7 @@ export default function Index({ params }: any) {
             
 
             
-            await fetch('/api/order/getAllBuyOrdersForSeller', {
+            await fetch('/api/order/getAllBuyOrders', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -1612,7 +1612,7 @@ export default function Index({ params }: any) {
 
           playSong();
           
-          await fetch('/api/order/getAllBuyOrdersForSeller', {
+          await fetch('/api/order/getAllBuyOrders', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -1823,7 +1823,7 @@ export default function Index({ params }: any) {
           ///fetchBuyOrders();
 
           // fetch Buy Orders
-          await fetch('/api/order/getAllBuyOrdersForSeller', {
+          await fetch('/api/order/getAllBuyOrders', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -1922,7 +1922,7 @@ export default function Index({ params }: any) {
               ///fetchBuyOrders();
 
               // fetch Buy Orders
-              await fetch('/api/order/getAllBuyOrdersForSeller', {
+              await fetch('/api/order/getAllBuyOrders', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -2103,7 +2103,7 @@ export default function Index({ params }: any) {
         ///fetchBuyOrders();
 
         // fetch Buy Orders
-        await fetch('/api/order/getAllBuyOrdersForSeller', {
+        await fetch('/api/order/getAllBuyOrders', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -2275,7 +2275,7 @@ export default function Index({ params }: any) {
 
       
 
-      const response = await fetch('/api/order/getAllBuyOrdersForSeller', {
+      const response = await fetch('/api/order/getAllBuyOrders', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -2435,7 +2435,7 @@ const fetchBuyOrders = async () => {
   }
   setFetchingBuyOrders(true);
 
-  const response = await fetch('/api/order/getAllBuyOrdersForSeller', {
+  const response = await fetch('/api/order/getAllBuyOrders', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -2727,6 +2727,9 @@ const fetchBuyOrders = async () => {
            //searchDepositName: searchDepositName,
  
            //searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+            fromDate: searchFromDate,
+            toDate: searchToDate,
          })
        });
        if (!response.ok) {
