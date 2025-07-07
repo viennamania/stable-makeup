@@ -2642,6 +2642,9 @@ export default function Index({ params }: any) {
                       <option value="신협" selected={userBankName === "신협"}>
                         신협
                       </option>
+                      <option value="새마을금고" selected={userBankName === "새마을금고"}>
+                        새마을금고
+                      </option>
                       <option value="우체국" selected={userBankName === "우체국"}>
                         우체국
                       </option>
@@ -2818,8 +2821,9 @@ export default function Index({ params }: any) {
                         <th className="p-2">회원아이디</th>
                         <th className="p-2">회원 통장</th>
                         <th className="p-2">구매건수</th>
-                        <th className="p-2">구매금액</th>
-                        <th className="p-2">구매량</th>
+                        <th className="p-2">
+                          구매금액(원)<br/>구매량(USDT)
+                        </th>
                         <th className="p-2">충전금액</th>
                         <th className="p-2">회원 결제페이지</th>
                         <th className="p-2">회원 USDT통장</th>
@@ -2858,7 +2862,10 @@ export default function Index({ params }: any) {
                           <td className="p-2">
                             <div className="flex flex-col items-end justify-center gap-1">
                               <span className="text-sm text-zinc-500">
-                                {item?.buyer?.depositBankName}{' '}{item?.buyer?.depositBankAccountNumber}
+                                {item?.buyer?.depositBankName}
+                              </span>
+                              <span className="text-sm text-zinc-500">
+                                {item?.buyer?.depositBankAccountNumber}
                               </span>
                               <span className="text-sm text-zinc-500">
                                 {item?.buyer?.depositName}
@@ -2872,18 +2879,42 @@ export default function Index({ params }: any) {
                             </div>
                           </td>
                           <td className="p-2">
-                            <div className="flex flex-col items-end justify-center gap-1">
-                              {item?.totalPaymentConfirmedKrwAmount && item?.totalPaymentConfirmedKrwAmount.toLocaleString('ko-KR') || 0} 원
-                            </div>
-                          </td>
-                          <td className="p-2">
-                            <div className="flex flex-col items-end justify-center gap-1">
-                              {item?.totalPaymentConfirmedUsdtAmount && item?.totalPaymentConfirmedUsdtAmount.toLocaleString('ko-KR') || 0} USDT
+                            <div className="
+                              mr-5
+                              w-48
+                              flex flex-col items-end justify-center gap-1">
+                              <div className="w-full flex flex-row items-center justify-end gap-1">
+                                <span className="text-lg text-yellow-600 font-semibold"
+                                  style={{ fontFamily: 'monospace' }}
+                                >
+                                {item?.totalPaymentConfirmedKrwAmount && item?.totalPaymentConfirmedKrwAmount.toLocaleString('ko-KR') || 0}
+                                </span>
+                                <span className="text-sm text-zinc-500">
+                                  원
+                                </span>
+                              </div>
+                              <div className="w-full flex flex-row items-center justify-end gap-1">
+                                <Image
+                                  src="/icon-tether.png"
+                                  alt="Tether"
+                                  width={20}
+                                  height={20}
+                                  className="w-5 h-5"
+                                />
+                                <span className="text-lg text-green-600 font-semibold"
+                                  style={{ fontFamily: 'monospace' }}
+                                >
+                                {
+                                Number(item?.totalPaymentConfirmedUsdtAmount ?
+                                  item?.totalPaymentConfirmedUsdtAmount
+                                  : 0)
+                                  .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                }
+                                </span>
+                              </div>
                             </div>
                           </td>
 
-
-                          {/* depositAmountKrw input */}
                           <td className="p-2">
                             <div className="flex flex-col xl:flex-row items-start justify-center gap-2">
                               <input
@@ -2906,106 +2937,114 @@ export default function Index({ params }: any) {
 
                           <td className="p-2">
 
-                            <div className="flex flex-row items-center justify-center gap-2">
+                            <div className="
+                              w-64
+                              flex flex-col items-center justify-center gap-2">
 
-                              {/*}
-                              <button
-                                onClick={() => {
-                                  window.open(
-                                    'https://cryptoss.beauty/' + params.lang + '/' + item.storecode + '/payment?'
-                                    + 'storeUser=' + item.nickname + '&depositBankName=' + item?.buyer?.depositBankName + '&depositName=' + item?.buyer?.depositName,
-                                    '_blank'
-                                  );
-                                  toast.success('회원 홈페이지를 새창으로 열었습니다.');
-                                }}
-                                className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
-                                  hover:bg-[#3167b4]/80"
-                              >
-                                보기
-                              </button>
-                              */}
+                              <div className="w-full flex flex-row items-center justify-between gap-2">
 
-                              {/* Modal open */}
-                              <button
-                                onClick={() => {
-                                  setSelectedItem({
-                                    ...item,
-                                    depositAmountKrw: depositAmountKrw[index],
-                                  });
-                                  openModal();
-                                }}
-                                className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
-                                  hover:bg-[#3167b4]/80"
-                              >
-                                보기
-                              </button>
+                                {/*}
+                                <button
+                                  onClick={() => {
+                                    window.open(
+                                      'https://cryptoss.beauty/' + params.lang + '/' + item.storecode + '/payment?'
+                                      + 'storeUser=' + item.nickname + '&depositBankName=' + item?.buyer?.depositBankName + '&depositName=' + item?.buyer?.depositName,
+                                      '_blank'
+                                    );
+                                    toast.success('회원 홈페이지를 새창으로 열었습니다.');
+                                  }}
+                                  className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                    hover:bg-[#3167b4]/80"
+                                >
+                                  보기
+                                </button>
+                                */}
 
-
-
-                              {/* 복사 버튼 */}
-                              <button
-                                onClick={() => {
-                                  navigator.clipboard.writeText(
-                                    'https://cryptoss.beauty/' + params.lang + '/' + item.storecode + '/payment?'
-                                    + 'storeUser=' + item.nickname
-                                    + '&depositBankName='+ item?.buyer?.depositBankName
-                                    + '&depositBankAccountNumber=' + item?.buyer?.depositBankAccountNumber
-                                    + '&depositName=' + item?.buyer?.depositName
-                                    + '&depositAmountKrw=' + depositAmountKrw[index]
-                                  );
-                                  toast.success('회원 결제페이지 링크가 복사되었습니다.');
-                                }}
-                                className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
-                                  hover:bg-[#3167b4]/80"
-                              >
-                                링크 복사
-                              </button>
-
-                              {/* copy javascript code */}
-                              {/*
-                                <a href={`https://cryptoss.beauty/${params.lang}/${item.storecode}/payment?storeUser=${item.nickname}&depositBankName=${item?.buyer?.depositBankName}&depositBankAccountNumber=${item?.buyer?.depositBankAccountNumber}&depositName=${item?.buyer?.depositName}&depositAmountKrw=${depositAmountKrw[index]}`} target="_blank" rel="noopener noreferrer">스크립트 복사</a>
-                              */}
-                              <button
-                                onClick={() => {
-                                  navigator.clipboard.writeText(
-                                    `<script src="https://cryptoss.beauty/${params.lang}/${item.storecode}/payment?storeUser=${item.nickname}&depositBankName=${item?.buyer?.depositBankName}&depositBankAccountNumber=${item?.buyer?.depositBankAccountNumber}&depositName=${item?.buyer?.depositName}&depositAmountKrw=${depositAmountKrw[index]}">결제하기</script>`
-                                  );
-                                  toast.success('회원 결제페이지 스크립트가 복사되었습니다.');
-                                }}
-                                className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
-                                  hover:bg-[#3167b4]/80"
-                              >
-                                스크립트 복사
-                              </button>
-                                    
+                                {/* Modal open */}
+                                <button
+                                  onClick={() => {
+                                    setSelectedItem({
+                                      ...item,
+                                      depositAmountKrw: depositAmountKrw[index],
+                                    });
+                                    openModal();
+                                  }}
+                                  className="w-full bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                    hover:bg-[#3167b4]/80"
+                                >
+                                  보기
+                                </button>
 
 
-                              {/* 새창 열기 버튼 */}
-                              <button
-                                onClick={() => {
-                                  window.open(
-                                    'https://cryptoss.beauty/' + params.lang + '/' + item.storecode + '/payment?'
-                                    + 'storeUser=' + item.nickname
-                                    + '&depositBankName=' + item?.buyer?.depositBankName
-                                    + '&depositBankAccountNumber=' + item?.buyer?.depositBankAccountNumber
-                                    + '&depositName=' + item?.buyer?.depositName
-                                    + '&depositAmountKrw=' + depositAmountKrw[index]
-                                    ,
-                                    '_blank'
-                                  );
-                                  toast.success('회원 홈페이지를 새창으로 열었습니다.');
-                                }}
-                                className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
-                                  hover:bg-[#3167b4]/80"
-                              >
-                                새창열기
-                              </button>
+
+                                {/* 복사 버튼 */}
+                                <button
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(
+                                      'https://cryptoss.beauty/' + params.lang + '/' + item.storecode + '/payment?'
+                                      + 'storeUser=' + item.nickname
+                                      + '&depositBankName='+ item?.buyer?.depositBankName
+                                      + '&depositBankAccountNumber=' + item?.buyer?.depositBankAccountNumber
+                                      + '&depositName=' + item?.buyer?.depositName
+                                      + '&depositAmountKrw=' + depositAmountKrw[index]
+                                    );
+                                    toast.success('회원 결제페이지 링크가 복사되었습니다.');
+                                  }}
+                                  className="w-full bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                    hover:bg-[#3167b4]/80"
+                                >
+                                  링크 복사
+                                </button>
+
+                              </div>
+
+                              <div className="w-full flex flex-row items-center justify-between gap-2">
+
+
+                                {/* copy javascript code */}
+                                {/*
+                                  <a href={`https://cryptoss.beauty/${params.lang}/${item.storecode}/payment?storeUser=${item.nickname}&depositBankName=${item?.buyer?.depositBankName}&depositBankAccountNumber=${item?.buyer?.depositBankAccountNumber}&depositName=${item?.buyer?.depositName}&depositAmountKrw=${depositAmountKrw[index]}`} target="_blank" rel="noopener noreferrer">스크립트 복사</a>
+                                */}
+                                <button
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(
+                                      `<script src="https://cryptoss.beauty/${params.lang}/${item.storecode}/payment?storeUser=${item.nickname}&depositBankName=${item?.buyer?.depositBankName}&depositBankAccountNumber=${item?.buyer?.depositBankAccountNumber}&depositName=${item?.buyer?.depositName}&depositAmountKrw=${depositAmountKrw[index]}">결제하기</script>`
+                                    );
+                                    toast.success('회원 결제페이지 스크립트가 복사되었습니다.');
+                                  }}
+                                  className="w-full bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                    hover:bg-[#3167b4]/80"
+                                >
+                                  스크립트 복사
+                                </button>
+                                      
+
+
+                                {/* 새창 열기 버튼 */}
+                                <button
+                                  onClick={() => {
+                                    window.open(
+                                      'https://cryptoss.beauty/' + params.lang + '/' + item.storecode + '/payment?'
+                                      + 'storeUser=' + item.nickname
+                                      + '&depositBankName=' + item?.buyer?.depositBankName
+                                      + '&depositBankAccountNumber=' + item?.buyer?.depositBankAccountNumber
+                                      + '&depositName=' + item?.buyer?.depositName
+                                      + '&depositAmountKrw=' + depositAmountKrw[index]
+                                      ,
+                                      '_blank'
+                                    );
+                                    toast.success('회원 홈페이지를 새창으로 열었습니다.');
+                                  }}
+                                  className="w-full bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                    hover:bg-[#3167b4]/80"
+                                >
+                                  새창열기
+                                </button>
+
+                              </div>
 
 
                             </div>
-
-
-
 
                           </td>
 
@@ -3028,27 +3067,29 @@ export default function Index({ params }: any) {
 
  
                           <td className="p-2">
-                            <div className="flex flex-col xl:flex-row items-start justify-center gap-2">
+                            <div className="
+                              w-32
+                              flex flex-col xl:flex-row items-start justify-center gap-2">
                               <span className="text-sm text-zinc-500">
                                 {
                                 item?.buyOrderStatus === 'ordered' ? (
-                                  <span className="text-sm text-yellow-500">
+                                  <span className="text-lg text-yellow-500 font-semibold">
                                     구매주문
                                   </span>
                                 ) : item?.buyOrderStatus === 'accepted' ? (
-                                  <span className="text-sm text-green-500">
+                                  <span className="text-lg text-green-500 font-semibold">
                                     판매자확정
                                   </span>
                                 ) : item?.buyOrderStatus === 'paymentRequested' ? (
-                                  <span className="text-sm text-red-500">
+                                  <span className="text-lg text-red-500 font-semibold">
                                     결제요청
                                   </span>
                                 ) : item?.buyOrderStatus === 'paymentConfirmed' ? (
-                                  <span className="text-sm text-green-500">
+                                  <span className="text-lg text-green-500 font-semibold">
                                     결제완료
                                   </span>
                                 ) : item?.buyOrderStatus === 'cancelled' ? (
-                                  <span className="text-sm text-red-500">
+                                  <span className="text-lg text-red-500 font-semibold">
                                     거래취소
                                   </span>
                                 ) : ''
