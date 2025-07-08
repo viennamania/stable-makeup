@@ -981,7 +981,7 @@ export default function SettingsPage({ params }: any) {
                         connectModal={{
                             size: "wide", 
                             //size: "compact",
-                            titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
+                            titleIcon: "https://www.stable.makeup/logo.png",                           
                             showThirdwebBranding: false,
                         }}
 
@@ -1270,7 +1270,7 @@ export default function SettingsPage({ params }: any) {
                         connectModal={{
                             size: "wide", 
                             //size: "compact",
-                            titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
+                            titleIcon: "https://www.stable.makeup/logo.png",                           
                             showThirdwebBranding: false,
                         }}
 

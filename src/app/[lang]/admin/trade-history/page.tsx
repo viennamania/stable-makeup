@@ -2335,7 +2335,7 @@ const fetchBuyOrders = async () => {
 
              >
                <Image
-                 src="/logo-oneclick.png"
+                 src="/logo.png"
                  alt="logo"
                  width={100}
                  height={100}
@@ -2445,7 +2445,7 @@ const fetchBuyOrders = async () => {
                 connectModal={{
                   size: "wide", 
                   //size: "compact",
-                  titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
+                  titleIcon: "https://www.stable.makeup/logo.png",                           
                   showThirdwebBranding: false,
                 }}
 

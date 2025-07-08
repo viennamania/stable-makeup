@@ -2731,7 +2731,7 @@ const [tradeSummary, setTradeSummary] = useState({
               connectModal={{
                 size: "wide", 
                 //size: "compact",
-                titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
+                titleIcon: "https://www.stable.makeup/logo.png",                           
                 showThirdwebBranding: false,
               }}
 
@@ -3015,7 +3015,7 @@ const [tradeSummary, setTradeSummary] = useState({
                       connectModal={{
                         size: "wide", 
                         //size: "compact",
-                        titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
+                        titleIcon: "https://www.stable.makeup/logo.png",                           
                         showThirdwebBranding: false,
                       }}
 

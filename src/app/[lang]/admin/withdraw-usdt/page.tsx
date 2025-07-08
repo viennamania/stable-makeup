@@ -801,7 +801,7 @@ export default function SendUsdt({ params }: any) {
                   connectModal={{
                       size: "wide", 
                       //size: "compact",
-                      titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
+                      titleIcon: "https://www.stable.makeup/logo.png",                           
                       showThirdwebBranding: false,
                   }}
 

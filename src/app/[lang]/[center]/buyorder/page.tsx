@@ -2994,7 +2994,7 @@ const fetchBuyOrders = async () => {
                   connectModal={{
                     size: "wide", 
                     //size: "compact",
-                    titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
+                    titleIcon: "https://www.stable.makeup/logo.png",                           
                     showThirdwebBranding: false,
                   }}
 
@@ -3282,7 +3282,7 @@ const fetchBuyOrders = async () => {
                       connectModal={{
                         size: "wide", 
                         //size: "compact",
-                        titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
+                        titleIcon: "https://www.stable.makeup/logo.png",                           
                         showThirdwebBranding: false,
                       }}
 

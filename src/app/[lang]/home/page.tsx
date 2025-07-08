@@ -2566,7 +2566,7 @@ const fetchBuyOrders = async () => {
                 className="flex bg-zinc-100 text-sm text-[#3167b4] px-4 py-2 rounded-lg hover:bg-zinc-200"
               >
                 <Image
-                  src="/logo-oneclick.png"
+                  src="/logo.png"
                   alt="logo"
                   width={100}
                   height={100}
@@ -2677,7 +2677,7 @@ const fetchBuyOrders = async () => {
                 connectModal={{
                   size: "wide", 
                   //size: "compact",
-                  titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
+                  titleIcon: "https://www.stable.makeup/logo.png",                           
                   showThirdwebBranding: false,
                 }}
 

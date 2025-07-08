@@ -1277,8 +1277,8 @@ export default function Index({ params }: any) {
     "storeType": "test",
     "storeUrl": "https://test.com",
     "storeDescription": "설명입니다.",
-    "storeLogo": "https://www.stable.makeup/logo-oneclick.png",
-    "storeBanner": "https://www.stable.makeup/logo-oneclick.png",
+    "storeLogo": "https://www.stable.makeup/logo.png",
+    "storeBanner": "https://www.stable.makeup/logo.png",
     "createdAt": "2025-05-06T04:36:44.683Z"
     "adminWalletAddress": "0x2111b6A49CbFf1C8Cc39d13250eF6bd4e1B59cF6",
   }
@@ -1670,7 +1670,7 @@ export default function Index({ params }: any) {
             connectModal={{
               size: "wide", 
               //size: "compact",
-              titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
+              titleIcon: "https://www.stable.makeup/logo.png",                           
               showThirdwebBranding: false,
             }}
             locale={"ko_KR"}
@@ -1779,7 +1779,7 @@ export default function Index({ params }: any) {
                       connectModal={{
                         size: "wide", 
                         //size: "compact",
-                        titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
+                        titleIcon: "https://www.stable.makeup/logo.png",                           
                         showThirdwebBranding: false,
                       }}
 
@@ -2824,7 +2824,7 @@ export default function Index({ params }: any) {
                       connectModal={{
                         size: "wide", 
                         //size: "compact",
-                        titleIcon: "https://www.stable.makeup/logo-oneclick.png",                           
+                        titleIcon: "https://www.stable.makeup/logo.png",                           
                         showThirdwebBranding: false,
                       }}
 
