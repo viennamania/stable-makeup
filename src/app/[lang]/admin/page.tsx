@@ -780,6 +780,10 @@ export default function Index({ params }: any) {
     latestTrades: any[];
 
 
+    totalNumberOfClearances?: number;
+    totalClearanceAmountKrw?: number;
+    totalClearanceAmountUsdt?: number;
+    latestClearances?: any[];
 
 
     totalNumberOfBuyOrders: number;
@@ -802,6 +806,11 @@ export default function Index({ params }: any) {
     totalSettlementAmount: 0,
     totalSettlementAmountKRW: 0,
     latestTrades: [],
+
+    totalNumberOfClearances: 0,
+    totalClearanceAmountKrw: 0,
+    totalClearanceAmountUsdt: 0,
+    latestClearances: [],
 
 
     totalNumberOfBuyOrders: 0,
@@ -1437,6 +1446,409 @@ export default function Index({ params }: any) {
 
 
 
+            {/* total number of trades, total buy amount krw, total usdt amount */}
+            <div className="w-full flex flex-col items-start justify-start gap-2  bg-white shadow-md rounded-lg p-4">
+
+              <div className="w-full flex flex-col xl:flex-row items-center justify-start gap-2">
+
+                <div className="w-full flex flex-row items-center justify-start gap-2">                
+                  <Image
+                    src="/icon-trade.png"
+                    alt="Trade"
+                    width={35}
+                    height={35}
+                    className="w-6 h-6"
+                  />
+                  <h2 className="text-lg font-semibold">거래내역</h2>
+                </div>
+
+                <div className="w-full flex flex-row items-center justify-end gap-2">
+                  <button
+                    onClick={() => {
+                      router.push('/' + params.lang + '/admin/trade-history');
+                    }}
+                    className="bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
+                  >
+                    거래내역관리
+                  </button>
+                </div>
+
+              </div>
+
+              <div className="w-full flex flex-row items-center justify-center gap-2
+                bg-white shadow-md rounded-lg p-4 mt-4">
+
+                <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
+                  <div className="flex flex-col items-center justify-center gap-2">
+                    <h2 className="text-lg font-semibold">총 거래금액(원)</h2>
+                    <p className="text-lg text-zinc-500">
+                      {Number(totalSummary.totalBuyAmountKrw)?.toLocaleString()} 원
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col items-center justify-center gap-2">
+                    <h2 className="text-lg font-semibold">총 거래량(USDT)</h2>
+                    <p className="text-lg text-zinc-500">
+                      {Number(totalSummary.totalUsdtAmount)?.toLocaleString()} USDT
+                    </p>
+                  </div>
+                </div>
+
+                {/* divider */}
+                <div className="w-0.5 h-10 bg-gray-300 mx-2"></div>
+
+                <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
+                
+                  <div className="flex flex-col items-center justify-center gap-2">
+                    <h2 className="text-lg font-semibold">총 정산금액(원)</h2>
+                    <p className="text-lg text-zinc-500">
+                      {Number(totalSummary.totalSettlementAmountKRW)?.toLocaleString()} 원
+                    </p>
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-2">
+                    <h2 className="text-lg font-semibold">총 정산량(USDT)</h2>
+                    <p className="text-lg text-zinc-500">
+                      {Number(totalSummary.totalSettlementAmount)?.toLocaleString()} USDT
+                    </p>
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div className="w-full flex flex-row items-center justify-end gap-2">
+
+                {/* latest trades table */}
+                <div className="w-full mt-4">
+                  <div className="flex flex-row items-center justify-start gap-2">
+                    {/* dot */}
+                    <div className="w-2 h-2 bg-[#3167b4] rounded-full"></div>
+                    <h2 className="text-lg font-semibold">총 거래수</h2>
+                    <p className="text-lg text-zinc-500">
+                      {totalSummary.totalNumberOfTrades} 건
+                    </p>
+                    {loadingSummary && (
+                      <Image
+                        src="/loading.png"
+                        alt="Loading"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5 animate-spin"
+                      />
+                    )}
+                  </div>
+
+                  <table className="min-w-full
+                    border-collapse
+                    border border-gray-300
+                    rounded-lg
+                    overflow-hidden
+                    shadow-md
+                  ">
+                    <thead
+                      className="bg-gray-100
+                        text-gray-600
+                        text-sm
+                        font-semibold
+                        uppercase
+                        border-b
+                      "
+                    >
+                      <tr>
+                        
+                        <th className="px-4 py-2 text-left">거래번호<br/>거래시간</th>
+                        <th className="
+                          hidden xl:block
+                          px-4 py-2 text-left">
+                          구매자<br/>가맹점
+                        </th>
+                        <th className="px-4 py-2 text-left">거래금액(원)<br/>거래량(USDT)</th>
+                        <th className="px-4 py-2 text-left">정산금액(원)<br/>정산량(USDT)</th>
+                    
+                        <th className="hidden xl:block
+                          px-4 py-2 text-left">판매자</th>
+                        {/*
+                        <th className="px-4 py-2 text-left">거래일시</th>
+                        */}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {totalSummary.latestTrades.map((trade, index) => (
+                        <tr key={index} className="border-b">
+                          <td className="px-4 py-2">
+                            #{trade.tradeId.slice(0, 3) + "..."}
+                            <br/>
+                            {
+                              new Date().getTime() - new Date(trade.paymentConfirmedAt).getTime() < 1000 * 60 ? (
+                                ' ' + Math.floor((new Date().getTime() - new Date(trade.paymentConfirmedAt).getTime()) / 1000) + ' 초 전'
+                              ) :
+                              new Date().getTime() - new Date(trade.paymentConfirmedAt).getTime() < 1000 * 60 * 60 ? (
+                                ' ' + Math.floor((new Date().getTime() - new Date(trade.paymentConfirmedAt).getTime()) / 1000 / 60) + ' 분 전'
+                              ) : (
+                                ' ' + Math.floor((new Date().getTime() - new Date(trade.paymentConfirmedAt).getTime()) / 1000 / 60 / 60) + ' 시간 전'
+                              )
+                            }
+                          </td>
+                          <td className="
+                            hidden xl:block
+                            px-4 py-2">
+                            {trade?.buyer?.depositName}
+                            <br/>
+                            {trade?.store?.storeName}
+                          </td>
+
+                          <td className="px-4 py-2">
+                            {Number(trade.krwAmount)?.toLocaleString()} 원
+                            <br/>
+                            {Number(trade.usdtAmount)?.toLocaleString()} USDT
+                          </td>
+                          <td className="px-4 py-2">
+                            {trade?.settlement?.settlementAmountKRW > 0 ? Number(trade.settlement.settlementAmountKRW)?.toLocaleString() : 0} 원
+                            <br/>
+                            {trade?.settlement?.settlementAmount > 0 ? Number(trade.settlement.settlementAmount)?.toLocaleString() : 0} USDT
+                          </td>
+
+
+                          <td className="
+                            hidden xl:block
+                            px-4 py-2">
+                            {trade?.seller?.nickname.length > 10 ? trade?.seller?.nickname.slice(0, 10) + "..." : trade?.seller?.nickname}
+                            <br/>
+                            {trade?.seller?.bankInfo?.bankName}
+                            <br/>
+                            {trade?.seller?.bankInfo?.accountHolder}
+                          </td>
+
+                          {/*}
+                          <td className="px-4 py-2 text-xs">
+                            {
+                              //new Date(trade.createdAt).toLocaleDateString() + " " + new Date(trade.createdAt).toLocaleTimeString()
+                              new Date(trade.createdAt).toLocaleTimeString()
+                            }
+
+                          </td>
+                          */}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+              {/*
+              <div className="w-full flex flex-row items-center justify-end gap-2">
+
+                <button
+                  onClick={() => {
+                    router.push('/' + params.lang + '/admin/trade-history');
+                  }}
+                  className="bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
+                >
+                  거래내역
+                </button>
+              </div>
+              */}
+
+            </div>
+
+
+
+
+
+            {/* total number of trades, total buy amount krw, total usdt amount */}
+            <div className="w-full flex flex-col items-start justify-start gap-2  bg-white shadow-md rounded-lg p-4">
+
+              <div className="w-full flex flex-col xl:flex-row items-center justify-start gap-2">
+
+                <div className="w-full flex flex-row items-center justify-start gap-2">                
+                  <Image
+                    src="/icon-clearance.png"
+                    alt="Clearance"
+                    width={35}
+                    height={35}
+                    className="w-6 h-6"
+                  />
+                  <h2 className="text-lg font-semibold">청산내역</h2>
+                </div>
+
+                <div className="w-full flex flex-row items-center justify-end gap-2">
+                  <button
+                    onClick={() => {
+                      router.push('/' + params.lang + '/admin/clearance-history');
+                    }}
+                    className="bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
+                  >
+                    청산내역관리
+                  </button>
+                </div>
+
+              </div>
+
+              <div className="w-full flex flex-row items-center justify-center gap-2
+                bg-white shadow-md rounded-lg p-4 mt-4">
+
+                <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
+                  <div className="flex flex-col items-center justify-center gap-2">
+                    <h2 className="text-lg font-semibold">총 거래금액(원)</h2>
+                    <p className="text-lg text-zinc-500">
+                      {Number(totalSummary.totalClearanceAmountKrw)?.toLocaleString()} 원
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col items-center justify-center gap-2">
+                    <h2 className="text-lg font-semibold">총 거래량(USDT)</h2>
+                    <p className="text-lg text-zinc-500">
+                      {Number(totalSummary.totalClearanceAmountUsdt)?.toLocaleString()} USDT
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+
+
+              <div className="w-full flex flex-row items-center justify-end gap-2">
+
+                {/* latest trades table */}
+                <div className="w-full mt-4">
+                  <div className="flex flex-row items-center justify-start gap-2">
+                    {/* dot */}
+                    <div className="w-2 h-2 bg-[#3167b4] rounded-full"></div>
+                    <h2 className="text-lg font-semibold">총 거래수</h2>
+                    <p className="text-lg text-zinc-500">
+                      {totalSummary.totalNumberOfClearances} 건
+                    </p>
+                    {loadingSummary && (
+                      <Image
+                        src="/loading.png"
+                        alt="Loading"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5 animate-spin"
+                      />
+                    )}
+                  </div>
+
+                  <table className="min-w-full
+                    border-collapse
+                    border border-gray-300
+                    rounded-lg
+                    overflow-hidden
+                    shadow-md
+                  ">
+                    <thead
+                      className="bg-gray-100
+                        text-gray-600
+                        text-sm
+                        font-semibold
+                        uppercase
+                        border-b
+                      "
+                    >
+                      <tr>
+                        
+                        <th className="px-4 py-2 text-left">거래번호<br/>거래시간</th>
+                        <th className="
+                          hidden xl:block
+                          px-4 py-2 text-left">
+                          구매자<br/>가맹점
+                        </th>
+                        <th className="px-4 py-2 text-left">거래금액(원)<br/>거래량(USDT)</th>
+                        <th className="px-4 py-2 text-left">정산금액(원)<br/>정산량(USDT)</th>
+                    
+                        <th className="hidden xl:block
+                          px-4 py-2 text-left">판매자</th>
+                        {/*
+                        <th className="px-4 py-2 text-left">거래일시</th>
+                        */}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {totalSummary.latestClearances?.map((trade, index) => (
+                        <tr key={index} className="border-b">
+                          <td className="px-4 py-2">
+                            #{trade.tradeId.slice(0, 3) + "..."}
+                            <br/>
+                            {
+                              new Date().getTime() - new Date(trade.paymentConfirmedAt).getTime() < 1000 * 60 ? (
+                                ' ' + Math.floor((new Date().getTime() - new Date(trade.paymentConfirmedAt).getTime()) / 1000) + ' 초 전'
+                              ) :
+                              new Date().getTime() - new Date(trade.paymentConfirmedAt).getTime() < 1000 * 60 * 60 ? (
+                                ' ' + Math.floor((new Date().getTime() - new Date(trade.paymentConfirmedAt).getTime()) / 1000 / 60) + ' 분 전'
+                              ) : (
+                                ' ' + Math.floor((new Date().getTime() - new Date(trade.paymentConfirmedAt).getTime()) / 1000 / 60 / 60) + ' 시간 전'
+                              )
+                            }
+                          </td>
+                          <td className="
+                            hidden xl:block
+                            px-4 py-2">
+                            {trade?.buyer?.depositName}
+                            <br/>
+                            {trade?.store?.storeName}
+                          </td>
+
+                          <td className="px-4 py-2">
+                            {Number(trade.krwAmount)?.toLocaleString()} 원
+                            <br/>
+                            {Number(trade.usdtAmount)?.toLocaleString()} USDT
+                          </td>
+                          <td className="px-4 py-2">
+                            {trade?.settlement?.settlementAmountKRW > 0 ? Number(trade.settlement.settlementAmountKRW)?.toLocaleString() : 0} 원
+                            <br/>
+                            {trade?.settlement?.settlementAmount > 0 ? Number(trade.settlement.settlementAmount)?.toLocaleString() : 0} USDT
+                          </td>
+
+
+                          <td className="
+                            hidden xl:block
+                            px-4 py-2">
+                            {trade?.seller?.nickname.length > 10 ? trade?.seller?.nickname.slice(0, 10) + "..." : trade?.seller?.nickname}
+                            <br/>
+                            {trade?.seller?.bankInfo?.bankName}
+                            <br/>
+                            {trade?.seller?.bankInfo?.accountHolder}
+                          </td>
+
+                          {/*}
+                          <td className="px-4 py-2 text-xs">
+                            {
+                              //new Date(trade.createdAt).toLocaleDateString() + " " + new Date(trade.createdAt).toLocaleTimeString()
+                              new Date(trade.createdAt).toLocaleTimeString()
+                            }
+
+                          </td>
+                          */}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+              {/*
+              <div className="w-full flex flex-row items-center justify-end gap-2">
+
+                <button
+                  onClick={() => {
+                    router.push('/' + params.lang + '/admin/trade-history');
+                  }}
+                  className="bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
+                >
+                  거래내역
+                </button>
+              </div>
+              */}
+
+            </div>
+
+
+
+
+
+
             
             {/* store */}
             <div className="w-full flex flex-col items-start justify-start gap-2  bg-white shadow-md rounded-lg p-4">
@@ -1701,212 +2113,6 @@ export default function Index({ params }: any) {
             </div>
 
 
-            {/* total number of trades, total buy amount krw, total usdt amount */}
-            <div className="w-full flex flex-col items-start justify-start gap-2  bg-white shadow-md rounded-lg p-4">
-
-              <div className="w-full flex flex-col xl:flex-row items-center justify-start gap-2">
-
-                <div className="w-full flex flex-row items-center justify-start gap-2">                
-                  <Image
-                    src="/icon-trade.png"
-                    alt="Trade"
-                    width={35}
-                    height={35}
-                    className="w-6 h-6"
-                  />
-                  <h2 className="text-lg font-semibold">거래내역</h2>
-                </div>
-
-                <div className="w-full flex flex-row items-center justify-end gap-2">
-                  <button
-                    onClick={() => {
-                      router.push('/' + params.lang + '/admin/trade-history');
-                    }}
-                    className="bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
-                  >
-                    거래내역관리
-                  </button>
-                </div>
-
-              </div>
-
-              <div className="w-full flex flex-row items-center justify-center gap-2
-                bg-white shadow-md rounded-lg p-4 mt-4">
-
-                <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    <h2 className="text-lg font-semibold">총 거래금액(원)</h2>
-                    <p className="text-lg text-zinc-500">
-                      {Number(totalSummary.totalBuyAmountKrw)?.toLocaleString()} 원
-                    </p>
-                  </div>
-
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    <h2 className="text-lg font-semibold">총 거래량(USDT)</h2>
-                    <p className="text-lg text-zinc-500">
-                      {Number(totalSummary.totalUsdtAmount)?.toLocaleString()} USDT
-                    </p>
-                  </div>
-                </div>
-
-                {/* divider */}
-                <div className="w-0.5 h-10 bg-gray-300 mx-2"></div>
-
-                <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
-                
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    <h2 className="text-lg font-semibold">총 정산금액(원)</h2>
-                    <p className="text-lg text-zinc-500">
-                      {Number(totalSummary.totalSettlementAmountKRW)?.toLocaleString()} 원
-                    </p>
-                  </div>
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    <h2 className="text-lg font-semibold">총 정산량(USDT)</h2>
-                    <p className="text-lg text-zinc-500">
-                      {Number(totalSummary.totalSettlementAmount)?.toLocaleString()} USDT
-                    </p>
-                  </div>
-
-                </div>
-
-              </div>
-
-
-              <div className="w-full flex flex-row items-center justify-end gap-2">
-
-                {/* latest trades table */}
-                <div className="w-full mt-4">
-                  <div className="flex flex-row items-center justify-start gap-2">
-                    {/* dot */}
-                    <div className="w-2 h-2 bg-[#3167b4] rounded-full"></div>
-                    <h2 className="text-lg font-semibold">총 거래수</h2>
-                    <p className="text-lg text-zinc-500">
-                      {totalSummary.totalNumberOfTrades} 건
-                    </p>
-                    {loadingSummary && (
-                      <Image
-                        src="/loading.png"
-                        alt="Loading"
-                        width={20}
-                        height={20}
-                        className="w-5 h-5 animate-spin"
-                      />
-                    )}
-                  </div>
-
-                  <table className="min-w-full
-                    border-collapse
-                    border border-gray-300
-                    rounded-lg
-                    overflow-hidden
-                    shadow-md
-                  ">
-                    <thead
-                      className="bg-gray-100
-                        text-gray-600
-                        text-sm
-                        font-semibold
-                        uppercase
-                        border-b
-                      "
-                    >
-                      <tr>
-                        
-                        <th className="px-4 py-2 text-left">거래번호<br/>거래시간</th>
-                        <th className="
-                          hidden xl:block
-                          px-4 py-2 text-left">
-                          구매자<br/>가맹점
-                        </th>
-                        <th className="px-4 py-2 text-left">거래금액(원)<br/>거래량(USDT)</th>
-                        <th className="px-4 py-2 text-left">정산금액(원)<br/>정산량(USDT)</th>
-                    
-                        <th className="hidden xl:block
-                          px-4 py-2 text-left">판매자</th>
-                        {/*
-                        <th className="px-4 py-2 text-left">거래일시</th>
-                        */}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {totalSummary.latestTrades.map((trade, index) => (
-                        <tr key={index} className="border-b">
-                          <td className="px-4 py-2">
-                            #{trade.tradeId.slice(0, 3) + "..."}
-                            <br/>
-                            {
-                              new Date().getTime() - new Date(trade.paymentConfirmedAt).getTime() < 1000 * 60 ? (
-                                ' ' + Math.floor((new Date().getTime() - new Date(trade.paymentConfirmedAt).getTime()) / 1000) + ' 초 전'
-                              ) :
-                              new Date().getTime() - new Date(trade.paymentConfirmedAt).getTime() < 1000 * 60 * 60 ? (
-                                ' ' + Math.floor((new Date().getTime() - new Date(trade.paymentConfirmedAt).getTime()) / 1000 / 60) + ' 분 전'
-                              ) : (
-                                ' ' + Math.floor((new Date().getTime() - new Date(trade.paymentConfirmedAt).getTime()) / 1000 / 60 / 60) + ' 시간 전'
-                              )
-                            }
-                          </td>
-                          <td className="
-                            hidden xl:block
-                            px-4 py-2">
-                            {trade?.buyer?.depositName}
-                            <br/>
-                            {trade?.store?.storeName}
-                          </td>
-
-                          <td className="px-4 py-2">
-                            {Number(trade.krwAmount)?.toLocaleString()} 원
-                            <br/>
-                            {Number(trade.usdtAmount)?.toLocaleString()} USDT
-                          </td>
-                          <td className="px-4 py-2">
-                            {trade?.settlement?.settlementAmountKRW > 0 ? Number(trade.settlement.settlementAmountKRW)?.toLocaleString() : 0} 원
-                            <br/>
-                            {trade?.settlement?.settlementAmount > 0 ? Number(trade.settlement.settlementAmount)?.toLocaleString() : 0} USDT
-                          </td>
-
-
-                          <td className="
-                            hidden xl:block
-                            px-4 py-2">
-                            {trade?.seller?.nickname.length > 10 ? trade?.seller?.nickname.slice(0, 10) + "..." : trade?.seller?.nickname}
-                            <br/>
-                            {trade?.seller?.bankInfo?.bankName}
-                            <br/>
-                            {trade?.seller?.bankInfo?.accountHolder}
-                          </td>
-
-                          {/*}
-                          <td className="px-4 py-2 text-xs">
-                            {
-                              //new Date(trade.createdAt).toLocaleDateString() + " " + new Date(trade.createdAt).toLocaleTimeString()
-                              new Date(trade.createdAt).toLocaleTimeString()
-                            }
-
-                          </td>
-                          */}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-
-                </div>
-
-              </div>
-              {/*
-              <div className="w-full flex flex-row items-center justify-end gap-2">
-
-                <button
-                  onClick={() => {
-                    router.push('/' + params.lang + '/admin/trade-history');
-                  }}
-                  className="bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
-                >
-                  거래내역
-                </button>
-              </div>
-              */}
-
-            </div>
 
 
 
