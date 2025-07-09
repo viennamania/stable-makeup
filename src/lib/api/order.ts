@@ -6574,3 +6574,24 @@ export async function updateBuyOrderSettlement(
     return false;
   }
 }
+
+
+
+
+// getTotalNumberOfBuyOrders
+export async function getTotalNumberOfBuyOrders(): Promise<{ totalCount: number }> {
+  const client = await clientPromise;
+  const collection = client.db('ultraman').collection('buyorders');
+  // get total number of buy orders
+  const totalCount = await collection.countDocuments(
+    {
+      privateSale: { $ne: true },
+      //status: 'paymentConfirmed',
+      status: { $in: ['ordered', 'accepted', 'paymentRequested'] },
+    }
+  );
+
+  return {
+    totalCount: totalCount,
+  }
+}

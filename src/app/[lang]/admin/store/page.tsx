@@ -1266,6 +1266,7 @@ export default function Index({ params }: any) {
       totalClearanceAmount: 0,
       totalClearanceAmountUSDT: 0,
     });
+
     const [loadingTradeSummary, setLoadingTradeSummary] = useState(false);
 
 
@@ -1562,8 +1563,55 @@ export default function Index({ params }: any) {
   };
 
 
+  // totalNumberOfBuyOrders
+  const [loadingTotalNumberOfBuyOrders, setLoadingTotalNumberOfBuyOrders] = useState(false);
+  const [totalNumberOfBuyOrders, setTotalNumberOfBuyOrders] = useState(0);
+  useEffect(() => {
+    if (!address) {
+      setTotalNumberOfBuyOrders(0);
+      return;
+    }
+
+    
+
+    const fetchTotalBuyOrders = async () => {
+      setLoadingTotalNumberOfBuyOrders(true);
+      const response = await fetch('/api/order/getTotalNumberOfBuyOrders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+        }),
+      });
+      if (!response.ok) {
+        console.error('Failed to fetch total number of buy orders');
+        return;
+      }
+      const data = await response.json();
+      //console.log('getTotalNumberOfBuyOrders data', data);
+      setTotalNumberOfBuyOrders(data.result.totalCount);
+
+      setLoadingTotalNumberOfBuyOrders(false);
+    };
+    
+    fetchTotalBuyOrders();
+
+    const interval = setInterval(() => {
+      fetchTotalBuyOrders();
+    }, 5000);
+    return () => clearInterval(interval);
+
+  }, [address]);
+
       
-      
+  
+  useEffect(() => {
+    if (totalNumberOfBuyOrders > 0 && loadingTotalNumberOfBuyOrders === false) {
+      const audio = new Audio('/notification.wav'); 
+      audio.play();
+    }
+  }, [totalNumberOfBuyOrders, loadingTotalNumberOfBuyOrders]);
 
 
   return (
@@ -1747,6 +1795,67 @@ export default function Index({ params }: any) {
             ></div>
 
 
+
+
+
+            <div className="w-full flex flex-row items-center justify-end gap-2">
+               
+
+              {loadingTotalNumberOfBuyOrders && (
+                <Image
+                  src="/loading.png"
+                  alt="Loading"
+                  width={20}
+                  height={20}
+                  className="w-6 h-6 animate-spin"
+                />
+              )}
+
+              <Image
+                src="/icon-buyorder.png"
+                alt="Buy Order"
+                width={35}
+                height={35}
+                className="w-6 h-6"
+              />
+              <p className="text-lg text-red-500 font-semibold">
+                {
+                totalNumberOfBuyOrders
+                } 건
+              </p>
+
+              {totalNumberOfBuyOrders > 0 && (
+                <div className="flex flex-row items-center justify-center gap-2">
+                  <Image
+                    src="/icon-notification.gif"
+                    alt="Notification"
+                    width={50}
+                    height={50}
+                    className="w-15 h-15 object-cover"
+                    
+                  />
+                  <button
+                    onClick={() => {
+                      router.push('/' + params.lang + '/admin/buyorder');
+                    }}
+                    className="flex items-center justify-center gap-2
+                    bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
+                  >
+                    <span className="text-sm">
+                      구매주문관리
+                    </span>
+                  </button>
+                </div>
+              )}
+
+
+          
+            </div>
+
+
+
+
+
             {/* 홈 / 가맹점관리 / 회원관리 / 구매주문관리 */}
             {/* memnu buttons same width left side */}
             <div className="grid grid-cols-3 xl:grid-cols-6 gap-2 items-center justify-start mb-4">
@@ -1852,7 +1961,7 @@ export default function Index({ params }: any) {
               p-4 rounded-lg shadow-md
               ">
 
-              <div className="flex flex-row items-center justify-center gap-2">
+              <div className="w-full flex flex-row items-center justify-center gap-2">
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 거래수(건)</div>
                   <div className="text-xl font-semibold text-zinc-500">
@@ -1878,7 +1987,7 @@ export default function Index({ params }: any) {
                       className="w-5 h-5"
                     />
                     <div className="text-xl font-semibold text-zinc-500">
-                      {tradeSummary.totalUsdtAmount?.toLocaleString()}
+                      {tradeSummary.totalUsdtAmount?.toFixed(2).toLocaleString()}
                     </div>
                   </div>
                 </div>
@@ -1888,70 +1997,63 @@ export default function Index({ params }: any) {
               <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
               <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
-              <div className="
-                flex flex-row items-center justify-center gap-5">
+              <div className="w-full
+                flex flex-row items-center justify-center gap-2">
 
-                <div className="flex flex-col gap-2 items-center">
+                <div className="w-32 flex flex-col gap-2 items-center">
                   <div className="text-sm">총 정산수(건)</div>
                   <div className="text-xl font-semibold text-zinc-500">
                     {tradeSummary.totalSettlementCount?.toLocaleString()} 건
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-2 items-center">
-                  <div className="flex flex-row gap-2 items-center">
-                    <div className="flex flex-col gap-2 items-center">
+                <div className="w-full flex flex-col gap-5 items-between justify-center">
+
+                  <div className="w-full flex flex-row items-end justify-center gap-2">
+                    <div className="w-full flex flex-col gap-2 items-end justify-center">
                       <div className="text-sm">총 정산금액(원)</div>
                       <div className="text-xl font-semibold text-zinc-500">
                         {tradeSummary.totalSettlementAmountKRW?.toLocaleString()} 원
                       </div>
                     </div>
-                    <div className="flex flex-col gap-2 items-center">
+                    <div className="w-full flex flex-col gap-2 items-end justify-center">
                       <div className="text-sm">총 정산량(USDT)</div>
-
-                      <div className="flex flex-row items-center gap-1">
+                      <div className="flex flex-row items-center justify-center gap-1">
                         <Image
                           src="/icon-tether.png"
-                          alt="USDT"
+                          alt="Tether"
                           width={20}
                           height={20}
                           className="w-5 h-5"
                         />
                         <div className="text-xl font-semibold text-zinc-500">
-                          {tradeSummary.totalSettlementAmount?.toLocaleString()}
+                          {tradeSummary.totalSettlementAmount?.toFixed(2).toLocaleString()}
                         </div>
                       </div>
-
                     </div>
                   </div>
 
-                  {/* divider */}
-                  <div className="w-full h-0.5 bg-zinc-300"></div>
-
-                  <div className="flex flex-row gap-2 items-center">              
-                    <div className="flex flex-col gap-2 items-center">
+                  <div className="w-full flex flex-row items-end justify-center gap-2">
+                    <div className="w-full flex flex-col gap-2 items-end justify-center">
                       <div className="text-sm">총 수수료금액(원)</div>
                       <div className="text-xl font-semibold text-zinc-500">
                         {tradeSummary.totalFeeAmountKRW?.toLocaleString()} 원
                       </div>
                     </div>
-                    <div className="flex flex-col gap-2 items-center">
+                    <div className="w-full flex flex-col gap-2 items-end justify-center">
                       <div className="text-sm">총 수수료수량(USDT)</div>
-
-                      <div className="flex flex-row items-center gap-1">
+                      <div className="flex flex-row items-center justify-center gap-1">
                         <Image
                           src="/icon-tether.png"
-                          alt="USDT"
+                          alt="Tether"
                           width={20}
                           height={20}
                           className="w-5 h-5"
                         />
                         <div className="text-xl font-semibold text-zinc-500">
-                          {tradeSummary.totalFeeAmount?.toLocaleString()}
+                          {tradeSummary.totalFeeAmount?.toFixed(2).toLocaleString()}
                         </div>
                       </div>
-
-
                     </div>
                   </div>
 
@@ -1964,7 +2066,7 @@ export default function Index({ params }: any) {
               <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
               <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
 
-              <div className="
+              <div className="w-full
                 flex flex-row items-center justify-center gap-2">
                 <div className="flex flex-col gap-2 items-center">
                   <div className="text-sm">총 청산수(건)</div>
@@ -1991,7 +2093,7 @@ export default function Index({ params }: any) {
                       className="w-5 h-5"
                     />
                     <div className="text-xl font-semibold text-zinc-500">
-                      {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()}
+                      {tradeSummary.totalClearanceAmountUSDT?.toFixed(2).toLocaleString()}
                     </div>
                   </div>
 
