@@ -2344,7 +2344,7 @@ const fetchBuyOrders = async () => {
   }, [address]);
 
       
-  
+
   useEffect(() => {
     if (totalNumberOfBuyOrders > 0 && loadingTotalNumberOfBuyOrders === false) {
       const audio = new Audio('/notification.wav'); 
