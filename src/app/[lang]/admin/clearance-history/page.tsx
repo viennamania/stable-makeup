@@ -2301,9 +2301,60 @@ const fetchBuyOrders = async () => {
 
 
 
-    console.log('buyOrders', buyOrders);
+  
+  // totalNumberOfBuyOrders
+  const [loadingTotalNumberOfBuyOrders, setLoadingTotalNumberOfBuyOrders] = useState(false);
+  const [totalNumberOfBuyOrders, setTotalNumberOfBuyOrders] = useState(0);
+  useEffect(() => {
+    if (!address) {
+      setTotalNumberOfBuyOrders(0);
+      return;
+    }
 
     
+
+    const fetchTotalBuyOrders = async () => {
+      setLoadingTotalNumberOfBuyOrders(true);
+      const response = await fetch('/api/order/getTotalNumberOfBuyOrders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+        }),
+      });
+      if (!response.ok) {
+        console.error('Failed to fetch total number of buy orders');
+        return;
+      }
+      const data = await response.json();
+      //console.log('getTotalNumberOfBuyOrders data', data);
+      setTotalNumberOfBuyOrders(data.result.totalCount);
+
+      setLoadingTotalNumberOfBuyOrders(false);
+    };
+    
+    fetchTotalBuyOrders();
+
+    const interval = setInterval(() => {
+      fetchTotalBuyOrders();
+    }, 5000);
+    return () => clearInterval(interval);
+
+  }, [address]);
+
+      
+  
+  useEffect(() => {
+    if (totalNumberOfBuyOrders > 0 && loadingTotalNumberOfBuyOrders === false) {
+      const audio = new Audio('/notification.wav'); 
+      audio.play();
+    }
+  }, [totalNumberOfBuyOrders, loadingTotalNumberOfBuyOrders]);
+
+
+
+
 
 
     return (
@@ -2447,15 +2498,10 @@ const fetchBuyOrders = async () => {
 
             )}
 
-
-
-
           </div>
 
  
  
-
-
           <div className="flex flex-col items-start justify-center gap-2 mt-4">
             
             {/* USDT 가격 binance market price */}
@@ -2477,6 +2523,67 @@ const fetchBuyOrders = async () => {
               //data-powered-by="Powered by OneClick USDT"
               //data-disclaimer="Disclaimer"
             ></div>
+
+
+            <div className="w-full flex flex-row items-center justify-end gap-2">
+                
+
+              {loadingTotalNumberOfBuyOrders && (
+                <Image
+                  src="/loading.png"
+                  alt="Loading"
+                  width={20}
+                  height={20}
+                  className="w-6 h-6 animate-spin"
+                />
+              )}
+
+              <div className="flex flex-row items-center justify-center gap-2
+              bg-white/80
+              p-2 rounded-lg shadow-md
+              backdrop-blur-md
+              ">
+                <Image
+                  src="/icon-buyorder.png"
+                  alt="Buy Order"
+                  width={35}
+                  height={35}
+                  className="w-6 h-6"
+                />
+                <p className="text-lg text-red-500 font-semibold">
+                  {
+                  totalNumberOfBuyOrders
+                  } 건
+                </p>
+
+                {totalNumberOfBuyOrders > 0 && (
+                  <div className="flex flex-row items-center justify-center gap-2">
+                    <Image
+                      src="/icon-notification.gif"
+                      alt="Notification"
+                      width={50}
+                      height={50}
+                      className="w-15 h-15 object-cover"
+                      
+                    />
+                    <button
+                      onClick={() => {
+                        router.push('/' + params.lang + '/admin/buyorder');
+                      }}
+                      className="flex items-center justify-center gap-2
+                      bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
+                    >
+                      <span className="text-sm">
+                        구매주문관리
+                      </span>
+                    </button>
+                  </div>
+                )}
+              </div>
+          
+            </div>
+
+
  
             {/* 홈 / 가맹점관리 / 회원관리 / 구매주문관리 */}
             {/* memnu buttons same width left side */}
