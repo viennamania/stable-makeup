@@ -282,7 +282,11 @@ export async function POST(request: NextRequest) {
 
 
 
-  const storecode = "ixryqqtw"; // upbet
+  //const storecode = "ixryqqtw"; // upbet
+
+  const storecode = "ycvqgqgg"; // 타이틀
+
+
 
   try {
 
