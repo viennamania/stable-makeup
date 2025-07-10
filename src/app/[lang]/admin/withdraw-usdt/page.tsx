@@ -32,10 +32,10 @@ import {
 } from "thirdweb/chains";
 
 import {
-    getContract,
-    //readContract,
-    sendTransaction,
-    sendAndConfirmTransaction,
+  getContract,
+  //readContract,
+  sendTransaction,
+  sendAndConfirmTransaction,
 } from "thirdweb";
 
 import {
@@ -100,6 +100,10 @@ import path from 'path';
 
 
 
+
+
+
+
 export default function SendUsdt({ params }: any) {
 
 
@@ -129,9 +133,6 @@ export default function SendUsdt({ params }: any) {
     // OPTIONAL: the contract's abi
     //abi: [...],
   });
-
-
-
 
 
 
@@ -275,8 +276,8 @@ export default function SendUsdt({ params }: any) {
       });
 
   
-      console.log("balanceOf address", address);
-      console.log("balanceOf result", result);
+      //console.log("balanceOf address", address);
+      //console.log("balanceOf result", result);
 
 
   
@@ -301,6 +302,7 @@ export default function SendUsdt({ params }: any) {
       });
 
       */
+
 
     };
 
