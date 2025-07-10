@@ -2703,35 +2703,34 @@ const fetchBuyOrders = async () => {
   // totalNumberOfBuyOrders
   const [loadingTotalNumberOfBuyOrders, setLoadingTotalNumberOfBuyOrders] = useState(false);
   const [totalNumberOfBuyOrders, setTotalNumberOfBuyOrders] = useState(0);
+  // Move fetchTotalBuyOrders outside of useEffect to avoid self-reference error
+  const fetchTotalBuyOrders = async (): Promise<void> => {
+    setLoadingTotalNumberOfBuyOrders(true);
+    const response = await fetch('/api/order/getTotalNumberOfBuyOrders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({}),
+    });
+    if (!response.ok) {
+      console.error('Failed to fetch total number of buy orders');
+      setLoadingTotalNumberOfBuyOrders(false);
+      return;
+    }
+    const data = await response.json();
+    //console.log('getTotalNumberOfBuyOrders data', data);
+    setTotalNumberOfBuyOrders(data.result.totalCount);
+
+    setLoadingTotalNumberOfBuyOrders(false);
+  };
+
   useEffect(() => {
     if (!address) {
       setTotalNumberOfBuyOrders(0);
       return;
     }
 
-    
-
-    const fetchTotalBuyOrders = async () => {
-      setLoadingTotalNumberOfBuyOrders(true);
-      const response = await fetch('/api/order/getTotalNumberOfBuyOrders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-        }),
-      });
-      if (!response.ok) {
-        console.error('Failed to fetch total number of buy orders');
-        return;
-      }
-      const data = await response.json();
-      //console.log('getTotalNumberOfBuyOrders data', data);
-      setTotalNumberOfBuyOrders(data.result.totalCount);
-
-      setLoadingTotalNumberOfBuyOrders(false);
-    };
-    
     fetchTotalBuyOrders();
 
     const interval = setInterval(() => {
@@ -2749,7 +2748,6 @@ const fetchBuyOrders = async () => {
       audio.play();
     }
   }, [totalNumberOfBuyOrders, loadingTotalNumberOfBuyOrders]);
-
 
 
 
