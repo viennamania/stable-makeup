@@ -326,7 +326,7 @@ export async function POST(request: NextRequest) {
         
 
 
-        const response = await fetch("https://dubai-telegram.vercel.app/api/telegram/sendMessageByUseridAndStorecode", {
+        const response = await fetch("https://dubai-telegram.vercel.app/api/telegram/sendMessageByUseridAndStorecodeAppleBot", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
