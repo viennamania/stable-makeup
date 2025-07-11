@@ -80,8 +80,8 @@ import { get } from "http";
 import { useSearchParams } from 'next/navigation';
 
 
-
-
+// import config/payment.ts
+import { paymentUrl } from "@/app/config/payment";
 
 interface BuyOrder {
   _id: string;
@@ -2514,22 +2514,7 @@ export default function Index({ params }: any) {
 
                             <div className="flex flex-col xl:flex-row items-start justify-center gap-2">
 
-                              {/*}
-                              <button
-                                onClick={() => {
-                                  window.open(
-                                    'https://cryptoss.beauty/' + params.lang + '/' + item.storecode + '/payment?'
-                                    + 'storeUser=' + item.nickname + '&depositBankName=' + item?.buyer?.depositBankName + '&depositName=' + item?.buyer?.depositName,
-                                    '_blank'
-                                  );
-                                  toast.success('회원 홈페이지를 새창으로 열었습니다.');
-                                }}
-                                className="bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
-                                  hover:bg-[#3167b4]/80"
-                              >
-                                보기
-                              </button>
-                              */}
+ 
 
                               {/* Modal open */}
                               <button
@@ -2555,7 +2540,7 @@ export default function Index({ params }: any) {
                               <button
                                 onClick={() => {
                                   navigator.clipboard.writeText(
-                                    'https://cryptoss.beauty/' + params.lang + '/' + item.storecode + '/payment?'
+                                    paymentUrl + '/' + params.lang + '/' + item.storecode + '/payment?'
                                     + 'storeUser=' + item.nickname
                                     + '&depositBankName=' + item?.buyer?.depositBankName
                                     + '&depositBankAccountNumber=' + item?.buyer?.depositBankAccountNumber
@@ -2575,7 +2560,7 @@ export default function Index({ params }: any) {
                               <button
                                 onClick={() => {
                                   window.open(
-                                    'https://cryptoss.beauty/' + params.lang + '/' + item.storecode + '/payment?'
+                                    paymentUrl + '/' + params.lang + '/' + item.storecode + '/payment?'
                                     + 'storeUser=' + item.nickname
                                     + '&depositBankName=' + item?.buyer?.depositBankName
                                     + '&depositBankAccountNumber=' + item?.buyer?.depositBankAccountNumber
@@ -2755,17 +2740,6 @@ export default function Index({ params }: any) {
 
 
 
-/*
-selectedItem?.buyer?.depositBankName
-selectedItem?.buyer?.depositName
-'https://cryptoss.beauty/' + params.lang + '/' + selectedItem.storecode + '/payment?'
-'storeUser=' + selectedItem.nickname + '&depositBankName=' + selectedItem?.buyer?.depositBankName + '&depositName=' + selectedItem?.buyer?.depositName
-
-
-'https://cryptoss.beauty/' + params.lang + '/' + item.storecode + '/payment?'
-                                    + 'storeUser=' + item.nickname + '&depositBankName=' + item?.buyer?.depositBankName + '&depositName=' + item?.buyer?.depositName
-*/
-
 const UserHomePage = (
   {
       closeModal = () => {},
@@ -2783,7 +2757,7 @@ const UserHomePage = (
       
       {/* iframe */}
       <iframe
-        src={`https://cryptoss.beauty/kr/${selectedItem?.storecode}/payment?`
+        src={`${paymentUrl}/kr/${selectedItem?.storecode}/payment?`
           + 'storeUser=' + selectedItem?.nickname
           + '&depositBankName=' + selectedItem?.buyer?.depositBankName
           + '&depositBankAccountNumber=' + selectedItem?.buyer?.depositBankAccountNumber
