@@ -332,7 +332,7 @@ export async function POST(request: NextRequest) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            center: "place69_bot",
+            center: "oneclick_apple_bot",
             userid: userid,
             storecode: storecode,
     
