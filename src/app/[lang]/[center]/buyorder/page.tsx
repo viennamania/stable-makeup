@@ -898,30 +898,15 @@ export default function Index({ params }: any) {
 
 
 
+  const today = new Date();
+  today.setHours(today.getHours() + 9); // Adjust for Korean timezone (UTC+9)
+  const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
 
   // search form date to date
-  const [searchFromDate, setSearchFormDate] = useState("");
-  // set today's date in YYYY-MM-DD format
-  useEffect(() => {
-    const today = new Date();
-    today.setHours(today.getHours() + 9); // Adjust for Korean timezone (UTC+9)
+  const [searchFromDate, setSearchFormDate] = useState(formattedDate);
+  const [searchToDate, setSearchToDate] = useState(formattedDate);
 
-
-    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
-    setSearchFormDate(formattedDate);
-  }, []);
-
-
-  const [searchToDate, setSearchToDate] = useState("");
-
-  // set today's date in YYYY-MM-DD format
-  useEffect(() => {
-    const today = new Date();
-    today.setHours(today.getHours() + 9); // Adjust for Korean timezone (UTC+9)
-
-    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
-    setSearchToDate(formattedDate);
-  }, []);
+ 
 
 
 
@@ -2330,7 +2315,7 @@ export default function Index({ params }: any) {
 
 
       //console.log('buyOrders[0]', buyOrders?.[0]);
-
+      /*
       if (data.result.orders?.[0]?._id !== latestBuyOrder?._id) {
 
         setLatestBuyOrder(data.result.orders?.[0] || null);
@@ -2356,6 +2341,7 @@ export default function Index({ params }: any) {
 
 
       }
+      */
 
       setBuyOrders(data.result.orders);
 
@@ -2764,7 +2750,8 @@ const fetchBuyOrders = async () => {
        }, 10000);
        return () => clearInterval(interval);
  
-     } , [address, searchMyOrders, params.storecode,]);
+     } , [address, searchMyOrders, params.storecode, 
+        searchFromDate, searchToDate,]);
  
 
 
@@ -3696,17 +3683,19 @@ const fetchBuyOrders = async () => {
 
                     </div>
 
-                    <div className="flex flex-row items-center justify-center  gap-2">
-                        <span className="text-sm text-zinc-500">
-                            잔액
-                        </span>
+                    <div className="flex flex-row items-center justify-center gap-1">
+                        <Image
+                            src="/icon-tether.png"
+                            alt="Tether"
+                            width={20}
+                            height={20}
+                            className="w-5 h-5"
+                        />
                         <span className="text-2xl xl:text-4xl font-semibold text-green-600"
                             style={{ fontFamily: 'monospace' }}
                         >
                             {Number(balance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </span>
-                        {' '}
-                        <span className="text-sm">USDT</span>
                     </div>
 
                 </div>
@@ -4087,14 +4076,14 @@ const fetchBuyOrders = async () => {
               <div className="w-full xl:w-1/3 flex flex-row items-center justify-between gap-2 pl-4 pr-4">
                 
                 <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 거래수(건)</div>
+                  <div className="text-sm">거래수(건)</div>
                   <div className="text-xl font-semibold text-zinc-500">
                     {tradeSummary.totalCount?.toLocaleString()} 건
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 거래금액(원)</div>
+                  <div className="text-sm">거래금액(원)</div>
                   <div className="flex flex-row items-center gap-1">
                     <span className="text-xl font-semibold text-yellow-600"
                       style={{ fontFamily: 'monospace' }}
@@ -4106,7 +4095,7 @@ const fetchBuyOrders = async () => {
                 </div>
 
                 <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 거래량(USDT)</div>
+                  <div className="text-sm">거래량(USDT)</div>
                   <div className="flex flex-row items-center gap-1">
                     <Image
                       src="/icon-tether.png"
@@ -4133,14 +4122,14 @@ const fetchBuyOrders = async () => {
               <div className="w-full xl:w-1/2
                 flex flex-row items-center justify-between gap-2 pl-4 pr-4">
                 <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 정산수(건)</div>
+                  <div className="text-sm">정산수(건)</div>
                   <div className="text-xl font-semibold text-zinc-500">
                     {tradeSummary.totalSettlementCount?.toLocaleString()} 건
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 정산금액(원)</div>
+                  <div className="text-sm">정산금액(원)</div>
                   <div className="flex flex-row items-center gap-1"> 
                     <span className="text-xl font-semibold text-yellow-600"
                       style={{ fontFamily: 'monospace' }}
@@ -4151,7 +4140,7 @@ const fetchBuyOrders = async () => {
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 정산량(USDT)</div>
+                  <div className="text-sm">정산량(USDT)</div>
                   <div className="flex flex-row items-center gap-1">
                     <Image
                       src="/icon-tether.png"
@@ -4171,7 +4160,7 @@ const fetchBuyOrders = async () => {
                 </div>
 
                 <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 수수료금액(원)</div>
+                  <div className="text-sm">수수료금액(원)</div>
                   <div className="flex flex-row items-center gap-1">
                     <span className="text-xl font-semibold text-yellow-600"
                       style={{ fontFamily: 'monospace' }}
@@ -4185,7 +4174,7 @@ const fetchBuyOrders = async () => {
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 items-center">
-                  <div className="text-sm">총 수수료수량(USDT)</div>
+                  <div className="text-sm">수수료량(USDT)</div>
                   <div className="flex flex-row items-center gap-1">
                     <Image
                       src="/icon-tether.png"
@@ -4274,9 +4263,10 @@ const fetchBuyOrders = async () => {
                     <tr>
 
                       <th className="p-2">
-                        가맹점
-                        <br/>
-                        {TID}
+                        <div className="flex flex-col items-center justify-center gap-2">
+                          <span>거래번호</span>
+                          <span>거래일시</span>
+                        </div>
                       </th>
 
                       <th className="p-2">
@@ -4469,7 +4459,7 @@ const fetchBuyOrders = async () => {
 
 
                             <div className=" flex flex-col gap-2 items-center justify-start">
-
+                              {/*
                               <div className="flex flex-row items-center justify-start gap-2">
                                 <Image
                                   src={item?.store?.storeLogo || "/icon-store.png"}
@@ -4492,12 +4482,24 @@ const fetchBuyOrders = async () => {
                                   </span>
                                 </div>
                               </div>
+                              */}
 
 
                               <span className="text-sm text-zinc-500 font-semibold">
                               {
                                 "#" + item.tradeId
                               }
+                              </span>
+
+                              <span className="text-sm text-zinc-500 font-semibold">
+                                {new Date(item.createdAt).toLocaleString('ko-KR', {
+                                  year: 'numeric',
+                                  month: '2-digit',
+                                  day: '2-digit',
+                                  hour: '2-digit',
+                                  minute: '2-digit',
+                                  second: '2-digit',
+                                })}
                               </span>
 
                               <span className="text-sm text-zinc-500 font-semibold">
@@ -4764,7 +4766,7 @@ const fetchBuyOrders = async () => {
                         <td className="p-2">
 
                           <div className="
-                            w-48
+                            w-52  
                             flex flex-row items-center justify-center gap-2">
                             {/* status */}
                             {item.status === 'ordered' && (
