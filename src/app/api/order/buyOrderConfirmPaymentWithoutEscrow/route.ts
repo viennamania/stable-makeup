@@ -5,7 +5,7 @@ import {
 	buyOrderConfirmPayment,
   buyOrderGetOrderById,
 
-  buyOrderWebhook,
+  //buyOrderWebhook,
 
 } from '@lib/api/order';
 
@@ -188,7 +188,7 @@ export async function POST(request: NextRequest) {
     */
   
   
-
+    /*
     // order storecode가 매니의 storecode인 경우에만 webhook을 보냄
     if (orderStorecode === "dtwuzgst") { // 가맹점 이름 매니
 
@@ -205,14 +205,13 @@ export async function POST(request: NextRequest) {
 
       try {
 
-        /*
-        const response = await fetch(fetchUrl, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        */
+        
+        //const response = await fetch(fetchUrl, {
+        //  method: "GET",
+        //  headers: {
+        //    "Content-Type": "application/json",
+        //  },
+        //});
 
         // GET 요청
         const response = await fetch(fetchUrl);
@@ -227,25 +226,9 @@ export async function POST(request: NextRequest) {
         } else {
 
 
-          /*
-          성공: {result: success), 실패: {result: fail}
-          */
-
-          /*
-
-          const data = await response.json();
-
-          console.log("Webhook sent for user:", userid, "with response:", data);
-
-
-  
-          if (data.result === "success") {
-            console.log("Webhook sent successfully for user:", userid);
-
-          } else {
-            console.error("Webhook failed for user:", userid, "with response:", data);
-          }
-          */
+          
+          //성공: {result: success), 실패: {result: fail}
+          
 
           try {
             const data = await response.json();
@@ -279,15 +262,14 @@ export async function POST(request: NextRequest) {
 
           }
 
-
-
         }
+
       } catch (error) {
         console.error("Error sending webhook:", error);
       }
 
-
     }
+    */
 
 
   
