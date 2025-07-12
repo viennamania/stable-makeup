@@ -276,7 +276,7 @@ export async function POST(request: NextRequest) {
 
 
   // order storecode가 매니의 storecode인 경우에만 webhook을 보냄
-    if (buyOrder.storecode === "dtwuzgst") { // 가맹점 이름 매니
+    if (buyOrder.store.storecode === "dtwuzgst") { // 가맹점 이름 매니
 
 
       // http://3.112.81.28/?userid=test1234&amount=10000
