@@ -217,17 +217,26 @@ export async function POST(request: NextRequest) {
         // GET 요청
         const response = await fetch(fetchUrl);
 
+        console.log("fetchUrl", fetchUrl);
+        console.log("response", response);
+
 
 
         if (!response.ok) {
           console.error("Failed to send webhook for user:", userid, "with status:", response.status);
         } else {
-          const data = await response.json();
-          console.log("Webhook sent for user:", userid, "with response:", data);
+
 
           /*
           성공: {result: success), 실패: {result: fail}
           */
+
+          /*
+
+          const data = await response.json();
+
+          console.log("Webhook sent for user:", userid, "with response:", data);
+
 
   
           if (data.result === "success") {
@@ -236,7 +245,7 @@ export async function POST(request: NextRequest) {
           } else {
             console.error("Webhook failed for user:", userid, "with response:", data);
           }
-
+          */
 
 
           await buyOrderWebhook({
@@ -246,7 +255,7 @@ export async function POST(request: NextRequest) {
               url: webhookUrl,
               userid: userid,
               amount: amount,
-              response: data,
+              response: response,
             }
           });
 
