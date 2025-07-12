@@ -4171,7 +4171,6 @@ const fetchBuyOrders = async () => {
                             <div className="flex flex-col gap-2 items-center justify-center">
 
                               <div className="flex flex-row items-center justify-center gap-2">
-
                                 <Image
                                   src="/icon-matching-completed.png"
                                   alt="Matching Completed"
@@ -4180,7 +4179,7 @@ const fetchBuyOrders = async () => {
                                   className="w-5 h-5 rounded-full"
                                 />
                                 <span className="text-sm text-zinc-500 font-semibold">
-                                  매칭완료
+                                  자동매칭
                                 </span>
                               </div>
 

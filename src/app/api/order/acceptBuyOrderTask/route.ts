@@ -215,6 +215,7 @@ export async function POST(request: NextRequest) {
       sellerStorecode: sellerStorecode,
       sellerMemo: sellerMemo,
 
+
       /*
       sellerNickname: sellerNickname,
       sellerAvatar: sellerAvatar,
