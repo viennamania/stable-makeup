@@ -247,17 +247,36 @@ export async function POST(request: NextRequest) {
           }
           */
 
+          try {
+            const data = await response.json();
+            console.log("Webhook sent for user:", userid, "with response:", data);
 
-          await buyOrderWebhook({
-            orderId: orderId,
-            webhookData: {
-              createdAt: new Date().toISOString(),
-              url: webhookUrl,
-              userid: userid,
-              amount: amount,
-              response: response,
-            }
-          });
+            await buyOrderWebhook({
+              orderId: orderId,
+              webhookData: {
+                createdAt: new Date().toISOString(),
+                url: webhookUrl,
+                userid: userid,
+                amount: amount,
+                response: data,
+              }
+            });
+
+
+          } catch (jsonError) {
+
+
+            await buyOrderWebhook({
+              orderId: orderId,
+              webhookData: {
+                createdAt: new Date().toISOString(),
+                url: webhookUrl,
+                userid: userid,
+                amount: amount,
+              }
+            });
+
+          }
 
 
 
