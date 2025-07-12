@@ -273,6 +273,7 @@ export async function POST(request: NextRequest) {
                 url: webhookUrl,
                 userid: userid,
                 amount: amount,
+                response: response.text(), // response를 JSON으로 파싱하지 못한 경우
               }
             });
 
