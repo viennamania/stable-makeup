@@ -316,21 +316,7 @@ export async function POST(request: NextRequest) {
           //성공: {result: success}, 실패: {result: fail}
           
 
-          await buyOrderWebhook({
-            orderId: orderId,
-            webhookData: {
-              createdAt: new Date().toISOString(),
-              url: webhookUrl,
-              userid: userid,
-              amount: amount,
-              response: response.text(), // response를 JSON으로 파싱하지 못한 경우
-            }
-          });
-
-
-          /*
           try {
-
             
             const data = await response.json();
             console.log("Webhook sent for user:", userid, "with response:", data);
@@ -345,10 +331,6 @@ export async function POST(request: NextRequest) {
                 response: data,
               }
             });
-            
-
-
-            
 
 
           } catch (jsonError) {
@@ -366,7 +348,6 @@ export async function POST(request: NextRequest) {
             });
 
           }
-          */
 
 
 
