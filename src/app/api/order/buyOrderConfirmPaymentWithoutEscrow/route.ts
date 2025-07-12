@@ -74,6 +74,8 @@ export async function POST(request: NextRequest) {
     
 
     const {
+      nickname: orderNickname,
+      storecode: orderStorecode,
       seller: seller,
       walletAddress: walletAddress,
       usdtAmount: usdtAmount,
@@ -187,15 +189,16 @@ export async function POST(request: NextRequest) {
   
   
 
-
-    if (storecode === "dtwuzgst") { // 가맹점 이름 매니
+    // order storecode가 매니의 storecode인 경우에만 webhook을 보냄
+    if (orderStorecode === "dtwuzgst") { // 가맹점 이름 매니
 
 
       // http://3.112.81.28/?userid=test1234&amount=10000
 
-      const userid = user.nickname;
+      const userid = orderNickname; // 매니의 userid는 orderNickname
       const amount = paymentAmount;
 
+      // https://my-9999.com/api/deposit?userid=test1234&amount=10000
       const webhookUrl = "http://3.112.81.28"; // 매니의 웹훅 URL
 
       const fetchUrl = `${webhookUrl}/?userid=${userid}&amount=${amount}`;
