@@ -6595,3 +6595,30 @@ export async function getTotalNumberOfBuyOrders(): Promise<{ totalCount: number 
     totalCount: totalCount,
   }
 }
+
+
+// buyOrderWebhook
+export async function buyOrderWebhook(
+  {
+    orderId,
+    webhookData,
+  }: {
+    orderId: string;
+    webhookData: any;
+  }
+): Promise<boolean> {
+  const client = await clientPromise;
+  const collection = client.db('ultraman').collection('buyorders');
+  // update buyorder
+  const result = await collection.updateOne(
+    { _id: new ObjectId(orderId) },
+    { $set: {
+      webhookData: webhookData,
+    } }
+  );
+  if (result.modifiedCount === 1) {
+    return true;
+  } else {
+    return false;
+  }
+}

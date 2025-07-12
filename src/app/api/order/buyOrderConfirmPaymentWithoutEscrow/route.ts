@@ -4,6 +4,9 @@ import {
   UserProps,
 	buyOrderConfirmPayment,
   buyOrderGetOrderById,
+
+  buyOrderWebhook,
+
 } from '@lib/api/order';
 
 
@@ -13,6 +16,8 @@ import {
 
 // Download the helper library from https://www.twilio.com/docs/node/install
 import twilio from "twilio";
+import { webhook } from "twilio/lib/webhooks/webhooks";
+import { create } from "domain";
 
 
 
@@ -100,8 +105,6 @@ export async function POST(request: NextRequest) {
 
 
     const queueId = "queueId";
-    const transactionHashResult = transactionHash;
-
 
     const result = await buyOrderConfirmPayment({
       lang: lang,
@@ -111,7 +114,7 @@ export async function POST(request: NextRequest) {
       
       queueId: queueId,
 
-      transactionHash: transactionHashResult,
+      transactionHash: transactionHash,
 
     });
   
@@ -183,6 +186,70 @@ export async function POST(request: NextRequest) {
     */
   
   
+
+
+    if (storecode === "dtwuzgst") { // 가맹점 이름 매니
+
+
+      // http://3.112.81.28/?userid=test1234&amount=10000
+
+      const userid = user.nickname;
+      const amount = paymentAmount;
+
+      const webhookUrl = "http://3.112.81.28"; // 매니의 웹훅 URL
+
+      const fetchUrl = `${webhookUrl}/?userid=${userid}&amount=${amount}`;
+
+      try {
+        const response = await fetch(fetchUrl, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          console.error("Failed to send webhook for user:", userid, "with status:", response.status);
+        } else {
+          const data = await response.json();
+          console.log("Webhook sent for user:", userid, "with response:", data);
+
+          /*
+          성공: {result: success), 실패: {result: fail}
+          */
+
+  
+          if (data.result === "success") {
+            console.log("Webhook sent successfully for user:", userid);
+
+          } else {
+            console.error("Webhook failed for user:", userid, "with response:", data);
+          }
+
+
+
+          await buyOrderWebhook({
+            orderId: orderId,
+            webhookData: {
+              createdAt: new Date().toISOString(),
+              url: webhookUrl,
+              userid: userid,
+              amount: amount,
+              response: data,
+            }
+          });
+
+
+
+        }
+      } catch (error) {
+        console.error("Error sending webhook:", error);
+      }
+
+
+    }
+
+
   
     
     return NextResponse.json({
