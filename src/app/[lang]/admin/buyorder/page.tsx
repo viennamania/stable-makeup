@@ -4514,18 +4514,38 @@ const fetchBuyOrders = async () => {
                           <div className="
                             w-32
                             flex flex-col gap-2 items-center justify-center">
-                            <div className="flex flex-row gap-2 items-center justify-center">
-                              <Image
-                                src="/icon-payaction.png"
-                                alt="Bank Check"
-                                width={20}
-                                height={20}
-                                className="w-5 h-5 rounded-full"
-                              />
-                              <span className="text-sm font-semibold text-zinc-500">
-                                입금완료
-                              </span>
-                            </div>
+                            
+                            {item?.autoConfirmPayment === true ? (
+                            
+                              <div className="flex flex-row gap-2 items-center justify-center">
+                                <Image
+                                  src="/icon-payaction.png"
+                                  alt="Bank Check"
+                                  width={20}
+                                  height={20}
+                                  className="w-5 h-5 rounded-full"
+                                />
+                                <span className="text-sm font-semibold text-zinc-500">
+                                  자동입금확인
+                                </span>
+                              </div>
+
+                            ) : (
+
+                              <div className="flex flex-row gap-2 items-center justify-center">
+                                <Image
+                                  src="/icon-bank-check.png"
+                                  alt="Bank Check"
+                                  width={20}
+                                  height={20}
+                                  className="w-5 h-5 rounded-full"
+                                />
+                                <span className="text-sm font-semibold text-zinc-500">
+                                  수동입금확인
+                                </span>
+                              </div>
+
+                            )}
 
                             {/* seller bank info */}
                             <div className="flex flex-row gap-2 items-center justify-center">

@@ -3511,7 +3511,7 @@ const fetchBuyOrders = async () => {
                             w-32
                             flex flex-col mr-2 items-center justify-end gap-2">
 
-                              {item?.autoConfirmPayment ? (
+                              {item?.autoConfirmPayment === true ? (
                                 <span className="text-sm text-green-500 font-semibold">
                                   자동입금처리
                                 </span>
