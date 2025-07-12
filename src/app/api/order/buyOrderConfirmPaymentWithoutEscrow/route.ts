@@ -204,12 +204,20 @@ export async function POST(request: NextRequest) {
       const fetchUrl = `${webhookUrl}/?userid=${userid}&amount=${amount}`;
 
       try {
+
+        /*
         const response = await fetch(fetchUrl, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
         });
+        */
+
+        // GET 요청
+        const response = await fetch(fetchUrl);
+
+
 
         if (!response.ok) {
           console.error("Failed to send webhook for user:", userid, "with status:", response.status);
