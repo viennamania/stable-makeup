@@ -2677,7 +2677,7 @@ export default function Index({ params }: any) {
                                 <button
                                   onClick={() => {
                                     navigator.clipboard.writeText(
-                                      'https://stable.makeup/' + params.lang + '/' + item.storecode
+                                      '/' + params.lang + '/' + item.storecode
                                     );
                                     toast.success('복사되었습니다');
                                   }
@@ -2689,7 +2689,7 @@ export default function Index({ params }: any) {
                                 */}
                                 <a
                                   href={
-                                    'https://stable.makeup/' + params.lang + '/' + item.storecode + '/paymaster'
+                                    '/' + params.lang + '/' + item.storecode + '/paymaster'
                                   }
                                   target="_blank"
                                   rel="noopener noreferrer"
@@ -2701,7 +2701,7 @@ export default function Index({ params }: any) {
                                 <button
                                   onClick={() => {
                                     navigator.clipboard.writeText(
-                                      'https://stable.makeup/' + params.lang + '/' + item.storecode + '/center'
+                                      '/' + params.lang + '/' + item.storecode + '/center'
                                     );
                                     toast.success('복사되었습니다');
                                   }
@@ -2713,7 +2713,7 @@ export default function Index({ params }: any) {
                                 */}
                                 <a
                                   href={
-                                    'https://stable.makeup/' + params.lang + '/' + item.storecode + '/center'
+                                    '/' + params.lang + '/' + item.storecode + '/center'
                                   }
                                   target="_blank"
                                   rel="noopener noreferrer"
