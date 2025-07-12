@@ -1189,6 +1189,8 @@ export default function Index({ params }: any) {
     return data.result.users;
   }
 
+  
+
   useEffect(() => {
     if (!address) {
       setAllBuyer([]);
@@ -2677,22 +2679,35 @@ export default function Index({ params }: any) {
 
 
             <div className="flex flex-row items-center gap-2">
-                <select
-                  value={limit}
-                  onChange={(e) =>
-                    
-                    router.push(`/${params.lang}/admin/member?limit=${Number(e.target.value)}&page=${page}`)
+              <select
+                value={limit}
+                onChange={(e) =>
+                  
+                  router.push(`/${params.lang}/admin/member?limit=${Number(e.target.value)}&page=${page}`)
 
-                  }
+                }
 
-                  className="text-sm bg-zinc-800 text-zinc-200 px-2 py-1 rounded-md"
-                >
-                  <option value={10}>10</option>
-                  <option value={20}>20</option>
-                  <option value={50}>50</option>
-                  <option value={100}>100</option>
-                </select>
-              </div>
+                className="text-sm bg-zinc-800 text-zinc-200 px-2 py-1 rounded-md"
+              >
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+              </select>
+            </div>
+
+            {/* 처음 페이지로 이동 버튼 */}
+            <button
+              disabled={Number(page) <= 1}
+              className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
+              onClick={() => {
+                
+                router.push(`/${params.lang}/admin/member?limit=${Number(limit)}&page=1&storecode=${searchParamsStorecode}`);
+
+              }}
+            >
+              처음
+            </button>
 
 
             <button
@@ -2700,7 +2715,7 @@ export default function Index({ params }: any) {
               className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
               onClick={() => {
                 
-                router.push(`/${params.lang}/admin/member?limit=${Number(limit)}&page=${Number(page) - 1}`);
+                router.push(`/${params.lang}/admin/member?limit=${Number(limit)}&page=${Number(page) - 1}&storecode=${searchParamsStorecode}`);
 
               }}
             >
@@ -2718,11 +2733,23 @@ export default function Index({ params }: any) {
               className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
               onClick={() => {
                 
-                router.push(`/${params.lang}/admin/member?limit=${Number(limit)}&page=${Number(page) + 1}`);
+                router.push(`/${params.lang}/admin/member?limit=${Number(limit)}&page=${Number(page) + 1}&storecode=${searchParamsStorecode}`);
 
               }}
             >
               다음
+            </button>
+
+            <button
+              disabled={Number(page) >= Math.ceil(Number(totalCount) / Number(limit))}
+              className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
+              onClick={() => {
+                
+                router.push(`/${params.lang}/admin/member?limit=${Number(limit)}&page=${Math.ceil(Number(totalCount) / Number(limit))}&storecode=${searchParamsStorecode}`);
+
+              }}
+            >
+              마지막
             </button>
 
           </div>
