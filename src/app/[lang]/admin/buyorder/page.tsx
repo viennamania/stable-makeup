@@ -5561,12 +5561,12 @@ const fetchBuyOrders = async () => {
 
                                 <div className="w-full flex flex-row gap-2 items-center justify-center">
                                   <span className="
-                                  w-16
+                                  w-7   
                                   text-sm text-zinc-500">
-                                    가맹점
+                                    가맹
                                   </span>
                                   <span className="
-                                  w-14 text-end
+                                  w-12 text-end
                                   text-sm text-zinc-500"
                                     style={{
                                       fontFamily: 'monospace',
@@ -5580,12 +5580,12 @@ const fetchBuyOrders = async () => {
 
                                 <div className="w-full flex flex-row gap-2 items-center justify-center">
                                   <span className="
-                                  w-16
+                                  w-7
                                   text-sm text-zinc-500">
-                                    AG 수수료
+                                    AG
                                   </span>
                                   <span className="
-                                  w-14 text-end
+                                  w-12 text-end
                                   text-sm text-zinc-500"
                                     style={{
                                       fontFamily: 'monospace',
@@ -5596,12 +5596,12 @@ const fetchBuyOrders = async () => {
 
                                 <div className="w-full flex flex-row gap-2 items-center justify-center">
                                   <span className="
-                                  w-16
+                                  w-7
                                   text-sm text-zinc-500">
-                                    PG 수수료
+                                    PG
                                   </span>
                                   <span className="
-                                  w-14  text-end
+                                  w-12  text-end
                                   text-sm text-zinc-500"
                                     style={{
                                       fontFamily: 'monospace',
