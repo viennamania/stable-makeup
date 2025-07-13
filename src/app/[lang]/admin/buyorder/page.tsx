@@ -81,6 +81,7 @@ import { useSearchParams } from 'next/navigation';
 import { getAllUsersForSettlementOfStore } from "@/lib/api/user";
 
 
+import { paymentUrl } from "../../../config/payment";
 
 
 interface BuyOrder {
@@ -4470,9 +4471,8 @@ const fetchBuyOrders = async () => {
                                 {Completed}
                               </button>
                               {/* new window */}
-                              {/* https://www.cryptoss.beauty/ */}
                               <a
-                                href={`https://www.cryptoss.beauty/ko/${item?.storecode}/pay-usdt-reverse/${item?._id}`}
+                                href={`${paymentUrl}/ko/${item?.storecode}/pay-usdt-reverse/${item?._id}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-sm text-blue-600 font-semibold underline"
@@ -6954,7 +6954,7 @@ const UserPaymentPage = (
       
       {/* iframe */}
       <iframe
-        src={`https://cryptoss.beauty/kr/${selectedItem?.storecode}/pay-usdt-reverse/${selectedItem?._id}`}
+        src={`${paymentUrl}/kr/${selectedItem?.storecode}/pay-usdt-reverse/${selectedItem?._id}`}
 
         
           
