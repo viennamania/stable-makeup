@@ -1385,7 +1385,6 @@ export default function Index({ params }: any) {
                 </div>
 
                 {/* link new window */}
-                {/* https://cryptoss.beauty/ko/[storecode] */}
                 <button
                   onClick={() => {
                     window.open(`https://cryptoss.beauty/ko/${store?.storecode}`, '_blank');
