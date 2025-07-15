@@ -1513,7 +1513,6 @@ export default function Index({ params }: any) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        storecode: params.center,
         walletAddress: walletAddress,
       }),
     });

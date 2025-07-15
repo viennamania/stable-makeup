@@ -1500,6 +1500,127 @@ export default function Index({ params }: any) {
 
 
 
+  const [usdtBalance, setUsdtBalance] = useState([] as any[]);
+
+  allBuyer.forEach((user) => {
+    usdtBalance.push(0);
+  });
+
+
+
+
+  const getBalanceOfWalletAddress = async (walletAddress: string) => {
+  
+
+    const balance = await balanceOf({
+      contract,
+      address: walletAddress,
+    });
+    
+    console.log('getBalanceOfWalletAddress', walletAddress, 'balance', balance);
+
+    toast.success(`잔액이 업데이트되었습니다. 잔액: ${(Number(balance) / 10 ** 6).toFixed(2)} USDT`);
+
+    /*
+    setAllUsers((prev) => {
+      const newUsers = [...prev];
+      const index = newUsers.findIndex(u => u.walletAddress === walletAddress);
+      if (index !== -1) {
+        newUsers[index] = {
+          ...newUsers[index],
+          usdtBalance: Number(balance) / 10 ** 6,
+        };
+      }
+      return newUsers;
+    });
+    */
+    // update the usdtBalance of the user
+    setUsdtBalance((prev) => {
+      const newUsdtBalance = [...prev];
+      const index = allBuyer.findIndex(u => u.walletAddress === walletAddress);
+      if (index !== -1) {
+        newUsdtBalance[index] = Number(balance) / 10 ** 6; // Convert to USDT
+      }
+      return newUsdtBalance;
+    });
+
+
+
+
+    return Number(balance) / 10 ** 6; // Convert to USDT
+
+  };
+
+
+
+  // clearanceWalletAddress
+  const [clearanceingWalletAddress, setClearanceingWalletAddress] = useState([] as boolean[]);
+  for (let i = 0; i < 100; i++) {
+    clearanceingWalletAddress.push(false);
+  }
+
+  const clearanceWalletAddress = async (walletAddress: string) => {
+    
+    if (clearanceingWalletAddress.includes(true)) {
+      return;
+    }
+
+
+    // api call to clear the wallet address
+    setClearanceingWalletAddress((prev) => {
+      const newClearanceing = [...prev];
+      const index = newClearanceing.findIndex(u => u === false);
+      if (index !== -1) {
+        newClearanceing[index] = true;
+      }
+      return newClearanceing;
+    });
+
+
+    
+    const response = await fetch('/api/user/clearanceWalletAddress', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        walletAddress: walletAddress,
+      }),
+    });
+
+    if (!response.ok) {
+      setClearanceingWalletAddress((prev) => {
+        const newClearanceing = [...prev];
+        const index = newClearanceing.findIndex(u => u === true);
+        if (index !== -1) {
+          newClearanceing[index] = false;
+        }
+        return newClearanceing;
+      });
+      toast.error('지갑 주소 정산에 실패했습니다.');
+      return;
+    }
+
+    const data = await response.json();
+    //console.log('clearanceWalletAddress data', data);
+    if (data.result) {
+      toast.success('지갑 주소 정산이 완료되었습니다.');
+      // update the balance of the user
+      getBalanceOfWalletAddress(walletAddress);
+    } else {
+      toast.error('지갑 주소 정산에 실패했습니다.');
+    }
+    setClearanceingWalletAddress((prev) => {
+      const newClearanceing = [...prev];
+      const index = newClearanceing.findIndex(u => u === true);
+      if (index !== -1) {
+        newClearanceing[index] = false;
+      }
+      return newClearanceing;
+    });
+    return data.result;
+  };
+
 
 
 
@@ -2390,6 +2511,7 @@ export default function Index({ params }: any) {
                         <th className="p-2">결제페이지</th>
                         <th className="p-2">주문상태</th>
 
+                        <th className="p-2">잔액확인</th>
                       </tr>
                     </thead>
 
@@ -2439,7 +2561,7 @@ export default function Index({ params }: any) {
                           </td>
 
                           <td className="p-2">
-                            <div className="flex flex-col xl:flex-row items-start justify-center gap-2">
+                            <div className="flex flex-col items-start justify-center gap-2">
                               <span>{item?.buyer?.depositBankName}</span>
                               
                               <span>{item?.buyer?.depositBankAccountNumber}</span>
@@ -2631,7 +2753,73 @@ export default function Index({ params }: any) {
                           </td>
 
 
+                           {/* 잔고확인 버튼 */}
+                           {/* USDT 잔액 */}
+                           <td className="p-2">
+                             <div className="w-24
+                               flex flex-col items-between justify-between gap-2">
  
+                               {/*
+                               <div className="w-full flex flex-col items-center justify-center gap-2">
+ 
+                                 <span className="text-lg text-green-600"
+                                   style={{ fontFamily: 'monospace' }}
+                                 >
+                                   {usdtBalance[index] ?
+                                     usdtBalance[index].toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'}{' USDT'}
+                                 </span>
+          
+                               </div>
+                               */}
+ 
+ 
+                               {/* button to getBalance of USDT */}
+                               <button
+                                 //disabled={!isAdmin || insertingStore}
+                                 onClick={() => {
+                                   //if (!isAdmin || insertingStore) return;
+                                   //getBalance(item.storecode);
+ 
+                                   getBalanceOfWalletAddress(item.walletAddress);
+           
+ 
+                                   //toast.success('잔액을 가져왔습니다.');
+ 
+                                   // toast usdtBalance[index] is updated
+                                   //toast.success(`잔액을 가져왔습니다. 현재 잔액: ${usdtBalance[index] ? usdtBalance[index].toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'} USDT`);
+ 
+                                 }}
+                                 className={`
+                                   w-full mb-2
+                                   bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                   hover:bg-[#3167b4]/80
+                                 `}
+                               >
+                                 잔액 확인하기
+                               </button>
+ 
+ 
+                               {/* function call button clearanceWalletAddress */}
+                               
+                               <button
+                                 onClick={() => {
+                                   clearanceWalletAddress(item.walletAddress);
+                                   toast.success('잔액을 회수했습니다.');
+                                 }}
+                                 className={`
+                                   w-full mb-2
+                                   bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                   hover:bg-[#3167b4]/80
+                                 `}
+                               >
+                                 잔액 회수하기
+                               </button>
+                                
+  
+                             
+ 
+                             </div>
+                           </td>
 
 
 

@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 
-import { getOneByWalletAddress } from "@/lib/api/user";
+import { getPayUserByWalletAddress } from "@/lib/api/user";
 
 import { getStoreByStorecode } from "@/lib/api/store";
 
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
 
 
 
-  const { storecode, walletAddress } = body;
+  const { walletAddress } = body;
 
 
 
@@ -79,24 +79,54 @@ export async function POST(request: NextRequest) {
 
   const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // USDT on Arbitrum
 
-  const contractAddress = contractAddressPolygon;
-
 
   try {
 
 
 
-    const user = await getOneByWalletAddress(storecode, walletAddress);
+    const user = await getPayUserByWalletAddress(walletAddress);
 
     if (!user) {
 
-      console.log("User not found for storecode:", storecode, "and walletAddress:", walletAddress);
+      console.log("User not found for walletAddress:", walletAddress);
 
       return NextResponse.json({
         result: "error",
         error: "User not found"
       });
     }
+
+    const storecode = user.storecode;
+
+    //get sellerWalletAddress from storecode
+    const store = await getStoreByStorecode({
+        storecode: storecode,
+    } );
+
+
+    if (!store) {
+      console.log("Store not found for storecode:", storecode);
+
+      return NextResponse.json({
+        result: "error",
+        error: "Store not found"
+      });
+    }
+
+    const sellerWalletAddress = store.sellerWalletAddress;
+
+
+    console.log("sellerWalletAddress", sellerWalletAddress);
+
+    if (!sellerWalletAddress) {
+        console.log("sellerWalletAddress not found for storecode:", storecode);
+        return NextResponse.json({
+            result: "error",
+            error: "Seller wallet address not found"
+        });
+    }
+
+
 
     // private key
 
@@ -135,19 +165,7 @@ export async function POST(request: NextRequest) {
 
 
 
-    //get sellerWalletAddress from storecode
-    const store = await getStoreByStorecode({
-        storecode: storecode,
-    } );
 
-    if (!store) {
-      console.log("Store not found for storecode:", storecode);
-
-      return NextResponse.json({
-        result: "error",
-        error: "Store not found"
-      });
-    }
 
 
     //get USDT balance of walletAddress
@@ -181,18 +199,7 @@ export async function POST(request: NextRequest) {
     }
 
 
-    const sellerWalletAddress = store.sellerWalletAddress;
 
-
-    console.log("sellerWalletAddress", sellerWalletAddress);
-
-    if (!sellerWalletAddress) {
-        console.log("sellerWalletAddress not found for storecode:", storecode);
-        return NextResponse.json({
-            result: "error",
-            error: "Seller wallet address not found"
-        });
-    }
 
 
 

@@ -729,6 +729,44 @@ export async function getOneByWalletAddress(
 
 
 
+
+
+
+
+export async function getPayUserByWalletAddress(
+  walletAddress: string,
+): Promise<UserProps | null> {
+
+
+  const client = await clientPromise;
+
+  const collection = client.db('ultraman').collection('users');
+
+
+  // walletPrivateKey is not null
+  const results = await collection.findOne<UserProps>(
+    {
+      walletAddress: walletAddress,
+      ///walletPrivateKey: { $exists: true, $ne: null },
+      $or: [
+        { verified: { $exists: false } },
+        { verified: false },
+      ],
+    },
+  );
+
+
+  //console.log('getOneByWalletAddress results: ' + results);
+
+  return results;
+
+}
+
+
+
+
+
+
 // getOneByTelegramId
 export async function getOneByTelegramId(
   telegramId: string,
