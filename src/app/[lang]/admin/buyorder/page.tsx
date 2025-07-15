@@ -82,6 +82,7 @@ import { getAllUsersForSettlementOfStore } from "@/lib/api/user";
 
 
 import { paymentUrl } from "../../../config/payment";
+import { send } from "process";
 
 
 interface BuyOrder {
@@ -1808,9 +1809,9 @@ export default function Index({ params }: any) {
           */
 
 
-          const { transactionHash } = await sendAndConfirmTransaction({
-          //const { transactionHash } = await sendTransaction({
+          //const { transactionHash } = await sendAndConfirmTransaction({
 
+          const { transactionHash } = await sendTransaction({
             transaction: transaction,
             account: activeAccount as any,
           });
@@ -1843,6 +1844,7 @@ export default function Index({ params }: any) {
             const data = await response.json();
 
             //console.log('data', data);
+
 
             await fetch('/api/order/getAllBuyOrders', {
               method: 'POST',
@@ -1905,6 +1907,157 @@ export default function Index({ params }: any) {
 
   }
 
+
+
+
+
+
+
+
+  // send payment
+  const sendPayment = async (
+
+    index: number,
+    orderId: string,
+    //paymentAmount: number,
+    krwAmount: number,
+    //paymentAmountUsdt: number,
+    usdtAmount: number,
+
+    buyerWalletAddress: string,
+
+  ) => {
+    // confirm payment
+    // send usdt to buyer wallet address
+
+
+    // if escrowWalletAddress balance is less than paymentAmount, then return
+
+    //console.log('escrowBalance', escrowBalance);
+    //console.log('paymentAmountUsdt', paymentAmountUsdt);
+    
+
+    // check balance
+    // if balance is less than paymentAmount, then return
+    if (balance < usdtAmount) {
+      toast.error(Insufficient_balance);
+      return;
+    }
+
+    const storecode = "admin";
+
+
+    if (confirmingPayment[index]) {
+      return;
+    }
+
+    setConfirmingPayment(
+      confirmingPayment.map((item, idx) =>  idx === index ? true : item)
+    );
+
+      try {
+
+
+        const transaction = transfer({
+          contract,
+          to: buyerWalletAddress,
+          amount: usdtAmount,
+        });
+
+
+
+        //const { transactionHash } = await sendAndConfirmTransaction({
+        const { transactionHash } = await sendTransaction({
+          transaction: transaction,
+          account: activeAccount as any,
+        });
+
+        console.log("transactionHash===", transactionHash);
+
+
+
+        if (transactionHash) {
+
+
+
+
+          const response = await fetch('/api/order/buyOrderConfirmPaymentWithoutEscrow', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              lang: params.lang,
+              storecode: storecode,
+              orderId: orderId,
+              paymentAmount: krwAmount,
+              transactionHash: transactionHash,
+              ///isSmartAccount: activeWallet === inAppConnectWallet ? false : true,
+              isSmartAccount: false,
+            })
+          });
+
+          const data = await response.json();
+
+          //console.log('data', data);
+
+
+          await fetch('/api/order/getAllBuyOrders', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+              {
+                storecode: searchStorecode,
+                limit: Number(limitValue),
+                page: Number(pageValue),
+                walletAddress: address,
+                searchMyOrders: searchMyOrders,
+                searchOrderStatusCancelled: searchOrderStatusCancelled,
+                searchOrderStatusCompleted: searchOrderStatusCompleted,
+
+                searchStoreName: searchStoreName,
+
+                fromDate: searchFormDate,
+                toDate: searchToDate,
+              }
+            )
+          }).then(async (response) => {
+            const data = await response.json();
+            //console.log('data', data);
+            if (data.result) {
+              setBuyOrders(data.result.orders);
+  
+              setTotalCount(data.result.totalCount);
+            }
+          });
+
+          toast.success(Payment_has_been_confirmed);
+          playSong();
+
+
+        } else {
+          toast.error('결제확인이 실패했습니다.');
+        }
+
+    } catch (error) {
+      console.error('Error:', error);
+      //toast.error('결제확인이 실패했습니다.');
+    }
+
+
+
+    setConfirmingPayment(
+      confirmingPayment.map((item, idx) => idx === index ? false : item)
+    );
+
+    setConfirmPaymentCheck(
+      confirmPaymentCheck.map((item, idx) => idx === index ? false : item)
+    );
+  
+
+  }
 
 
 
@@ -5129,13 +5282,33 @@ const fetchBuyOrders = async () => {
                                         hover:shadow-lg
                                         hover:shadow-green-500/50
                                       "
+
+                                      /*
+                                        confirmPayment(
+                                            index,
+                                            item._id,
+                                            
+                                            //paymentAmounts[index],
+                                            item.krwAmount,
+
+                                            //paymentAmountsUsdt[index],
+                                            item.usdtAmount,
+
+
+                                            item.walletAddress,
+                                          );
+                                          */
+
                                       
                                       onClick={() => {
                                         confirmPayment(
                                           index,
                                           item._id,
-                                          paymentAmounts[index],
-                                          paymentAmountsUsdt[index],
+                                          //paymentAmounts[index],
+                                          //paymentAmountsUsdt[index],
+
+                                          item.krwAmount,
+                                          item.usdtAmount,
                                           
                                           item.walletAddress,
                                         );
@@ -5358,7 +5531,9 @@ const fetchBuyOrders = async () => {
 
 
                                         onClick={() => {
-                                          confirmPayment(
+                                          //confirmPayment(
+                                          sendPayment(
+
                                             index,
                                             item._id,
                                             
