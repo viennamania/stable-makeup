@@ -1808,7 +1808,9 @@ export default function Index({ params }: any) {
           */
 
 
-          const { transactionHash } = await sendAndConfirmTransaction({
+          //const { transactionHash } = await sendAndConfirmTransaction({
+          const transactionHash = await sendTransaction({
+
             transaction: transaction,
             account: activeAccount as any,
           });
