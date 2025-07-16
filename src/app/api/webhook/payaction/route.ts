@@ -19,8 +19,9 @@ import {
 
   buyOrderConfirmPayment,
 
-} from '@lib/api/order';
+  buyOrderWebhook,
 
+} from '@lib/api/order';
 
 
 
@@ -215,118 +216,106 @@ export async function POST(request: NextRequest) {
 
   });
 
-  //console.log("confirmPayment response", response);
+
+
   
+  
+  
+  
+  
+  
+  
+  if (buyOrder.store.storecode === "dtwuzgst") { // 가맹점 이름 매니
 
 
-  // sendMessageByUseridAndStorecode
-  // api
-  // https://dubai-telegram.vercel.app/api/telegram/sendMessageByUseridAndStorecode
-  // POST
+      // http://3.112.81.28/?userid=test1234&amount=10000
 
-  /*
-    const {
-    center,
-    userid,
-    storecode,
-    message,
-  } = body;
-   */
+      const userid = buyOrder.nickname; // 매니의 userid는 orderNickname
+      const amount = buyOrder.paymentAmount;
 
-  // center = 'place69_bot'
-  // userid = 'mcmcmo'
-  // storecode = storecode
+      // https://my-9999.com/api/deposit?userid=test1234&amount=10000
+      const webhookUrl = "http://3.112.81.28"; // 매니의 웹훅 URL
 
+      const fetchUrl = `${webhookUrl}/?userid=${userid}&amount=${amount}`;
 
-  /*
+      try {
 
-  try {
+        
+        //const response = await fetch(fetchUrl, {
+        //  method: "GET",
+        //  headers: {
+        //    "Content-Type": "application/json",
+        //  },
+        //});
 
+        // GET 요청
+        const response = await fetch(fetchUrl);
 
-    // get all users by storecode
-    const response = await getAllUsersByStorecode({
-      storecode: storecode,
-      limit: 1000,
-      page: 1,
-    });
-
-    const users = response?.users || [];
-
-    console.log("getAllUsersByStorecode response", response);
-    console.log("getAllUsersByStorecode users", users);
+        console.log("fetchUrl", fetchUrl);
+        console.log("response", response);
 
 
-    if (users && users.length > 0) {
-
-
-      //for (const user of users) {
-
-
-      for (let i = 0; i < users.length; i++) {
-        const user = users[i];
-
-
-        //const userid = user.nickname;
-
-        //const userid = user.id;
-        // toString()으로 변환하여 사용
-        const userid = user.id.toString();
-
-
-
-        const response = await fetch("https://dubai-telegram.vercel.app/api/telegram/sendMessageByUseridAndStorecode", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            center: "place69_bot",
-            userid: userid,
-            storecode: storecode,
-            //message: `주문이 완료되었습니다. 주문번호: ${orderId}, 결제금액: ${paymentAmount}원`,
-
-            // 주문번호: tradeId,
-            // 입금시간: '2025년 5월 21일 15시 31분 06초',
-            // 입금자명: "홍길동",
-            // 입금액: 10,000원
-
-            
-            message:
-            '주문번호: ' + '#' + order_number + '\n' +
-
-
-
-
-            '입금시간: ' + processing_date.replace('T', ' ').replace('+09:00', '') + '\n' +
-
-            '회원아이디: ' + buyerNickname + '\n' +
-            '입금자명: ' + buyerDepositName + '\n' +
-            '입금액: ' + paymentAmount.toLocaleString() + '원',
-            
-            //message: `주문번호: ${order_number}, 입금시간: ${processing_date}, 회원아이디: ${buyerNickname}, 입금자명: ${buyerDepositName}, 입금액: ${paymentAmount.toLocaleString()}원`,
-
-          }),
-        });
 
         if (!response.ok) {
-          console.error("Failed to send Telegram message for user:", userid, "with status:", response.status);
-          continue; // Skip to the next user if sending fails
-        }
-        const data = await response.json();
-        console.log("Telegram message sent for user:", userid, "with response:", data);
+          console.error("Failed to send webhook for user:", userid, "with status:", response.status);
+        } else {
 
+
+          
+          //성공: {result: success}, 실패: {result: fail}
+          
+
+          try {
+            
+            const data = await response.json();
+            console.log("Webhook sent for user:", userid, "with response:", data);
+
+            await buyOrderWebhook({
+              orderId: orderId,
+              webhookData: {
+                createdAt: new Date().toISOString(),
+                url: webhookUrl,
+                userid: userid,
+                amount: amount,
+                response: data,
+              }
+            });
+
+
+          } catch (jsonError) {
+
+
+            await buyOrderWebhook({
+              orderId: orderId,
+              webhookData: {
+                createdAt: new Date().toISOString(),
+                url: webhookUrl,
+                userid: userid,
+                amount: amount,
+                response: response.text(), // response를 JSON으로 파싱하지 못한 경우
+              }
+            });
+
+          }
+
+
+
+
+        }
+
+      } catch (error) {
+        console.error("Error sending webhook:", error);
       }
 
-
-    } else {
-      console.log("No users found for storecode:", storecode);
     }
 
-  } catch (error) {
-    console.error("Error sending Telegram message:", error);
-  }
 
-  */
+
+
+
+
+
+
 
 
   

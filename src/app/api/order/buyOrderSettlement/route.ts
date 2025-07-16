@@ -3,7 +3,6 @@ import { NextResponse, type NextRequest } from "next/server";
 import {
   getOneBuyOrder,
   updateBuyOrderSettlement,
-  buyOrderWebhook,
 } from '@lib/api/order';
 
 
@@ -276,6 +275,8 @@ export async function POST(request: NextRequest) {
 
 
   // order storecode가 매니의 storecode인 경우에만 webhook을 보냄
+  // 여기서 안보내고 입금처리될때 api 호출하는걸로 변경
+  /*
     if (buyOrder.store.storecode === "dtwuzgst") { // 가맹점 이름 매니
 
 
@@ -360,7 +361,7 @@ export async function POST(request: NextRequest) {
 
     }
 
-
+  */
 
 
 
