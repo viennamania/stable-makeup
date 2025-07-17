@@ -231,7 +231,7 @@ export async function POST(request: NextRequest) {
       // http://3.112.81.28/?userid=test1234&amount=10000
 
       const userid = buyOrder.nickname; // 매니의 userid는 orderNickname
-      const amount = buyOrder.paymentAmount;
+      const amount = paymentAmount; // 매니의 amount는 krwAmount
 
       // https://my-9999.com/api/deposit?userid=test1234&amount=10000
       const webhookUrl = "http://3.112.81.28"; // 매니의 웹훅 URL
@@ -263,8 +263,26 @@ export async function POST(request: NextRequest) {
 
           
           //성공: {result: success}, 실패: {result: fail}
-          
 
+
+
+          await buyOrderWebhook({
+            orderId: orderId,
+            webhookData: {
+              createdAt: new Date().toISOString(),
+              url: webhookUrl,
+              userid: userid,
+              amount: amount,
+              
+              //response: response.text(), // response를 JSON으로 파싱하지 못한 경우
+              response: await response.text(), // response를 JSON으로 파싱하지 못한 경우
+
+            }
+          });
+
+
+          
+          /*
           try {
             
             const data = await response.json();
@@ -300,6 +318,12 @@ export async function POST(request: NextRequest) {
             });
 
           }
+          */
+
+
+
+
+
 
 
 
