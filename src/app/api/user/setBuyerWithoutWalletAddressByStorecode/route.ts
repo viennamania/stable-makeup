@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
   const nickname = userCode.trim();
 
   const mobile = "+821012345678";
-  const password = userPassword.trim();
+  const password = userPassword ? userPassword.trim() : "12345678"; // default password if not provided
 
 
   /*
