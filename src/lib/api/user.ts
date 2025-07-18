@@ -1973,3 +1973,26 @@ export async function getAllAdmin(
 
 
 
+
+
+
+// getOneByNicknameAndPassword
+export async function getOneByNicknameAndPassword(
+  storecode: string,
+  nickname: string,
+  password: string
+): Promise<UserProps | null> {
+
+  const client = await clientPromise;
+  const collection = client.db('ultraman').collection('users');
+
+  const user = await collection.findOne<UserProps>(
+    {
+      storecode,
+      nickname,
+      password
+    }
+  );
+
+  return user;
+}
