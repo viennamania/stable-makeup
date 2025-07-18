@@ -644,7 +644,7 @@ export async function getAllStores(
 
           agentFeePercent: 1,
       
-
+          escrowAmountUSDT: 1,
           
 
           totalBuyerCount: 1,

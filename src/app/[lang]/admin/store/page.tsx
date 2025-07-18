@@ -2402,6 +2402,10 @@ export default function Index({ params }: any) {
                               AG 수수료율(%)
                             </span>
 
+                            <span className="text-center">
+                              보유금(USDT)
+                            </span>
+
                           </div>
                         </th>
 
@@ -2474,15 +2478,17 @@ export default function Index({ params }: any) {
                         {/* USDT통장 잔고 */}
                         <th className="p-2">
                           <div className="flex flex-col items-center justify-center gap-2">
-                            <span className="text-center">
-                              가맹점
-                            </span>
+
                             <span className="text-center">
                               USDT통장
                             </span>
                             <span className="text-center">
                               USDT통장 잔고
                             </span>
+                            <span className="text-center">
+                              USDT 보유금
+                            </span>
+
                           </div>
                         </th>
 
@@ -2908,9 +2914,25 @@ export default function Index({ params }: any) {
                                   </span>
                                 </div>
 
-                              </div>
+                                {/* escrowAmountUSDT */}
+                                <div className="w-full flex flex-row items-center justify-center gap-1">
+                                  <Image
+                                    src="/icon-tether.png"
+                                    alt="Tether"
+                                    width={20}
+                                    height={20}
+                                    className="w-5 h-5"
+                                  />
+                                  <span className="text-xl text-green-600"
+                                    style={{ fontFamily: 'monospace' }}
+                                  >
+                                    {item?.escrowAmountUSDT ? item?.escrowAmountUSDT.toFixed(2).toLocaleString('us-US') : 0}
+                                  </span>
+                                </div>
 
-                              
+
+                              </div>
+                 
                             </div>
                           </td>
 

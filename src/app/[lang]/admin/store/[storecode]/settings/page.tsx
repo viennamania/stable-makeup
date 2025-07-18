@@ -2842,7 +2842,7 @@ export default function SettingsPage({ params }: any) {
                                     {/* dot */}
                                     <div className='w-2 h-2 bg-green-500 rounded-full'></div>
                                     <span className="text-lg text-zinc-500">
-                                        에스크로용 USDT 수량
+                                        에스크로용 USDT 수량(보유금)
                                     </span>
                                 </div>
 
