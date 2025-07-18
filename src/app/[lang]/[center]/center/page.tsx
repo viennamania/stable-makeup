@@ -83,6 +83,7 @@ import { useSearchParams } from 'next/navigation';
 
 
 import { paymentUrl } from "../../../config/payment";
+import { it } from "node:test";
 
 
 
@@ -2002,17 +2003,21 @@ export default function Index({ params }: any) {
                   
 
                     //Number(item?.totalSettlementAmount - item?.totalUsdtAmountClearance || 0)
-
+                    /*
                     // if minus is negative, return 0
                     Number(store?.totalUsdtAmountClearance - store?.totalSettlementAmount || 0)
                     < 0 ? 0 :
                     Number(store?.totalUsdtAmountClearance - store?.totalSettlementAmount || 0)
                     .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-
+                    */
+                    store?.escrowAmountUSDT
+                    ? Number(store?.escrowAmountUSDT).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    : 0
                   }
                 </span>
               </div>
 
+              {/*
               <div className="flex flex-row gap-1 items-center">
                 <span className="text-lg text-yellow-600 font-semibold"
                   style={{ fontFamily: 'monospace' }}
@@ -2036,6 +2041,9 @@ export default function Index({ params }: any) {
                   원
                 </span>
               </div>
+              */}
+
+
             </div>
 
             {/* 가맹점 정산금 */}
