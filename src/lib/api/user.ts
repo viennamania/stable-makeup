@@ -1990,7 +1990,9 @@ export async function getOneByNicknameAndPassword(
     {
       storecode: storecode,
       nickname: memberid,
-      password: password,
+      
+      //password: password,
+
     },
   );
 
