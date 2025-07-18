@@ -1979,7 +1979,7 @@ export async function getAllAdmin(
 // getOneByNicknameAndPassword
 export async function getOneByNicknameAndPassword(
   storecode: string,
-  nickname: string,
+  memberid: string,
   password: string
 ): Promise<UserProps | null> {
 
@@ -1988,10 +1988,10 @@ export async function getOneByNicknameAndPassword(
 
   const user = await collection.findOne<UserProps>(
     {
-      storecode,
-      nickname,
-      password
-    }
+      storecode: storecode,
+      nickname: memberid,
+      password: password,
+    },
   );
 
   return user;
