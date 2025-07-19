@@ -4,9 +4,6 @@ import {
   UserProps,
 	buyOrderConfirmPayment,
   buyOrderGetOrderById,
-
-  //buyOrderWebhook,
-
 } from '@lib/api/order';
 
 
@@ -16,8 +13,6 @@ import {
 
 // Download the helper library from https://www.twilio.com/docs/node/install
 import twilio from "twilio";
-import { webhook } from "twilio/lib/webhooks/webhooks";
-import { create } from "domain";
 
 
 
@@ -74,8 +69,6 @@ export async function POST(request: NextRequest) {
     
 
     const {
-      nickname: orderNickname,
-      storecode: orderStorecode,
       seller: seller,
       walletAddress: walletAddress,
       usdtAmount: usdtAmount,
@@ -87,6 +80,9 @@ export async function POST(request: NextRequest) {
     const sellerWalletAddress = seller.walletAddress;
 
     if (!sellerWalletAddress) {
+
+      console.log("sellerWalletAddress not found for orderId", orderId);
+
       return NextResponse.json({
         result: null,
       });
@@ -100,6 +96,9 @@ export async function POST(request: NextRequest) {
     ///console.log("user", user);
 
     if (!user) {
+
+      console.log("user not found for walletAddress", sellerWalletAddress);
+
       return NextResponse.json({
         result: null,
       });
@@ -107,6 +106,10 @@ export async function POST(request: NextRequest) {
 
 
     const queueId = "queueId";
+    const transactionHashResult = transactionHash;
+
+
+
 
     const result = await buyOrderConfirmPayment({
       lang: lang,
@@ -116,9 +119,11 @@ export async function POST(request: NextRequest) {
       
       queueId: queueId,
 
-      transactionHash: transactionHash,
+      transactionHash: transactionHashResult,
 
     });
+
+    console.log("result", result);
   
   
     //console.log("result", JSON.stringify(result));
@@ -188,90 +193,6 @@ export async function POST(request: NextRequest) {
     */
   
   
-    /*
-    // order storecode가 매니의 storecode인 경우에만 webhook을 보냄
-    if (orderStorecode === "dtwuzgst") { // 가맹점 이름 매니
-
-
-      // http://3.112.81.28/?userid=test1234&amount=10000
-
-      const userid = orderNickname; // 매니의 userid는 orderNickname
-      const amount = paymentAmount;
-
-      // https://my-9999.com/api/deposit?userid=test1234&amount=10000
-      const webhookUrl = "http://3.112.81.28"; // 매니의 웹훅 URL
-
-      const fetchUrl = `${webhookUrl}/?userid=${userid}&amount=${amount}`;
-
-      try {
-
-        
-        //const response = await fetch(fetchUrl, {
-        //  method: "GET",
-        //  headers: {
-        //    "Content-Type": "application/json",
-        //  },
-        //});
-
-        // GET 요청
-        const response = await fetch(fetchUrl);
-
-        console.log("fetchUrl", fetchUrl);
-        console.log("response", response);
-
-
-
-        if (!response.ok) {
-          console.error("Failed to send webhook for user:", userid, "with status:", response.status);
-        } else {
-
-
-          
-          //성공: {result: success), 실패: {result: fail}
-          
-
-          try {
-            const data = await response.json();
-            console.log("Webhook sent for user:", userid, "with response:", data);
-
-            await buyOrderWebhook({
-              orderId: orderId,
-              webhookData: {
-                createdAt: new Date().toISOString(),
-                url: webhookUrl,
-                userid: userid,
-                amount: amount,
-                response: data,
-              }
-            });
-
-
-          } catch (jsonError) {
-
-
-            await buyOrderWebhook({
-              orderId: orderId,
-              webhookData: {
-                createdAt: new Date().toISOString(),
-                url: webhookUrl,
-                userid: userid,
-                amount: amount,
-                response: response.text(), // response를 JSON으로 파싱하지 못한 경우
-              }
-            });
-
-          }
-
-        }
-
-      } catch (error) {
-        console.error("Error sending webhook:", error);
-      }
-
-    }
-    */
-
-
   
     
     return NextResponse.json({

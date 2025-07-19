@@ -1371,7 +1371,7 @@ export default function Index({ params }: any) {
           /*
           const transactionResult = await waitForReceipt({
             client,
-            chain: arbitrum ,
+            arbitrum,
             maxBlocksWaitTime: 1,
             transactionHash: transactionHash,
           });
@@ -1805,7 +1805,13 @@ export default function Index({ params }: any) {
 
         
         //const sellerWalletAddress = buyOrders[index].store.sellerWalletAddress;
-        const sellerWalletAddress = "0x3f1e7D26A2704BE994aF84cEbf19BA9683E23666"; // for test
+        //const sellerWalletAddress = "0x3f1e7D26A2704BE994aF84cEbf19BA9683E23666"; // for test
+
+        const sellerWalletAddress = buyOrders[index].store.sellerWalletAddress;
+
+
+        //alert('sellerWalletAddress: ' + sellerWalletAddress);
+
 
         console.log('sellerWalletAddress', sellerWalletAddress);
 
@@ -3479,11 +3485,10 @@ const [tradeSummary, setTradeSummary] = useState({
             ></div>
 
 
-
             <div className="w-full flex flex-col items-end justify-end gap-2
             border-b border-zinc-300 pb-2">
 
-              {/* 가맹점 보유량 */}
+              {/* 가맹점 보유 */}
               <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
                 <div className="flex flex-row gap-2 items-center">
                   <Image
@@ -3670,6 +3675,7 @@ const [tradeSummary, setTradeSummary] = useState({
                 </div> 
 
             </div>
+
 
 
 
@@ -4849,7 +4855,7 @@ const [tradeSummary, setTradeSummary] = useState({
                                       rel="noopener noreferrer"
                                       className="text-sm text-blue-500 underline"
                                     >
-                                      폴리스캔에서 거래내역 보기
+                                      스캔에서 거래내역 보기
                                     </a>
                                       
 
@@ -6334,7 +6340,7 @@ const UserPaymentPage = (
       
       {/* iframe */}
       <iframe
-        src={`https://cryptoss.beauty/kr/${selectedItem?.storecode}/pay-usdt-reverse/${selectedItem?._id}`}
+        src={`https://cryptoss-runway.vercel.app/kr/${selectedItem?.storecode}/pay-usdt-reverse/${selectedItem?._id}`}
 
         
           
