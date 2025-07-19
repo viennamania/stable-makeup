@@ -6540,6 +6540,7 @@ export async function updateBuyOrderSettlement(
             }
         }
     ]).toArray();
+    console.log("totalSettlementAmountResult", totalSettlementAmountResult);
 
     const totalSettlementAmount = totalSettlementAmountResult[0].totalSettlementAmount;
 
