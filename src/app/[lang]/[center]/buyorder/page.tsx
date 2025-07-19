@@ -3399,180 +3399,196 @@ const fetchBuyOrders = async () => {
 
 
 
-            <div className="w-full flex flex-col items-end justify-end gap-2
-            border-b border-zinc-300 pb-2">
+          <div className="w-full flex flex-col items-end justify-end gap-2
+          border-b border-zinc-300 pb-2">
 
-              {/* 가맹점 보유금 */}
-              <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
-                <div className="flex flex-row gap-2 items-center">
-                  <Image
-                    src="/icon-escrow.png"
-                    alt="Escrow"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-lg font-semibold text-zinc-500">
-                    가맹점 보유금
-                  </span>
-                </div>
-
-                <div className="flex flex-row items-center gap-2">
-                  <Image
-                    src="/icon-tether.png"
-                    alt="Tether"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-lg text-green-600 font-semibold"
-                    style={{ fontFamily: 'monospace' }}
-                  >
-                    {
-                      //////(item.totalUsdtAmountClearanceBalance ? item.totalUsdtAmountClearanceBalance : 0)?.toLocaleString('us-US')
-                    
-
-                      //Number(item?.totalSettlementAmount - item?.totalUsdtAmountClearance || 0)
-
-                      // if minus is negative, return 0
-                      Number(store?.totalUsdtAmountClearance - store?.totalSettlementAmount || 0)
-                      < 0 ? 0 :
-                      
-                      Number(store?.totalUsdtAmountClearance - store?.totalSettlementAmount || 0)
-                      .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-
-
-
-                    }
-                  </span>
-                </div>
-
-                <div className="flex flex-row gap-1 items-center">
-                  <span className="text-lg text-yellow-600 font-semibold"
-                    style={{ fontFamily: 'monospace' }}
-                  >
-                    {
-                      //Number(item.totalKrwAmountClearanceBalance ? item.totalKrwAmountClearanceBalance : 0)
-                      //  ?.toLocaleString('ko-KR')
-
-                      //Number(item?.totalSettlementAmountKRW - item?.totalKrwAmountClearance || 0)
-
-
-                      // if minus is negative, return 0
-                      Number(store?.totalKrwAmountClearance - store?.totalSettlementAmountKRW || 0)
-                      < 0 ? 0 :
-
-                      Number(store?.totalKrwAmountClearance - store?.totalSettlementAmountKRW || 0)
-                      .toLocaleString('ko-KR')
-
-
-                    }
-                  </span>
-                  <span className="text-sm text-zinc-500">
-                    원
-                  </span>
-                </div>
+            {/* 가맹점 보유 */}
+            <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
+              <div className="flex flex-row gap-2 items-center">
+                <Image
+                  src="/icon-escrow.png"
+                  alt="Escrow"
+                  width={20}
+                  height={20}
+                  className="w-5 h-5"
+                />
+                <span className="text-lg font-semibold text-zinc-500">
+                  가맹점 보유
+                </span>
               </div>
 
-              {/* 가맹점 정산금 */}
-              <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
-                <div className="flex flex-row gap-2 items-center">
-                  <Image
-                    src="/icon-settlement.png"
-                    alt="Settlement"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-lg font-semibold text-zinc-500">
-                    가맹점 정산금
-                  </span>
-                </div>
-
-                <div className="flex flex-row items-center gap-2">
-                  <Image
-                    src="/icon-tether.png"
-                    alt="Tether"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-lg text-green-600 font-semibold"
-                    style={{ fontFamily: 'monospace' }}
-                  >
-                    {
-                      Number(store?.totalSettlementAmount ? store?.totalSettlementAmount : 0)
-                      .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
-                  </span>
-                </div>
-
-                <div className="flex flex-row gap-1 items-center">
-                  <span className="text-lg text-yellow-600 font-semibold"
-                    style={{ fontFamily: 'monospace' }}
-                  >
-                    {
-                      Number(store?.totalSettlementAmountKRW ? store?.totalSettlementAmountKRW : 0)
-                      .toLocaleString('ko-KR')
-                    }
-                  </span>
-                  <span className="text-sm text-zinc-500">
-                    원
-                  </span>
-                </div>
+              <div className="flex flex-row items-center gap-2">
+                <Image
+                  src="/icon-tether.png"
+                  alt="Tether"
+                  width={20}
+                  height={20}
+                  className="w-5 h-5"
+                />
+                <span className="text-lg text-green-600 font-semibold"
+                  style={{ fontFamily: 'monospace' }}
+                >
+                  {
+                    store?.escrowAmountUSDT
+                    ? Number(store?.escrowAmountUSDT).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    : 0
+                  }
+                </span>
               </div>
-
-
-              {/* 가맹점 판매금 */}
-              <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
-                <div className="flex flex-row gap-2 items-center">
-                  <Image
-                    src="/icon-clearance.png"
-                    alt="Clearance"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-lg font-semibold text-zinc-500">
-                    가맹점 판매금
-                  </span>
-                </div>
-
-                <div className="flex flex-row items-center gap-2">
-                  <Image
-                    src="/icon-tether.png"
-                    alt="Tether"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-lg text-green-600 font-semibold"
-                    style={{ fontFamily: 'monospace' }}
-                  >
-                    {
-                      Number(store?.totalUsdtAmountClearance || 0)
-                      .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
-                  </span>
-                </div>
-
-                <div className="flex flex-row gap-1 items-center">
-                  <span className="text-lg text-yellow-600 font-semibold"
-                    style={{ fontFamily: 'monospace' }}
-                  >
-                    {
-                      Number(store?.totalKrwAmountClearance || 0)
-                      .toLocaleString('ko-KR')
-                    }
-                  </span>
-                  <span className="text-sm text-zinc-500">
-                    원
-                  </span>
-                </div>
-
-               </div> 
 
             </div>
+
+
+            {/* 가맹점 거래 */}
+            <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
+              <div className="flex flex-row gap-2 items-center">
+                <Image
+                  src="/icon-trade.png"
+                  alt="Trade"
+                  width={20}
+                  height={20}
+                  className="w-5 h-5"
+                />
+                <span className="text-lg font-semibold text-zinc-500">
+                  가맹점 거래
+                </span>
+              </div>
+
+              <div className="flex flex-row items-center gap-2">
+                <Image
+                  src="/icon-tether.png"
+                  alt="Tether"
+                  width={20}
+                  height={20}
+                  className="w-5 h-5"
+                />
+                <span className="text-lg text-green-600 font-semibold"
+                  style={{ fontFamily: 'monospace' }}
+                >
+                  {
+                    Number(store?.totalUsdtAmount ? store?.totalUsdtAmount : 0)
+                    .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                </span>
+              </div>
+
+              <div className="flex flex-row gap-1 items-center">
+                <span className="text-lg text-yellow-600 font-semibold"
+                  style={{ fontFamily: 'monospace' }}
+                >
+                  {
+                    Number(store?.totalKrwAmount ? store?.totalKrwAmount : 0)
+                    .toLocaleString('ko-KR')
+                  }
+                </span>
+                <span className="text-sm text-zinc-500">
+                  원
+                </span>
+              </div>
+            </div>
+
+
+
+
+            {/* 가맹점 정산금 */}
+            <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
+              <div className="flex flex-row gap-2 items-center">
+                <Image
+                  src="/icon-settlement.png"
+                  alt="Settlement"
+                  width={20}
+                  height={20}
+                  className="w-5 h-5"
+                />
+                <span className="text-lg font-semibold text-zinc-500">
+                  가맹점 정산
+                </span>
+              </div>
+
+              <div className="flex flex-row items-center gap-2">
+                <Image
+                  src="/icon-tether.png"
+                  alt="Tether"
+                  width={20}
+                  height={20}
+                  className="w-5 h-5"
+                />
+                <span className="text-lg text-green-600 font-semibold"
+                  style={{ fontFamily: 'monospace' }}
+                >
+                  {
+                    Number(store?.totalSettlementAmount ? store?.totalSettlementAmount : 0)
+                    .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                </span>
+              </div>
+
+              <div className="flex flex-row gap-1 items-center">
+                <span className="text-lg text-yellow-600 font-semibold"
+                  style={{ fontFamily: 'monospace' }}
+                >
+                  {
+                    Number(store?.totalSettlementAmountKRW ? store?.totalSettlementAmountKRW : 0)
+                    .toLocaleString('ko-KR')
+                  }
+                </span>
+                <span className="text-sm text-zinc-500">
+                  원
+                </span>
+              </div>
+            </div>
+
+
+            {/* 가맹점 판매금 */}
+            <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
+              <div className="flex flex-row gap-2 items-center">
+                <Image
+                  src="/icon-clearance.png"
+                  alt="Clearance"
+                  width={20}
+                  height={20}
+                  className="w-5 h-5"
+                />
+                <span className="text-lg font-semibold text-zinc-500">
+                  가맹점 판매
+                </span>
+              </div>
+
+              <div className="flex flex-row items-center gap-2">
+                <Image
+                  src="/icon-tether.png"
+                  alt="Tether"
+                  width={20}
+                  height={20}
+                  className="w-5 h-5"
+                />
+                <span className="text-lg text-green-600 font-semibold"
+                  style={{ fontFamily: 'monospace' }}
+                >
+                  {
+                    Number(store?.totalUsdtAmountClearance || 0)
+                    .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                </span>
+              </div>
+
+              <div className="flex flex-row gap-1 items-center">
+                <span className="text-lg text-yellow-600 font-semibold"
+                  style={{ fontFamily: 'monospace' }}
+                >
+                  {
+                    Number(store?.totalKrwAmountClearance || 0)
+                    .toLocaleString('ko-KR')
+                  }
+                </span>
+                <span className="text-sm text-zinc-500">
+                  원
+                </span>
+              </div>
+
+              </div> 
+
+          </div>
 
 
 

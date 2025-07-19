@@ -1971,7 +1971,7 @@ export default function Index({ params }: any) {
           <div className="w-full flex flex-col items-end justify-end gap-2
           border-b border-zinc-300 pb-2">
 
-            {/* 가맹점 보유금 */}
+            {/* 가맹점 보유 */}
             <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
               <div className="flex flex-row gap-2 items-center">
                 <Image
@@ -1982,7 +1982,7 @@ export default function Index({ params }: any) {
                   className="w-5 h-5"
                 />
                 <span className="text-lg font-semibold text-zinc-500">
-                  가맹점 보유량(USDT)
+                  가맹점 보유
                 </span>
               </div>
 
@@ -1998,50 +1998,12 @@ export default function Index({ params }: any) {
                   style={{ fontFamily: 'monospace' }}
                 >
                   {
-                    //////(item.totalUsdtAmountClearanceBalance ? item.totalUsdtAmountClearanceBalance : 0)?.toLocaleString('us-US')
-                  
-
-                    //Number(item?.totalSettlementAmount - item?.totalUsdtAmountClearance || 0)
-                    /*
-                    // if minus is negative, return 0
-                    Number(store?.totalUsdtAmountClearance - store?.totalSettlementAmount || 0)
-                    < 0 ? 0 :
-                    Number(store?.totalUsdtAmountClearance - store?.totalSettlementAmount || 0)
-                    .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    */
                     store?.escrowAmountUSDT
                     ? Number(store?.escrowAmountUSDT).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                     : 0
                   }
                 </span>
               </div>
-
-              {/*
-              <div className="flex flex-row gap-1 items-center">
-                <span className="text-lg text-yellow-600 font-semibold"
-                  style={{ fontFamily: 'monospace' }}
-                >
-                  {
-                    //Number(item.totalKrwAmountClearanceBalance ? item.totalKrwAmountClearanceBalance : 0)
-                    //  ?.toLocaleString('ko-KR')
-
-                    //Number(item?.totalSettlementAmountKRW - item?.totalKrwAmountClearance || 0)
-
-                    // if minus is negative, return 0
-                    Number(store?.totalKrwAmountClearance - store?.totalSettlementAmountKRW || 0)
-                    < 0 ? 0 :
-                    Number(store?.totalKrwAmountClearance - store?.totalSettlementAmountKRW || 0)
-                    .toLocaleString('ko-KR')
-
-
-                  }
-                </span>
-                <span className="text-sm text-zinc-500">
-                  원
-                </span>
-              </div>
-              */}
-
 
             </div>
 
