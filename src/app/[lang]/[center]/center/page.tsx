@@ -2624,16 +2624,32 @@ export default function Index({ params }: any) {
                     <table className="min-w-full">
                       <thead>
                         <tr className="bg-gray-100">
-                          <th className="px-4 py-2 text-left">거래번호</th>
+                          <th className="
+                          hidden xl:table-cell
+                          px-4 py-2 text-left">거래번호</th>
+                          <th className="px-4 py-2 text-left">구매자</th>
                           <th className="px-4 py-2 text-left">거래금액(원)</th>
                           <th className="px-4 py-2 text-left">거래량(USDT)</th>
-                          <th className="px-4 py-2 text-left">거래일시</th>
+                          <th className="
+                          hidden xl:table-cell
+                          px-4 py-2 text-left">거래일시</th>
                         </tr>
                       </thead>
                       <tbody>
                         {storeSummary.latestTrades.map((trade, index) => (
                           <tr key={index} className="border-b">
-                            <td className="px-4 py-2">#{trade.tradeId}</td>
+                            <td className="
+                            hidden xl:table-cell
+                            px-4 py-2">#{trade.tradeId}</td>
+                            <td className="px-4 py-2">
+                              <span className="text-sm text-zinc-500">
+                                {trade.nickname || '익명'}
+                              </span>
+                              <br />
+                              <span className="text-sm text-zinc-400">
+                                {trade.buyer?.depositName || '입금자명 없음'}
+                              </span>
+                            </td>
                             <td className="px-4 py-2">
                               <div className="
                                 w-20
@@ -2665,7 +2681,17 @@ export default function Index({ params }: any) {
                             </td>
 
 
-                            <td className="px-4 py-2">{new Date(trade.createdAt).toLocaleDateString()}</td>
+                            <td className="
+                            hidden xl:table-cell
+                            px-4 py-2">
+                              {new Date(trade.createdAt).toLocaleDateString()}
+                              <br />
+                              {new Date(trade.createdAt).toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit'
+                              })}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -2768,19 +2794,49 @@ export default function Index({ params }: any) {
                     <table className="min-w-full">
                       <thead>
                         <tr className="bg-gray-100">
-                          <th className="px-4 py-2 text-left">판매번호</th>
+                          <th className="
+                          hidden xl:table-cell
+                          px-4 py-2 text-left">판매번호</th>
+                          <th className="px-4 py-2 text-left">구매자</th>
                           <th className="px-4 py-2 text-left">판매금액(원)</th>
                           <th className="px-4 py-2 text-left">판매량(USDT)</th>
+                          {/*
                           <th className="px-4 py-2 text-left">판매상태</th>
-                          <th className="px-4 py-2 text-left">판매일시</th>
+                          */}
+                          <th className="
+                          hidden xl:table-cell
+                          px-4 py-2 text-left">판매일시</th>
                         </tr>
                       </thead>
                       <tbody>
                         {storeSummary?.latestClearances?.map((trade, index) => (
                           <tr key={index} className="border-b">
-                            <td className="px-4 py-2">#{trade.tradeId}</td>
+                            <td className="
+                            hidden xl:table-cell
+                            px-4 py-2">#{trade.tradeId}</td>
                             <td className="px-4 py-2">
-                              <div className="w-20 flex flex-row items-center justify-end gap-2">
+                              
+                              {trade?.buyer?.depositName ? (
+                                <div className="flex flex-col items-start justify-start gap-1">
+                                  <span className="text-sm text-zinc-400">
+                                    {trade?.buyer?.depositName || '입금자명 없음'}
+                                  </span>
+                                </div>
+                              ) : (
+                                <div className="flex flex-col items-start justify-start gap-1">
+                                  <span className="text-sm text-zinc-400">
+                                    {trade.seller?.bankInfo?.bankName || '은행명 없음'}
+                                  </span>
+                                  <span className="text-sm text-zinc-400">
+                                    {trade.seller?.bankInfo?.accountHolder || '입금자명 없음'}
+                                  </span>
+                                </div>
+                              )}
+
+                            </td>
+                            
+                            <td className="px-4 py-2">
+                              <div className="w-20 flex flex-row items-center justify-end gap-1">
                                 <span className="text-lg text-yellow-600"
                                   style={{ fontFamily: 'monospace' }}>
                                   {Number(trade.krwAmount)?.toLocaleString()}
@@ -2810,6 +2866,7 @@ export default function Index({ params }: any) {
                               </div>
                             </td>
 
+                            {/*
                             <td className="px-4 py-2">
                               {trade.status === 'paymentConfirmed' && (
                                 <span className="text-sm text-green-500 font-semibold">
@@ -2822,7 +2879,19 @@ export default function Index({ params }: any) {
                                 </span>
                               )}
                             </td>
-                            <td className="px-4 py-2">{new Date(trade.createdAt).toLocaleDateString()}</td>
+                            */}
+
+                            <td className="
+                            hidden xl:table-cell
+                            px-4 py-2">
+                              {new Date(trade.createdAt).toLocaleDateString()}
+                              <br />
+                              {new Date(trade.createdAt).toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit'
+                              })}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
