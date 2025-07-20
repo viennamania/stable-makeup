@@ -5738,7 +5738,18 @@ const fetchBuyOrders = async () => {
 
                               {/* updater */}
                               <span className="text-sm font-semibold text-zinc-500">
-                                {item?.settlementUpdatedAt}
+                                {
+                                  item?.settlementUpdatedAt
+                                    ? new Date(item.settlementUpdatedAt).toLocaleDateString('ko-KR', {
+                                      year: 'numeric',
+                                      month: '2-digit',
+                                      day: '2-digit',
+                                      hour: '2-digit',
+                                      minute: '2-digit',
+                                      second: '2-digit',
+                                    })
+                                    : '정산일시 없음'
+                                  }
                               </span>
                               <span className="text-sm font-semibold text-zinc-500">
                                 {item?.settlementUpdatedBy
