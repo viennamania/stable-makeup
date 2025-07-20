@@ -5756,7 +5756,7 @@ const fetchBuyOrders = async () => {
                                 ? item?.settlementUpdatedBy.length > 6
                                   ? item?.settlementUpdatedBy.slice(0, 6) + '...'
                                   : item?.settlementUpdatedBy
-                                : '시스템'}
+                                : 'system'}
                               </span>
 
                             </div>
