@@ -5737,7 +5737,7 @@ const fetchBuyOrders = async () => {
                               </span>
 
                               {/* updater */}
-                              <span className="text-sm font-semibold text-zinc-500">
+                              <span className="text-sm text-zinc-500">
                                 {
                                   item?.settlementUpdatedAt
                                     ? new Date(item.settlementUpdatedAt).toLocaleDateString('ko-KR', {
