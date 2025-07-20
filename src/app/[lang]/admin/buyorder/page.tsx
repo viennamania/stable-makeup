@@ -5753,8 +5753,8 @@ const fetchBuyOrders = async () => {
                               </span>
                               <span className="text-sm font-semibold text-zinc-500">
                                 {item?.settlementUpdatedBy
-                                ? item?.settlementUpdatedBy.length > 5
-                                  ? item?.settlementUpdatedBy.slice(0, 5) + '...'
+                                ? item?.settlementUpdatedBy.length > 6
+                                  ? item?.settlementUpdatedBy.slice(0, 6) + '...'
                                   : item?.settlementUpdatedBy
                                 : '시스템'}
                               </span>
