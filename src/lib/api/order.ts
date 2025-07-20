@@ -6489,8 +6489,10 @@ export async function updateBuyOrderSettlement(
     storecode: string;
   }
 ): Promise<boolean> {
+
+
   const client = await clientPromise;
-  const collection = client.db('runway').collection('buyorders');
+  const collection = client.db('ultraman').collection('buyorders');
   // update buyorder
   const result = await collection.updateOne(
     { _id: new ObjectId(orderId) },
@@ -6505,62 +6507,68 @@ export async function updateBuyOrderSettlement(
 
 
 
-    /*
-    const collectionBuyorders = client.db('runway').collection('buyorders');
-    const collectionStore = client.db('runway').collection('stores');
+    try {
+      const collectionBuyorders = client.db('ultraman').collection('buyorders');
+      const collectionStore = client.db('ultraman').collection('stores');
 
 
-    // totalSettlementCount is count of all buyorders with settlement and storecode
-    const totalSettlementCount = await collectionBuyorders.countDocuments({
-        storecode: storecode,
-        settlement: {$exists: true}
-    });
-    console.log("totalSettlementCount", totalSettlementCount);
-    const totalSettlementAmountResult = await collectionBuyorders.aggregate([
-        {
-            $match: {
-                storecode: storecode,
-                settlement: {$exists: true}
-            }
-        },
-        {
-            $group: {
-                _id: null,
-                totalSettlementAmount: { $sum: "$settlement.settlementAmount" },
+      // totalSettlementCount is count of all buyorders with settlement and storecode
+      const totalSettlementCount = await collectionBuyorders.countDocuments({
+          storecode: storecode,
+          settlement: {$exists: true}
+      });
+      console.log("totalSettlementCount", totalSettlementCount);
+      const totalSettlementAmountResult = await collectionBuyorders.aggregate([
+          {
+              $match: {
+                  storecode: storecode,
+                  settlement: {$exists: true}
+              }
+          },
+          {
+              $group: {
+                  _id: null,
+                  totalSettlementAmount: { $sum: "$settlement.settlementAmount" },
 
-                totalSettlementAmountKRW: { $sum: { $toDouble: "$settlement.settlementAmountKRW" } },
+                  totalSettlementAmountKRW: { $sum: { $toDouble: "$settlement.settlementAmountKRW" } },
 
 
-                totalFeeAmount: { $sum: "$settlement.feeAmount" },
+                  totalFeeAmount: { $sum: "$settlement.feeAmount" },
 
-                totalFeeAmountKRW: { $sum: { $toDouble: "$settlement.feeAmountKRW" } },
-            }
-        }
-    ]).toArray();
+                  totalFeeAmountKRW: { $sum: { $toDouble: "$settlement.feeAmountKRW" } },
+              }
+          }
+      ]).toArray();
 
-    const totalSettlementAmount = totalSettlementAmountResult[0].totalSettlementAmount;
+      const totalSettlementAmount = totalSettlementAmountResult[0].totalSettlementAmount;
 
-    const totalSettlementAmountKRW = totalSettlementAmountResult[0].totalSettlementAmountKRW;
+      const totalSettlementAmountKRW = totalSettlementAmountResult[0].totalSettlementAmountKRW;
 
-    const totalFeeAmount = totalSettlementAmountResult[0].totalFeeAmount;
+      const totalFeeAmount = totalSettlementAmountResult[0].totalFeeAmount;
 
-    const totalFeeAmountKRW = totalSettlementAmountResult[0].totalFeeAmountKRW;
+      const totalFeeAmountKRW = totalSettlementAmountResult[0].totalFeeAmountKRW;
 
-    // update store
-    const resultStore = await collectionStore.updateOne(
-        { storecode: storecode },
-        {
-            $set: {
-                totalSettlementCount: totalSettlementCount,
-                totalSettlementAmount: totalSettlementAmount,
-                totalSettlementAmountKRW: totalSettlementAmountKRW,
-                totalFeeAmount: totalFeeAmount,
-                totalFeeAmountKRW: totalFeeAmountKRW,
-            },
-        }
-    );
-    */
+      // update store
+      const resultStore = await collectionStore.updateOne(
+          { storecode: storecode },
+          {
+              $set: {
+                  totalSettlementCount: totalSettlementCount,
+                  totalSettlementAmount: totalSettlementAmount,
+                  totalSettlementAmountKRW: totalSettlementAmountKRW,
+                  totalFeeAmount: totalFeeAmount,
+                  totalFeeAmountKRW: totalFeeAmountKRW,
+              },
+          }
+      );
+    
+      if (resultStore.modifiedCount !== 1) {
+        console.log('updateStore failed for storecode: ' + storecode);
+      }
 
+    } catch (error) {
+      console.error('Error updating store settlement data:', error);
+    }
 
 
 
