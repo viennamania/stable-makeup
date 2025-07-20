@@ -2889,7 +2889,7 @@ const fetchBuyOrders = async () => {
                     alt="logo"
                     width={35}
                     height={35}
-                    className="rounded-lg w-6 h-6"
+                    className="rounded-lg w-6 h-6 object-cover"
                   />
 
 
@@ -3113,7 +3113,7 @@ const fetchBuyOrders = async () => {
             alt="logo"
             width={35}
             height={35}
-            className="rounded-lg w-6 h-6"
+            className="rounded-lg w-6 h-6 object-cover"
           />
           <div className="text-sm text-[#3167b4] font-bold">
             {store?.storeName + " (" + store?.storecode + ") 가맹점 관리자가 아닙니다."}
@@ -3203,7 +3203,7 @@ const fetchBuyOrders = async () => {
                       alt="Store"
                       width={35}
                       height={35}
-                      className="rounded-lg w-5 h-5"
+                      className="rounded-lg w-5 h-5 object-cover"
                   />
                   <span className="text-sm text-zinc-50">
                     {
@@ -6202,7 +6202,7 @@ const fetchBuyOrders = async () => {
                                               alt="Store Logo"
                                               width={20}
                                               height={20}
-                                              className="rounded-lg w-6 h-6"
+                                              className="rounded-lg w-6 h-6 object-cover"
                                             />
                                             <span className="text-sm font-semibold text-zinc-500">
                                               {item.store?.storeName}
