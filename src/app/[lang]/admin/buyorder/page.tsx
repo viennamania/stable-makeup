@@ -5721,7 +5721,7 @@ const fetchBuyOrders = async () => {
                       <td className="p-2">
                         <div className="w-full flex flex-col gap-2 items-center justify-center">
 
-                          {item?.settlement && (
+                          {item?.settlement && item?.settlement?.settlementAmount && (
 
                             <div className="w-full flex flex-row gap-2 items-center justify-start">
 
@@ -5733,10 +5733,19 @@ const fetchBuyOrders = async () => {
                                 className="w-5 h-5"
                               />
                               <span className="text-sm font-semibold text-zinc-500">
-                                정산완료
+                                {item?.settlementUpdatedBy === 'system'
+                                  ? '자동정산'
+                                  : '수동정산'}
                               </span>
 
                               {/* updater */}
+                              <span className="text-sm font-semibold text-zinc-500">
+                                {item?.settlementUpdatedBy
+                                ? item?.settlementUpdatedBy.length > 6
+                                  ? item?.settlementUpdatedBy.slice(0, 6) + '...'
+                                  : item?.settlementUpdatedBy
+                                : 'system'}
+                              </span>
                               <span className="text-sm text-zinc-500">
                                 {
                                   item?.settlementUpdatedAt
@@ -5751,13 +5760,6 @@ const fetchBuyOrders = async () => {
                                     : '정산일시 없음'
                                   }
                               </span>
-                              <span className="text-sm font-semibold text-zinc-500">
-                                {item?.settlementUpdatedBy
-                                ? item?.settlementUpdatedBy.length > 6
-                                  ? item?.settlementUpdatedBy.slice(0, 6) + '...'
-                                  : item?.settlementUpdatedBy
-                                : 'system'}
-                              </span>
 
                             </div>
 
@@ -5767,7 +5769,7 @@ const fetchBuyOrders = async () => {
 
                           <div className="flex flex-row gap-2 items-between justify-center">
 
-                            {item?.settlement && (
+                            {item?.settlement && item?.settlement?.settlementAmount && (
                               <div className="flex flex-col gap-2 items-end justify-center">
 
                                 <div className="w-full flex flex-row gap-2 items-center justify-center">
@@ -5826,7 +5828,7 @@ const fetchBuyOrders = async () => {
 
 
 
-                            {item?.settlement ? (
+                            {item?.settlement && item?.settlement?.settlementAmount ? (
 
 
                               <button
@@ -5847,10 +5849,15 @@ const fetchBuyOrders = async () => {
                                 "
 
                                 onClick={() => {
-                                  window.open(
-                                    `https://arbiscan.io/tx/${item.settlement.txid}`,
-                                    '_blank'
-                                  );
+                                  if (item.settlement.txid === "0x" || !item.settlement.txid) {
+                                    alert("트랙젝션 해시가 없습니다.");
+                                    return;
+                                  } else {
+                                    window.open(
+                                      `https://arbiscan.io/tx/${item.settlement.txid}`,
+                                      '_blank'
+                                    );
+                                  }
                                 }}
                               >
 
