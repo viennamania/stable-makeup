@@ -139,6 +139,9 @@ interface BuyOrder {
 
   userStats: any;
 
+  settlementUpdatedAt: string;
+  settlementUpdatedBy: string; // who updates the settlement
+
 }
 
 
@@ -2254,6 +2257,7 @@ export default function Index({ params }: any) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          updater: address,
           orderId: orderId,
         })
       });
@@ -5730,6 +5734,18 @@ const fetchBuyOrders = async () => {
                               />
                               <span className="text-sm font-semibold text-zinc-500">
                                 정산완료
+                              </span>
+
+                              {/* updater */}
+                              <span className="text-sm font-semibold text-zinc-500">
+                                {item?.settlementUpdatedAt}
+                              </span>
+                              <span className="text-sm font-semibold text-zinc-500">
+                                {item?.settlementUpdatedBy
+                                ? item?.settlementUpdatedBy.length > 5
+                                  ? item?.settlementUpdatedBy.slice(0, 5) + '...'
+                                  : item?.settlementUpdatedBy
+                                : '시스템'}
                               </span>
 
                             </div>

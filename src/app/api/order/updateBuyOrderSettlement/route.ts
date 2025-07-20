@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
 
   const {
+    updater, // who updates the settlement
     orderId,
     transactionHash,
     //settlement,
@@ -255,6 +256,7 @@ export async function POST(request: NextRequest) {
 
     // updateBuyOrderSettlement
     const result = await updateBuyOrderSettlement({
+      updater: updater, // who updates the settlement, can be "system" or "admin"
       orderId: orderId,
       settlement: settlement,
       storecode: buyOrder.store.storecode, // Assuming storecode is available in the buyOrder

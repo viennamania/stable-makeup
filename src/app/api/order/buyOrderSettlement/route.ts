@@ -255,6 +255,7 @@ export async function POST(request: NextRequest) {
 
     // updateBuyOrderSettlement
     const result = await updateBuyOrderSettlement({
+      updater: "system", // who updates the settlement, can be "system" or "admin"
       orderId: orderId,
       settlement: settlement,
       storecode: buyOrder.store.storecode, // Assuming storecode is available in the buyOrder

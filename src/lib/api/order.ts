@@ -2288,15 +2288,8 @@ export async function getBuyOrders(
         }
 
 
-
-      
-          
-
-
-
       },
-      
-      //{ projection: { _id: 0, emailVerified: 0 } }
+    
   
     )
     .sort({ createdAt: -1 })
@@ -6485,10 +6478,12 @@ export async function getTradeId(
 // updateBuyOrderSettlement
 export async function updateBuyOrderSettlement(
   {
+    updater,
     orderId,
     settlement,
     storecode,
   }: {
+    updater: string; // who updates the settlement
     orderId: string;
     settlement: any;
     storecode: string;
@@ -6501,6 +6496,8 @@ export async function updateBuyOrderSettlement(
     { _id: new ObjectId(orderId) },
     { $set: {
       settlement: settlement,
+      settlementUpdatedAt: new Date().toISOString(),
+      settlementUpdatedBy: updater, // who updates the settlement
     } }
   );
   if (result.modifiedCount === 1) {
