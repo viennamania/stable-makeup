@@ -823,7 +823,7 @@ export default function Index({ params }: any) {
     setLoadingUser(false);
 
 
-  } , [address]);
+  } , [address, params.center]);
 
   
 
@@ -2364,6 +2364,10 @@ export default function Index({ params }: any) {
 
           setStoreAdminWalletAddress(data.result?.adminWalletAddress);
 
+          if (data.result?.adminWalletAddress === address) {
+            setIsAdmin(true);
+          }
+
           setSellerWalletAddress(data.result?.sellerWalletAddress || "");
 
         } else {
@@ -2917,9 +2921,6 @@ const [tradeSummary, setTradeSummary] = useState({
 
         <div className="py-0 w-full">
 
-       
-
-
           <div className={`w-full flex flex-col xl:flex-row items-center justify-between gap-2
             p-2 rounded-lg mb-4
             ${store?.backgroundColor ?
@@ -2948,33 +2949,7 @@ const [tradeSummary, setTradeSummary] = useState({
                       store && store?.storeName + " (" + store?.storecode + ")"
                     }
                   </span>
-                  {address === storeAdminWalletAddress && (
-                    <div className="flex flex-row gap-2 items-center">
-                      <Image
-                        src="/icon-manager.png"
-                        alt="Store Admin"
-                        width={20}
-                        height={20}
-                      />
-                      <span className="text-sm text-zinc-50">
-                        가맹점 관리자
-                      </span>
-                    </div>
-                  )}
-                  {isAdmin && (
-                    <div className="flex flex-row items-center justify-center gap-2">
-                      <Image
-                        src="/icon-admin.png"
-                        alt="Admin"
-                        width={20}
-                        height={20}
-                        className="rounded-lg w-5 h-5"
-                      />
-                      <span className="text-sm text-yellow-500">
-                        전체 관리자
-                      </span>
-                    </div>
-                  )}
+
                 </div>
 
               </button>
@@ -3034,12 +3009,31 @@ const [tradeSummary, setTradeSummary] = useState({
                           router.push('/' + params.lang + '/' + params.center + '/profile-settings');
                         }}
                         className="
-                        w-32 h-10 items-center justify-center
-                        flex bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
+                        w-40
+                        items-center justify-center
+                        bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
                       >
-                        {user?.nickname || "프로필"}
-                      </button>
+                        <div className="flex flex-col itmens-center justify-center gap-2">
+                          <span className="text-sm text-zinc-50">
+                            {user?.nickname || "프로필"}
+                          </span>
+                          {isAdmin && (
+                            <div className="flex flex-row items-center justify-center gap-2">
+                              <Image
+                                src="/icon-admin.png"
+                                alt="Admin"
+                                width={20}
+                                height={20}
+                                className="rounded-lg w-5 h-5"
+                              />
+                              <span className="text-sm text-yellow-500">
+                                가맹점 관리자
+                              </span>
+                            </div>
+                          )}
 
+                        </div>
+                      </button>
 
                       {/* logout button */}
                       <button

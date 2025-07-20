@@ -888,7 +888,7 @@ export default function Index({ params }: any) {
     setLoadingUser(false);
 
 
-  } , [address]);
+  } , [address, params.center]);
 
 
 
@@ -1180,6 +1180,10 @@ export default function Index({ params }: any) {
           setStoreAdminWalletAddress(data.result?.adminWalletAddress);
 
           //setStoreBackgroundColor(data.result?.backgroundColor || "blue-500");
+
+          if (data.result?.adminWalletAddress === address) {
+            setIsAdmin(true);
+          }
 
         } else {
           toast.error("가맹점 정보를 불러오는데 실패했습니다.");
@@ -1714,33 +1718,7 @@ export default function Index({ params }: any) {
                       store && store?.storeName + " (" + store?.storecode + ")"
                     }
                   </span>
-                  {address === storeAdminWalletAddress && (
-                    <div className="flex flex-row gap-2 items-center">
-                      <Image
-                        src="/icon-manager.png"
-                        alt="Store Admin"
-                        width={20}
-                        height={20}
-                      />
-                      <span className="text-sm text-zinc-50">
-                        가맹점 관리자
-                      </span>
-                    </div>
-                  )}
-                  {isAdmin && (
-                    <div className="flex flex-row items-center justify-center gap-2">
-                      <Image
-                        src="/icon-admin.png"
-                        alt="Admin"
-                        width={20}
-                        height={20}
-                        className="rounded-lg w-5 h-5"
-                      />
-                      <span className="text-sm text-yellow-500">
-                        전체 관리자
-                      </span>
-                    </div>
-                  )}
+
                 </div>
 
               </button>
@@ -1795,48 +1773,36 @@ export default function Index({ params }: any) {
                 {address && !loadingUser && (
                     <div className="w-full flex flex-row items-center justify-end gap-2">
 
-                      <div className="hidden flex-row items-center justify-center gap-2">
-
-                          <button
-                              className="text-lg text-zinc-600 underline"
-                              onClick={() => {
-                                  navigator.clipboard.writeText(address);
-                                  toast.success(Copied_Wallet_Address);
-                              } }
-                          >
-                              {address.substring(0, 6)}...{address.substring(address.length - 4)}
-                          </button>
-                          
-                          <Image
-                              src="/icon-shield.png"
-                              alt="Wallet"
-                              width={100}
-                              height={100}
-                              className="w-6 h-6"
-                          />
-
-                      </div>
-
-                      <div className="hidden flex-row items-center justify-end  gap-2">
-                          <span className="text-2xl xl:text-4xl font-semibold text-green-600">
-                              {Number(balance).toFixed(2)}
-                          </span>
-                          {' '}
-                          <span className="text-sm">USDT</span>
-                      </div>
-
-
                       <button
                         onClick={() => {
                           router.push('/' + params.lang + '/' + params.center + '/profile-settings');
                         }}
                         className="
-                        w-32 h-10 items-center justify-center
-                        flex bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
+                        w-40
+                        items-center justify-center
+                        bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
                       >
-                        {user?.nickname || "프로필"}
-                      </button>
+                        <div className="flex flex-col itmens-center justify-center gap-2">
+                          <span className="text-sm text-zinc-50">
+                            {user?.nickname || "프로필"}
+                          </span>
+                          {isAdmin && (
+                            <div className="flex flex-row items-center justify-center gap-2">
+                              <Image
+                                src="/icon-admin.png"
+                                alt="Admin"
+                                width={20}
+                                height={20}
+                                className="rounded-lg w-5 h-5"
+                              />
+                              <span className="text-sm text-yellow-500">
+                                가맹점 관리자
+                              </span>
+                            </div>
+                          )}
 
+                        </div>
+                      </button>
 
                       {/* logout button */}
                       <button
