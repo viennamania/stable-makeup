@@ -6505,7 +6505,7 @@ export async function updateBuyOrderSettlement(
 
 
 
-
+    /*
     const collectionBuyorders = client.db('runway').collection('buyorders');
     const collectionStore = client.db('runway').collection('stores');
 
@@ -6559,6 +6559,7 @@ export async function updateBuyOrderSettlement(
             },
         }
     );
+    */
 
 
 
