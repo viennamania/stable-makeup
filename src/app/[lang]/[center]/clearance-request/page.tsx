@@ -1822,16 +1822,18 @@ export default function Index({ params }: any) {
 
         try {
 
-          /*
+          
           const { transactionHash } = await sendTransaction({
             account: activeAccount as any,
             transaction,
           });
-          */
+          
+          /*
          const { transactionHash } = await sendAndConfirmTransaction({
             account: activeAccount as any,
             transaction,
           });
+          */
 
           console.log("transactionHash===", transactionHash);
 
@@ -1903,12 +1905,7 @@ export default function Index({ params }: any) {
           toast.error('결제확인이 실패했습니다.');
         }
 
-
-
       }
-
-
-
 
 
 
@@ -1922,10 +1919,10 @@ export default function Index({ params }: any) {
       confirmingPayment.map((item, idx) => idx === index ? false : item)
     );
 
+    
     setConfirmPaymentCheck(
       confirmPaymentCheck.map((item, idx) => idx === index ? false : item)
     );
-  
 
   }
 

@@ -116,11 +116,8 @@ export async function POST(request: NextRequest) {
       storecode: storecode,
       orderId: orderId,
       paymentAmount: paymentAmount,
-      
       queueId: queueId,
-
       transactionHash: transactionHashResult,
-
     });
 
     console.log("result", result);
