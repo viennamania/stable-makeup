@@ -5637,7 +5637,7 @@ const fetchBuyOrders = async () => {
 
 
 
-                        { !item?.settlement &&
+                        {/* !item?.settlement &&
 
                         item?.autoConfirmPayment
                         && (item?.transactionHashFail === true
@@ -5732,7 +5732,7 @@ const fetchBuyOrders = async () => {
 
                           </div>
 
-                        )}
+                        )*/}
 
 
 
