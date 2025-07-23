@@ -77,6 +77,7 @@ import useSound from 'use-sound';
 
 
 import { useSearchParams } from 'next/navigation';
+import { it } from "node:test";
 
 
 
@@ -1138,16 +1139,11 @@ export default function Index({ params }: any) {
     */
 
 
-
     const cancelTrade = async (orderId: string, index: number) => {
-
-
 
       if (cancellings[index]) {
         return;
       }
-
-
 
       setCancellings(
         cancellings.map((item, i) => i === index ? true : item)
@@ -1160,7 +1156,6 @@ export default function Index({ params }: any) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          lang: params.lang,
           storecode: params.center,
           orderId: orderId,
           walletAddress: address,
@@ -2220,43 +2215,6 @@ export default function Index({ params }: any) {
 
       const data = await response.json();
 
-      //console.log('data', data);
-
-
-      // if data.result is different from buyOrders
-      // check neweset order is different from buyOrders
-      // then toasts message
-      //console.log('data.result.orders[0]', data.result.orders?.[0]);
-      //console.log('buyOrders[0]', buyOrders);
-
-
-      //console.log('buyOrders[0]', buyOrders?.[0]);
-
-      if (data.result.orders?.[0]?._id !== latestBuyOrder?._id) {
-
-        setLatestBuyOrder(data.result.orders?.[0] || null);
-
-   
-        
-        //toast.success(Newest_order_has_been_arrived);
-        toast.success('새로운 주문이 도착했습니다');
-
-
-
-
-        // <audio src="/racing.mp3" typeof="audio/mpeg" autoPlay={soundStatus} muted={!soundStatus} />
-        // audio play
-
-        //setSoundStatus(true);
-
-        // audio ding play
-
-        playSong();
-
-        // Uncaught (in promise) NotAllowedError: play() failed because the user didn't interact with the document first.
-
-
-      }
 
       setBuyOrders(data.result.orders);
 
@@ -2275,21 +2233,6 @@ export default function Index({ params }: any) {
     fetchBuyOrders();
 
     
-    
-    const interval = setInterval(() => {
-
-      fetchBuyOrders();
-
-
-    }, 3000);
-
-
-    return () => clearInterval(interval);
-    
-    
-    
-    
-
 
   } , [
     limit,
@@ -4732,7 +4675,7 @@ const [tradeSummary, setTradeSummary] = useState({
                               <div className="flex flex-row items-center gap-2 justify-center">
                                 {/* status */}
                                 {item.status === 'ordered' && (
-                                  <div className="text-sm text-yellow-500 font-semibold">
+                                  <div className="text-lg text-yellow-600 font-semibold">
                                     {Buy_Order_Opened}
                                   </div>
                                 )}
@@ -4764,13 +4707,10 @@ const [tradeSummary, setTradeSummary] = useState({
                                         item.store.sellerWalletAddress.slice(0, 6) + '...' + item.store.sellerWalletAddress.slice(-4)
                                       }
                                     </div>
-                                    
-                                    <div className="text-sm text-green-600">
+                                  
+                                    <div className="text-lg text-green-600 font-semibold">
                                       {/*Waiting_for_seller_to_deposit*/}
-
                                       결제요청
-
-
                                     </div>
 
 
@@ -4785,7 +4725,7 @@ const [tradeSummary, setTradeSummary] = useState({
                                         {item.seller?.nickname}
                                       </span>
 
-                                      <div className="text-sm text-red-600">
+                                      <div className="text-lg text-red-600 font-semibold">
                                         {
                                           Cancelled_at
                                         }
@@ -4807,7 +4747,7 @@ const [tradeSummary, setTradeSummary] = useState({
                                     </div>
 
 
-                                    <span className="text-sm font-semibold text-yellow-500">
+                                    <span className="text-lg font-semibold text-yellow-600">
                                       {Completed}
                                     </span>
 
@@ -4847,7 +4787,9 @@ const [tradeSummary, setTradeSummary] = useState({
                               <div className="flex flex-row gap-2 items-start justify-start">
 
 
-                                {item.status === 'accepted' && item.seller && item.seller.walletAddress === address && (
+                                {
+                                (item.status === 'accepted' || item.status === 'paymentRequested')
+                                && item.seller && item.seller.walletAddress === address && (
                                   
                                   <div className="flex flex-row items-center gap-2">
                                     <input
@@ -4901,7 +4843,9 @@ const [tradeSummary, setTradeSummary] = useState({
 
                               <div className="flex flex-row gap-2 items-start justify-start">
 
-                                {/*item.status === 'accepted' && item.seller && item.seller.walletAddress === address && (
+                                {/*
+                                (item.status === 'accepted' || item.status === 'paymentRequested')
+                                && item.seller && item.seller.walletAddress === address && (
                                   
                                   <div className="flex flex-row items-center gap-2">
                                     <input
