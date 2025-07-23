@@ -1959,7 +1959,7 @@ export default function Index({ params }: any) {
       return;
     }
 
-    
+
     
      setConfirmingPayment(
       confirmingPayment.map((item, idx) =>  idx === index ? true : item)
@@ -5603,7 +5603,7 @@ const fetchBuyOrders = async () => {
                                             `}
                                           />
                                           <span className="text-sm">
-                                            USDT 전송
+                                            USDT 전송하기
                                           </span>
                                         </div>
 
