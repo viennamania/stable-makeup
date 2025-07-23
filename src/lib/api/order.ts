@@ -2925,7 +2925,10 @@ export async function buyOrderConfirmPayment(data: any) {
         status: 'paymentConfirmed',
         paymentAmount: paymentAmount,
         queueId: data.queueId,
+        
         transactionHash: data.transactionHash,
+        transactionHashFail: false,
+
         paymentConfirmedAt: new Date().toISOString(),
 
         autoConfirmPayment: autoConfirmPayment,

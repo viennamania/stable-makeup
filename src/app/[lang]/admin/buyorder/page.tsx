@@ -142,6 +142,8 @@ interface BuyOrder {
   settlementUpdatedAt: string;
   settlementUpdatedBy: string; // who updates the settlement
 
+  transactionHashFail: boolean; // if the transaction failed, set this to true
+
 }
 
 
@@ -5460,7 +5462,10 @@ const fetchBuyOrders = async () => {
                                   { !item?.settlement &&
 
                                   item?.autoConfirmPayment
-                                  && (item?.transactionHash === '0x' || item?.transactionHash === undefined)
+                                  && (item?.transactionHash === '0x'
+                                    || item?.transactionHash === undefined
+                                    || item?.transactionHashFail === true
+                                  )
                                   && (
 
 
@@ -5583,16 +5588,7 @@ const fetchBuyOrders = async () => {
                                 </div>
                               )}
 
-
-
-
-
-
-
-
                             </div>
-
-
 
                           </div>
 
@@ -5604,6 +5600,7 @@ const fetchBuyOrders = async () => {
                         {/* polygonscan */}
                         {item?.transactionHash
                         && item?.transactionHash !== '0x'
+                        && item?.transactionHashFail !== true
                         && (
                           <button
                             className="text-sm text-blue-600 font-semibold
@@ -5902,6 +5899,7 @@ const fetchBuyOrders = async () => {
                               <>
                                 {item.status === 'paymentConfirmed'
                                 && item?.transactionHash !== '0x'
+                                && item?.transactionHashFail !== true
                                 && (
                                   <div className="flex flex-row gap-2 items-center justify-center">
 
