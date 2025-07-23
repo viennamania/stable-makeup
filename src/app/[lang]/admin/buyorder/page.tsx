@@ -5464,7 +5464,6 @@ const fetchBuyOrders = async () => {
                                   item?.autoConfirmPayment
                                   && (item?.transactionHash === '0x'
                                     || item?.transactionHash === undefined
-                                    || item?.transactionHashFail === true
                                   )
                                   && (
 
@@ -5595,12 +5594,9 @@ const fetchBuyOrders = async () => {
                         )}
 
 
-
-
                         {/* polygonscan */}
                         {item?.transactionHash
                         && item?.transactionHash !== '0x'
-                        && item?.transactionHashFail !== true
                         && (
                           <button
                             className="text-sm text-blue-600 font-semibold
@@ -5635,6 +5631,109 @@ const fetchBuyOrders = async () => {
                             </div>
                           </button>
                         )}
+
+
+
+
+
+
+                        { !item?.settlement &&
+
+                        item?.autoConfirmPayment
+                        && (item?.transactionHashFail === true
+                        )
+                        && (
+
+
+                          <div className="w-full flex flex-row items-center justify-center gap-2">
+
+                            <span className="text-sm text-red-600 font-semibold">
+                              전송실패
+                            </span>
+
+                            <input
+                              disabled={confirmingPayment[index]}
+                              type="checkbox"
+                              checked={confirmPaymentCheck[index]}
+                              onChange={(e) => {
+                                setConfirmPaymentCheck(
+                                  confirmPaymentCheck.map((item, idx) => {
+                                    if (idx === index) {
+                                      return e.target.checked;
+                                    }
+                                    return item;
+                                  })
+                                );
+                              }}
+                              className="w-5 h-5 rounded-md border border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            />
+
+                            <button
+                              disabled={
+                                confirmingPayment[index]
+                                || !confirmPaymentCheck[index]
+                              
+                              }
+
+                              className={`
+                                w-full
+                              flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md
+                              border border-green-600
+                              hover:border-green-700
+                              hover:shadow-lg
+                              hover:shadow-green-500/50
+                              transition-all duration-200 ease-in-out
+
+                              ${confirmingPayment[index] ? 'bg-red-500' : 'bg-green-500'}
+                              
+
+                              ${!confirmPaymentCheck[index] ? 'bg-gray-500' : 'bg-green-500'}
+                              
+                              `}
+
+                              onClick={() => {
+                                //confirmPayment(
+                                sendPayment(
+
+                                  index,
+                                  item._id,
+                                  
+                                  //paymentAmounts[index],
+                                  item.krwAmount,
+
+                                  //paymentAmountsUsdt[index],
+                                  item.usdtAmount,
+
+
+                                  item.walletAddress,
+                                );
+                              }}
+
+
+                            >
+
+                              <div className="flex flex-row gap-2 items-center justify-center">
+                                <Image
+                                  src="/icon-transfer.png"
+                                  alt="Transfer"
+                                  width={20}
+                                  height={20}
+                                  className={`
+                                  ${confirmingPayment[index] ? 'animate-spin' : 'animate-pulse'}
+                                    w-5 h-5
+                                  `}
+                                />
+                                <span className="text-sm">
+                                  USDT 전송
+                                </span>
+                              </div>
+
+                            </button>
+
+                          </div>
+
+                        )}
+
 
 
 
