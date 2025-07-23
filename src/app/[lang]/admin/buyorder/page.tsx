@@ -5602,9 +5602,15 @@ const fetchBuyOrders = async () => {
                                               w-5 h-5
                                             `}
                                           />
-                                          <span className="text-sm">
-                                            USDT 전송하기
-                                          </span>
+                                          {confirmingPayment[index] ? (
+                                            <span className="text-sm">
+                                              구매자에게 USDT 전송중...
+                                            </span>
+                                          ) : (
+                                            <span className="text-sm">
+                                              구매자에게 USDT 전송하기
+                                            </span>
+                                          )}
                                         </div>
 
                                       </button>
