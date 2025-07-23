@@ -1916,9 +1916,6 @@ export default function Index({ params }: any) {
 
 
 
-
-
-
   // send payment
   const sendPayment = async (
 
@@ -1952,15 +1949,23 @@ export default function Index({ params }: any) {
     const storecode = "admin";
 
 
+    
     if (confirmingPayment[index]) {
       return;
     }
 
-    setConfirmingPayment(
+
+    if (!confirm("USDT를 구매자에게 전송하시겠습니까?")) {
+      return;
+    }
+
+    
+    
+     setConfirmingPayment(
       confirmingPayment.map((item, idx) =>  idx === index ? true : item)
     );
 
-      try {
+    try {
 
 
         const transaction = transfer({
@@ -2052,14 +2057,16 @@ export default function Index({ params }: any) {
     }
 
 
-
+    
     setConfirmingPayment(
       confirmingPayment.map((item, idx) => idx === index ? false : item)
     );
 
+    /*
     setConfirmPaymentCheck(
       confirmPaymentCheck.map((item, idx) => idx === index ? false : item)
     );
+    */
   
 
   }
@@ -5470,6 +5477,8 @@ const fetchBuyOrders = async () => {
 
                                     <div className="w-full flex flex-row items-center justify-center gap-2">
 
+
+                                      {/*
                                       <input
                                         disabled={confirmingPayment[index]}
                                         type="checkbox"
@@ -5486,29 +5495,52 @@ const fetchBuyOrders = async () => {
                                         }}
                                         className="w-5 h-5 rounded-md border border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                       />
+                                      */}
 
                                       <button
                                         disabled={
                                           confirmingPayment[index]
-                                          || !confirmPaymentCheck[index]
+                                          
+                                          //// || !confirmPaymentCheck[index]
                                         
                                         }
 
+                                        /*
                                         className={`
                                           w-full
-                                        flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md
-                                        border border-green-600
-                                        hover:border-green-700
-                                        hover:shadow-lg
-                                        hover:shadow-green-500/50
-                                        transition-all duration-200 ease-in-out
+                                          flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md
+                                          border border-green-600
+                                          hover:border-green-700
+                                          hover:shadow-lg
+                                          hover:shadow-green-500/50
+                                          transition-all duration-200 ease-in-out
 
-                                        ${confirmingPayment[index] ? 'bg-red-500' : 'bg-green-500'}
-                                        
+                                          ${confirmingPayment[index] ? 'bg-red-500' : 'bg-green-500'}
 
-                                        ${!confirmPaymentCheck[index] ? 'bg-gray-500' : 'bg-green-500'}
+                                          ${!confirmPaymentCheck[index] ? 'bg-gray-500' : 'bg-green-500'}
                                         
                                         `}
+                                        */
+
+                                        className={`
+                                          w-full
+                                          flex flex-row gap-1 text-sm text-white px-2 py-1 rounded-md
+                                          border border-green-600
+                                          hover:border-green-700
+                                          hover:shadow-lg
+                                          hover:shadow-green-500/50
+                                          transition-all duration-200 ease-in-out
+
+                                          ${confirmingPayment[index] ? 'bg-red-500' : 'bg-green-500'}
+
+                                        
+                                        `}
+
+
+
+
+
+
 
                                         
 
