@@ -6608,6 +6608,33 @@ export async function getTotalNumberOfBuyOrders(): Promise<{ totalCount: number 
   }
 }
 
+// getTotalNumberOfClearanceOrders
+export async function getTotalNumberOfClearanceOrders(): Promise<{ totalCount: number }> {
+  const client = await clientPromise;
+  const collection = client.db('ultraman').collection('buyorders');
+  // get total number of buy orders
+  const totalCount = await collection.countDocuments(
+    {
+      privateSale: true,
+      //status: 'paymentConfirmed',
+      status: { $in: ['paymentConfirmed'] },
+      'buyer.depositCompleted': false, // buyer has not completed deposit
+    }
+  );
+
+  console.log('getTotalNumberOfClearanceOrders totalCount: ' + totalCount);
+
+  return {
+    totalCount: totalCount,
+  }
+}
+
+
+
+
+
+
+
 
 // buyOrderWebhook
 export async function buyOrderWebhook(
@@ -6628,6 +6655,42 @@ export async function buyOrderWebhook(
       webhookData: webhookData,
     } }
   );
+  if (result.modifiedCount === 1) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+
+// updateBuyOrderDepositCompleted
+// update buyer.depositCompleted to true
+// and depositCompletedAt to current date
+// this is used when the buyer has completed the deposit
+export async function updateBuyOrderDepositCompleted(
+  {
+    orderId,
+  }: {
+    orderId: string;
+  }
+): Promise<boolean> {
+
+  console.log('updateBuyOrderDepositCompleted orderId: ' + orderId);
+
+  const client = await clientPromise;
+  const collection = client.db('ultraman').collection('buyorders');
+  // update buyorder
+  const result = await collection.updateOne(
+    { _id: new ObjectId(orderId) },
+    { $set: {
+      'buyer.depositCompleted': true,
+      'buyer.depositCompletedAt': new Date().toISOString(),
+    } }
+  );
+
+  console.log('updateBuyOrderDepositCompleted result: ' + JSON.stringify(result));
+
   if (result.modifiedCount === 1) {
     return true;
   } else {

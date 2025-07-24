@@ -2229,6 +2229,11 @@ export default function Index({ params }: any) {
 
     fetchBuyOrders();
 
+    // interval to fetch latest buy order every 5 seconds
+    const interval = setInterval(() => {
+      fetchBuyOrders();
+    }, 5000);
+
     
 
   } , [
@@ -2361,13 +2366,6 @@ export default function Index({ params }: any) {
     }
 
     fetchData();
-
-    // interval to fetch store data every 10 seconds
-    const interval = setInterval(() => {
-      fetchData();
-    }
-    , 5000);
-    return () => clearInterval(interval);
 
   } , [params.center]);
 
@@ -2668,7 +2666,8 @@ const [tradeSummary, setTradeSummary] = useState({
           nickname: buyerNickname,
           depositBankName: buyerDepositBankName,
           depositBankAccountNumber: buyerDepositBankAccountNumber,
-          depositName: buyerDepositName
+          depositName: buyerDepositName,
+          depositCompleted: false,
         },
 
         seller: {
@@ -2749,49 +2748,10 @@ const [tradeSummary, setTradeSummary] = useState({
 
       const data = await response.json();
 
-      //console.log('data', data);
-
-
-      // if data.result is different from buyOrders
-      // check neweset order is different from buyOrders
-      // then toasts message
-      //console.log('data.result.orders[0]', data.result.orders?.[0]);
-      //console.log('buyOrders[0]', buyOrders);
-
-
-      //console.log('buyOrders[0]', buyOrders?.[0]);
-
-      if (data.result.orders?.[0]?._id !== latestBuyOrder?._id) {
-
-        setLatestBuyOrder(data.result.orders?.[0] || null);
-
-   
-        
-        //toast.success(Newest_order_has_been_arrived);
-        toast.success('새로운 주문이 도착했습니다');
-
-
-
-
-        // <audio src="/racing.mp3" typeof="audio/mpeg" autoPlay={soundStatus} muted={!soundStatus} />
-        // audio play
-
-        //setSoundStatus(true);
-
-        // audio ding play
-
-        playSong();
-
-        // Uncaught (in promise) NotAllowedError: play() failed because the user didn't interact with the document first.
-
-
-      }
 
       setBuyOrders(data.result.orders);
 
       setTotalCount(data.result.totalCount);
-
-
 
 
 
@@ -4430,6 +4390,7 @@ const [tradeSummary, setTradeSummary] = useState({
                           <th className="p-2">{Seller} / {Status}</th>
                           <th className="p-2">거래취소</th>
                           <th className="p-2">거래완료</th>
+                          <th className="p-2">출금상태</th>
                         </tr>
                       </thead>
 
@@ -4750,6 +4711,7 @@ const [tradeSummary, setTradeSummary] = useState({
 
                                     {/* noew window open */}
                                     {/* polyscan explorer */}
+                                    {/*
                                     <a
                                       href={`https://arbiscan.io/tx/${item.transactionHash}`}
                                       target="_blank"
@@ -4758,8 +4720,45 @@ const [tradeSummary, setTradeSummary] = useState({
                                     >
                                       스캔에서 거래내역 보기
                                     </a>
-                                      
+                                    */}
 
+
+
+
+
+                                    <button
+                                      className="text-sm text-blue-600 font-semibold
+                                        border border-blue-600 rounded-lg p-2
+                                        bg-blue-100
+                                        w-full text-center
+                                        hover:bg-blue-200
+                                        cursor-pointer
+                                        transition-all duration-200 ease-in-out
+                                        hover:scale-105
+                                        hover:shadow-lg
+                                        hover:shadow-blue-500/50
+                                      "
+                                      onClick={() => {
+                                        window.open(
+                                          `https://arbiscan.io/tx/${item.transactionHash}`,
+                                          '_blank'
+                                        );
+                                      }}
+                                    >
+                                      <div className="flex flex-row gap-2 items-center justify-center">
+                                        <Image
+                                          src="/logo-arbitrum.png"
+                                          alt="Polygon"
+                                          width={20}
+                                          height={20}
+                                          className="w-5 h-5"
+                                        />
+                                        <span className="text-sm">
+                                          USDT 전송내역
+                                        </span>
+                                      </div>
+                                    </button>
+                      
 
                                   </div>
                                 )}
@@ -5129,7 +5128,22 @@ const [tradeSummary, setTradeSummary] = useState({
 
                             </td>
 
+                            {/* 출금상태: buyer.depositCompleted */}
+                            <td className="p-2">
 
+                              
+                              {item?.buyer?.depositCompleted === false
+                               ? (
+                                <div className="text-sm text-red-600">
+                                  출금대기중
+                                </div>
+                              ) : (
+                                <div className="text-sm text-green-600">
+                                  출금완료
+                                </div>
+                              )}
+                            
+                            </td>
 
                           </tr>
 
