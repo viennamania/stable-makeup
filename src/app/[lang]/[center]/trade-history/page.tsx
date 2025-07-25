@@ -2464,14 +2464,15 @@ const fetchBuyOrders = async () => {
 
     getTradeSummary();
 
+    /*
     // fetch trade summary every 10 seconds
     const interval = setInterval(() => {
       getTradeSummary();
     }, 10000);
     return () => clearInterval(interval);
+    */
 
-  } , [address, searchMyOrders, params.center, searchFromDate, searchToDate,
-    searchBuyer, searchDepositName, searchStoreBankAccountNumber]);
+  } , [address, searchMyOrders, params.center, searchFromDate, searchToDate]);
 
 
 
