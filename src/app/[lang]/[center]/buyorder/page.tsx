@@ -893,10 +893,10 @@ export default function Index({ params }: any) {
   }, [limit]);
   */
 
-  const [limitValue, setLimitValue] = useState('');
+  const [limitValue, setLimitValue] = useState(20);
   useEffect(() => {
-    const limit = searchParams.get('limit') || '20';
-    setLimitValue(limit);
+    const limit = searchParams.get('limit') || 20;
+    setLimitValue(Number(limit));
   }, [searchParams]);
 
 
@@ -908,10 +908,10 @@ export default function Index({ params }: any) {
   }, [page]);
   */
 
-  const [pageValue, setPageValue] = useState('');
+  const [pageValue, setPageValue] = useState(1);
   useEffect(() => {
-    const page = searchParams.get('page') || '1';
-    setPageValue(page);
+    const page = searchParams.get('page') || 1;
+    setPageValue(Number(page));
   }, [searchParams]);
 
 
@@ -3833,7 +3833,7 @@ const fetchBuyOrders = async () => {
                       checked={searchOrderStatusCancelled}
                       onChange={(e) => {
                         setSearchOrderStatusCancelled(e.target.checked);
-                        setPageValue(1);
+                        setPageValue(1)
                         //fetchBuyOrders();
                       }}
                       className="w-5 h-5"
