@@ -199,8 +199,8 @@ export default function Index({ params }: any) {
 
   // limit, page number params
 
-  const limit = searchParams.get('limit') || 10;
-  const page = searchParams.get('page') || 1;
+  //const limit = searchParams.get('limit') || 10;
+  //const page = searchParams.get('page') || 1;
 
 
 
@@ -886,16 +886,33 @@ export default function Index({ params }: any) {
 
 
   // limit number
-  const [limitValue, setLimitValue] = useState(limit || 20);
+  //const [limitValue, setLimitValue] = useState(searchParams.get('limit') || 20);
+  /*
   useEffect(() => {
     setLimitValue(limit || 20);
   }, [limit]);
+  */
+
+  const [limitValue, setLimitValue] = useState('');
+  useEffect(() => {
+    const limit = searchParams.get('limit') || '20';
+    setLimitValue(limit);
+  }, [searchParams]);
+
 
   // page number
-  const [pageValue, setPageValue] = useState(page || 1);
+  //const [pageValue, setPageValue] = useState(searchParams.get('page') || 1);
+  /*
   useEffect(() => {
     setPageValue(page || 1);
   }, [page]);
+  */
+
+  const [pageValue, setPageValue] = useState('');
+  useEffect(() => {
+    const page = searchParams.get('page') || '1';
+    setPageValue(page);
+  }, [searchParams]);
 
 
 
@@ -911,13 +928,13 @@ export default function Index({ params }: any) {
 
 
 
-  const [searchBuyer, setSearchBuyer] = useState("");
+  const [searchBuyer, setSearchBuyer] = useState(searchParams.get('searchBuyer') || "");
 
-  const [searchDepositName, setSearchDepositName] = useState("");
+  const [searchDepositName, setSearchDepositName] = useState(searchParams.get('searchDepositName') || "");
 
 
   // search store bank account number
-  const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState("");
+  const [searchStoreBankAccountNumber, setSearchStoreBankAccountNumber] = useState(searchParams.get('searchStoreBankAccountNumber') || "");
 
 
 
@@ -2376,8 +2393,7 @@ export default function Index({ params }: any) {
 
 
   } , [
-    limit,
-    page,
+
     address,
     searchMyOrders,
     agreementForTrade,
@@ -2400,6 +2416,10 @@ export default function Index({ params }: any) {
 
     searchOrderStatusCancelled,
     searchOrderStatusCompleted,
+
+    searchBuyer,
+    searchDepositName,
+    searchStoreBankAccountNumber,
 
 
 ]);
@@ -2717,10 +2737,11 @@ const fetchBuyOrders = async () => {
            walletAddress: address,
            searchMyOrders: searchMyOrders,
            searchOrderStatusCompleted: true,
-           //searchBuyer: searchBuyer,
-           //searchDepositName: searchDepositName,
+
+           searchBuyer: searchBuyer,
+           searchDepositName: searchDepositName,
  
-           //searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+           searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
             fromDate: searchFromDate,
             toDate: searchToDate,
@@ -2758,9 +2779,10 @@ const fetchBuyOrders = async () => {
        }, 10000);
        return () => clearInterval(interval);
  
-     } , [address, searchMyOrders, params.storecode, 
-        searchFromDate, searchToDate,]);
- 
+     } , [address, searchMyOrders, 
+        searchFromDate, searchToDate,
+        searchBuyer, searchDepositName, searchStoreBankAccountNumber,
+        params.center]);
 
 
 
@@ -3991,11 +4013,23 @@ const fetchBuyOrders = async () => {
                       flex flex-row items-center gap-2">
                       <button
                         onClick={() => {
-                          setPageValue(1);
                           
-                          fetchBuyOrders();
+                          ///setPageValue(1);
 
-                          getTradeSummary();
+                          // router
+                          router.push(
+                            '/' + params.lang + '/' + params.center + '/buyorder?page=1' +
+                            '&limit=' + limitValue +
+                            '&searchBuyer=' + searchBuyer +
+                            '&searchDepositName=' + searchDepositName +
+                            '&searchStoreBankAccountNumber=' + searchStoreBankAccountNumber
+                          );
+                          
+                          //fetchBuyOrders();
+
+                          //getTradeSummary();
+
+
                         }}
                         //className="bg-[#3167b4] text-white px-4 py-2 rounded-lg w-full"
                         className={`${
@@ -7235,10 +7269,14 @@ const fetchBuyOrders = async () => {
 
             <div className="flex flex-row items-center gap-2">
               <select
-                value={limit}
+                value={limitValue}
                 onChange={(e) =>
-                  
-                  router.push(`/${params.lang}/${params.center}/buyorder?limit=${Number(e.target.value)}&page=${page}&wallet=${wallet}&searchMyOrders=${searchMyOrders}`)
+
+                  router.push('/' + params.lang + '/' + params.center + '/buyorder?limit=' + e.target.value + '&page=1' +
+                    '&searchBuyer=' + searchBuyer +
+                    '&searchDepositName=' + searchDepositName +
+                    '&searchStoreBankAccountNumber=' + searchStoreBankAccountNumber
+                  )
 
                 }
 
@@ -7253,25 +7291,32 @@ const fetchBuyOrders = async () => {
 
             {/* 처음 페이지로 이동 */}
             <button
-              disabled={Number(page) <= 1}
-              className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
+              disabled={Number(pageValue) <= 1}
+              className={`text-sm text-white px-4 py-2 rounded-md ${Number(pageValue) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
               onClick={() => {
-                
-                router.push(`/${params.lang}/${params.center}/buyorder?limit=${Number(limit)}&page=1`);
 
-              }
-            }
+                router.push('/' + params.lang + '/' + params.center + '/buyorder?limit=' + Number(limitValue) + '&page=1' +
+                  '&searchBuyer=' + searchBuyer +
+                  '&searchDepositName=' + searchDepositName +
+                  '&searchStoreBankAccountNumber=' + searchStoreBankAccountNumber
+                );
+
+              }}
             >
               처음
             </button>
 
 
             <button
-              disabled={Number(page) <= 1}
-              className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
+              disabled={Number(pageValue) <= 1}
+              className={`text-sm text-white px-4 py-2 rounded-md ${Number(pageValue) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
               onClick={() => {
-                
-                router.push(`/${params.lang}/${params.center}/buyorder?limit=${Number(limit)}&page=${Number(page) - 1}`);
+
+                router.push('/' + params.lang + '/' + params.center + '/buyorder?limit=' + Number(limitValue) + '&page=' + (Number(pageValue) - 1) +
+                  '&searchBuyer=' + searchBuyer +
+                  '&searchDepositName=' + searchDepositName +
+                  '&searchStoreBankAccountNumber=' + searchStoreBankAccountNumber
+                );
 
               }}
             >
@@ -7280,16 +7325,20 @@ const fetchBuyOrders = async () => {
 
 
             <span className="text-sm text-zinc-500">
-              {page} / {Math.ceil(Number(totalCount) / Number(limit))}
+              {pageValue} / {Math.ceil(Number(totalCount) / Number(limitValue))}
             </span>
 
 
             <button
-              disabled={Number(page) >= Math.ceil(Number(totalCount) / Number(limit))}
-              className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
+              disabled={Number(pageValue) >= Math.ceil(Number(totalCount) / Number(limitValue))}
+              className={`text-sm text-white px-4 py-2 rounded-md ${Number(pageValue) >= Math.ceil(Number(totalCount) / Number(limitValue)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
               onClick={() => {
-                
-                router.push(`/${params.lang}/${params.center}/buyorder?limit=${Number(limit)}&page=${Number(page) + 1}`);
+
+                router.push('/' + params.lang + '/' + params.center + '/buyorder?limit=' + Number(limitValue) + '&page=' + (Number(pageValue) + 1) +
+                  '&searchBuyer=' + searchBuyer +
+                  '&searchDepositName=' + searchDepositName +
+                  '&searchStoreBankAccountNumber=' + searchStoreBankAccountNumber
+                );
 
               }}
             >
@@ -7298,11 +7347,15 @@ const fetchBuyOrders = async () => {
 
             {/* 마지막 페이지로 이동 */}
             <button
-              disabled={Number(page) >= Math.ceil(Number(totalCount) / Number(limit))}
-              className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
+              disabled={Number(pageValue) >= Math.ceil(Number(totalCount) / Number(limitValue))}
+              className={`text-sm text-white px-4 py-2 rounded-md ${Number(pageValue) >= Math.ceil(Number(totalCount) / Number(limitValue)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
               onClick={() => {
-                
-                router.push(`/${params.lang}/${params.center}/buyorder?limit=${Number(limit)}&page=${Math.ceil(Number(totalCount) / Number(limit))}`);
+
+                router.push('/' + params.lang + '/' + params.center + '/buyorder?limit=' + Number(limitValue) + '&page=' + Math.ceil(Number(totalCount) / Number(limitValue)) +
+                  '&searchBuyer=' + searchBuyer +
+                  '&searchDepositName=' + searchDepositName +
+                  '&searchStoreBankAccountNumber=' + searchStoreBankAccountNumber
+                );
 
               }}
             >

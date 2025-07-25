@@ -2157,17 +2157,17 @@ export default function Index({ params }: any) {
     fetchBuyOrders();
 
     
-    
+    /*
     const interval = setInterval(() => {
 
       fetchBuyOrders();
 
 
     }, 3000);
-
+  
 
     return () => clearInterval(interval);
-    
+    */
     
     
     
@@ -2411,10 +2411,11 @@ const fetchBuyOrders = async () => {
         walletAddress: address,
         searchMyOrders: searchMyOrders,
         searchOrderStatusCompleted: true,
-        //searchBuyer: searchBuyer,
-        //searchDepositName: searchDepositName,
 
-        //searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+        searchBuyer: searchBuyer,
+        searchDepositName: searchDepositName,
+
+        searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
         fromDate: searchFromDate,
         toDate: searchToDate,
@@ -2469,7 +2470,8 @@ const fetchBuyOrders = async () => {
     }, 10000);
     return () => clearInterval(interval);
 
-  } , [address, searchMyOrders, params.center, searchFromDate, searchToDate,]);
+  } , [address, searchMyOrders, params.center, searchFromDate, searchToDate,
+    searchBuyer, searchDepositName, searchStoreBankAccountNumber]);
 
 
 
