@@ -877,8 +877,15 @@ export default function Index({ params }: any) {
 
 
 
+
+
+  const fromDate = searchParams.get('fromDate') || '';
+  const toDate = searchParams.get('toDate') || '';
+
+
 // search form date to date
-  const [searchFromDate, setSearchFormDate] = useState("");
+/*
+  const [searchFromDate, setSearchFromDate] = useState("");
   // set today's date in YYYY-MM-DD format
   // korean timezone
   useEffect(() => {
@@ -888,12 +895,22 @@ export default function Index({ params }: any) {
     today.setHours(today.getHours() + 9); // Adjust for Korean timezone (UTC+9)
 
     const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
-    setSearchFormDate(formattedDate);
+    setSearchFromDate(formattedDate);
   }, []);
+  */
 
+  // get today's date in Korean timezone
+  const today = new Date();
+  today.setHours(today.getHours() + 9); // Adjust for Korean timezone (UTC+9)
 
+  const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
 
+  const [searchFromDate, setSearchFromDate] = useState(fromDate || formattedDate);
+  useEffect(() => {
+    fromDate && setSearchFromDate(fromDate);
+  }, [fromDate]);
 
+  /*
   const [searchToDate, setSearchToDate] = useState("");
 
   // set today's date in YYYY-MM-DD format
@@ -904,6 +921,12 @@ export default function Index({ params }: any) {
     const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
     setSearchToDate(formattedDate);
   }, []);
+  */
+
+  const [searchToDate, setSearchToDate] = useState(toDate || formattedDate);
+  useEffect(() => {
+    toDate && setSearchToDate(toDate);
+  }, [toDate]);
 
 
 
@@ -2145,7 +2168,7 @@ export default function Index({ params }: any) {
 
     const fetchBuyOrders = async () => {
 
-      //console.log('fetchBuyOrders===============>');
+      console.log('fetchBuyOrders===============>');
       //console.log("address=", address);
       //console.log("searchMyOrders=", searchMyOrders);
 
@@ -2229,10 +2252,12 @@ export default function Index({ params }: any) {
 
     fetchBuyOrders();
 
+
     // interval to fetch latest buy order every 5 seconds
     const interval = setInterval(() => {
       fetchBuyOrders();
     }, 5000);
+    return () => clearInterval(interval);
 
     
 
@@ -3580,7 +3605,7 @@ const [tradeSummary, setTradeSummary] = useState({
                 </button>
 
                 <button
-                    onClick={() => router.push('/' + params.lang + '/' + params.center + '/clearance-history')}
+                    onClick={() => router.push('/' + params.lang + '/' + params.center + '/clearance-request')}
                     className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
                     hover:bg-[#3167b4]/80
                     hover:cursor-pointer
@@ -4158,7 +4183,15 @@ const [tradeSummary, setTradeSummary] = useState({
                     <input
                       type="date"
                       value={searchFromDate}
-                      onChange={(e) => setSearchFormDate(e.target.value)}
+                      
+                      //onChange={(e) => setSearchFromDate(e.target.value)}
+                      // route to the date picker
+                      onChange={(e) => {
+                        router.push(
+                          '/' + params.lang + '/' + params.center + '/clearance-request?limit=' + limitValue + '&page=1' +
+                          '&fromDate=' + e.target.value + '&toDate=' + searchToDate
+                        );
+                      }}
                       className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
                     />
                   </div>
@@ -4176,7 +4209,14 @@ const [tradeSummary, setTradeSummary] = useState({
                     <input
                       type="date"
                       value={searchToDate}
-                      onChange={(e) => setSearchToDate(e.target.value)}
+                      //onChange={(e) => setSearchToDate(e.target.value)}
+                      // route to the date picker
+                      onChange={(e) => {
+                        router.push(
+                          '/' + params.lang + '/' + params.center + '/clearance-request?limit=' + limitValue + '&page=1' +
+                          '&fromDate=' + searchFromDate + '&toDate=' + e.target.value
+                        );
+                      }}
                       className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
                     />
                   </div>
@@ -6107,8 +6147,10 @@ const [tradeSummary, setTradeSummary] = useState({
                   value={limit}
                   onChange={(e) =>
                     
-                    router.push(`/${params.lang}/${params.center}/clearance-history?limit=${Number(e.target.value)}&page=${page}&wallet=${wallet}&searchMyOrders=${searchMyOrders}`)
+                    //router.push(`/${params.lang}/${params.center}/clearance-request?limit=${Number(e.target.value)}&page=${page}&wallet=${wallet}&searchMyOrders=${searchMyOrders}`)
 
+                    router.push('/' + params.lang + '/' + params.center + '/clearance-request?limit=' + Number(e.target.value) + '&page=1' +
+                    '&searchFromDate=' + searchFromDate + '&searchToDate=' + searchToDate)
                   }
 
                   className="text-sm bg-zinc-800 text-zinc-200 px-2 py-1 rounded-md"
@@ -6126,10 +6168,11 @@ const [tradeSummary, setTradeSummary] = useState({
                 className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
                 onClick={() => {
                   
-                  router.push(`/${params.lang}/${params.center}/clearance-history?limit=${Number(limit)}&page=1`);
+                  //router.push(`/${params.lang}/${params.center}/clearance-request?limit=${Number(limit)}&page=1`);
 
-                }
-              }
+                  router.push('/' + params.lang + '/' + params.center + '/clearance-request?limit=' + Number(limit) + '&page=1' +
+                  '&searchFromDate=' + searchFromDate + '&searchToDate=' + searchToDate)
+                }}
               >
                 처음
               </button>
@@ -6140,8 +6183,10 @@ const [tradeSummary, setTradeSummary] = useState({
                 className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) <= 1 ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
                 onClick={() => {
                   
-                  router.push(`/${params.lang}/${params.center}/clearance-history?limit=${Number(limit)}&page=${Number(page) - 1}`);
+                  //router.push(`/${params.lang}/${params.center}/clearance-request?limit=${Number(limit)}&page=${Number(page) - 1}`);
 
+                  router.push('/' + params.lang + '/' + params.center + '/clearance-request?limit=' + Number(limit) + '&page=' + (Number(page) - 1) +
+                  '&searchFromDate=' + searchFromDate + '&searchToDate=' + searchToDate)
                 }}
               >
                 이전
@@ -6158,8 +6203,10 @@ const [tradeSummary, setTradeSummary] = useState({
                 className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
                 onClick={() => {
                   
-                  router.push(`/${params.lang}/${params.center}/clearance-history?limit=${Number(limit)}&page=${Number(page) + 1}`);
+                  //router.push(`/${params.lang}/${params.center}/clearance-request?limit=${Number(limit)}&page=${Number(page) + 1}`);
 
+                  router.push('/' + params.lang + '/' + params.center + '/clearance-request?limit=' + Number(limit) + '&page=' + (Number(page) + 1) +
+                  '&searchFromDate=' + searchFromDate + '&searchToDate=' + searchToDate)
                 }}
               >
                 다음
@@ -6171,8 +6218,9 @@ const [tradeSummary, setTradeSummary] = useState({
                 className={`text-sm text-white px-4 py-2 rounded-md ${Number(page) >= Math.ceil(Number(totalCount) / Number(limit)) ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'}`}
                 onClick={() => {
                   
-                  router.push(`/${params.lang}/${params.center}/clearance-history?limit=${Number(limit)}&page=${Math.ceil(Number(totalCount) / Number(limit))}`);
-
+                  //router.push(`/${params.lang}/${params.center}/clearance-request?limit=${Number(limit)}&page=${Math.ceil(Number(totalCount) / Number(limit))}`);
+                  router.push('/' + params.lang + '/' + params.center + '/clearance-request?limit=' + Number(limit) + '&page=' + Math.ceil(Number(totalCount) / Number(limit)) +
+                  '&searchFromDate=' + searchFromDate + '&searchToDate=' + searchToDate)
                 }}
               >
                 마지막
