@@ -2259,59 +2259,51 @@ const fetchBuyOrders = async () => {
 
 
 
-        // get All stores
-    const [fetchingAllStores, setFetchingAllStores] = useState(false);
-    const [allStores, setAllStores] = useState([] as any[]);
-    const [storeTotalCount, setStoreTotalCount] = useState(0);
-    const fetchAllStores = async () => {
-      if (fetchingAllStores) {
-        return;
-      }
-      setFetchingAllStores(true);
-      const response = await fetch('/api/store/getAllStores', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(
-          {
-            limit: 100,
-            page: 1,
-          }
-        ),
-      });
-  
-      if (!response.ok) {
-        setFetchingAllStores(false);
-        toast.error('가맹점 검색에 실패했습니다.');
-        return;
-      }
-  
-      const data = await response.json();
-      
-      ///console.log('getAllStores data', data);
-  
-  
-  
-  
-      setAllStores(data.result.stores);
-      setStoreTotalCount(data.result.totalCount);
-      setFetchingAllStores(false);
-      return data.result.stores;
+  // get All stores
+  const [fetchingAllStores, setFetchingAllStores] = useState(false);
+  const [allStores, setAllStores] = useState([] as any[]);
+  const [storeTotalCount, setStoreTotalCount] = useState(0);
+  const fetchAllStores = async () => {
+    if (fetchingAllStores) {
+      return;
     }
-    useEffect(() => {
-      if (!address) {
-        setAllStores([]);
-        return;
-      }
-      fetchAllStores();
-    }, [address]); 
+    setFetchingAllStores(true);
+    const response = await fetch('/api/store/getAllStores', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        {
+          limit: 100,
+          page: 1,
+        }
+      ),
+    });
 
+    if (!response.ok) {
+      setFetchingAllStores(false);
+      toast.error('가맹점 검색에 실패했습니다.');
+      return;
+    }
 
-
-    //console.log('buyOrders', buyOrders);
-
+    const data = await response.json();
     
+    ///console.log('getAllStores data', data);
+
+
+
+
+    setAllStores(data.result.stores);
+    setStoreTotalCount(data.result.totalCount);
+    setFetchingAllStores(false);
+    return data.result.stores;
+  }
+  useEffect(() => {
+    fetchAllStores();
+  }, []); 
+
+
 
 
   // totalNumberOfBuyOrders
@@ -2784,22 +2776,32 @@ const fetchBuyOrders = async () => {
               </button>
 
 
+              <button
+                  onClick={() => router.push('/' + params.lang + '/admin/trade-history-daily')}
+                  className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                  hover:bg-[#3167b4]/80
+                  hover:cursor-pointer
+                  hover:scale-105
+                  transition-transform duration-200 ease-in-out
+                  ">
+                  통계(일별)
+              </button>
+
           </div>
 
 
           <div className='flex flex-row items-center space-x-4'>
-              <Image
-                src="/icon-trade.png"
-                alt="Trade"
-                width={35}
-                height={35}
-                className="w-6 h-6"
-              />
+            <Image
+              src="/icon-trade.png"
+              alt="Trade"
+              width={35}
+              height={35}
+              className="w-6 h-6"
+            />
 
-              <div className="text-xl font-semibold">
-                거래내역
-              </div>
-
+            <div className="text-xl font-semibold">
+              거래내역
+            </div>
           </div>
 
 
