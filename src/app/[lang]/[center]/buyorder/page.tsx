@@ -2701,104 +2701,165 @@ const fetchBuyOrders = async () => {
 
 
 
-   const [tradeSummary, setTradeSummary] = useState({
-      totalCount: 0,
-      totalKrwAmount: 0,
-      totalUsdtAmount: 0,
-      totalSettlementCount: 0,
-      totalSettlementAmount: 0,
-      totalSettlementAmountKRW: 0,
-      totalFeeAmount: 0,
-      totalFeeAmountKRW: 0,
-      totalAgentFeeAmount: 0,
-      totalAgentFeeAmountKRW: 0,
+  const [tradeSummary, setTradeSummary] = useState({
+    totalCount: 0,
+    totalKrwAmount: 0,
+    totalUsdtAmount: 0,
+    totalSettlementCount: 0,
+    totalSettlementAmount: 0,
+    totalSettlementAmountKRW: 0,
+    totalFeeAmount: 0,
+    totalFeeAmountKRW: 0,
+    totalAgentFeeAmount: 0,
+    totalAgentFeeAmountKRW: 0,
 
-      orders: [] as BuyOrder[],
+    orders: [] as BuyOrder[],
 
-      totalClearanceCount: 0,
-      totalClearanceAmount: 0,
-      totalClearanceAmountUSDT: 0,
-     });
-     const [loadingTradeSummary, setLoadingTradeSummary] = useState(false);
- 
- 
-     const getTradeSummary = async () => {
-       if (!address) {
-         return;
-       }
-       setLoadingTradeSummary(true);
-       const response = await fetch('/api/summary/getTradeSummary', {
-         method: 'POST',
-         headers: {
-           'Content-Type': 'application/json'
-         },
-         body: JSON.stringify({
-           storecode: params.center,
-           walletAddress: address,
-           searchMyOrders: searchMyOrders,
-           searchOrderStatusCompleted: true,
+    totalClearanceCount: 0,
+    totalClearanceAmount: 0,
+    totalClearanceAmountUSDT: 0,
+  });
+  const [loadingTradeSummary, setLoadingTradeSummary] = useState(false);
 
-           searchBuyer: searchBuyer,
-           searchDepositName: searchDepositName,
- 
-           searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
-            fromDate: searchFromDate,
-            toDate: searchToDate,
-         })
-       });
-       if (!response.ok) {
-         setLoadingTradeSummary(false);
-         toast.error('Failed to fetch trade summary');
-         return;
-       }
-       const data = await response.json();
-       
-       console.log('getTradeSummary data', data);
- 
- 
-       setTradeSummary(data.result);
-       setLoadingTradeSummary(false);
-       return data.result;
-     }
- 
- 
- 
- 
-     useEffect(() => {
- 
-       if (!address) {
-         return;
-       }
- 
-       getTradeSummary();
- 
-       // fetch trade summary every 10 seconds
-       const interval = setInterval(() => {
-         getTradeSummary();
-       }, 10000);
-       return () => clearInterval(interval);
- 
-     } , [address, searchMyOrders, 
-        searchFromDate, searchToDate,
-        searchBuyer, searchDepositName, searchStoreBankAccountNumber,
-        params.center]);
+  const getTradeSummary = async () => {
+    if (!address) {
+      return;
+    }
+    setLoadingTradeSummary(true);
+    const response = await fetch('/api/summary/getTradeSummary', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        storecode: params.center,
+        walletAddress: address,
+        searchMyOrders: searchMyOrders,
+        searchOrderStatusCompleted: true,
+
+        searchBuyer: searchBuyer,
+        searchDepositName: searchDepositName,
+
+        searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+        fromDate: searchFromDate,
+        toDate: searchToDate,
+      })
+    });
+    if (!response.ok) {
+      setLoadingTradeSummary(false);
+      toast.error('Failed to fetch trade summary');
+      return;
+    }
+    const data = await response.json();
+    
+    console.log('getTradeSummary data', data);
+
+
+    setTradeSummary(data.result);
+    setLoadingTradeSummary(false);
+    return data.result;
+  }
 
 
 
 
-    useEffect(() => {
-      // Dynamically load the Binance widget script
-      const script = document.createElement("script");
-      script.src = "https://public.bnbstatic.com/unpkg/growth-widget/cryptoCurrencyWidget@0.0.20.min.js";
-      script.async = true;
-      document.body.appendChild(script);
-  
-      return () => {
-        // Cleanup the script when the component unmounts
-        document.body.removeChild(script);
-      };
-    }, [address, store]);
+  useEffect(() => {
+
+    if (!address) {
+      return;
+    }
+
+    getTradeSummary();
+
+    // fetch trade summary every 10 seconds
+    const interval = setInterval(() => {
+      getTradeSummary();
+    }, 10000);
+    return () => clearInterval(interval);
+
+  } , [address, searchMyOrders, 
+    searchFromDate, searchToDate,
+    searchBuyer, searchDepositName, searchStoreBankAccountNumber,
+    params.center]);
+
+
+
+
+
+
+
+
+
+  // totalNumberOfBuyOrders
+  const [loadingTotalNumberOfBuyOrders, setLoadingTotalNumberOfBuyOrders] = useState(false);
+  const [totalNumberOfBuyOrders, setTotalNumberOfBuyOrders] = useState(0);
+  // Move fetchTotalBuyOrders outside of useEffect to avoid self-reference error
+  const fetchTotalBuyOrders = async (): Promise<void> => {
+    setLoadingTotalNumberOfBuyOrders(true);
+    const response = await fetch('/api/order/getTotalNumberOfBuyOrders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        storecode: params.center,
+      })
+    });
+    if (!response.ok) {
+      console.error('Failed to fetch total number of buy orders');
+      setLoadingTotalNumberOfBuyOrders(false);
+      return;
+    }
+    const data = await response.json();
+    //console.log('getTotalNumberOfBuyOrders data', data);
+    setTotalNumberOfBuyOrders(data.result.totalCount);
+
+    setLoadingTotalNumberOfBuyOrders(false);
+  };
+
+  useEffect(() => {
+    if (!address) {
+      setTotalNumberOfBuyOrders(0);
+      return;
+    }
+
+    fetchTotalBuyOrders();
+
+    const interval = setInterval(() => {
+      fetchTotalBuyOrders();
+    }, 5000);
+    return () => clearInterval(interval);
+
+  }, [address]);
+
+      
+
+  useEffect(() => {
+    if (totalNumberOfBuyOrders > 0 && loadingTotalNumberOfBuyOrders === false) {
+      const audio = new Audio('/notification.wav'); 
+      audio.play();
+    }
+  }, [totalNumberOfBuyOrders, loadingTotalNumberOfBuyOrders]);
+
+
+
+
+
+
+  useEffect(() => {
+    // Dynamically load the Binance widget script
+    const script = document.createElement("script");
+    script.src = "https://public.bnbstatic.com/unpkg/growth-widget/cryptoCurrencyWidget@0.0.20.min.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Cleanup the script when the component unmounts
+      document.body.removeChild(script);
+    };
+  }, [address, store]);
 
 
 
@@ -3705,6 +3766,54 @@ const fetchBuyOrders = async () => {
 
                 </div>
             )}
+
+
+            <div className="w-full flex flex-col xl:flex-row items-center justify-end gap-2 mt-4">
+              <div className="flex flex-row items-center justify-center gap-2
+              bg-white/80
+              p-2 rounded-lg shadow-md
+              backdrop-blur-md
+              ">
+                {loadingTotalNumberOfBuyOrders ? (
+                  <Image
+                    src="/loading.png"
+                    alt="Loading"
+                    width={20}
+                    height={20}
+                    className="w-6 h-6 animate-spin"
+                  />
+                ) : (
+                  <Image
+                    src="/icon-buyorder.png"
+                    alt="Buy Order"
+                    width={35}
+                    height={35}
+                    className="w-6 h-6"
+                  />
+                )}
+
+
+                <p className="text-lg text-red-500 font-semibold">
+                  {
+                  totalNumberOfBuyOrders
+                  } 건
+                </p>
+
+                {totalNumberOfBuyOrders > 0 && (
+                  <div className="flex flex-row items-center justify-center gap-2">
+                    <Image
+                      src="/icon-notification.gif"
+                      alt="Notification"
+                      width={50}
+                      height={50}
+                      className="w-15 h-15 object-cover"
+                      
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
 
 
             <div className="w-full flex flex-row items-center justify-end gap-2">
