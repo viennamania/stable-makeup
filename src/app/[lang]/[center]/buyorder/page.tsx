@@ -4682,14 +4682,11 @@ const fetchBuyOrders = async () => {
 
                               <div className="flex flex-row items-center gap-2">     
                                 <Image
-                                  src={item?.buyer?.avatar || "/profile-default.png"}
+                                  src={item?.buyer?.avatar || "/icon-buyer.png"}
                                   alt="Avatar"
                                   width={20}
                                   height={20}
-                                  className="rounded-full w-5 h-5"
-                                  style={{
-                                    objectFit: 'cover',
-                                  }}
+                                  className="rounded-sm w-5 h-5"
                                 />                         
                                 <span className="text-lg text-blue-600 font-bold">
                                   {
@@ -4980,7 +4977,7 @@ const fetchBuyOrders = async () => {
                                     alt="Avatar"
                                     width={20}
                                     height={20}
-                                    className="rounded-full w-5 h-5"
+                                    className="rounded-sm w-5 h-5"
                                   />
                                   <span className="text-lg font-semibold text-zinc-500">
                                     {
