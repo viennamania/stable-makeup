@@ -942,6 +942,8 @@ export default function Index({ params }: any) {
 
 
   const [totalCount, setTotalCount] = useState(0);
+
+  const [loadingBuyOrders, setLoadingBuyOrders] = useState(false);
     
   const [buyOrders, setBuyOrders] = useState<BuyOrder[]>([]);
 
@@ -2067,7 +2069,7 @@ export default function Index({ params }: any) {
 
 
 
-
+  
   const [latestBuyOrder, setLatestBuyOrder] = useState<BuyOrder | null>(null);
 
 
@@ -2107,7 +2109,7 @@ export default function Index({ params }: any) {
       }
 
 
-      
+      setLoadingBuyOrders(true);
 
       const response = await fetch('/api/order/getAllBuyOrders', {
           method: 'POST',
@@ -2125,10 +2127,16 @@ export default function Index({ params }: any) {
 
               fromDate: searchFromDate,
               toDate: searchToDate,
+
+              searchBuyer: searchBuyer,
+              searchDepositName: searchDepositName,
+              searchStoreBankAccountNumber: searchStoreBankAccountNumber,
             }
 
         ),
       });
+
+      setLoadingBuyOrders(false);
 
       if (!response.ok) {
         return;
@@ -2148,26 +2156,20 @@ export default function Index({ params }: any) {
     }
 
 
-    if (!address || !params.center || !searchFromDate || !searchToDate) {
-      setBuyOrders([]);
-
-      return;
-    }
-
     fetchBuyOrders();
 
     
-    /*
+    
     const interval = setInterval(() => {
 
       fetchBuyOrders();
 
 
-    }, 3000);
+    }, 5000);
   
 
     return () => clearInterval(interval);
-    */
+    
     
     
     
@@ -3342,6 +3344,15 @@ const fetchBuyOrders = async () => {
                     거래내역
                   </div>
 
+                  
+                  <Image
+                    src="/loading.png"
+                    alt="Loading"
+                    width={35}
+                    height={35}
+                    className={`w-6 h-6 ${loadingBuyOrders ? 'animate-spin' : 'hidden'}`}
+                  />
+
               </div>
 
 
@@ -4063,15 +4074,22 @@ const fetchBuyOrders = async () => {
                               w-32
                               flex flex-col items-end justify-center gap-2">
 
-                                {item?.autoConfirmPayment ? (
-                                  <span className="text-sm text-green-500 font-semibold">
-                                    자동입금처리
-                                  </span>
-                                ) : (
-                                  <span className="text-sm text-red-500 font-semibold">
-                                    수동입금처리
-                                  </span>
+                                
+                                {item?.status === 'paymentCompleted' && (
+                                  <>
+                                    {item?.autoConfirmPayment ? (
+                                      <span className="text-sm text-green-500 font-semibold">
+                                        자동입금처리
+                                      </span>
+                                    ) : (
+                                      <span className="text-sm text-red-500 font-semibold">
+                                        수동입금처리
+                                      </span>
+                                    )}
+                                  </>
                                 )}
+
+
                               
                                 <div className=" text-yellow-600 text-lg font-semibold"
                                   style={{
