@@ -2070,7 +2070,9 @@ export default function Index({ params }: any) {
 
 
   
-  const [latestBuyOrder, setLatestBuyOrder] = useState<BuyOrder | null>(null);
+  //const [latestBuyOrder, setLatestBuyOrder] = useState<BuyOrder | null>(null);
+
+
 
 
   useEffect(() => {
@@ -2190,15 +2192,17 @@ export default function Index({ params }: any) {
     confirmPaymentCheck,
     rollbackPaymentCheck,
 
-    latestBuyOrder,
+    //latestBuyOrder,
     //playSong,
 
-    limitValue,
-    pageValue,
 
     params.center,
     searchFromDate,
     searchToDate,
+
+    searchBuyer,
+    searchDepositName,
+    searchStoreBankAccountNumber,
 ]);
 
 
@@ -2206,6 +2210,7 @@ export default function Index({ params }: any) {
 
 
 const [fetchingBuyOrders, setFetchingBuyOrders] = useState(false);
+
 
 const fetchBuyOrders = async () => {
 
