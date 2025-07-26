@@ -1381,10 +1381,6 @@ const fetchBuyOrders = async () => {
             ></div>
 
 
-
-
-
-
           {/* 홈 / 가맹점관리 / 회원관리 / 구매주문관리 */}
           {/* memnu buttons same width left side */}
             <div className="grid grid-cols-3 xl:grid-cols-6 gap-2 items-center justify-start mb-4">
