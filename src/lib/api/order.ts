@@ -2393,7 +2393,7 @@ export async function getBuyOrdersGroupByStorecodeDaily(
   console.log('getBuyOrdersGroupByStorecodeDaily toDate: ' + toDate);
 
   const client = await clientPromise;
-  const collection = client.db('ultraman').collection('buyorders');
+  const collection = client.db('runway').collection('buyorders');
 
   // fromDate format: YYYY-MM-DD
   // toDate format: YYYY-MM-DD
@@ -2445,12 +2445,24 @@ export async function getBuyOrdersGroupByStorecodeDaily(
         totalKrwAmount: { $sum: "$krwAmount" },
         totalCount: { $sum: 1 }, // Count the number of orders
 
+
+        // if settlement fields is exist in buyorders, then count settlement
+        totalSettlementCount: { $sum: { $cond: [{ $ifNull: ["$settlement", false] }, 1, 0] } },
+
         // sum of settlement.settlementAmount
         totalSettlementAmount: { $sum: "$settlement.settlementAmount" },
 
         // sum of settlement.settlementAmountKRW
         // convert settlement.settlementAmountKRW to double
         totalSettlementAmountKRW: { $sum: { $toDouble: "$settlement.settlementAmountKRW" } },
+
+        // agentFeeAmount, agentFeeAmountKRW
+        totalAgentFeeAmount: { $sum: "$settlement.agentFeeAmount" },
+        totalAgentFeeAmountKRW: { $sum: { $toDouble: "$settlement.agentFeeAmountKRW" } },
+
+        // feeAmount, feeAmountKRW
+        totalFeeAmount: { $sum: "$settlement.feeAmount" },
+        totalFeeAmountKRW: { $sum: { $toDouble: "$settlement.feeAmountKRW" } },
 
       }
     },
@@ -2471,11 +2483,17 @@ export async function getBuyOrdersGroupByStorecodeDaily(
     toDate: toDate,
     orders: results.map(result => ({
       date: result._id.date,
+      totalCount: result.totalCount,
       totalUsdtAmount: result.totalUsdtAmount,
       totalKrwAmount: result.totalKrwAmount,
-      totalCount: result.totalCount,
+      totalSettlementCount: result.totalSettlementCount,
       totalSettlementAmount: result.totalSettlementAmount,
       totalSettlementAmountKRW: result.totalSettlementAmountKRW,
+
+      totalAgentFeeAmount: result.totalAgentFeeAmount,
+      totalAgentFeeAmountKRW: result.totalAgentFeeAmountKRW,
+      totalFeeAmount: result.totalFeeAmount,
+      totalFeeAmountKRW: result.totalFeeAmountKRW,
     }))
   }
 
