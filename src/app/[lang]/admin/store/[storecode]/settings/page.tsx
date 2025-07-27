@@ -2842,7 +2842,7 @@ export default function SettingsPage({ params }: any) {
                                     {/* dot */}
                                     <div className='w-2 h-2 bg-green-500 rounded-full'></div>
                                     <span className="text-lg text-zinc-500">
-                                        에스크로용 USDT 수량(보유금)
+                                        에스크로용 보유금 수량(USDT)
                                     </span>
                                 </div>
 
@@ -2856,12 +2856,23 @@ export default function SettingsPage({ params }: any) {
                                             height={20}
                                             className="w-5 h-5"
                                         />
-                                        <span className="text-lg text-zinc-500">
+                                        <span className="text-xl text-green-600 font-semibold">
                                             {store && store.escrowAmountUSDT &&
                                             store.escrowAmountUSDT.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                                             || 0.00}
                                         </span>
                                     </div>
+
+                                    {/* route to daily-close page */}
+                                    <button
+                                        onClick={() => router.push(`/${params.lang}/admin/store/${storecode}/daily-close`)}
+                                        className="bg-[#3167b4] text-zinc-100 rounded-lg p-2 text-sm"
+                                        disabled={!address}
+                                    >
+                                        일일 마감 페이지로 이동
+                                    </button>
+
+                                    {/*
                                     <input
                                         disabled={!address}
                                         className="bg-[#1f2937] text-zinc-100 rounded-lg p-2 text-sm"
@@ -2895,6 +2906,7 @@ export default function SettingsPage({ params }: any) {
                                     >
                                         {updatingEscrowAmountUSDT ? '변경 중...' : '변경'}
                                     </button>
+                                    */}
 
                                 </div>
 
