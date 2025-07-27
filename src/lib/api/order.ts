@@ -1681,10 +1681,10 @@ export async function insertBuyOrder(data: any) {
 
 
 
-// update audioOn to false
-export async function updateAudioOff(data: any) {
+// updateAudioNotification
+export async function updateAudioNotification(data: any) {
 
-  if (!data.orderId) {
+  if (!data.orderId || data.audioOn === undefined) {
     return null;
   }
 
@@ -1693,8 +1693,9 @@ export async function updateAudioOff(data: any) {
 
   const result = await collection.updateOne(
     { _id: new ObjectId(data.orderId) },
-    { $set: { audioOn: false } }
+    { $set: { audioOn: data.audioOn } }
   );
+  
   if (result.modifiedCount === 1) {
     const updated = await collection.findOne<UserProps>(
       { _id: new ObjectId(data.orderId) }
@@ -2370,6 +2371,120 @@ export async function getBuyOrders(
 
 }
 
+
+
+
+export async function getBuyOrdersGroupByStorecodeDaily(
+  {
+    storecode,
+    fromDate,
+    toDate,
+  }: {
+
+    storecode: string;
+    fromDate: string;
+    toDate: string;
+
+  }
+): Promise<any> {
+  console.log('getBuyOrdersGroupByStorecodeDaily fromDate: ' + fromDate);
+  console.log('getBuyOrdersGroupByStorecodeDaily toDate: ' + toDate);
+
+  const client = await clientPromise;
+  const collection = client.db('ultraman').collection('buyorders');
+
+  // fromDate format: YYYY-MM-DD
+  // toDate format: YYYY-MM-DD
+
+  // group by korean timezone, so we need to convert fromDate, toDate to UTC time
+  // plus 9 hours to UTC time
+  // so if hours larger than 24, then add 1 day to date
+
+
+  const fromDateValue = fromDate ? new Date(fromDate + 'T00:00:00+09:00').toISOString() : '1970-01-01T00:00:00Z';
+  const toDateValue = toDate ? new Date(toDate + 'T23:59:59+09:00').toISOString() : new Date().toISOString();
+
+
+  console.log('getBuyOrdersGroupByStorecodeDaily fromDateValue: ' + fromDateValue);
+  console.log('getBuyOrdersGroupByStorecodeDaily toDateValue: ' + toDateValue);
+
+
+  // order by date descending
+
+  const pipeline = [
+    {
+      $match: {
+        storecode: {
+          $regex: storecode || '',
+          $options: 'i'
+        },
+        status: 'paymentConfirmed',
+        privateSale: { $ne: true },
+        createdAt: {
+          $gte: fromDateValue,
+          $lte: toDateValue,
+        }
+      }
+    },
+    {
+      $group: {
+        _id: {
+          date: { 
+            $dateToString: { 
+              format: "%Y-%m-%d", 
+              date: { $dateFromString: { dateString: "$createdAt" } },
+              timezone: "Asia/Seoul"
+            } 
+          },
+          storecode: "$storecode"
+        },
+        totalUsdtAmount: { $sum: "$usdtAmount" },
+        totalKrwAmount: { $sum: "$krwAmount" },
+        totalCount: { $sum: 1 }, // Count the number of orders
+
+        // sum of settlement.settlementAmount
+        totalSettlementAmount: { $sum: "$settlement.settlementAmount" },
+
+        // sum of settlement.settlementAmountKRW
+        // convert settlement.settlementAmountKRW to double
+        totalSettlementAmountKRW: { $sum: { $toDouble: "$settlement.settlementAmountKRW" } },
+
+      }
+    },
+    {
+      $sort: { "_id.date": -1 } // Sort by date descending
+    }
+  ];
+
+  const results = await collection.aggregate(pipeline).toArray();
+  //console.log('getBuyOrdersGroupByStorecodeDaily results: ' + JSON.stringify(results));
+
+  /*
+  return results.map(result => ({
+    date: result._id.date,
+    storecode: result._id.storecode,
+    totalUsdtAmount: result.totalUsdtAmount,
+    totalKrwAmount: result.totalKrwAmount
+  }));
+  */
+  return {
+    storecode: storecode,
+    fromDate: fromDate,
+    toDate: toDate,
+    orders: results.map(result => ({
+      date: result._id.date,
+      storecode: result._id.storecode,
+      totalUsdtAmount: result.totalUsdtAmount,
+      totalKrwAmount: result.totalKrwAmount,
+      totalCount: result.totalCount,
+
+      totalSettlementAmount: result.totalSettlementAmount,
+      totalSettlementAmountKRW: result.totalSettlementAmountKRW,
+    }))
+  }
+
+
+}
 
 
 
