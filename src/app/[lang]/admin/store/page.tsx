@@ -2607,9 +2607,6 @@ export default function Index({ params }: any) {
                             <span className="text-center">
                               USDT통장 잔고
                             </span>
-                            <span className="text-center">
-                              USDT 보유금
-                            </span>
 
                           </div>
                         </th>
