@@ -6753,7 +6753,7 @@ export async function getTotalNumberOfBuyOrders(
   }: {
     storecode: string;
   }
-): Promise<{ totalCount: number }> {
+): Promise<{ totalCount: number; audioOnCount: number }> {
   const client = await clientPromise;
   const collection = client.db('ultraman').collection('buyorders');
   // get total number of buy orders
@@ -6770,8 +6770,23 @@ export async function getTotalNumberOfBuyOrders(
     }
   );
 
+
+  // count of audioOn is true
+  const audioOnCount = await collection.countDocuments(
+    {
+      storecode: {
+        $regex: storecode || '', // if storecode is empty, it will match all
+        $options: 'i',
+      },
+      privateSale: { $ne: true },
+      status: { $in: ['ordered', 'accepted', 'paymentRequested'] },
+      audioOn: true,
+    }
+  );
+
   return {
     totalCount: totalCount,
+    audioOnCount: audioOnCount,
   }
 }
 

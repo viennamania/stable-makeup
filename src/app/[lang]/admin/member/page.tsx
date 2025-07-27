@@ -1703,15 +1703,15 @@ export default function Index({ params }: any) {
   // totalNumberOfBuyOrders
   const [loadingTotalNumberOfBuyOrders, setLoadingTotalNumberOfBuyOrders] = useState(false);
   const [totalNumberOfBuyOrders, setTotalNumberOfBuyOrders] = useState(0);
+  const [totalNumberOfAudioOnBuyOrders, setTotalNumberOfAudioOnBuyOrders] = useState(0);
+
   useEffect(() => {
-    if (!address) {
-      setTotalNumberOfBuyOrders(0);
-      return;
-    }
-
-    
-
-    const fetchTotalBuyOrders = async () => {
+    const fetchTotalBuyOrders = async (): Promise<void> => {
+      if (!address) {
+        setTotalNumberOfBuyOrders(0);
+        return;
+      }
+      
       setLoadingTotalNumberOfBuyOrders(true);
       const response = await fetch('/api/order/getTotalNumberOfBuyOrders', {
         method: 'POST',
@@ -1723,15 +1723,17 @@ export default function Index({ params }: any) {
       });
       if (!response.ok) {
         console.error('Failed to fetch total number of buy orders');
+        setLoadingTotalNumberOfBuyOrders(false);
         return;
       }
       const data = await response.json();
       //console.log('getTotalNumberOfBuyOrders data', data);
       setTotalNumberOfBuyOrders(data.result.totalCount);
+      setTotalNumberOfAudioOnBuyOrders(data.result.audioOnCount);
 
       setLoadingTotalNumberOfBuyOrders(false);
     };
-    
+
     fetchTotalBuyOrders();
 
     const interval = setInterval(() => {
@@ -1741,14 +1743,12 @@ export default function Index({ params }: any) {
 
   }, [address]);
 
-      
-  
   useEffect(() => {
-    if (totalNumberOfBuyOrders > 0 && loadingTotalNumberOfBuyOrders === false) {
-      const audio = new Audio('/notification.wav'); 
+    if (totalNumberOfAudioOnBuyOrders > 0 && loadingTotalNumberOfBuyOrders === false) {
+      const audio = new Audio('/notification.wav');
       audio.play();
     }
-  }, [totalNumberOfBuyOrders, loadingTotalNumberOfBuyOrders]);
+  }, [totalNumberOfAudioOnBuyOrders, loadingTotalNumberOfBuyOrders]);
 
 
 
