@@ -1436,7 +1436,7 @@ const fetchBuyOrders = async () => {
             <div className="w-full flex flex-col items-start justify-start gap-2 mt-4">
 
               <h2 className="text-lg font-semibold text-zinc-600">
-                에스크로 거래 내역
+                에스크로 입출금 내역
               </h2>
 
               <table className="w-full table-auto border-collapse border border-zinc-800 rounded-md">
