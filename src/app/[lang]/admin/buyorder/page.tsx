@@ -3006,8 +3006,14 @@ const fetchBuyOrders = async () => {
     })
     .then(response => response.json())
     .then(data => {
+      
       //console.log('toggleAudioNotification data', data);
-      if (data.result) {
+      //alert('toggleAudioNotification data: ' + JSON.stringify(data));
+      /*
+      {"success":true,"message":"Audio notification setting updated successfully"}
+      */
+
+      if (data.success) {
         // update local state for immediate UI feedback
         setAudioNotification((prev) =>
           prev.map((v, i) => (i === index ? !v : v))
@@ -3019,7 +3025,7 @@ const fetchBuyOrders = async () => {
     })
     .catch(error => {
       console.error('Error toggling audio notification:', error);
-      toast.error('오디오 알림 설정 변경에 실패했습니다.');
+      toast.error('오디오 알림 설정 변경에 실패했습니다.' + error.message);
     });
   };
     

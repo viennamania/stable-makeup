@@ -19,10 +19,13 @@ export async function POST(request: NextRequest) {
       audioOn,
     });
 
+    //console.log("Updated order:", updatedOrder);
+
+
     return NextResponse.json({
       success: true,
       message: "Audio notification setting updated successfully",
-      order: updatedOrder,
+      ///order: updatedOrder,
     });
 
   } catch (error) {
