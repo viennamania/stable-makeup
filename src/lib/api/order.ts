@@ -6704,8 +6704,6 @@ export async function updateBuyOrderSettlement(
     storecode: string;
   }
 ): Promise<boolean> {
-
-
   const client = await clientPromise;
   const collection = client.db('ultraman').collection('buyorders');
   // update buyorder
@@ -6717,15 +6715,17 @@ export async function updateBuyOrderSettlement(
       settlementUpdatedBy: updater, // who updates the settlement
     } }
   );
+
+
   if (result.modifiedCount === 1) {
 
 
+    const collectionBuyorders = client.db('ultraman').collection('buyorders');
 
-
+    // update store with settlement data
     try {
-      const collectionBuyorders = client.db('ultraman').collection('buyorders');
-      const collectionStore = client.db('ultraman').collection('stores');
 
+      const collectionStore = client.db('ultraman').collection('stores');
 
       // totalSettlementCount is count of all buyorders with settlement and storecode
       const totalSettlementCount = await collectionBuyorders.countDocuments({
@@ -6744,23 +6744,16 @@ export async function updateBuyOrderSettlement(
               $group: {
                   _id: null,
                   totalSettlementAmount: { $sum: "$settlement.settlementAmount" },
-
                   totalSettlementAmountKRW: { $sum: { $toDouble: "$settlement.settlementAmountKRW" } },
-
-
                   totalFeeAmount: { $sum: "$settlement.feeAmount" },
-
                   totalFeeAmountKRW: { $sum: { $toDouble: "$settlement.feeAmountKRW" } },
               }
           }
       ]).toArray();
 
       const totalSettlementAmount = totalSettlementAmountResult[0].totalSettlementAmount;
-
       const totalSettlementAmountKRW = totalSettlementAmountResult[0].totalSettlementAmountKRW;
-
       const totalFeeAmount = totalSettlementAmountResult[0].totalFeeAmount;
-
       const totalFeeAmountKRW = totalSettlementAmountResult[0].totalFeeAmountKRW;
 
       // update store
@@ -6776,17 +6769,91 @@ export async function updateBuyOrderSettlement(
               },
           }
       );
-    
-      if (resultStore.modifiedCount !== 1) {
-        console.log('updateStore failed for storecode: ' + storecode);
+
+
+      if (resultStore.modifiedCount === 1) {
+        console.log('updateBuyOrderSettlement: store updated successfully');
+      } else {
+        console.log('updateBuyOrderSettlement: store update failed');
       }
 
     } catch (error) {
-      console.error('Error updating store settlement data:', error);
+      console.error('Error updating store with settlement data:', error);
     }
 
 
 
+
+    // update agent with settlement data
+    try {
+
+      // get agentcode from buyorder
+      const buyOrder = await collectionBuyorders.findOne<any>(
+        { _id: new ObjectId(orderId) },
+        { projection: { agentcode: 1 } }
+      );
+      if (!buyOrder || !buyOrder.agentcode) {
+        console.log('updateBuyOrderSettlement: agentcode not found in buyorder');
+        return false;
+      }
+      const agentcode = buyOrder.agentcode;
+
+      const collectionAgents = client.db('ultraman').collection('agents');
+
+      // totalSettlementCount is count of all buyorders with settlement and agentcode
+      const totalSettlementCount = await collectionBuyorders.countDocuments({
+        agentcode: agentcode,
+        settlement: { $exists: true }
+      });
+      console.log("updateBuyOrderSettlement totalSettlementCount", totalSettlementCount);
+      const totalSettlementAmountResult = await collectionBuyorders.aggregate([
+        {
+          $match: {
+            agentcode: agentcode,
+            settlement: { $exists: true }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            totalSettlementAmount: { $sum: "$settlement.settlementAmount" },
+
+            totalSettlementAmountKRW: { $sum: { $toDouble: "$settlement.settlementAmountKRW" } },
+
+            totalFeeAmount: { $sum: "$settlement.feeAmount" },
+
+            totalFeeAmountKRW: { $sum: { $toDouble: "$settlement.feeAmountKRW" } },
+          }
+        }
+      ]).toArray();
+
+      const totalSettlementAmount = totalSettlementAmountResult[0].totalSettlementAmount;
+      const totalSettlementAmountKRW = totalSettlementAmountResult[0].totalSettlementAmountKRW;
+      const totalFeeAmount = totalSettlementAmountResult[0].totalFeeAmount;
+      const totalFeeAmountKRW = totalSettlementAmountResult[0].totalFeeAmountKRW;
+      // update agent
+      const resultAgent = await collectionAgents.updateOne(
+        { agentcode: agentcode },
+        {
+          $set: {
+            totalSettlementCount: totalSettlementCount,
+            totalSettlementAmount: totalSettlementAmount,
+            totalSettlementAmountKRW: totalSettlementAmountKRW,
+            totalFeeAmount: totalFeeAmount,
+            totalFeeAmountKRW: totalFeeAmountKRW,
+          },
+        }
+      );
+
+      if (resultAgent.modifiedCount === 1) {
+        console.log('updateBuyOrderSettlement: agent updated successfully');
+      } else {
+        console.log('updateBuyOrderSettlement: agent update failed');
+      }
+
+    } catch (error) {
+      console.error('Error updating agent with settlement data:', error);
+    }
 
 
     return true;
@@ -6798,6 +6865,7 @@ export async function updateBuyOrderSettlement(
     return false;
   }
 }
+
 
 
 
