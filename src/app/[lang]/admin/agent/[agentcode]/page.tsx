@@ -1727,10 +1727,14 @@ export default function Index({ params }: any) {
   // if user?.role is not "admin", return "에이전트"
 
   if (
-    (address
-    && agent
-    &&  address !== agent.adminWalletAddress)
     
+
+    address
+    && agent
+    &&  address !== agent.adminWalletAddress
+    && user?.role !== "admin"
+
+  
 
   ) {
     return (
@@ -1773,6 +1777,13 @@ export default function Index({ params }: any) {
 
             {/* 로그아웃 버튼 */}
             <div className="w-full flex flex-row items-center justify-end gap-2">
+
+              {user?.nickname && (
+                <span className="text-sm text-gray-500">
+                  {user.nickname}
+                </span>
+              )}
+
               <button
                 onClick={() => {
                   confirm("로그아웃 하시겠습니까?") && activeWallet?.disconnect()
@@ -2994,7 +3005,7 @@ export default function Index({ params }: any) {
 
                   <div className="flex flex-row gap-2 justify-center items-center">
                     {/* if pol balance is 0, comment out the text */}
-                    {nativeBalance < 0.01 && (
+                    {nativeBalance < 0.0001 && (
                       <p className="text-sm text-red-500">
                         가스비용이 부족합니다.<br/>가스비용이 부족하면 입금은 가능하지만 출금은 불가능합니다.
                       </p>
@@ -3227,107 +3238,6 @@ export default function Index({ params }: any) {
                 </div>
 
 
-                {true && (
-            
-                  <div className="w-full flex flex-row gap-2 justify-between items-center mt-5">
-
-                    {/*
-                    <button
-                      onClick={() => {
-    
-
-                        // redirect to buy USDT page
-                        router.push(
-                          //"/" + params.lang + "/" + storecode + "/buyorder-usdt"
-
-                          //wallet === "smart" ?
-                          //</div>"/" + params.lang + "/" + storecode + "/buyorder-usdt?wallet=smart"
-                          //:
-
-                          "/" + params.lang + "/" + storecode + "/buyorder-placement"
-
-                        );
-
-                      }}
-                      className="w-full flex flex-row gap-2 justify-center items-center
-                      bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
-                    >
-                      <Image
-                        src="/icon-buy-label-color.png"
-                        alt="Buy"
-                        width={40}
-                        height={40}
-                        className="w-6 h-6"
-                      />
-                      {Buy}
-                    </button>
-                    */}
-              
-
-
-                    {/*
-                    <button
-                      //disabled={!address}
-                      onClick={() => {
-                        // my sell trades
-                        //console.log("my sell trades");
-                        //if (!address) {
-                        //  toast.error(Please_connect_your_wallet_first);
-                        //  return;
-                        //}
-
-                        //if (!seller && !userCode) {
-                        //  toast.error(Please_verify_your_account_first_for_selling);
-                        //  return;
-                        // }
-
-                        // redirect to sell trades page
-                        router.push(
-                          //"/" + params.lang + "/" + storecode + "/accept-buyorder-usdt"
-
-                          //wallet === "smart" ?
-                          //</div>"/" + params.lang + "/" + storecode + "/accept-buyorder-usdt?wallet=smart"
-                          //:
-
-                          "/" + params.lang + "/admin/trade"
-
-                        );
-
-                      }}
-                      className="w-full flex flex-row gap-2 justify-center items-center
-                      bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
-                    >
-                      <Image
-                        src="/icon-sell-label-color.png"
-                        alt="Sell"
-                        width={40}
-                        height={40}
-                        className="w-6 h-6"
-                      />
-                      {Sell}
-                    </button>
-                    */}
-
-                  </div>
-
-                )}
-
-
-
-                {false && isAdmin && (
-
-                  <div className="w-full grid grid-cols-2 xl:grid-cols-4 gap-2 mt-5">
-
-
-                  </div>
-
-                )}
-
-
-
-
-
-
             </div>
 
 
@@ -3393,172 +3303,5 @@ export default function Index({ params }: any) {
 };
 
 
-
-/*
-selectedItem?.buyer?.depositBankName
-selectedItem?.buyer?.depositName
-'https://cryptoss.beauty/' + params.lang + '/' + selectedItem.agentcode + '/payment?'
-'agentUser=' + selectedItem.nickname + '&depositBankName=' + selectedItem?.buyer?.depositBankName + '&depositName=' + selectedItem?.buyer?.depositName
-
-
-'https://cryptoss.beauty/' + params.lang + '/' + item.agentcode + '/payment?'
-                                    + 'agentUser=' + item.nickname + '&depositBankName=' + item?.buyer?.depositBankName + '&depositName=' + item?.buyer?.depositName
-*/
-
-const UserHomePage = (
-  {
-      closeModal = () => {},
-      selectedItem = null as { nickname: string; agentcode: string; buyer?: {
-        depositBankName?: string; depositName?: string; depositBankAccountNumber?: string;
-      } } | null,
-  }
-) => {
-
-  return (
-    <div className="w-full flex flex-col items-center justify-center gap-4">
-      <h1 className="text-2xl font-semibold">회원 홈페이지</h1>
-      
-      {/* iframe */}
-      <iframe
-        src={`https://cryptoss.beauty/kr/${selectedItem?.agentcode}/payment?`
-          + 'agentUser=' + selectedItem?.nickname
-          + '&depositBankName=' + selectedItem?.buyer?.depositBankName
-          + '&depositBankAccountNumber=' + selectedItem?.buyer?.depositBankAccountNumber
-          + '&depositName=' + selectedItem?.buyer?.depositName}
-        width="400px"
-        height="500px"
-        className="border border-zinc-300 rounded-lg"
-        title="User Home Page"
-      ></iframe>
-
-
-      <button
-        onClick={closeModal}
-        className="bg-[#3167b4] text-white px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
-      >
-        닫기
-      </button>
-    </div>
-  );
-
-};
-
-
-
-// close modal
-{/*
-const TradeDetail = (
-    {
-        closeModal = () => {},
-        goChat = () => {},
-        
-    }
-) => {
-
-
-    const [amount, setAmount] = useState(1000);
-    const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
-    const commission = 0.01; // example commission
-  
-    return (
-
-      <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-6">
-        <div className="flex items-center">
-          <span className="inline-block w-4 h-4 rounded-full bg-green-500 mr-2"></span>
-          <h2 className="text-lg font-semibold text-black ">Iskan9</h2>
-          <span className="ml-2 text-blue-500 text-sm">318 trades</span>
-        </div>
-        <p className="text-gray-600 mt-2">The offer is taken from another source. You can only use chat if the trade is open.</p>
-        
-        <div className="mt-4">
-          <div className="flex justify-between text-gray-700">
-            <span>Price</span>
-            <span>{price} KRW</span>
-          </div>
-          <div className="flex justify-between text-gray-700 mt-2">
-            <span>Limit</span>
-            <span>40680.00 KRW - 99002.9 KRW</span>
-          </div>
-          <div className="flex justify-between text-gray-700 mt-2">
-            <span>Available</span>
-            <span>1085.91 USDT</span>
-          </div>
-          <div className="flex justify-between text-gray-700 mt-2">
-            <span>Seller&apos;s payment method</span>
-            <span className="bg-yellow-100 text-yellow-800 px-2 rounded-full">Tinkoff</span>
-          </div>
-          <div className="mt-4 text-gray-700">
-            <p>24/7</p>
-          </div>
-        </div>
-  
-        <div className="mt-6 border-t pt-4 text-gray-700">
-          <div className="flex flex-col space-y-4">
-            <div>
-              <label className="block text-gray-700">I want to pay</label>
-              <input 
-                type="number"
-                value={amount}
-                onChange={(e) => setAmount(
-                    e.target.value === '' ? 0 : parseInt(e.target.value)
-                ) }
-
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">I will receive</label>
-              <input 
-                type="text"
-                value={`${receiveAmount} USDT`}
-                readOnly
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">Commission</label>
-              <input 
-                type="text"
-                value={`${commission} USDT`}
-                readOnly
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </div>
-          </div>
-          
-          <div className="mt-6 flex space-x-4">
-            <button
-                className="bg-green-500 text-white px-4 py-2 rounded-lg"
-                onClick={() => {
-                    console.log('Buy USDT');
-                    // go to chat
-                    // close modal
-                    closeModal();
-                    goChat();
-
-                }}
-            >
-                Buy USDT
-            </button>
-            <button
-                className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg"
-                onClick={() => {
-                    console.log('Cancel');
-                    // close modal
-                    closeModal();
-                }}
-            >
-                Cancel
-            </button>
-          </div>
-
-        </div>
-
-
-      </div>
-    );
-  };
-  */}
 
 
