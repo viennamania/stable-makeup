@@ -2387,6 +2387,8 @@ export async function getBuyOrdersGroupByStorecodeDaily(
 
   }
 ): Promise<any> {
+
+  console.log('getBuyOrdersGroupByStorecodeDaily storecode: ' + storecode);
   console.log('getBuyOrdersGroupByStorecodeDaily fromDate: ' + fromDate);
   console.log('getBuyOrdersGroupByStorecodeDaily toDate: ' + toDate);
 
@@ -2410,14 +2412,15 @@ export async function getBuyOrdersGroupByStorecodeDaily(
 
 
   // order by date descending
-
+  
   const pipeline = [
     {
       $match: {
-        storecode: {
-          $regex: storecode || '',
-          $options: 'i'
-        },
+        
+       // if storecode is not empty, then match storecode
+        storecode: storecode ? { $regex: storecode, $options: 'i' } : { $ne: null },
+
+
         status: 'paymentConfirmed',
         privateSale: { $ne: true },
         createdAt: {
@@ -2436,7 +2439,7 @@ export async function getBuyOrdersGroupByStorecodeDaily(
               timezone: "Asia/Seoul"
             } 
           },
-          storecode: "$storecode"
+
         },
         totalUsdtAmount: { $sum: "$usdtAmount" },
         totalKrwAmount: { $sum: "$krwAmount" },
@@ -2455,34 +2458,26 @@ export async function getBuyOrdersGroupByStorecodeDaily(
       $sort: { "_id.date": -1 } // Sort by date descending
     }
   ];
+  
+
 
   const results = await collection.aggregate(pipeline).toArray();
   //console.log('getBuyOrdersGroupByStorecodeDaily results: ' + JSON.stringify(results));
 
-  /*
-  return results.map(result => ({
-    date: result._id.date,
-    storecode: result._id.storecode,
-    totalUsdtAmount: result.totalUsdtAmount,
-    totalKrwAmount: result.totalKrwAmount
-  }));
-  */
+
   return {
     storecode: storecode,
     fromDate: fromDate,
     toDate: toDate,
     orders: results.map(result => ({
       date: result._id.date,
-      storecode: result._id.storecode,
       totalUsdtAmount: result.totalUsdtAmount,
       totalKrwAmount: result.totalKrwAmount,
       totalCount: result.totalCount,
-
       totalSettlementAmount: result.totalSettlementAmount,
       totalSettlementAmountKRW: result.totalSettlementAmountKRW,
     }))
   }
-
 
 }
 

@@ -93,7 +93,6 @@ import { useSearchParams } from 'next/navigation';
 interface BuyOrder {
 
   date: string,
-  storecode: string,
   totalUsdtAmount: number,
   totalKrwAmount: number,
   totalCount: number, // Count the number of orders
@@ -103,35 +102,6 @@ interface BuyOrder {
 }
 
 
-/*
-const wallets = [
-  inAppWallet({
-    auth: {
-      options: [
-        "google",
-        "discord",
-        "email",
-        "x",
-        "passkey",
-        "phone",
-        "facebook",
-        "line",
-        "apple",
-        "coinbase",
-      ],
-    },
-  }),
-  createWallet("com.coinbase.wallet"),
-  createWallet("me.rainbow"),
-  createWallet("io.rabby"),
-  createWallet("io.zerion.wallet"),
-  createWallet("io.metamask"),
-  createWallet("com.bitget.web3"),
-  createWallet("com.trustwallet.app"),
-  createWallet("com.okex.wallet"),
-
-];
-*/
 
 const wallets = [
   inAppWallet({
@@ -1044,7 +1014,6 @@ const fetchBuyOrders = async () => {
 
 
 
-
   const [tradeSummary, setTradeSummary] = useState({
     totalCount: 0,
     totalKrwAmount: 0,
@@ -1069,6 +1038,7 @@ const fetchBuyOrders = async () => {
     if (!address) {
       return;
     }
+
     setLoadingTradeSummary(true);
     const response = await fetch('/api/summary/getTradeSummary', {
       method: 'POST',
@@ -1076,18 +1046,38 @@ const fetchBuyOrders = async () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        /*
+        storecode: params.storecode,
+        walletAddress: address,
+        searchMyOrders: searchMyOrders,
+        searchOrderStatusCompleted: true,
+        //searchBuyer: searchBuyer,
+        //searchDepositName: searchDepositName,
+
+        //searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+
+        */
+
+        agentcode: params.agentcode,
         storecode: searchStorecode,
         walletAddress: address,
         searchMyOrders: searchMyOrders,
         searchOrderStatusCompleted: true,
+        
+        //searchBuyer: searchBuyer,
+        searchBuyer: '',
+        //searchDepositName: searchDepositName,
+        searchDepositName: '',
+        //searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+        searchStoreBankAccountNumber: '',
 
-        searchBuyer: searchBuyer,
-        searchDepositName: searchDepositName,
 
-        searchStoreBankAccountNumber: searchStoreBankAccountNumber,
 
         fromDate: searchFromDate,
         toDate: searchToDate,
+
+
+
       })
     });
     if (!response.ok) {
@@ -1110,38 +1100,22 @@ const fetchBuyOrders = async () => {
 
   useEffect(() => {
 
-    if (!address || !searchStorecode || !searchFromDate || !searchToDate) {
-      setTradeSummary({
-        totalCount: 0,
-        totalKrwAmount: 0,
-        totalUsdtAmount: 0,
-        totalSettlementCount: 0,
-        totalSettlementAmount: 0,
-        totalSettlementAmountKRW: 0,
-        totalFeeAmount: 0,
-        totalFeeAmountKRW: 0,
-        totalAgentFeeAmount: 0,
-        totalAgentFeeAmountKRW: 0,
-        orders: [] as BuyOrder[],
-
-        totalClearanceCount: 0,
-        totalClearanceAmount: 0,
-        totalClearanceAmountUSDT: 0,
-      });
+    if (!address || !searchFromDate || !searchToDate) {
       return;
     }
 
     getTradeSummary();
 
-    /*
     // fetch trade summary every 10 seconds
     const interval = setInterval(() => {
       getTradeSummary();
     }, 10000);
     return () => clearInterval(interval);
-    */
 
-  } , [address, searchMyOrders, searchStorecode, searchFromDate, searchToDate]);
+
+  } , [address, searchMyOrders, searchStorecode,
+    searchFromDate, searchToDate,
+  ]);
 
 
 
@@ -1205,6 +1179,113 @@ const fetchBuyOrders = async () => {
   useEffect(() => {
     fetchAllStores();
   }, []); 
+
+
+
+
+
+
+
+  // totalNumberOfBuyOrders
+  const [loadingTotalNumberOfBuyOrders, setLoadingTotalNumberOfBuyOrders] = useState(false);
+  const [totalNumberOfBuyOrders, setTotalNumberOfBuyOrders] = useState(0);
+  useEffect(() => {
+    if (!address) {
+      setTotalNumberOfBuyOrders(0);
+      return;
+    }
+
+    
+
+    const fetchTotalBuyOrders = async () => {
+      setLoadingTotalNumberOfBuyOrders(true);
+      const response = await fetch('/api/order/getTotalNumberOfBuyOrders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+        }),
+      });
+      if (!response.ok) {
+        console.error('Failed to fetch total number of buy orders');
+        return;
+      }
+      const data = await response.json();
+      //console.log('getTotalNumberOfBuyOrders data', data);
+      setTotalNumberOfBuyOrders(data.result.totalCount);
+
+      setLoadingTotalNumberOfBuyOrders(false);
+    };
+    
+    fetchTotalBuyOrders();
+
+    const interval = setInterval(() => {
+      fetchTotalBuyOrders();
+    }, 5000);
+    return () => clearInterval(interval);
+
+  }, [address]);
+
+      
+  
+  useEffect(() => {
+    if (totalNumberOfBuyOrders > 0 && loadingTotalNumberOfBuyOrders === false) {
+      const audio = new Audio('/notification.wav'); 
+      audio.play();
+    }
+  }, [totalNumberOfBuyOrders, loadingTotalNumberOfBuyOrders]);
+
+
+
+  // totalNumberOfClearanceOrders
+  const [loadingTotalNumberOfClearanceOrders, setLoadingTotalNumberOfClearanceOrders] = useState(false);
+  const [totalNumberOfClearanceOrders, setTotalNumberOfClearanceOrders] = useState(0);
+  useEffect(() => {
+    if (!address) {
+      setTotalNumberOfClearanceOrders(0);
+      return;
+    }
+
+    const fetchTotalClearanceOrders = async () => {
+      setLoadingTotalNumberOfClearanceOrders(true);
+      const response = await fetch('/api/order/getTotalNumberOfClearanceOrders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+        }),
+      });
+      if (!response.ok) {
+        console.error('Failed to fetch total number of clearance orders');
+        return;
+      }
+      const data = await response.json();
+      //console.log('getTotalNumberOfClearanceOrders data', data);
+      setTotalNumberOfClearanceOrders(data.result.totalCount);
+
+      setLoadingTotalNumberOfClearanceOrders(false);
+    };
+
+    fetchTotalClearanceOrders();
+
+    const interval = setInterval(() => {
+      fetchTotalClearanceOrders();
+    }, 5000);
+    return () => clearInterval(interval);
+
+  }, [address]);
+
+  useEffect(() => {
+    if (totalNumberOfClearanceOrders > 0 && loadingTotalNumberOfClearanceOrders === false) {
+      const audio = new Audio('/notification.wav');
+      audio.play();
+    }
+  }, [totalNumberOfClearanceOrders, loadingTotalNumberOfClearanceOrders]);
+
+
+
 
 
 
@@ -1379,6 +1460,128 @@ const fetchBuyOrders = async () => {
               //data-powered-by="Powered by OneClick USDT"
               //data-disclaimer="Disclaimer"
             ></div>
+
+
+
+          <div className="w-full flex flex-row items-center justify-end gap-2">
+
+            <div className="flex flex-row items-center justify-center gap-2
+            bg-white/80
+            p-2 rounded-lg shadow-md
+            backdrop-blur-md
+            ">
+              {loadingTotalNumberOfBuyOrders ? (
+                <Image
+                  src="/loading.png"
+                  alt="Loading"
+                  width={20}
+                  height={20}
+                  className="w-6 h-6 animate-spin"
+                />
+              ) : (
+                <Image
+                  src="/icon-buyorder.png"
+                  alt="Buy Order"
+                  width={35}
+                  height={35}
+                  className="w-6 h-6"
+                />
+              )}
+
+
+              <p className="text-lg text-red-500 font-semibold">
+                {
+                totalNumberOfBuyOrders
+                } 건
+              </p>
+
+              {totalNumberOfBuyOrders > 0 && (
+                <div className="flex flex-row items-center justify-center gap-2">
+                  <Image
+                    src="/icon-notification.gif"
+                    alt="Notification"
+                    width={50}
+                    height={50}
+                    className="w-15 h-15 object-cover"
+                    
+                  />
+                  <button
+                    onClick={() => {
+                      router.push('/' + params.lang + '/admin/buyorder');
+                    }}
+                    className="flex items-center justify-center gap-2
+                    bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
+                  >
+                    <span className="text-sm">
+                      구매주문관리
+                    </span>
+                  </button>
+                </div>
+              )}
+            </div>
+
+
+            {/* Clearance Orders */}
+            <div className="flex flex-row items-center justify-center gap-2
+            bg-white/80
+            p-2 rounded-lg shadow-md
+            backdrop-blur-md
+            ">
+
+              {loadingTotalNumberOfClearanceOrders ? (
+                <Image
+                  src="/loading.png"
+                  alt="Loading"
+                  width={20}
+                  height={20}
+                  className="w-6 h-6 animate-spin"
+                />
+              ) : (
+                <Image
+                  src="/icon-clearance.png"
+                  alt="Clearance"
+                  width={35}
+                  height={35}
+                  className="w-6 h-6"
+                />
+              )}
+
+              <p className="text-lg text-yellow-500 font-semibold">
+                {
+                totalNumberOfClearanceOrders
+                } 건
+              </p>
+
+              {totalNumberOfClearanceOrders > 0 && (
+                <div className="flex flex-row items-center justify-center gap-2">
+                  <Image
+                    src="/icon-notification.gif"
+                    alt="Notification"
+                    width={50}
+                    height={50}
+                    className="w-15 h-15 object-cover"
+                    
+                  />
+                  <button
+                    onClick={() => {
+                      router.push('/' + params.lang + '/admin/clearance-history');
+                    }}
+                    className="flex items-center justify-center gap-2
+                    bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
+                  >
+                    <span className="text-sm">
+                      청산내역관리
+                    </span>
+                  </button>
+                </div>
+              )}
+            </div>
+
+        
+          </div>
+
+
+
 
 
           {/* 홈 / 가맹점관리 / 회원관리 / 구매주문관리 */}
@@ -1609,12 +1812,11 @@ const fetchBuyOrders = async () => {
                 */}
 
 
-                {/* search depositName */}
+                {/*
                 <div className="flex flex-col items-center gap-2">
 
-
                   <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
-                    {/* search nickname */}
+
                     <div className="flex flex-row items-center gap-2">
                       <input
                         type="text"
@@ -1635,7 +1837,6 @@ const fetchBuyOrders = async () => {
                       />
                     </div>
 
-                    {/* searchStoreBankAccountNumber */}
                     <div className="flex flex-row items-center gap-2">
                       <input
                         type="text"
@@ -1646,12 +1847,6 @@ const fetchBuyOrders = async () => {
                       /> 
                     </div>
 
-
-
-                  
-
-
-                    {/* 검색 버튼 */}
                     <div className="
                       w-28  
                       flex flex-row items-center gap-2">
@@ -1697,6 +1892,7 @@ const fetchBuyOrders = async () => {
 
 
                 </div>
+                */}
 
 
 
@@ -1707,173 +1903,110 @@ const fetchBuyOrders = async () => {
 
 
 
-              {/* trade summary */}
+          {/* trade summary */}
 
-              <div className="flex flex-col xl:flex-row items-center justify-between gap-2
-                w-full
-                bg-zinc-100/50
-                p-4 rounded-lg shadow-md
-                ">
+          <div className="flex flex-col xl:flex-row items-center justify-between gap-2
+            w-full
+            bg-zinc-100/50
+            p-4 rounded-lg shadow-md
+            ">
 
-                <div className="w-full xl:w-1/3 flex flex-row items-center justify-between gap-2 pl-4 pr-4">
+            <div className="xl:w-1/4 flex flex-row items-center justify-between gap-2">
+              <div className="flex flex-col gap-2 items-center">
+                <div className="text-sm">총 거래수(건)</div>
+                <div className="text-xl font-semibold text-zinc-500">
+                  {tradeSummary.totalCount?.toLocaleString()} 건
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2 items-center">
+                <div className="text-sm">총 거래금액(원)</div>
+                <div className="flex flex-row items-center justify-center gap-1">
+                  <span className="text-xl font-semibold text-yellow-600">
+                    {tradeSummary.totalKrwAmount?.toLocaleString()}
+                  </span>
+                  <span className="text-sm text-zinc-500">원</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2 items-center">
+                <div className="text-sm">총 거래량(USDT)</div>
+                <div className="flex flex-row items-center justify-center gap-1">
+                  <Image
+                    src="/icon-tether.png"
+                    alt="Tether"
+                    width={20}
+                    height={20}
+                    className="w-5 h-5"
+                  />
+                  <span className="text-xl font-semibold text-green-600">
+                    {tradeSummary.totalUsdtAmount
+                      ? tradeSummary.totalUsdtAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                      : '0.00'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* divider */}
+            <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
+            <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
+
+            <div className="xl:w-1/2
+              flex flex-row items-center justify-between gap-2">
+              <div className="flex flex-col gap-2 items-center">
+                <div className="text-sm">총 정산수(건)</div>
+                  <span className="text-xl font-semibold text-zinc-500">
+                    {tradeSummary.totalSettlementCount?.toLocaleString()} 건
+                  </span>
+              </div>
+
+              <div className="flex flex-col gap-2 items-center">
+                <div className="text-sm">총 정산금액(원)</div>
+                <div className="flex flex-row items-center justify-center gap-1">
+                  <span className="text-xl font-semibold text-yellow-600">
+                    {tradeSummary.totalSettlementAmountKRW?.toLocaleString()}
+                  </span>
+                  <span className="text-sm text-zinc-500">원</span>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 items-center">
+                <div className="text-sm">총 정산량(USDT)</div>
+                <div className="flex flex-row items-center justify-center gap-1">
+                  <Image
+                    src="/icon-tether.png"
+                    alt="Tether"
+                    width={20}
+                    height={20}
+                    className="w-5 h-5"
+                  />
+                  <span className="text-xl font-semibold text-green-600">
+                    {tradeSummary.totalSettlementAmount
+                      ? tradeSummary.totalSettlementAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                      : '0.00'}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2 items-center">
+
+                <div className="flex flex-row gap-2 items-center">
                   
                   <div className="flex flex-col gap-2 items-center">
-                    <div className="text-sm">총 거래수(건)</div>
-                    <div className="text-xl font-semibold text-zinc-500">
-                      {tradeSummary.totalCount?.toLocaleString()} 건
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-2 items-center">
-                    <div className="text-sm">총 거래금액(원)</div>
-                    <div className="flex flex-row items-center gap-1">
-                      <span className="text-xl font-semibold text-yellow-600"
-                        style={{ fontFamily: 'monospace' }}
-                      >
-                      
-                        {tradeSummary.totalKrwAmount?.toLocaleString()}
-                      </span>
-                      <span className="text-sm text-zinc-500">
-                        원
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-2 items-center">
-                    <div className="text-sm">총 거래량(USDT)</div>
-                    <div className="flex flex-row items-center gap-1">
-                      <Image
-                        src="/icon-tether.png"
-                        alt="Tether"
-                        width={20}
-                        height={20}
-                        className="w-5 h-5"
-                      />
-                      <span className="text-xl font-semibold text-green-600"
-                        style={{ fontFamily: 'monospace' }}
-                      >
-                        {Number(tradeSummary.totalUsdtAmount
-                          ? tradeSummary.totalUsdtAmount
-                          : 0
-                        ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* divider */}
-                <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
-                <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
-
-                <div className="w-full xl:w-1/2
-                  flex flex-row items-center justify-between gap-2 pl-4 pr-4">
-
-                  
-                  <div className="flex flex-col gap-2 items-center">
-                    <div className="text-sm">총 정산수(건)</div>
-                    <div className="text-xl font-semibold text-zinc-500">
-                      {tradeSummary.totalSettlementCount?.toLocaleString()} 건
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-2 items-center">
-                    <div className="text-sm">총 정산금액(원)</div>
-                    <div className="flex flex-row items-center gap-1">
-                      <span className="text-xl font-semibold text-yellow-600"
-                        style={{ fontFamily: 'monospace' }}
-                      >
-                        {tradeSummary.totalSettlementAmountKRW?.toLocaleString()}
-                      </span>
-                      <span className="text-sm text-zinc-500">원</span>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-2 items-center">
-                    <div className="text-sm">총 정산량(USDT)</div>
-                    <div className="flex flex-row items-center gap-1">
-                      <Image
-                        src="/icon-tether.png"
-                        alt="Tether"
-                        width={20}
-                        height={20}
-                        className="w-5 h-5"
-                      />
-                      <span className="text-xl font-semibold text-green-600"
-                        style={{ fontFamily: 'monospace' }}
-                      >
-                        {Number(tradeSummary.totalSettlementAmount
-                          ? tradeSummary.totalSettlementAmount
-                          : 0
-                        ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-2 items-center">
-                    <div className="text-sm">총 수수료금액(원)</div>
-                    <div className="flex flex-row items-center gap-1">
-                      <span className="text-xl font-semibold text-yellow-600"
-                        style={{ fontFamily: 'monospace' }}
-                      >
-
-                        {
-                          (tradeSummary.totalFeeAmountKRW + tradeSummary.totalAgentFeeAmountKRW)
-                          .toLocaleString()
-                        }
-
-                      </span>
-                      <span className="text-sm text-zinc-500">원</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-2 items-center">
-                    <div className="text-sm">총 수수료수량(USDT)</div>
-                    <div className="flex flex-row items-center gap-1">
-                      <Image
-                        src="/icon-tether.png"
-                        alt="Tether"
-                        width={20}
-                        height={20}
-                        className="w-5 h-5"
-                      />
-                      <span className="text-xl font-semibold text-green-600"
-                        style={{ fontFamily: 'monospace' }}
-                      >
-                      {
-                        (tradeSummary.totalFeeAmount + tradeSummary.totalAgentFeeAmount)
-                        .toFixed(2)
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                      }
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-
-                {/* divider */}
-                {/*}
-                <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
-                <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
-
-                <div className="w-full xl:w-1/4 flex flex-row items-center justify-between gap-2 pl-4 pr-4">
-                  <div className="flex flex-col gap-2 items-center">
-                    <div className="text-sm">총 청산수(건)</div>
-                    <div className="text-xl font-semibold text-zinc-500">
-                      {tradeSummary.totalClearanceCount?.toLocaleString()} 건
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-2 items-center">
-                    <div className="text-sm">총 청산금액(원)</div>
-                    <div className="flex flex-row items-center gap-1">
+                    <div className="text-sm">총 PG 수수료(원)</div>
+                    <div className="w-full flex flex-row items-center justify-end gap-1">
                       <span className="text-xl font-semibold text-yellow-600">
-                        {tradeSummary.totalClearanceAmount?.toLocaleString()}
+                        {tradeSummary.totalFeeAmountKRW
+                          ? tradeSummary.totalFeeAmountKRW.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          : '0'}
                       </span>
                       <span className="text-sm text-zinc-500">원</span>
                     </div>
                   </div>
+
                   <div className="flex flex-col gap-2 items-center">
-                    <div className="text-sm">총 청산수량(USDT)</div>
-                    <div className="flex flex-row items-center gap-1">
+                    <div className="text-sm">총 PG 수수료(USDT)</div>
+                    <div className="w-full flex flex-row items-center justify-end gap-1">
                       <Image
                         src="/icon-tether.png"
                         alt="Tether"
@@ -1882,40 +2015,79 @@ const fetchBuyOrders = async () => {
                         className="w-5 h-5"
                       />
                       <span className="text-xl font-semibold text-green-600">
-                        {Number(tradeSummary.totalClearanceAmountUSDT
-                          ? tradeSummary.totalClearanceAmountUSDT
-                          : 0
-                        ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        {tradeSummary.totalFeeAmount
+                          ? tradeSummary.totalFeeAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          : '0.00'}
                       </span>
                     </div>
                   </div>
                 </div>
-                */}
-                
+
+                <div className="flex flex-row gap-2 items-center">
+                  <div className="flex flex-col gap-2 items-center">
+                    <div className="text-sm">총 AG 수수료(원)</div>
+                    <div className="w-full flex flex-row items-cneter justify-end gap-1">
+                      <span className="text-xl font-semibold text-yellow-600">
+                        {tradeSummary.totalAgentFeeAmountKRW
+                          ? tradeSummary.totalAgentFeeAmountKRW.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          : '0'}
+                      </span>
+                      <span className="text-sm text-zinc-500">원</span>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-2 items-center">
+                    <div className="text-sm">총 AG 수수료(USDT)</div>
+                    <div className="w-full flex flex-row items-center justify-end gap-1">
+                      <Image
+                        src="/icon-tether.png"
+                        alt="Tether"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
+                      <span className="text-xl font-semibold text-green-600">
+                        {tradeSummary.totalAgentFeeAmount
+                          ? tradeSummary.totalAgentFeeAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          : '0.00'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
               </div>
 
+            </div>
 
-              {/*
-              getAllBuyOrders result {
-                storecode: 'repruuqp',
-                fromDate: '2025-07-26',
-                toDate: '2025-07-26',
-                orders: [
-                  {
-                    date: '2025-07-25', 날짜
-                    storecode: 'repruuqp', 가맹점
-                    totalUsdtAmount: 19339.14, 총 USDT 금액
-                    totalKrwAmount: 26688000, 총 KRW 금액
-                  },
-                  {
-                    date: '2025-07-26',
-                    storecode: 'repruuqp',
-                    totalUsdtAmount: 5877.05,
-                    totalKrwAmount: 8110295
-                  }
-                ]
-              }
-                */}
+            
+            {/* divider */}
+            {/*}
+            <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
+            <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
+
+            <div className="xl:w-1/4 flex flex-row items-center justify-center gap-2">
+              <div className="flex flex-col gap-2 items-center">
+                <div className="text-sm">총 청산수(건)</div>
+                <div className="text-xl font-semibold text-zinc-500">
+                  {tradeSummary.totalClearanceCount?.toLocaleString()} 건
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2 items-center">
+                <div className="text-sm">총 청산금액(원)</div>
+                <div className="text-xl font-semibold text-zinc-500">
+                  {tradeSummary.totalClearanceAmount?.toLocaleString()} 원
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 items-center">
+                <div className="text-sm">총 청산수량(USDT)</div>
+                <div className="text-xl font-semibold text-zinc-500">
+                  {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()} USDT
+                </div>
+              </div>
+            </div>
+            */}
+            
+          </div>
 
 
               <div className="w-full overflow-x-auto">
@@ -1925,7 +2097,6 @@ const fetchBuyOrders = async () => {
                   <thead className="bg-zinc-200">
                     <tr>
                       <th className="px-4 py-2 text-left text-sm font-semibold text-zinc-600">날짜</th>
-                      <th className="px-4 py-2 text-left text-sm font-semibold text-zinc-600">가맹점</th>
                       <th className="px-4 py-2 text-left text-sm font-semibold text-zinc-600">총 거래건수(건)</th>
                       <th className="px-4 py-2 text-left text-sm font-semibold text-zinc-600">총 거래량(USDT)</th>
                       <th className="px-4 py-2 text-left text-sm font-semibold text-zinc-600">총 거래금액(원)</th>
@@ -1938,9 +2109,6 @@ const fetchBuyOrders = async () => {
                       <tr key={index} className="border-b border-zinc-300 hover:bg-zinc-100">
                         <td className="px-4 py-2 text-sm text-zinc-700">
                           {new Date(order.date).toLocaleDateString('ko-KR')}
-                        </td>
-                        <td className="px-4 py-2 text-sm text-zinc-700">
-                          {order.storecode}
                         </td>
                         <td className="px-4 py-2 text-sm text-zinc-700">
                           {order.totalCount ? order.totalCount.toLocaleString() : 0} 건
