@@ -2486,6 +2486,11 @@ export async function getBuyOrdersGroupByStorecodeDaily(
     {
       $match: {
         storecode: storecode ? { $regex: storecode, $options: 'i' } : { $ne: null },
+
+        // withdrawAmount > 0,
+        // depositAmount > 0,
+        withdrawAmount: { $gt: 0 },
+
         date: {
           $gte: fromDateValue,
           $lte: toDateValue,
@@ -6974,12 +6979,8 @@ export async function depositEscrow(
     return false;
   }
 
-  if (!store.escrowAmountUSDT) {
-    console.log('store.escrowAmountUSDT is not set for storecode: ' + storecode);
-    return false;
-  }
 
-  
+  const storeEscrowAmountUSDT = store.escrowAmountUSDT || 0;
 
   // insert escrow record
   const escrowCollection = client.db('ultraman').collection('escrows');
@@ -6988,8 +6989,8 @@ export async function depositEscrow(
       storecode: storecode,
       date: date,
       depositAmount: depositAmount,
-      beforeBalance: store.escrowAmountUSDT,
-      afterBalance: store.escrowAmountUSDT + depositAmount,
+      beforeBalance: storeEscrowAmountUSDT,
+      afterBalance: storeEscrowAmountUSDT + depositAmount,
     }
   );
   if (result.insertedId) {
@@ -7036,12 +7037,9 @@ export async function withdrawEscrow(
     return false;
   }
 
-  if (!store.escrowAmountUSDT) {
-    console.log('store.escrowAmountUSDT is not set for storecode: ' + storecode);
-    return false;
-  }
+  const storeEscrowAmountUSDT = store.escrowAmountUSDT || 0;
 
-  if (store.escrowAmountUSDT < withdrawAmount) {
+  if (storeEscrowAmountUSDT < withdrawAmount) {
     console.log('store.escrowAmountUSDT is less than withdrawAmount for storecode: ' + storecode);
     return false;
   }
@@ -7053,8 +7051,8 @@ export async function withdrawEscrow(
       storecode: storecode,
       date: date,
       withdrawAmount: withdrawAmount,
-      beforeBalance: store.escrowAmountUSDT,
-      afterBalance: store.escrowAmountUSDT - withdrawAmount,
+      beforeBalance: storeEscrowAmountUSDT,
+      afterBalance: storeEscrowAmountUSDT - withdrawAmount,
     }
   );
   
@@ -7096,7 +7094,7 @@ export async function getEscrowHistory(
   
   const results = await collection.find<any>(
     { storecode: storecode },
-  ).sort({ date: -1 }).limit(limit).skip((page - 1) * limit).toArray();
+  ).sort({ _id: -1 }).limit(limit).skip((page - 1) * limit).toArray();
 
   const totalCount = await collection.countDocuments(
     { storecode: storecode }
