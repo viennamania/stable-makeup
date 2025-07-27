@@ -1329,6 +1329,7 @@ const fetchBuyOrders = async () => {
                 />
                 )}
 
+                {/*
                 {address && !loadingUser && (
                     <div className="w-full flex flex-row items-center justify-end gap-2">
 
@@ -1338,6 +1339,7 @@ const fetchBuyOrders = async () => {
 
                     </div>
                 )}
+                */}
 
             </div>
 
