@@ -2374,6 +2374,7 @@ export async function getBuyOrders(
 
 
 
+
 export async function getBuyOrdersGroupByStorecodeDaily(
   {
     storecode,
@@ -2393,7 +2394,7 @@ export async function getBuyOrdersGroupByStorecodeDaily(
   console.log('getBuyOrdersGroupByStorecodeDaily toDate: ' + toDate);
 
   const client = await clientPromise;
-  const collection = client.db('runway').collection('buyorders');
+  const collection = client.db('ultraman').collection('buyorders');
 
   // fromDate format: YYYY-MM-DD
   // toDate format: YYYY-MM-DD
