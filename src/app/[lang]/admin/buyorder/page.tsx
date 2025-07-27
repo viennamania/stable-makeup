@@ -3241,17 +3241,6 @@ const fetchBuyOrders = async () => {
                     className="w-15 h-15 object-cover"
                     
                   />
-                  <button
-                    onClick={() => {
-                      router.push('/' + params.lang + '/admin/buyorder');
-                    }}
-                    className="flex items-center justify-center gap-2
-                    bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
-                  >
-                    <span className="text-sm">
-                      구매주문관리
-                    </span>
-                  </button>
                 </div>
               )}
             </div>
