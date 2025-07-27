@@ -2792,54 +2792,51 @@ const fetchBuyOrders = async () => {
 
 
 
-  // totalNumberOfBuyOrders
+ // totalNumberOfBuyOrders
   const [loadingTotalNumberOfBuyOrders, setLoadingTotalNumberOfBuyOrders] = useState(false);
   const [totalNumberOfBuyOrders, setTotalNumberOfBuyOrders] = useState(0);
-  // Move fetchTotalBuyOrders outside of useEffect to avoid self-reference error
-  const fetchTotalBuyOrders = async (): Promise<void> => {
-
-    if (loadingTotalNumberOfBuyOrders) {
-      return;
-    }
-
-    if (!params.center) {
-      return;
-    }
-
-    setLoadingTotalNumberOfBuyOrders(true);
-    const response = await fetch('/api/order/getTotalNumberOfBuyOrders', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        storecode: params.center,
-      })
-    });
-    if (!response.ok) {
-      console.error('Failed to fetch total number of buy orders');
-      setLoadingTotalNumberOfBuyOrders(false);
-      return;
-    }
-    const data = await response.json();
-    //console.log('getTotalNumberOfBuyOrders data', data);
-    setTotalNumberOfBuyOrders(data.result.totalCount);
-
-    setLoadingTotalNumberOfBuyOrders(false);
-  };
 
   useEffect(() => {
 
+    const fetchTotalBuyOrders = async (): Promise<void> => {
+      setLoadingTotalNumberOfBuyOrders(true);
+      const response = await fetch('/api/order/getTotalNumberOfBuyOrders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          storecode: params.center,
+        })
+      });
+      if (!response.ok) {
+        console.error('Failed to fetch total number of buy orders');
+        setLoadingTotalNumberOfBuyOrders(false);
+        return;
+      }
+      const data = await response.json();
+      //console.log('getTotalNumberOfBuyOrders data', data);
+      setTotalNumberOfBuyOrders(data.result.totalCount);
+
+      setLoadingTotalNumberOfBuyOrders(false);
+    };
+
+
+    if (!address) {
+      setTotalNumberOfBuyOrders(0);
+      return;
+    }
 
     fetchTotalBuyOrders();
-
 
     const interval = setInterval(() => {
       fetchTotalBuyOrders();
     }, 5000);
     return () => clearInterval(interval);
 
-  }, [params.center]);
+  }, [address, params.center]);
+
+
 
       
 

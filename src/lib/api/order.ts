@@ -6747,22 +6747,23 @@ export async function updateBuyOrderSettlement(
 
 
 // getTotalNumberOfBuyOrders
-export async function getTotalNumberOfBuyOrders({
-  storecode,
-} : {
+export async function getTotalNumberOfBuyOrders(
+  {
+    storecode,
+  }: {
     storecode: string;
-}): Promise<{ totalCount: number }> {
-
-  console.log('getTotalNumberOfBuyOrders storecode: ' + storecode);
-
+  }
+): Promise<{ totalCount: number }> {
   const client = await clientPromise;
   const collection = client.db('ultraman').collection('buyorders');
   // get total number of buy orders
   const totalCount = await collection.countDocuments(
     {
-      storecode: { $regex: storecode, $options: 'i' },
-
-
+      storecode: {
+        $regex: storecode || '', // if storecode is empty, it will match all
+        
+        $options: 'i',
+      },
       privateSale: { $ne: true },
       //status: 'paymentConfirmed',
       status: { $in: ['ordered', 'accepted', 'paymentRequested'] },
