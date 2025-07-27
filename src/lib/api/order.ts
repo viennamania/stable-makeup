@@ -6747,12 +6747,22 @@ export async function updateBuyOrderSettlement(
 
 
 // getTotalNumberOfBuyOrders
-export async function getTotalNumberOfBuyOrders(): Promise<{ totalCount: number }> {
+export async function getTotalNumberOfBuyOrders({
+  storecode,
+} : {
+    storecode: string;
+}): Promise<{ totalCount: number }> {
+
+  console.log('getTotalNumberOfBuyOrders storecode: ' + storecode);
+
   const client = await clientPromise;
   const collection = client.db('ultraman').collection('buyorders');
   // get total number of buy orders
   const totalCount = await collection.countDocuments(
     {
+      storecode: { $regex: storecode, $options: 'i' },
+
+
       privateSale: { $ne: true },
       //status: 'paymentConfirmed',
       status: { $in: ['ordered', 'accepted', 'paymentRequested'] },
@@ -6763,6 +6773,9 @@ export async function getTotalNumberOfBuyOrders(): Promise<{ totalCount: number 
     totalCount: totalCount,
   }
 }
+
+
+
 
 // getTotalNumberOfClearanceOrders
 export async function getTotalNumberOfClearanceOrders(): Promise<{ totalCount: number }> {

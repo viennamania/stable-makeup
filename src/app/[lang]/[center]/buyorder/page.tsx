@@ -2797,6 +2797,15 @@ const fetchBuyOrders = async () => {
   const [totalNumberOfBuyOrders, setTotalNumberOfBuyOrders] = useState(0);
   // Move fetchTotalBuyOrders outside of useEffect to avoid self-reference error
   const fetchTotalBuyOrders = async (): Promise<void> => {
+
+    if (loadingTotalNumberOfBuyOrders) {
+      return;
+    }
+
+    if (!params.center) {
+      return;
+    }
+
     setLoadingTotalNumberOfBuyOrders(true);
     const response = await fetch('/api/order/getTotalNumberOfBuyOrders', {
       method: 'POST',
@@ -2820,19 +2829,17 @@ const fetchBuyOrders = async () => {
   };
 
   useEffect(() => {
-    if (!address) {
-      setTotalNumberOfBuyOrders(0);
-      return;
-    }
+
 
     fetchTotalBuyOrders();
+
 
     const interval = setInterval(() => {
       fetchTotalBuyOrders();
     }, 5000);
     return () => clearInterval(interval);
 
-  }, [address]);
+  }, [params.center]);
 
       
 

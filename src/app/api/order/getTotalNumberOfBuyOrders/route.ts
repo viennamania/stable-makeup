@@ -9,9 +9,14 @@ import {
 export async function POST(request: NextRequest) {
 
   const body = await request.json();
+  const {
+    storecode = '', // Default to empty string if not provided
+  } = body;
 
 
-  const result = await getTotalNumberOfBuyOrders();
+  const result = await getTotalNumberOfBuyOrders({
+    storecode: storecode,
+  });
 
  
   return NextResponse.json({
