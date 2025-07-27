@@ -507,21 +507,9 @@ export default function Index({ params }: any) {
 
 
 
-
-
-
-
-
-
-  
-
-  // get User by wallet address
   const [isAdmin, setIsAdmin] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [loadingUser, setLoadingUser] = useState(false);
-
-
-
 
 
   useEffect(() => {
@@ -595,6 +583,10 @@ export default function Index({ params }: any) {
 
 
   
+  // get User by wallet address
+
+
+  
   useEffect(() => {
 
     if (!address) {
@@ -611,19 +603,20 @@ export default function Index({ params }: any) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            storecode: searchStorecode,
+            storecode: "admin",
             walletAddress: address,
         }),
     })
     .then(response => response.json())
     .then(data => {
         
-        /////console.log('data.result', data.result);
+        ///console.log('getUser data.result', data.result);
 
 
         setUser(data.result);
 
         setIsAdmin(data.result?.role === "admin");
+
 
     })
     .catch((error) => {
@@ -635,9 +628,8 @@ export default function Index({ params }: any) {
     setLoadingUser(false);
 
 
-  } , [address, searchStorecode]);
+  } , [address]);
 
-  
 
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -1294,7 +1286,7 @@ const fetchBuyOrders = async () => {
     <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-2xl mx-auto">
 
 
-        <div className="py-0 w-full">
+      <div className="py-0 w-full">
 
         <div className="w-full flex flex-col xl:flex-row items-center justify-center gap-2 bg-black/10 p-2 rounded-lg mb-4">
             
@@ -1392,7 +1384,6 @@ const fetchBuyOrders = async () => {
             <ConnectButton
               client={client}
               wallets={wallets}
-              chain={arbitrum}
 
               /*
               accountAbstraction={{
