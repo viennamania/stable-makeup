@@ -1925,7 +1925,7 @@ export default function Index({ params }: any) {
 
         } catch (error) {
           console.error('Error:', error);
-          toast.error('결제확인이 실패했습니다.');
+          toast.error('결제확인이 실패했습니다.' + error);
         }
 
       }
