@@ -1491,7 +1491,7 @@ export default function Index({ params }: any) {
               <div className='flex w-32 items-center justify-center gap-2
                 bg-yellow-500 text-[#3167b4] text-sm rounded-lg p-2'>
                 <Image
-                  src="/icon-agent.png"
+                  src="/icon-statistics.png"
                   alt="Trade"
                   width={35}
                   height={35}
@@ -1514,15 +1514,15 @@ export default function Index({ params }: any) {
 
               <div className='flex flex-row items-center space-x-4'>
                   <Image
-                    src="/icon-trade.png"
-                    alt="Trade"
+                    src="/icon-statistics.png"
+                    alt="Statistics"
                     width={35}
                     height={35}
                     className="w-6 h-6"
                   />
 
                   <div className="text-xl font-semibold">
-                    통계(가맹)
+                    통계(AG)
                   </div>
 
                   
