@@ -4404,8 +4404,16 @@ const [tradeSummary, setTradeSummary] = useState({
                         }}
                       >
                         <tr>
-                          <th className="p-2">#{TID}</th>
-                          <th className="p-2">출금신청시간</th>
+                          <th className="p-2">
+                            <div className="flex flex-col items-center">
+                              <span className="text-sm">
+                                #{TID}
+                              </span>
+                              <span className="text-sm">
+                                신청시간
+                              </span>
+                            </div>
+                          </th>
 
                           <th className="p-2">{Buyer}</th>
 
@@ -4429,7 +4437,7 @@ const [tradeSummary, setTradeSummary] = useState({
 
                           <th className="p-2">{Seller} / {Status}</th>
                           <th className="p-2">거래취소</th>
-                          <th className="p-2">거래완료</th>
+                          <th className="p-2">USDT 전송</th>
                           <th className="p-2">출금상태</th>
                         </tr>
                       </thead>
@@ -4452,60 +4460,53 @@ const [tradeSummary, setTradeSummary] = useState({
                           `}>
                           
 
-                            {/* monospace font for tradeId */}
-                            <td className="text-zinc-500
-                              text-sm font-semibold
-                              p-2"
-                              style={{ fontFamily: 'monospace' }}
-                            >
-                              
-                              {
-                                "#" + item.tradeId
-                              }
-                            </td>
-
-
                             <td className="p-2">
                               <div className="flex flex-col items-center gap-2">
+                                <span className="text-sm text-zinc-500">
+                                  #{item.tradeId}
+                                </span>
+                                <div className="flex flex-col items-center gap-2">
 
-                                {
-                                  new Date(item.createdAt).toLocaleDateString(params.lang, {
-                                    year: 'numeric',
-                                    month: '2-digit',
-                                    day: '2-digit',
-                                  }) + ' ' +
-                                  new Date(item.createdAt).toLocaleTimeString(params.lang, {
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                    second: '2-digit',
-                                  })
-                                }
+                                  {
+                                    new Date(item.createdAt).toLocaleDateString(params.lang, {
+                                      year: 'numeric',
+                                      month: '2-digit',
+                                      day: '2-digit',
+                                    }) + ' ' +
+                                    new Date(item.createdAt).toLocaleTimeString(params.lang, {
+                                      hour: '2-digit',
+                                      minute: '2-digit',
+                                      second: '2-digit',
+                                    })
+                                  }
 
-                                <div className="text-sm text-zinc-500">
-                                  {params.lang === 'ko' ? (
-                                    <p>{
-                                      new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 ? (
-                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000) + ' ' + seconds_ago
-                                      ) :
-                                      new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 * 60 ? (
-                                      ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
-                                      ) : (
-                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
-                                      )
-                                    }</p>
-                                  ) : (
-                                    <p>{
-                                      new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 ? (
-                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000) + ' ' + seconds_ago
-                                      ) :
-                                      new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 * 60 ? (
-                                      ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
-                                      ) : (
-                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
-                                      )
-                                    }</p>
-                                  )}
+                                  <div className="text-sm text-zinc-500">
+                                    {params.lang === 'ko' ? (
+                                      <p>{
+                                        new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 ? (
+                                          ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000) + ' ' + seconds_ago
+                                        ) :
+                                        new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 * 60 ? (
+                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
+                                        ) : (
+                                          ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
+                                        )
+                                      }</p>
+                                    ) : (
+                                      <p>{
+                                        new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 ? (
+                                          ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000) + ' ' + seconds_ago
+                                        ) :
+                                        new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 * 60 ? (
+                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
+                                        ) : (
+                                          ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
+                                        )
+                                      }</p>
+                                    )}
+                                  </div>
                                 </div>
+
                               </div>
                             </td>
                             
@@ -5064,7 +5065,7 @@ const [tradeSummary, setTradeSummary] = useState({
                                       <button
                                         disabled={confirmingPayment[index] || !confirmPaymentCheck[index]}
                                         className={`
-                                          w-24 h-8
+                                          w-32 h-8
                                           flex flex-row
                                           items-center justify-center
                                           gap-1 text-sm text-white px-2 py-1 rounded-md ${confirmingPayment[index] || !confirmPaymentCheck[index] ? 'bg-gray-500' : 'bg-green-500'}`}
@@ -5091,7 +5092,7 @@ const [tradeSummary, setTradeSummary] = useState({
                                           />
                                         )}
                                         <span className="text-sm">
-                                          거래완료
+                                          USDT 전송
                                         </span>
 
                                       </button>
@@ -5174,11 +5175,17 @@ const [tradeSummary, setTradeSummary] = useState({
                               
                               {item?.buyer?.depositCompleted === false
                                ? (
-                                <div className="text-sm text-red-600">
+                                <div className="text-sm text-red-600
+                                flex flex-row items-center gap-2
+                                border border-red-600
+                                rounded-md px-2 py-1">
                                   출금대기중
                                 </div>
                               ) : (
-                                <div className="text-sm text-green-600">
+                                <div className="text-sm text-green-600
+                                flex flex-row items-center gap-2
+                                border border-green-600
+                                rounded-md px-2 py-1">
                                   출금완료
                                 </div>
                               )}

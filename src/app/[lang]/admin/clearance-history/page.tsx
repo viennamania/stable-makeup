@@ -3904,8 +3904,10 @@ const fetchBuyOrders = async () => {
 
 
                           {/* 출금상태: buyer.depositCompleted */}
-                          <td className="p-2">
-
+                          <td className="p-2
+                            flex items-center justify-center
+                            text-center
+                            ">
 
                             {
                             item.transactionHash && item.transactionHash !== '0x' && (
@@ -3914,13 +3916,16 @@ const fetchBuyOrders = async () => {
                               {item?.buyer?.depositCompleted === false
                               ? (
                                 <div className="flex flex-col items-center justify-center gap-1">
-                                  <span className="text-sm text-red-600">
+                                  <span className="text-sm text-red-600
+                                    border border-red-600
+                                    rounded-md px-2 py-1">
                                     출금대기중
                                   </span>
                                   {/* 출금완료 버튼 */}
                                   <button
                                     disabled={loadingDeposit[index]}
                                     className={`
+                                      w-36 h-8
                                       text-sm text-white px-2 py-1 rounded-md
                                       bg-green-500 hover:bg-green-600
                                       transition-all duration-200 ease-in-out
@@ -3948,11 +3953,13 @@ const fetchBuyOrders = async () => {
                                         className="animate-spin"
                                       />
                                     )}
-                                    출금완료
+                                    출금완료하기
                                   </button>
                                 </div>
                               ) : (
-                                <span className="text-sm text-green-600">
+                                <span className="text-sm text-green-600
+                                  border border-green-600
+                                  rounded-md px-2 py-1">
                                   출금완료
                                 </span>
                               )}
