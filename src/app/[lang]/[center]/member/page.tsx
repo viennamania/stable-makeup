@@ -820,7 +820,7 @@ export default function Index({ params }: any) {
     setLoadingUser(false);
 
 
-  } , [address, params.center]);
+  } , [address]);
 
 
 
@@ -1079,10 +1079,6 @@ export default function Index({ params }: any) {
           setStore(data.result);
 
           setStoreAdminWalletAddress(data.result?.adminWalletAddress);
-
-          if (data.result?.adminWalletAddress === address) {
-            setIsAdmin(true);
-          }
 
         } else {
           // get store list
@@ -2013,7 +2009,7 @@ export default function Index({ params }: any) {
                       alt="Store"
                       width={35}
                       height={35}
-                      className="rounded-lg w-5 h-5"
+                      className="rounded-lg w-5 h-5 object-cover"
                   />
                   <span className="text-sm text-zinc-50">
                     {
@@ -2175,7 +2171,7 @@ export default function Index({ params }: any) {
             <div className="w-full flex flex-col items-end justify-end gap-2
             border-b border-zinc-300 pb-2">
 
-              {/* 가맹점 보유량 */}
+              {/* 가맹점 보유 */}
               <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
                 <div className="flex flex-row gap-2 items-center">
                   <Image
