@@ -146,13 +146,16 @@ export default function Index({ params }: any) {
   const page = searchParams.get('page') || 1;
 
 
-  const searchParamsStorecode = searchParams.get('storecode') || "";
+  // search agent code
+  const searchParamsAgentcode = searchParams.get('agentcode') || "";
 
-
-  const [searchStorecode, setSearchStorecode] = useState("");
+  const [searchAgentcode, setSearchAgentcode] = useState("");
   useEffect(() => {
-    setSearchStorecode(searchParamsStorecode || "");
-  }, [searchParamsStorecode]);
+    setSearchAgentcode(searchParamsAgentcode || "");
+  }, [searchParamsAgentcode]);
+
+
+
 
 
 
@@ -475,26 +478,6 @@ export default function Index({ params }: any) {
       setBalance( Number(result) / 10 ** 6 );
 
 
-      /*
-      await fetch('/api/user/getBalanceByWalletAddress', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          chain: searchStorecode,
-          walletAddress: address,
-        }),
-      })
-
-      .then(response => response.json())
-
-      .then(data => {
-          setNativeBalance(data.result?.displayValue);
-      });
-      */
-
-
 
     };
 
@@ -517,76 +500,6 @@ export default function Index({ params }: any) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [loadingUser, setLoadingUser] = useState(false);
-
-
-  useEffect(() => {
-
-    if (address) {
-
-      getUserEmail({ client }).then((email) => {
-        console.log('email', email);
-
-        if (email) {
-          
-
-          fetch('/api/user/setUserVerified', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            // storecode, walletAddress, nickname, mobile, email
-            body: JSON.stringify({
-              storecode: searchStorecode,
-              walletAddress: address,
-              nickname: email,
-              mobile: '+82',
-              email: email,
-            }),
-          })
-          .then(response => response.json())
-          .then(data => {
-              //console.log('data', data);
-
-
-
-              fetch('/api/user/getUser', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  storecode: searchStorecode,
-                  walletAddress: address,
-                }),
-              })
-              .then(response => response.json())
-              .then(data => {
-                  //console.log('data', data);
-                  setUser(data.result);
-              })
-
-          });
-
-
-
-        }
-
-      });
-
-  
-
-      //const phoneNumber = await getUserPhoneNumber({ client });
-      //setPhoneNumber(phoneNumber);
-
-
-      getUserPhoneNumber({ client }).then((phoneNumber) => {
-        setPhoneNumber(phoneNumber || "");
-      });
-
-    }
-
-  } , [address]);
-
 
 
   
@@ -757,9 +670,16 @@ export default function Index({ params }: any) {
     const fetchBuyOrders = async () => {
 
 
+      if (!searchAgentcode || searchAgentcode === "") {
+        setBuyOrders([]);
+        setTotalCount(0);
+        return;
+      }
+
+
       setLoadingBuyOrders(true);
 
-      const response = await fetch('/api/order/getAllBuyOrdersByStorecodeDaily', {
+      const response = await fetch('/api/order/getAllBuyOrdersByAgentcodeDaily', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -767,7 +687,7 @@ export default function Index({ params }: any) {
           body: JSON.stringify(
 
             {
-              storecode: searchStorecode,
+              agentcode: searchAgentcode,
               limit: Number(limit),
               page: Number(page),
               walletAddress: address,
@@ -829,7 +749,7 @@ export default function Index({ params }: any) {
     address,
     searchMyOrders,
 
-    searchStorecode,
+    searchAgentcode,
     searchFromDate,
     searchToDate,
     searchBuyer,
@@ -838,121 +758,30 @@ export default function Index({ params }: any) {
 ]);
 
 
-///console.log('agreementForTrade', agreementForTrade);
 
 
-const [fetchingBuyOrders, setFetchingBuyOrders] = useState(false);
-
-const fetchBuyOrders = async () => {
-
-
-  if (fetchingBuyOrders) {
-    return;
-  }
-  setFetchingBuyOrders(true);
-
-  const response = await fetch('/api/order/getAllBuyOrdersByStorecodeDaily', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(
-      {
-        storecode: searchStorecode,
-        limit: Number(limitValue),
-        page: Number(pageValue),
-        walletAddress: address,
-        searchMyOrders: searchMyOrders,
-
-        searchOrderStatusCompleted: true,
-
-        searchBuyer: searchBuyer,
-        searchDepositName: searchDepositName,
-
-        searchStoreBankAccountNumber: searchStoreBankAccountNumber,
+  // array of agents
+  const [agentList, setAgentList] = useState([] as any[]);
 
 
-        fromDate: searchFromDate,
-        toDate: searchToDate,
+  const [agentAdminWalletAddress, setAgentAdminWalletAddress] = useState("");
 
-      }
-
-    ),
-  });
-
-  if (!response.ok) {
-    setFetchingBuyOrders(false);
-    toast.error('Failed to fetch buy orders');
-    return;
-  }
-  const data = await response.json();
-  //console.log('data', data);
-
-  setBuyOrders(data.result.orders);
-  setTotalCount(data.result.totalCount);
-  setFetchingBuyOrders(false);
-
-  return data.result.orders;
-}
-
-
-
-
-  
-
-
-  // check table view or card view
-  const [tableView, setTableView] = useState(true);
-
-
-
-
-  const [storeCodeNumber, setStoreCodeNumber] = useState('');
-
-  useEffect(() => {
-
-    const fetchStoreCode = async () => {
-
-      const response = await fetch('/api/order/getStoreCodeNumber', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      const data = await response.json();
-
-      //console.log('getStoreCodeNumber data', data);
-
-      setStoreCodeNumber(data?.storeCodeNumber);
-
-    }
-
-    fetchStoreCode();
-
-  } , []);
-    
-
-
-
-  const [storeAdminWalletAddress, setStoreAdminWalletAddress] = useState("");
-
-  const [fetchingStore, setFetchingStore] = useState(false);
-  const [store, setStore] = useState(null) as any;
+  const [fetchingAgent, setFetchingAgent] = useState(false);
+  const [agent, setAgent] = useState(null) as any;
 
   useEffect(() => {
 
 
-    setFetchingStore(true);
+    setFetchingAgent(true);
 
     const fetchData = async () => {
-        const response = await fetch("/api/store/getOneStore", {
+        const response = await fetch("/api/agent/getOneAgent", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              storecode: searchStorecode,
+                agentcode: searchAgentcode,
             }),
         });
 
@@ -962,26 +791,48 @@ const fetchBuyOrders = async () => {
 
         if (data.result) {
 
-          setStore(data.result);
+          setAgent(data.result);
 
-          setStoreAdminWalletAddress(data.result?.adminWalletAddress);
+          setAgentAdminWalletAddress(data.result?.adminWalletAddress);
 
           if (data.result?.adminWalletAddress === address) {
             setIsAdmin(true);
           }
 
-        }
+      } else {
+        // get agent list
+        const response = await fetch("/api/agent/getAllAgents", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+          }),
+        });
+        const data = await response.json();
+        //console.log("getAgentList data", data);
+        setAgentList(data.result.agents);
+        setAgent(null);
+        setAgentAdminWalletAddress("");
+      }
 
-        setFetchingStore(false);
+        setFetchingAgent(false);
     };
 
-    if (!searchStorecode) {
+    if (!searchAgentcode || searchAgentcode === "") {
       return;
     }
 
     fetchData();
 
-  } , [searchStorecode, address]);
+    // interval to fetch store data every 10 seconds
+    const interval = setInterval(() => {
+      fetchData();
+    }
+    , 5000);
+    return () => clearInterval(interval);
+
+  } , [searchAgentcode, address]);
 
 
 
@@ -1007,7 +858,7 @@ const fetchBuyOrders = async () => {
 
 
   const getTradeSummary = async () => {
-    if (!address) {
+    if (!address || !searchAgentcode) {
       return;
     }
 
@@ -1030,8 +881,9 @@ const fetchBuyOrders = async () => {
 
         */
 
-        agentcode: params.agentcode,
-        storecode: searchStorecode,
+        agentcode: searchAgentcode,
+      
+
         walletAddress: address,
         searchMyOrders: searchMyOrders,
         searchOrderStatusCompleted: true,
@@ -1058,8 +910,8 @@ const fetchBuyOrders = async () => {
       return;
     }
     const data = await response.json();
-    
-    console.log('getTradeSummary data', data);
+
+    //console.log('getTradeSummary data', data);
 
 
     setTradeSummary(data.result);
@@ -1085,7 +937,7 @@ const fetchBuyOrders = async () => {
     return () => clearInterval(interval);
 
 
-  } , [address, searchMyOrders, searchStorecode,
+  } , [address, searchMyOrders, searchAgentcode,
     searchFromDate, searchToDate,
   ]);
 
@@ -1104,8 +956,51 @@ const fetchBuyOrders = async () => {
       // Cleanup the script when the component unmounts
       document.body.removeChild(script);
     };
-  }, [address, store]);
+  }, [address]);
 
+
+
+
+  // get all Agents
+  const [fetchingAllAgents, setFetchingAllAgents] = useState(false);
+  const [allAgents, setAllAgents] = useState([] as any[]);
+  const [agentTotalCount, setAgentTotalCount] = useState(0);
+  const fetchAllAgents = async () => {
+    if (fetchingAllAgents) {
+      return;
+    }
+    setFetchingAllAgents(true);
+    const response = await fetch('/api/agent/getAllAgents', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        {
+          limit: 100,
+          page: 1,
+        }
+      ),
+    });
+
+    if (!response.ok) {
+      setFetchingAllAgents(false);
+      toast.error('에이전트 검색에 실패했습니다.');
+      return;
+    }
+
+    const data = await response.json();
+
+    ///console.log('getAllStores data', data);
+
+    setAllAgents(data.result.agents);
+    setAgentTotalCount(data.result.totalCount);
+    setFetchingAllAgents(false);
+    return data.result.agents;
+  }
+  useEffect(() => {
+    fetchAllAgents();
+  }, []);
 
 
 
@@ -1210,28 +1105,7 @@ const fetchBuyOrders = async () => {
   }, [totalNumberOfClearanceOrders, loadingTotalNumberOfClearanceOrders]);
 
 
-  // if loadingStore is true, show loading
-  if (fetchingStore) {
-    return (
-      <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-2xl mx-auto">
-        <div className="py-0 w-full">
-          <h1 className="text-2xl font-bold">로딩 중...</h1>
-        </div>
-      </main>
-    );
-  }
 
-  // if searchStorecode is empty, error page
-  if (!fetchingStore && !searchStorecode) {
-    return (
-      <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-2xl mx-auto">
-        <div className="py-0 w-full">
-          <h1 className="text-2xl font-bold text-red-500">잘못된 접근입니다.</h1>
-          <p className="text-gray-500">올바른 상점 코드를 입력해주세요.</p>
-        </div>
-      </main>
-    );
-  }
 
 
 
@@ -1603,18 +1477,28 @@ const fetchBuyOrders = async () => {
                   청산내역
               </button>
 
+              <button
+                  onClick={() => router.push('/' + params.lang + '/admin/trade-history-daily')}
+                  className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                  hover:bg-[#3167b4]/80
+                  hover:cursor-pointer
+                  hover:scale-105
+                  transition-transform duration-200 ease-in-out
+                  ">
+                  통계(가맹)
+              </button>
 
               <div className='flex w-32 items-center justify-center gap-2
-              bg-yellow-500 text-[#3167b4] text-sm rounded-lg p-2'>
+                bg-yellow-500 text-[#3167b4] text-sm rounded-lg p-2'>
                 <Image
-                  src="/icon-buyorder.png"
+                  src="/icon-agent.png"
                   alt="Trade"
                   width={35}
                   height={35}
                   className="w-4 h-4"
                 />
                 <div className="text-sm font-semibold">
-                  통계(가맹)
+                  통계(AG)
                 </div>
               </div>
 
@@ -1649,6 +1533,201 @@ const fetchBuyOrders = async () => {
                     height={35}
                     className={`w-6 h-6 ${loadingBuyOrders ? 'animate-spin' : 'hidden'}`}
                   />
+
+              </div>
+
+
+
+
+
+
+              <div className="w-full flex flex-col xl:flex-row items-center justify-between gap-3">
+
+
+
+                {/* select agentcode */}
+                <div className="flex flex-row items-center gap-2">
+
+                    <Image
+                      src="/icon-store.png"
+                      alt="Store"
+                      width={20}
+                      height={20}
+                      className="rounded-lg w-5 h-5"
+                    />
+
+                    <span className="
+                      w-32
+                      text-sm font-semibold">
+                      에이전트 선택
+                    </span>
+
+
+                    <select
+                      value={searchAgentcode}
+
+                      //onChange={(e) => setSearchStorecode(e.target.value)}
+
+                      // storecode parameter is passed to fetchBuyOrders
+                      onChange={(e) => {
+                        router.push('/' + params.lang + '/admin/trade-history-daily-agent?agentcode=' + e.target.value);
+                        setSearchAgentcode(e.target.value);
+                      }}
+
+
+
+                      className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                    >
+                      <option value="">에이전트 선택</option>
+
+                      {fetchingAllAgents && (
+                        <option value="" disabled>
+                          에이전트 검색중...
+                        </option>
+                      )}
+
+                      {!fetchingAllAgents && allAgents && allAgents.map((item, index) => (
+                        <option key={index} value={item.agentcode}
+                          className="flex flex-row items-center justify-start gap-2"
+                        >
+
+                          {item.agentName}{' '}({item.agentcode})
+
+                        </option>
+                      ))}
+                    </select>
+                
+                </div>
+
+
+
+                {/* serach fromDate and toDate */}
+                {/* DatePicker for fromDate and toDate */}
+                {/*
+                <div className="flex flex-col xl:flex-row items-center gap-2">
+                  <div className="flex flex-row items-center gap-2">
+                    <Image
+                      src="/icon-calendar.png"
+                      alt="Calendar"
+                      width={20}
+                      height={20}
+                      className="rounded-lg w-5 h-5"
+                    />
+                    <input
+                      type="date"
+                      value={searchFromDate}
+                      onChange={(e) => setSearchFormDate(e.target.value)}
+                      className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                    />
+                  </div>
+
+                  <span className="text-sm text-gray-500">~</span>
+
+                  <div className="flex flex-row items-center gap-2">
+                    <Image
+                      src="/icon-calendar.png"
+                      alt="Calendar"
+                      width={20}
+                      height={20}
+                      className="rounded-lg w-5 h-5"
+                    />
+                    <input
+                      type="date"
+                      value={searchToDate}
+                      onChange={(e) => setSearchToDate(e.target.value)}
+                      className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                    />
+                  </div>
+                </div>
+                */}
+
+
+                {/*
+                <div className="flex flex-col items-center gap-2">
+
+                  <div className="flex flex-col xl:flex-row items-center justify-center gap-2">
+
+                    <div className="flex flex-row items-center gap-2">
+                      <input
+                        type="text"
+                        value={searchBuyer}
+                        onChange={(e) => setSearchBuyer(e.target.value)}
+                        placeholder="회원 아이디"
+                        className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                      />
+                    </div>
+
+                    <div className="flex flex-row items-center gap-2">
+                      <input
+                        type="text"
+                        value={searchDepositName}
+                        onChange={(e) => setSearchDepositName(e.target.value)}
+                        placeholder="입금자명"
+                        className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                      />
+                    </div>
+
+                    <div className="flex flex-row items-center gap-2">
+                      <input
+                        type="text"
+                        value={searchStoreBankAccountNumber}
+                        onChange={(e) => setSearchStoreBankAccountNumber(e.target.value)}
+                        placeholder="입금통장번호"
+                        className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                      /> 
+                    </div>
+
+                    <div className="
+                      w-28  
+                      flex flex-row items-center gap-2">
+                      <button
+                        onClick={() => {
+                          setPageValue(1);
+                          
+                          fetchBuyOrders();
+
+                          getTradeSummary();
+                        }}
+                        //className="bg-[#3167b4] text-white px-4 py-2 rounded-lg w-full"
+                        className={`${
+                          fetchingBuyOrders ? 'bg-gray-400' : 'bg-[#3167b4]'
+                        }
+                        text-white px-4 py-2 rounded-lg w-full
+                        hover:bg-[#3167b4]/80
+                        hover:cursor-pointer
+                        hover:scale-105
+                        transition-transform duration-200 ease-in-out`}
+                        title="검색"
+
+                        disabled={fetchingBuyOrders}
+                      >
+                        <div className="flex flex-row items-center justify-between gap-2">
+                          <Image
+                            src="/icon-search.png"
+                            alt="Search"
+                            width={20}
+                            height={20}
+                            className="rounded-lg w-5 h-5"
+                          />
+                          <span className="text-sm">
+                            {fetchingBuyOrders ? '검색중...' : '검색'}
+                          </span>
+                        </div>
+
+                      </button>
+                    </div>
+
+                  </div>
+
+
+
+                </div>
+                */}
+
+
+
+
+  
 
               </div>
 
@@ -1705,6 +1784,8 @@ const fetchBuyOrders = async () => {
 
             <div className="xl:w-1/2
               flex flex-row items-center justify-between gap-2">
+              
+
               <div className="flex flex-col gap-2 items-center">
                 <div className="text-sm">총 정산수(건)</div>
                   <span className="text-xl font-semibold text-zinc-500">
@@ -1712,6 +1793,7 @@ const fetchBuyOrders = async () => {
                   </span>
               </div>
 
+              {/*
               <div className="flex flex-col gap-2 items-center">
                 <div className="text-sm">총 정산금액(원)</div>
                 <div className="flex flex-row items-center justify-center gap-1">
@@ -1721,6 +1803,9 @@ const fetchBuyOrders = async () => {
                   <span className="text-sm text-zinc-500">원</span>
                 </div>
               </div>
+              */}
+
+              {/*
               <div className="flex flex-col gap-2 items-center">
                 <div className="text-sm">총 정산량(USDT)</div>
                 <div className="flex flex-row items-center justify-center gap-1">
@@ -1738,9 +1823,12 @@ const fetchBuyOrders = async () => {
                   </span>
                 </div>
               </div>
+              */}
+
 
               <div className="flex flex-col gap-2 items-center">
 
+                {/*
                 <div className="flex flex-row gap-2 items-center">
                   
                   <div className="flex flex-col gap-2 items-center">
@@ -1773,6 +1861,7 @@ const fetchBuyOrders = async () => {
                     </div>
                   </div>
                 </div>
+                */}
 
                 <div className="flex flex-row gap-2 items-center">
                   <div className="flex flex-col gap-2 items-center">
@@ -1862,11 +1951,14 @@ const fetchBuyOrders = async () => {
                       <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">AG수수료량(USDT)</th>
                       <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">AG수수료금액(원)</th>
 
+                      {/*
                       <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">PG수수료량(USDT)</th>
                       <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">PG수수료금액(원)</th>
 
                       <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">정산량(USDT)</th>
                       <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">정산금액(원)</th>
+                      */}
+
 
                     </tr>
                   </thead>
@@ -1912,6 +2004,9 @@ const fetchBuyOrders = async () => {
                           {Number(order.totalAgentFeeAmountKRW).toLocaleString('ko-KR')}
                         </td>
 
+
+
+                        {/*
                         <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
                           style={{ fontFamily: 'monospace' }}
                         >
@@ -1933,6 +2028,7 @@ const fetchBuyOrders = async () => {
                         >
                           {Number(order.totalSettlementAmountKRW).toLocaleString('ko-KR')}
                         </td>
+                        */}
 
 
                       </tr>

@@ -1667,7 +1667,7 @@ const fetchBuyOrders = async () => {
                   className="w-4 h-4"
                 />
                 <div className="text-sm font-semibold">
-                  통계(일별)
+                  통계(가맹)
                 </div>
               </div>
 
@@ -1691,7 +1691,7 @@ const fetchBuyOrders = async () => {
                   />
 
                   <div className="text-xl font-semibold">
-                    통계(일별)
+                    통계(가맹)
                   </div>
 
                   

@@ -3400,7 +3400,7 @@ const fetchBuyOrders = async () => {
                   hover:scale-105
                   transition-transform duration-200 ease-in-out
                   ">
-                  통계(일별)
+                  통계(가맹)
               </button>
 
 
