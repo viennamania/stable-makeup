@@ -1835,10 +1835,14 @@ export default function Index({ params }: any) {
 
 
                         <th className="p-2">
-                          회원 홈페이지
-                        </th>
-                        <th className="p-2">
-                          관리자 홈페이지
+                          <div className="flex flex-col items-center justify-center gap-2">
+                            <span className="text-center">
+                              회원 홈페이지
+                            </span>
+                            <span className="text-center">
+                              관리자 홈페이지
+                            </span>
+                          </div>
                         </th>
 
                         <th className="p-2">에이전트 수수료(%)</th>
@@ -1900,7 +1904,6 @@ export default function Index({ params }: any) {
                               */}
 
                               <div className="flex flex-col items-center justify-center gap-2">
-                                <span>보유금액(원)</span>
                                 <span>보유수량(USDT)</span>
                               </div>
 
@@ -1932,19 +1935,19 @@ export default function Index({ params }: any) {
                           
 
                             <div className="
-                              w-48 
+                              w-32 h-32
                               flex flex-col items-center justify-center gap-2">
 
                               <div className="w-full flex flex-row items-center justify-start gap-2"> 
                                 
-                                <div className="w-full flex flex-row items-center justify-start gap-2">
+                                <div className="w-full flex flex-col items-center justify-start gap-2">
                                   <Image
                                     src={item.storeLogo || '/icon-store.png'}
                                     alt="Store Logo"
-                                    width={100}
-                                    height={100}
+                                    width={50}
+                                    height={50}
                                     className="
-                                      rounded-lg w-20 h-20
+                                      rounded-lg w-10 h-10
                                       object-cover
                                       "
                                   />
@@ -2040,13 +2043,7 @@ export default function Index({ params }: any) {
                                 </a>
                               </div>
 
-                            </div>
 
-                          </td>
-
-                          <td className="p-2">
-
-                            <div className="flex-col items-center justify-center gap-2">
 
                               {/* 관리자 홈페이지 */}
                               <div className="flex flex-row items-center gap-2">
@@ -2073,6 +2070,9 @@ export default function Index({ params }: any) {
                                   새창
                                 </a>
                               </div>
+
+
+
 
                             </div>
 
@@ -2103,8 +2103,8 @@ export default function Index({ params }: any) {
                                     에이전트 USDT통장 없음
                                   </span>
                                 )}
-
-                                {' '}
+                              </div>
+                              <div className="flex flex-row items-center justify-center gap-2">
                                 <span className="text-lg text-gray-500">
                                   {
                                     item.agentFeePercent ? item.agentFeePercent : 0.00
@@ -2112,7 +2112,6 @@ export default function Index({ params }: any) {
                                 </span>
                               </div>
 
-                              
                             </div>
                           </td>
 
@@ -2122,9 +2121,8 @@ export default function Index({ params }: any) {
 
                           <td className="p-2">
                             <div className="
-                              w-40 h-36
-                              flex flex-col items-end justify-start gap-2">
-
+                              w-56 h-36
+                              flex flex-col items-end justify-between gap-2">
       
                                 <div className="w-full flex flex-row items-center justify-center gap-2
                                 border-b border-gray-300 pb-2">
@@ -2137,7 +2135,7 @@ export default function Index({ params }: any) {
 
                                 <div className="flex flex-col items-end gap-2">
 
-                                  <span className="text-lg text-yellow-600 font-semibold"
+                                  <span className="text-sm text-yellow-600 font-semibold"
                                     style={{ fontFamily: 'monospace' }}
                                   >
                                     {
@@ -2145,7 +2143,7 @@ export default function Index({ params }: any) {
                                       ?.toLocaleString('ko-KR')
                                     }{' '}원
                                   </span>
-                                  <span className="text-lg text-green-600 font-semibold"
+                                  <span className="text-sm text-green-600 font-semibold"
                                     style={{ fontFamily: 'monospace' }}
                                   >
                                     {
@@ -2179,7 +2177,7 @@ export default function Index({ params }: any) {
                           <td className="p-2">
                             <div className="
                               w-80 h-36
-                              flex flex-col items-end justify-start gap-2">
+                              flex flex-col items-end justify-between gap-2">
 
                               <div className="w-full flex flex-row items-center justify-center gap-2
                               border-b border-gray-300 pb-2">
@@ -2193,7 +2191,7 @@ export default function Index({ params }: any) {
                               <div className="w-full flex flex-row items-center justify-center gap-2">
 
                                 <div className="w-full flex flex-col items-end gap-2">
-                                  <span className="text-xl text-yellow-600 font-bold"
+                                  <span className="text-sm text-yellow-600 font-bold"
                                     style={{ fontFamily: 'monospace' }}
                                   >
                                     {
@@ -2201,7 +2199,7 @@ export default function Index({ params }: any) {
                                         ?.toLocaleString('ko-KR')
                                     }{' '}원
                                   </span>
-                                  <span className="text-lg text-green-600 font-semibold"
+                                  <span className="text-sm text-green-600 font-semibold"
                                     style={{ fontFamily: 'monospace' }}
                                   >
                                     {
@@ -2213,7 +2211,7 @@ export default function Index({ params }: any) {
 
                                 <div className="w-full flex flex-col items-end gap-2">
 
-                                  <span className="text-lg text-yellow-600 font-semibold"
+                                  <span className="text-sm text-yellow-600 font-semibold"
                                     style={{ fontFamily: 'monospace' }}
                                   >
                                     {
@@ -2221,7 +2219,7 @@ export default function Index({ params }: any) {
                                         ?.toLocaleString('ko-KR')
                                     }{' '}원
                                   </span>
-                                  <span className="text-lg text-green-600 font-semibold"
+                                  <span className="text-sm text-green-600 font-semibold"
                                     style={{ fontFamily: 'monospace' }}
                                   >
                                     {
@@ -2247,9 +2245,6 @@ export default function Index({ params }: any) {
                               </button>
 
 
-                              
-
-
                             </div>
 
                           </td>
@@ -2257,8 +2252,8 @@ export default function Index({ params }: any) {
 
                           <td className="p-2">
 
-                            <div className="w-48 h-36
-                            flex flex-col items-end justify-start gap-2">
+                            <div className="w-32 h-36
+                            flex flex-col items-end justify-between gap-2">
 
 
                               <div className="w-full flex flex-col items-center justify-center gap-2">
@@ -2303,29 +2298,12 @@ export default function Index({ params }: any) {
 
                                   <div className="w-full flex flex-col items-end justify-center gap-2">
 
-                                      <span className="text-lg text-yellow-600 font-semibold"
-                                        style={{ fontFamily: 'monospace' }}
-                                      >
-                                        {
-                                          //Number(item.totalKrwAmountClearanceBalance ? item.totalKrwAmountClearanceBalance : 0)
-                                          //  ?.toLocaleString('ko-KR')
-
-                                          //Number(item?.totalSettlementAmountKRW - item?.totalKrwAmountClearance || 0)
-                                          Number(item?.totalKrwAmountClearance - item?.totalSettlementAmountKRW || 0)
-                                          ?.toLocaleString('ko-KR')
-
-
-                                        }{' '}원
-                                      </span>
                                       <span className="text-lg text-green-600 font-semibold"
                                         style={{ fontFamily: 'monospace' }}
                                       >
                                         {
-                                          //////(item.totalUsdtAmountClearanceBalance ? item.totalUsdtAmountClearanceBalance : 0)?.toLocaleString('us-US')
-                                        
 
-                                          //Number(item?.totalSettlementAmount - item?.totalUsdtAmountClearance || 0)
-                                          Number(item?.totalUsdtAmountClearance - item?.totalSettlementAmount || 0)
+                                          Number(item?.escrowAmountUSDT ? item.escrowAmountUSDT : 0)
                                           ?.toLocaleString('us-US')
 
                                         }{' '}USDT
