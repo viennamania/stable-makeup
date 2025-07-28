@@ -2843,6 +2843,17 @@ const fetchBuyOrders = async () => {
                     거래내역
                 </button>
 
+                <button
+                    onClick={() => router.push('/' + params.lang + '/admin/agent/' + params.agentcode + '/trade-history-daily')}
+                    className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                    hover:bg-[#3167b4]/80
+                    hover:cursor-pointer
+                    hover:scale-105
+                    transition-transform duration-200 ease-in-out
+                    ">
+                    통계(AG)
+                </button>
+
               </div>
             </div>
 
@@ -5115,7 +5126,7 @@ const fetchBuyOrders = async () => {
 
                                 
                                 <span>
-                                  {item?.settlement?.settlementAmount?.toLocaleString() + ' USDT'}
+                                  {item?.settlement?.settlementAmount?.toLocaleString()}
                                   {' '}
                                   {
                                     item?.settlement?.settlementWalletAddress &&
@@ -5124,8 +5135,8 @@ const fetchBuyOrders = async () => {
                                 <span>
                                   {
                                     item?.settlement?.agentFeeAmount ?
-                                    item?.settlement?.agentFeeAmount?.toLocaleString() + ' USDT'
-                                    : '0 USDT'
+                                    item?.settlement?.agentFeeAmount?.toLocaleString()
+                                    : '0'
                                   }
                                   {' '}
                                   {
@@ -5133,7 +5144,7 @@ const fetchBuyOrders = async () => {
                                   item?.settlement?.agentFeeWalletAddress?.slice(0, 5) + '...'}
                                 </span>
                                 <span>
-                                  {item?.settlement?.feeAmount?.toLocaleString() + ' USDT'}
+                                  {item?.settlement?.feeAmount?.toLocaleString()}
                                   {' '}
                                   {
                                     item?.settlement?.feeWalletAddress &&

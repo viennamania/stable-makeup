@@ -80,7 +80,7 @@ import { get } from "http";
 import { useSearchParams } from 'next/navigation';
 
 
-
+import { paymentUrl } from "@/app/config/payment";
 
 
 interface BuyOrder {
@@ -1048,8 +1048,8 @@ export default function Index({ params }: any) {
   const [storeType, setStoreType] = useState('test');
   const [storeUrl, setStoreUrl] = useState('https://test.com');
   const [storeDescription, setStoreDescription] = useState('설명입니다.');
-  const [storeLogo, setStoreLogo] = useState('https://cryptoss.beauty/logo.png');
-  const [storeBanner, setStoreBanner] = useState('https://cryptoss.beauty/logo.png');
+  const [storeLogo, setStoreLogo] = useState(paymentUrl + '/logo.png');
+  const [storeBanner, setStoreBanner] = useState(paymentUrl + '/banner.png');
 
 
   const [insertingStore, setInsertingStore] = useState(false);
@@ -1532,6 +1532,18 @@ export default function Index({ params }: any) {
                       ">
                       거래내역
                   </button>
+
+                  <button
+                      onClick={() => router.push('/' + params.lang + '/admin/agent/' + params.agentcode + '/trade-history-daily')}
+                      className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                      hover:bg-[#3167b4]/80
+                      hover:cursor-pointer
+                      hover:scale-105
+                      transition-transform duration-200 ease-in-out
+                      ">
+                      통계(AG)
+                  </button>
+
 
               </div>
             </div>
@@ -2022,18 +2034,17 @@ export default function Index({ params }: any) {
                                 <button
                                   onClick={() => {
                                     navigator.clipboard.writeText(
-                                      'https://cryptoss.beauty/' + params.lang + '/' + item.storecode
+                                      paymentUrl + '/' + params.lang + '/' + item.storecode
                                     );
                                     toast.success('복사되었습니다');
-                                  }
-                                }
-                                className="text-sm text-blue-500 hover:underline"
+                                  }}
+                                  className="text-sm text-blue-500 hover:underline"
                                 >
                                   링크복사
                                 </button>
                                 <a
                                   href={
-                                    'https://cryptoss.beauty/' + params.lang + '/' + item.storecode + '/paymaster'
+                                    paymentUrl + '/' + params.lang + '/' + item.storecode + '/paymaster'
                                   }
                                   target="_blank"
                                   rel="noopener noreferrer"
@@ -2050,18 +2061,17 @@ export default function Index({ params }: any) {
                                 <button
                                   onClick={() => {
                                     navigator.clipboard.writeText(
-                                      'https://cryptoss.beauty/' + params.lang + '/' + item.storecode + '/center'
+                                      paymentUrl + '/' + params.lang + '/' + item.storecode + '/center'
                                     );
                                     toast.success('복사되었습니다');
-                                  }
-                                }
-                                className="text-sm text-blue-500 hover:underline"
+                                  }}
+                                  className="text-sm text-blue-500 hover:underline"
                                 >
                                   링크복사
                                 </button>
                                 <a
                                   href={
-                                    'https://cryptoss.beauty/' + params.lang + '/' + item.storecode + '/center'
+                                    paymentUrl + '/' + params.lang + '/' + item.storecode + '/center'
                                   }
                                   target="_blank"
                                   rel="noopener noreferrer"

@@ -2582,6 +2582,18 @@ const fetchBuyOrders = async () => {
                   </div>
                 </div>
 
+                <button
+                    onClick={() => router.push('/' + params.lang + '/admin/agent/' + params.agentcode + '/trade-history-daily')}
+                    className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                    hover:bg-[#3167b4]/80
+                    hover:cursor-pointer
+                    hover:scale-105
+                    transition-transform duration-200 ease-in-out
+                    ">
+                    통계(AG)
+                </button>
+
+
               </div>
             </div>
 
@@ -3154,13 +3166,24 @@ const fetchBuyOrders = async () => {
                                   >
                                     {Number(item.krwAmount)?.toLocaleString()}{' '}원
                                   </span>
-                                  <span className="text-lg text-green-600 font-semibold"
-                                    style={{
-                                      fontFamily: 'monospace',
-                                      }}
-                                    >
-                                    {item.usdtAmount}{' '}USDT
-                                  </span>
+                                  
+                                  <div className="flex flex-row items-center gap-1">
+                                    <Image
+                                      src="/icon-tether.png"
+                                      alt="Tether"
+                                      width={20}
+                                      height={20}
+                                      className="rounded-full w-5 h-5"
+                                    />
+                                    <span className="text-lg text-green-600 font-semibold"
+                                      style={{
+                                        fontFamily: 'monospace',
+                                        }}
+                                      >
+                                      {item.usdtAmount && Number(item.usdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    </span>
+                                  </div>
+
                                 </div>
                                 <span className="text-sm text-zinc-500 font-semibold"
                                   style={{
@@ -3184,19 +3207,10 @@ const fetchBuyOrders = async () => {
                                   {item?.store?.bankInfo?.bankName}
                                 </div>
 
-                                {/* copy account number to clipboard */}
-                                <button
-                                  onClick={() => {
-                                    navigator.clipboard.writeText(item?.store?.bankInfo?.accountNumber);
-                                    toast.success('입금통장번호가 복사되었습니다.');
-                                  }}
-                                  className="text-sm text-zinc-500 font-semibold
-                                    hover:text-blue-600 cursor-pointer
-                                    hover:underline"
-                                  title="입금통장번호 복사"
-                                >
-                                  {item?.store?.bankInfo?.accountNumber}
-                                </button>
+                                <div className="text-sm font-semibold text-zinc-500">
+                                  {item?.store?.bankInfo?.accountNumber &&
+                                    item?.store?.bankInfo?.accountNumber.slice(0, 5) + '...'}
+                                </div>
 
                                 <div className="text-sm font-semibold text-zinc-500">
                                   {item?.store?.bankInfo?.accountHolder}
@@ -3220,7 +3234,7 @@ const fetchBuyOrders = async () => {
                                     </span>
                                   )}
                                
-                                  <div className=" text-yellow-600 text-xl font-semibold"
+                                  <div className=" text-yellow-600 text-lg font-semibold"
                                     style={{
                                       fontFamily: 'monospace',
                                     }}
@@ -3787,10 +3801,8 @@ const fetchBuyOrders = async () => {
                                     }}
                                   >
 
-
-                                    
                                     <span>
-                                      {item?.settlement?.settlementAmount?.toLocaleString() + ' USDT'}
+                                      {item?.settlement?.settlementAmount?.toLocaleString()}
                                       {' '}
                                       {
                                         item?.settlement?.settlementWalletAddress &&
@@ -3799,8 +3811,8 @@ const fetchBuyOrders = async () => {
                                     <span>
                                       {
                                         item?.settlement?.agentFeeAmount ?
-                                        item?.settlement?.agentFeeAmount?.toLocaleString() + ' USDT'
-                                        : '0 USDT'
+                                        item?.settlement?.agentFeeAmount?.toLocaleString()
+                                        : '0'
                                       }
                                       {' '}
                                       {
@@ -3808,7 +3820,7 @@ const fetchBuyOrders = async () => {
                                       item?.settlement?.agentFeeWalletAddress?.slice(0, 5) + '...'}
                                     </span>
                                     <span>
-                                      {item?.settlement?.feeAmount?.toLocaleString() + ' USDT'}
+                                      {item?.settlement?.feeAmount?.toLocaleString()}
                                       {' '}
                                       {
                                         item?.settlement?.feeWalletAddress &&
