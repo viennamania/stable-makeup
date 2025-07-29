@@ -1183,7 +1183,7 @@ export default function Index({ params }: any) {
                     className="w-5 h-5"
                   />
                   <span className="text-lg text-zinc-600 font-semibold">
-                    현재 실시간 보유량
+                    현재 보유량
                   </span>
                 </div>
   
