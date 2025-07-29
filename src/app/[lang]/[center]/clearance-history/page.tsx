@@ -3359,6 +3359,29 @@ const [tradeSummary, setTradeSummary] = useState({
                     출금(회원)
                 </button>
 
+                <button
+                  onClick={() => router.push('/' + params.lang + '/' + params.center + '/daily-close')}
+                  className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                  hover:bg-[#3167b4]/80
+                  hover:cursor-pointer
+                  hover:scale-105
+                  transition-transform duration-200 ease-in-out
+                  ">
+                    통계(일별)
+                </button>
+
+                <button
+                  onClick={() => router.push('/' + params.lang + '/' + params.center + '/escrow-history')}
+                  className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                  hover:bg-[#3167b4]/80
+                  hover:cursor-pointer
+                  hover:scale-105
+                  transition-transform duration-200 ease-in-out
+                  ">
+                    보유량내역
+                </button>
+
+
             </div>
 
 
@@ -4254,18 +4277,25 @@ const [tradeSummary, setTradeSummary] = useState({
                                       {Completed}
                                     </span>
 
-                                    {/* noew window open */}
-                                    {/* polyscan explorer */}
-                                    <a
-                                      href={`https://arbiscan.io/tx/${item.transactionHash}`}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-sm text-blue-500 underline"
+                                    <button
+                                      onClick={() => {
+                                        window.open(`https://arbiscan.io/tx/${item.transactionHash}`, '_blank');
+                                      }}
+                                      className="flex flex-row gap-1 items-center justify-center
+                                      text-sm text-blue-500
+                                      border border-blue-500
+                                      bg-blue-100 hover:bg-blue-200
+                                      rounded-md px-2 py-1"
                                     >
-                                      폴리스캔에서 거래내역 보기
-                                    </a>
-                                      
-
+                                      <Image
+                                        src="/logo-arbitrum.png"
+                                        alt="Arbitrum"
+                                        width={20}
+                                        height={20}
+                                        className="w-4 h-4"
+                                      />
+                                      USDT 전송내역
+                                    </button>
 
                                   </div>
                                 )}
