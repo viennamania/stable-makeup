@@ -2193,15 +2193,15 @@ export default function Index({ params }: any) {
                     "
                   >
                     <tr>
-                      <th className="px-4 py-2 text-left">가맹점이름</th>
-                      <th className="px-4 py-2 text-left">
+                      <th className="px-4 py-2 text-center">가맹점</th>
+                      <th className="px-4 py-2 text-right">
                           회원수
                           <br/>
                           거래수
                       </th>
-                      <th className="px-4 py-2 text-left">거래금액(원)<br/>거래량(USDT)</th>
-                      <th className="px-4 py-2 text-left">정산금액(원)<br/>정산량(USDT)</th>
-                      <th className="px-4 py-2 text-left">수수료금액(원)<br/>수수료수량(USDT)</th>
+                      <th className="px-4 py-2 text-right">거래금액(원)<br/>거래량(USDT)</th>
+                      <th className="px-4 py-2 text-right">정산금액(원)<br/>정산량(USDT)</th>
+                      <th className="px-4 py-2 text-right">수수료금액(원)<br/>수수료수량(USDT)</th>
 
                       {/*
                       <th className="px-4 py-2 text-left">가입일</th>
@@ -2213,7 +2213,7 @@ export default function Index({ params }: any) {
                       <tr key={index} className="border-b">
                         <td className="
                           px-4 py-2">
-                            <div className="flex flex-col xl:flex-row items-center justify-start gap-2">
+                            <div className="flex flex-col items-center justify-start gap-2">
                               <Image
                                 src={store.storeLogo || "/icon-store.png"}
                                 alt="Store Logo"
@@ -2229,32 +2229,81 @@ export default function Index({ params }: any) {
                               >
                                 {store.storeName}
                               </button>
+                              <span className="text-lg text-green-600 font-semibold">
+                                {store.agentFeePercent > 0 ? store.agentFeePercent + "% 수수료" : "수수료 없음"}
+                              </span>
                           </div>
                         </td>
-                        <td className="px-4 py-2">
+                        <td className="px-4 py-2
+                        text-right">
                           {store.totalBuyerCount > 0 ? Number(store.totalBuyerCount)?.toLocaleString() : 0} 명
                           <br/>
                           {store.totalPaymentConfirmedCount > 0 ? Number(store.totalPaymentConfirmedCount)?.toLocaleString() : 0} 건
                         </td>
 
                         <td className="px-4 py-2
-                        text-right">{
-                          store.totalKrwAmount > 0 ? Number(store.totalKrwAmount)?.toLocaleString() : 0} 원
+                        text-right">
+                          <span className="text-sm text-yellow-600 font-semibold"
+                            style={{ fontFamily: 'monospace' }}>
+                            {store.totalKrwAmount > 0 ? Number(store.totalKrwAmount)?.toLocaleString() : 0} 원
+                          </span>
                           <br/>
-                          {store.totalUsdtAmount > 0 ? Number(store.totalUsdtAmount)?.toLocaleString() : 0} USDT
+                          <div className="flex flex-row items-center justify-end gap-1">
+                            <Image
+                              src="/icon-tether.png"
+                              alt="USDT"
+                              width={20}
+                              height={20}
+                              className="rounded-full w-5 h-5"
+                            />
+                            <span className="text-sm text-green-600 font-semibold"
+                              style={{ fontFamily: 'monospace' }}> 
+                              {store.totalUsdtAmount > 0 ? Number(store.totalUsdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}
+                            </span>
+                          </div>
                         </td>
                         <td className="px-4 py-2
                         text-right">
-                          {store.totalSettlementAmountKRW > 0 ? Number(store.totalSettlementAmountKRW)?.toLocaleString() : 0} 원
+                          <span className="text-sm text-yellow-600 font-semibold"
+                            style={{ fontFamily: 'monospace' }}>
+                            {store.totalSettlementAmountKRW > 0 ? Number(store.totalSettlementAmountKRW)?.toLocaleString() : 0} 원
+                          </span>
                           <br/>
-                          {store.totalSettlementAmount > 0 ? Number(store.totalSettlementAmount)?.toLocaleString() : 0} USDT
+                          <div className="flex flex-row items-center justify-end gap-1">
+                            <Image
+                              src="/icon-tether.png"
+                              alt="USDT"
+                              width={20}
+                              height={20}
+                              className="rounded-full w-5 h-5"
+                            />
+                            <span className="text-sm text-green-600 font-semibold"
+                              style={{ fontFamily: 'monospace' }}>
+                              {store.totalSettlementAmount > 0 ? Number(store.totalSettlementAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}
+                            </span>
+                          </div>
                         </td>
                         <td className="px-4 py-2
                         text-right
                         ">
-                          {store.totalAgentFeeAmountKRW > 0 ? Number(store.totalAgentFeeAmountKRW)?.toLocaleString() : 0} 원
+                          <span className="text-sm text-yellow-600 font-semibold"
+                            style={{ fontFamily: 'monospace' }}>
+                            {store.totalAgentFeeAmountKRW > 0 ? Number(store.totalAgentFeeAmountKRW)?.toLocaleString() : 0} 원
+                          </span>
                           <br/>
-                          {store.totalAgentFeeAmount > 0 ? Number(store.totalAgentFeeAmount)?.toLocaleString() : 0} USDT
+                          <div className="flex flex-row items-center justify-end gap-1">
+                            <Image
+                              src="/icon-tether.png"
+                              alt="USDT"
+                              width={20}
+                              height={20}
+                              className="rounded-full w-5 h-5"
+                            />
+                            <span className="text-sm text-green-600 font-semibold"
+                              style={{ fontFamily: 'monospace' }}>
+                              {store.totalAgentFeeAmount > 0 ? Number(store.totalAgentFeeAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}
+                            </span>
+                          </div>
                         </td>
                         {/*
                         <td className="px-4 py-2">{new Date(store.createdAt).toLocaleDateString()}</td>
