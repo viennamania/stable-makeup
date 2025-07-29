@@ -7427,6 +7427,7 @@ export async function getEscrowBalanceByStorecode(
 
       return {
         escrowBalance: store.escrowAmountUSDT || 0,
+        todayMinusedEscrowAmount: 0,
       };
 
     } else {
@@ -7434,11 +7435,14 @@ export async function getEscrowBalanceByStorecode(
       const totalFeeAmount = totalSettlement[0].totalFeeAmount || 0;
       const totalDealerAmount = totalSettlement[0].totalDealerAmount || 0;
 
+      const todayMinusedEscrowAmount = totalFeeAmount + totalDealerAmount;
+
       // calculate escrow balance
-      const escrowBalance = (store.escrowAmountUSDT || 0) - (totalFeeAmount + totalDealerAmount);
+      const escrowBalance = (store.escrowAmountUSDT || 0) - todayMinusedEscrowAmount;
 
       return {
         escrowBalance: escrowBalance,
+        todayMinusedEscrowAmount: todayMinusedEscrowAmount,
       };
 
     }
@@ -7487,6 +7491,7 @@ export async function getEscrowBalanceByStorecode(
 
       return {
         escrowBalance: store.escrowAmountUSDT || 0,
+        todayMinusedEscrowAmount: 0,
       };
 
     } else {
@@ -7497,11 +7502,13 @@ export async function getEscrowBalanceByStorecode(
       console.log('getEscrowBalanceByStorecode totalFeeAmount: ' + totalFeeAmount);
       console.log('getEscrowBalanceByStorecode totalDealerAmount: ' + totalDealerAmount);
 
+      const todayMinusedEscrowAmount = totalFeeAmount + totalDealerAmount;
       // calculate escrow balance
-      const escrowBalance = (store.escrowAmountUSDT || 0) - (totalFeeAmount + totalDealerAmount);
+      const escrowBalance = (store.escrowAmountUSDT || 0) - todayMinusedEscrowAmount;
 
       return {
         escrowBalance: escrowBalance,
+        todayMinusedEscrowAmount: todayMinusedEscrowAmount,
       };
 
     }

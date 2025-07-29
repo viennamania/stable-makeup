@@ -839,6 +839,7 @@ export default function Index({ params }: any) {
 
 
   const [escrowBalance, setEscrowBalance] = useState(0);
+  const [todayMinusedEscrowAmount, setTodayMinusedEscrowAmount] = useState(0);
 
   useEffect(() => {
 
@@ -868,6 +869,7 @@ export default function Index({ params }: any) {
       const data = await response.json();
 
       setEscrowBalance(data.result.escrowBalance);
+      setTodayMinusedEscrowAmount(data.result.todayMinusedEscrowAmount);
 
     }
 
@@ -1231,38 +1233,76 @@ export default function Index({ params }: any) {
             <div className="w-full flex flex-col items-end justify-end gap-2
             border-b border-zinc-300 pb-2">
 
-              {/* 가맹점 보유량 */}
-              <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2
-              bg-white/50 backdrop-blur-sm p-2 rounded-lg shadow-md">
-                <div className="flex flex-row gap-2 items-center">
-                  <Image
-                    src="/icon-escrow.png"
-                    alt="Escrow"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-lg font-semibold text-zinc-500">
-                    현재 보유량
-                  </span>
+                {/* 가맹점 보유량 */}
+                <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2
+                bg-white/50 backdrop-blur-sm p-2 rounded-lg shadow-md">
+
+                <div className="flex flex-col items-start xl:items-center gap-2 mb-2 xl:mb-0">                
+                  <div className="flex flex-row gap-2 items-center">
+                    <div className="flex flex-row gap-2 items-center">
+                      <Image
+                        src="/icon-escrow.png"
+                        alt="Escrow"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
+                      <span className="text-lg font-semibold text-zinc-500">
+                        현재 보유량
+                      </span>
+                    </div>
+
+                    <div className="
+                      w-32
+                      flex flex-row gap-2 items-center justify-between
+                    ">
+                      <Image
+                        src="/icon-tether.png"
+                        alt="Tether"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
+                      <span className="text-lg text-green-600 font-semibold"
+                        style={{ fontFamily: 'monospace' }}
+                      >
+                        {
+                          escrowBalance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                        }
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* 오늘 수수료 차감량 */}
+                  <div className="flex flex-row gap-2 items-center">
+                    <span className="text-sm text-zinc-500 font-semibold">
+                      오늘 수수료 차감량
+                    </span>
+                    <div className="
+                      w-32
+                      flex flex-row gap-2 items-center justify-between
+                    ">
+                      <Image
+                        src="/icon-tether.png"
+                        alt="Tether"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
+                      <span className="text-lg text-red-600 font-semibold"
+                        style={{ fontFamily: 'monospace' }}
+                      >
+                        {
+                          todayMinusedEscrowAmount && todayMinusedEscrowAmount > 0 ?
+                          todayMinusedEscrowAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') :
+                          '0.00'
+                        }
+                      </span>
+                    </div>
+                  </div>
+
                 </div>
 
-                <div className="flex flex-row items-center gap-2">
-                  <Image
-                    src="/icon-tether.png"
-                    alt="Tether"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-lg text-green-600 font-semibold"
-                    style={{ fontFamily: 'monospace' }}
-                  >
-                    {
-                      escrowBalance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
-                  </span>
-                </div>
 
                 {/* 보유량 내역 */}
                 <button
