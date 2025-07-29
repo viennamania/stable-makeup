@@ -1607,8 +1607,8 @@ const fetchBuyOrders = async () => {
               <div className='flex w-32 items-center justify-center gap-2
               bg-yellow-500 text-[#3167b4] text-sm rounded-lg p-2'>
                 <Image
-                  src="/icon-buyorder.png"
-                  alt="Trade"
+                  src="/icon-statistics.png"
+                  alt="Statistics"
                   width={35}
                   height={35}
                   className="w-4 h-4"
@@ -1630,8 +1630,8 @@ const fetchBuyOrders = async () => {
 
               <div className='flex flex-row items-center space-x-4'>
                   <Image
-                    src="/icon-trade.png"
-                    alt="Trade"
+                    src="/icon-statistics.png"
+                    alt="Statistics"
                     width={35}
                     height={35}
                     className="w-6 h-6"

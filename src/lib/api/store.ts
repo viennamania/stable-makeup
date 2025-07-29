@@ -154,7 +154,8 @@ export async function getStoreByStorecode(
 
         payactionKey: 1,
         backgroundColor: 1,
-        
+
+
 
         totalBuyerCount: 1,
         totalKrwAmount: 1,

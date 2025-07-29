@@ -1660,8 +1660,8 @@ const fetchBuyOrders = async () => {
               <div className='flex w-32 items-center justify-center gap-2
               bg-yellow-500 text-[#3167b4] text-sm rounded-lg p-2'>
                 <Image
-                  src="/icon-buyorder.png"
-                  alt="Trade"
+                  src="/icon-statistics.png"
+                  alt="Statistics"
                   width={35}
                   height={35}
                   className="w-4 h-4"
@@ -1692,8 +1692,8 @@ const fetchBuyOrders = async () => {
 
               <div className='flex flex-row items-center space-x-4'>
                   <Image
-                    src="/icon-trade.png"
-                    alt="Trade"
+                    src="/icon-statistics.png"
+                    alt="Statistics"
                     width={35}
                     height={35}
                     className="w-6 h-6"
@@ -1719,7 +1719,7 @@ const fetchBuyOrders = async () => {
 
 
 
-              <div className="w-full flex flex-col xl:flex-row items-center justify-between gap-3">
+              <div className="w-full flex flex-col xl:flex-row items-center justify-start gap-3">
 
 
 
@@ -1773,9 +1773,46 @@ const fetchBuyOrders = async () => {
                         </option>
                       ))}
                     </select>
-                
+
                 </div>
 
+                {/* 가맹점 정보 */}
+                <div className="flex flex-col items-center gap-2">
+
+                  <div className="flex flex-row items-center justify-start gap-2">
+                    <Image
+                      src="/icon-info.png"
+                      alt="Store Info"
+                      width={20}
+                      height={20}
+                      className="rounded-lg w-5 h-5"
+                    />
+
+                    <span className="text-sm font-semibold">
+                      가맹점 수수료 설정
+                    </span>
+                  </div>
+                  <span className="text-sm text-zinc-500">
+                    {!fetchingAllStores ? (searchStorecode && store && store.storeName) ? (
+                      <div className="flex flex-row items-center justify-start gap-2">
+                        <span className="text-sm font-semibold">
+                          AG 수수료율: {store.agentFeePercent ? store.agentFeePercent + '%' : '없음'}
+                        </span>
+                        <span className="text-sm font-semibold">
+                          PG 수수료율: {store.settlementFeePercent ? store.settlementFeePercent + '%' : '없음'}
+                        </span>
+                      </div>
+                    ) : (
+                      <span className="text-sm text-red-500">
+                        가맹점 정보가 없습니다.
+                      </span>
+                    ) : (
+                      <span className="text-sm text-gray-500">
+                        가맹점 정보를 불러오는 중...
+                      </span>
+                    )}
+                  </span>
+                </div>
 
 
                 {/* serach fromDate and toDate */}
