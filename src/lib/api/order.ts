@@ -7449,12 +7449,28 @@ export async function getEscrowBalanceByStorecode(
 
     // get sum of settlement.feeAmount + settlement.dealerAmount from buyorders where storecode is storecode
     // where settlementUpdatedAt is greater than  latestEscrow[0].date
-    
+
+
+    // latestEscrow[0].date is in 'YYYY-MM-DD' format and korean timezone
+    // so we need to convert it to UTC date format
+    // and plus one day to get the end of the day
+    // e.g. '2025-07-28' -> '2025-07
+
+    //const latestEscrowDate = new Date(latestEscrow[0].date + 'T00:00:00+09:00').toISOString();
+
+    const latestEscrowDate = new Date(latestEscrow[0].date + 'T00:00:00+09:00').toISOString();
+    // plus one day to get the end of the day
+    const latestEscrowDatePlusOne = 
+      new Date(new Date(latestEscrowDate).getTime() + 24 * 60 * 60 * 1000).toISOString();
+
+    console.log('getEscrowBalanceByStorecode latestEscrowDatePlusOne: ' + latestEscrowDatePlusOne);
+    // 2025-07-28T15:00:00.000Z
+
     const totalSettlement = await buyordersCollection.aggregate([
       {
         $match: {
           storecode: storecode,
-          settlementUpdatedAt: { $gt: latestEscrow[0].date },
+          settlementUpdatedAt: { $gt: latestEscrowDatePlusOne },
           settlement: { $exists: true },
         },
       },
@@ -7477,6 +7493,9 @@ export async function getEscrowBalanceByStorecode(
 
       const totalFeeAmount = totalSettlement[0].totalFeeAmount || 0;
       const totalDealerAmount = totalSettlement[0].totalDealerAmount || 0;
+
+      console.log('getEscrowBalanceByStorecode totalFeeAmount: ' + totalFeeAmount);
+      console.log('getEscrowBalanceByStorecode totalDealerAmount: ' + totalDealerAmount);
 
       // calculate escrow balance
       const escrowBalance = (store.escrowAmountUSDT || 0) - (totalFeeAmount + totalDealerAmount);
