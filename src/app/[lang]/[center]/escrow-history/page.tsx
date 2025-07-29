@@ -1015,7 +1015,7 @@ export default function Index({ params }: any) {
 
   return (
 
-    <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-2xl mx-auto">
+    <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
 
 
       <div className="py-0 w-full">
@@ -1026,188 +1026,102 @@ export default function Index({ params }: any) {
 
 
 
-
-          <div className={`w-full flex flex-col xl:flex-row items-center justify-between gap-2
-            p-2 rounded-lg mb-4
-            ${store?.backgroundColor ?
-              "bg-" + store.backgroundColor + " " :
-              "bg-black/10"
-            }`}>
-              
-              
-              <button
-                onClick={() => {
-                  router.push('/' + params.lang + '/' + params.center + '/center');
-                }}
-                className="flex bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
-              >
-
-                <div className="flex flex-row items-center gap-2">
-                  <Image
-                      src={store?.storeLogo || "/logo.png"}
-                      alt="Store"
-                      width={35}
-                      height={35}
-                      className="rounded-lg w-5 h-5 object-cover"
-                  />
-                  <span className="text-sm text-zinc-50">
-                    {
-                      store && store?.storeName + " (" + store?.storecode + ")"
-                    }
-                  </span>
+            <div className="w-full flex flex-row gap-2 items-center justify-start text-zinc-500 text-lg"
+            >
+                {/* go back button */}
+                <div className="w-full flex justify-start items-center gap-2">
+                    <button
+                        onClick={() => window.history.back()}
+                        className="flex items-center justify-center bg-gray-200 rounded-lg p-2
+                        hover:bg-gray-300 transition duration-200 ease-in-out"
+                    >
+                        <Image
+                            src="/icon-back.png"
+                            alt="Back"
+                            width={20}
+                            height={20}
+                            className="rounded-full"
+                        />
+                        <span className="ml-2 text-sm text-gray-500 font-semibold">
+                            돌아가기
+                        </span>
+                    </button>
 
                 </div>
 
-              </button>
 
 
-              <div className="flex flex-row items-center gap-2">
-                
+                {!address && (
+                <ConnectButton
+                    client={client}
+                    wallets={wallets}
+                    chain={arbitrum}
+                    theme={"light"}
 
-                <div className="w-full flex flex-row items-center justify-end gap-2">
-                  {!address && (
-                    <ConnectButton
-                      client={client}
-                      wallets={wallets}
+                    // button color is dark skyblue convert (49, 103, 180) to hex
+                    connectButton={{
+                        style: {
+                            backgroundColor: "#3167b4", // dark skyblue
+                            color: "#f3f4f6", // gray-300
+                            padding: "2px 10px",
+                            borderRadius: "10px",
+                            fontSize: "14px",
+                            width: "60x",
+                            height: "38px",
+                        },
+                        label: "원클릭 로그인",
+                    }}
 
-                      /*
-                      accountAbstraction={{
-                        chain: arbitrum,
-                        sponsorGas: true
-                      }}
-                      */
-                      
-                      theme={"light"}
+                    connectModal={{
+                    size: "wide", 
+                    //size: "compact",
+                    titleIcon: "https://www.stable.makeup/logo.png",                           
+                    showThirdwebBranding: false,
+                    }}
 
-                      // button color is dark skyblue convert (49, 103, 180) to hex
-                      connectButton={{
-                          style: {
-                              backgroundColor: "#3167b4", // dark skyblue
-                              color: "#f3f4f6", // gray-300
-                              padding: "2px 10px",
-                              borderRadius: "10px",
-                              fontSize: "14px",
-                              width: "60x",
-                              height: "38px",
-                          },
-                          label: "원클릭 로그인",
-                      }}
+                    locale={"ko_KR"}
+                    //locale={"en_US"}
+                />
+                )}
 
-                      connectModal={{
-                        size: "wide", 
-                        //size: "compact",
-                        titleIcon: "https://www.stable.makeup/logo.png",                           
-                        showThirdwebBranding: false,
-                      }}
-
-                      locale={"ko_KR"}
-                      //locale={"en_US"}
-                    />
-                  )}
-                </div>
-
-            
+                {/*
                 {address && !loadingUser && (
                     <div className="w-full flex flex-row items-center justify-end gap-2">
 
-                      <button
-                        onClick={() => {
-                          router.push('/' + params.lang + '/' + params.center + '/profile-settings');
-                        }}
-                        className="
-                        w-40
-                        items-center justify-center
-                        bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
-                      >
-                        <div className="flex flex-col itmens-center justify-center gap-2">
-                          <span className="text-sm text-zinc-50">
-                            {user?.nickname || "프로필"}
-                          </span>
-                          {isAdmin && (
-                            <div className="flex flex-row items-center justify-center gap-2">
-                              <Image
-                                src="/icon-admin.png"
-                                alt="Admin"
-                                width={20}
-                                height={20}
-                                className="rounded-lg w-5 h-5"
-                              />
-                              <span className="text-sm text-yellow-500">
-                                가맹점 관리자
-                              </span>
-                            </div>
-                          )}
-
-                        </div>
-                      </button>
-
-                      {/* logout button */}
-                      <button
-                          onClick={() => {
-                              confirm("로그아웃 하시겠습니까?") && activeWallet?.disconnect()
-                              .then(() => {
-
-                                  toast.success('로그아웃 되었습니다');
-
-                                  //router.push(
-                                  //    "/admin/" + params.center
-                                  //);
-                              });
-                          } }
-
-                          className="
-                            w-32
-                            flex items-center justify-center gap-2
-                            bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
-                      >
-                        <Image
-                          src="/icon-logout.webp"
-                          alt="Logout"
-                          width={20}
-                          height={20}
-                          className="rounded-lg w-5 h-5"
-                        />
-                        <span className="text-sm">
-                          로그아웃
+                        <span className="text-lg text-gray-500 font-semibold">
+                        {user?.nickname || "프로필"}
                         </span>
-                      </button>
 
-                  </div>
+                    </div>
                 )}
-
-              </div>
+                */}
 
             </div>
 
 
 
+            <div className='flex flex-row items-center justify-start gap-2'>
+                <Image
+                    src={store?.storeLogo || "/icon-store.png"}
+                    alt="Store Logo"
+                    width={35}
+                    height={35}
+                    className="w-10 h-10 rounded-full"
+                />
+
+                <div className="text-xl font-semibold">
+                가맹점{' '}{
+                    store && store.storeName + " (" + store.storecode + ")"
+                }{' '}보유량 관리
+                </div>
+            </div>
 
 
-            {/* USDT 가격 binance market price */}
-            <div
-              className="
-              h-20
-                w-full flex
-                binance-widget-marquee
-              flex-row items-center justify-center gap-2
-              p-2
-              "
-
-              data-cmc-ids="1,1027,52,5426,3408,74,20947,5994,24478,13502,35336,825"
-              data-theme="dark"
-              data-transparent="true"
-              data-locale="ko"
-              data-fiat="KRW"
-              //data-powered-by="Powered by OneClick USDT"
-              //data-disclaimer="Disclaimer"
-            ></div>
-
-
-
-
+            {/* store?.escrowAmountUSDT */}
+            {/* 보유수량(USDT) */}
             <div className="w-full flex flex-col items-end justify-end gap-2
             border-b border-zinc-300 pb-2">
-
+  
               {/* 가맹점 보유 */}
               <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
                 <div className="flex flex-row gap-2 items-center">
@@ -1218,11 +1132,23 @@ export default function Index({ params }: any) {
                     height={20}
                     className="w-5 h-5"
                   />
-                  <span className="text-lg font-semibold text-zinc-500">
-                    가맹점 보유
-                  </span>
-                </div>
+                
+                    {escrowHistory && escrowHistory.length > 0
+                      ? (
+                        <span className="text-lg text-zinc-600 font-semibold">
+                        
 
+                        {new Date(escrowHistory[0].date).toLocaleDateString('ko-KR')} 보유량
+                        </span>
+                      ) : (
+                        <span className="text-lg text-zinc-600 font-semibold">
+                          보유량
+                        </span>
+                      )
+                    }
+
+                </div>
+  
                 <div className="flex flex-row items-center gap-2">
                   <Image
                     src="/icon-tether.png"
@@ -1241,248 +1167,8 @@ export default function Index({ params }: any) {
                     }
                   </span>
                 </div>
-
+  
               </div>
-
-
-              {/* 가맹점 거래 */}
-              <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
-                <div className="flex flex-row gap-2 items-center">
-                  <Image
-                    src="/icon-trade.png"
-                    alt="Trade"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-lg font-semibold text-zinc-500">
-                    가맹점 거래
-                  </span>
-                </div>
-
-                <div className="flex flex-row items-center gap-2">
-                  <Image
-                    src="/icon-tether.png"
-                    alt="Tether"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-lg text-green-600 font-semibold"
-                    style={{ fontFamily: 'monospace' }}
-                  >
-                    {
-                      Number(store?.totalUsdtAmount ? store?.totalUsdtAmount : 0)
-                      .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
-                  </span>
-                </div>
-
-                <div className="flex flex-row gap-1 items-center">
-                  <span className="text-lg text-yellow-600 font-semibold"
-                    style={{ fontFamily: 'monospace' }}
-                  >
-                    {
-                      Number(store?.totalKrwAmount ? store?.totalKrwAmount : 0)
-                      .toLocaleString('ko-KR')
-                    }
-                  </span>
-                  <span className="text-sm text-zinc-500">
-                    원
-                  </span>
-                </div>
-              </div>
-
-
-
-
-              {/* 가맹점 정산금 */}
-              <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
-                <div className="flex flex-row gap-2 items-center">
-                  <Image
-                    src="/icon-settlement.png"
-                    alt="Settlement"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-lg font-semibold text-zinc-500">
-                    가맹점 정산
-                  </span>
-                </div>
-
-                <div className="flex flex-row items-center gap-2">
-                  <Image
-                    src="/icon-tether.png"
-                    alt="Tether"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-lg text-green-600 font-semibold"
-                    style={{ fontFamily: 'monospace' }}
-                  >
-                    {
-                      Number(store?.totalSettlementAmount ? store?.totalSettlementAmount : 0)
-                      .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
-                  </span>
-                </div>
-
-                <div className="flex flex-row gap-1 items-center">
-                  <span className="text-lg text-yellow-600 font-semibold"
-                    style={{ fontFamily: 'monospace' }}
-                  >
-                    {
-                      Number(store?.totalSettlementAmountKRW ? store?.totalSettlementAmountKRW : 0)
-                      .toLocaleString('ko-KR')
-                    }
-                  </span>
-                  <span className="text-sm text-zinc-500">
-                    원
-                  </span>
-                </div>
-              </div>
-
-
-              {/* 가맹점 판매금 */}
-              <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
-                <div className="flex flex-row gap-2 items-center">
-                  <Image
-                    src="/icon-clearance.png"
-                    alt="Clearance"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-lg font-semibold text-zinc-500">
-                    가맹점 판매
-                  </span>
-                </div>
-
-                <div className="flex flex-row items-center gap-2">
-                  <Image
-                    src="/icon-tether.png"
-                    alt="Tether"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-lg text-green-600 font-semibold"
-                    style={{ fontFamily: 'monospace' }}
-                  >
-                    {
-                      Number(store?.totalUsdtAmountClearance || 0)
-                      .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    }
-                  </span>
-                </div>
-
-                <div className="flex flex-row gap-1 items-center">
-                  <span className="text-lg text-yellow-600 font-semibold"
-                    style={{ fontFamily: 'monospace' }}
-                  >
-                    {
-                      Number(store?.totalKrwAmountClearance || 0)
-                      .toLocaleString('ko-KR')
-                    }
-                  </span>
-                  <span className="text-sm text-zinc-500">
-                    원
-                  </span>
-                </div>
-
-                </div> 
-
-            </div>
-
-
-
-
-            <div className="grid grid-cols-2 xl:grid-cols-4 gap-2 mb-4">
-
-                <button
-                    onClick={() => router.push('/' + params.lang + '/' + params.center + '/member')}
-                    className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                    hover:bg-[#3167b4]/80
-                    hover:cursor-pointer
-                    hover:scale-105
-                    transition-transform duration-200 ease-in-out
-                    ">
-                    회원관리
-                </button>
-
-                <button
-                    onClick={() => router.push('/' + params.lang + '/' + params.center + '/buyorder')}
-                    className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                    hover:bg-[#3167b4]/80
-                    hover:cursor-pointer
-                    hover:scale-105
-                    transition-transform duration-200 ease-in-out
-                    ">
-                    구매주문관리
-                </button>
-
-                <button
-                    onClick={() => router.push('/' + params.lang + '/' + params.center + '/trade-history')}
-                    className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                    hover:bg-[#3167b4]/80
-                    hover:cursor-pointer
-                    hover:scale-105
-                    transition-transform duration-200 ease-in-out
-                    ">
-                    거래내역
-                </button>
-
-
-                <button
-                    onClick={() => router.push('/' + params.lang + '/' + params.center + '/clearance-history')}
-                    className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                    hover:bg-[#3167b4]/80
-                    hover:cursor-pointer
-                    hover:scale-105
-                    transition-transform duration-200 ease-in-out
-                    ">
-                    판매(거래소)
-                </button>
-
-                <button
-                  onClick={() => router.push('/' + params.lang + '/' + params.center + '/clearance-request')}
-                  className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                  hover:bg-[#3167b4]/80
-                  hover:cursor-pointer
-                  hover:scale-105
-                  transition-transform duration-200 ease-in-out
-                  ">
-                    출금(회원)
-                </button>
-
-                <button
-                  onClick={() => router.push('/' + params.lang + '/' + params.center + '/daily-close')}
-                  className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                  hover:bg-[#3167b4]/80
-                  hover:cursor-pointer
-                  hover:scale-105
-                  transition-transform duration-200 ease-in-out
-                  ">
-                    통계(일별)
-                </button>
-
-                <div className='flex w-32 items-center justify-center gap-2
-                bg-yellow-500 text-[#3167b4] text-sm rounded-lg p-2'>
-                  <Image
-                    src="/icon-escrow.png"
-                    alt="Escrow"
-                    width={35}
-                    height={35}
-                    className="w-4 h-4"
-                  />
-                  <div className="text-sm font-semibold">
-                    보유랑내역
-                  </div>
-                </div>
-
-
             </div>
 
 
@@ -1496,7 +1182,7 @@ export default function Index({ params }: any) {
                 />
 
                 <div className="text-xl font-semibold">
-                  보유량내역
+                  보유량 내역(USDT)
                 </div>
 
             </div>
@@ -1514,10 +1200,10 @@ export default function Index({ params }: any) {
                       날짜
                     </th>
                     <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">
-                      출금량(USDT)
+                      입금량(USDT)
                     </th>
                     <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">
-                      입금량(USDT)
+                      출금량(USDT)
                     </th>
                     <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">
                       처리전 잔고(USDT)
@@ -1537,15 +1223,7 @@ export default function Index({ params }: any) {
                       <td className="px-4 py-2 text-sm text-zinc-700">
                         {new Date(escrow.date).toLocaleDateString('ko-KR')}
                       </td>
-                      <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
-                        style={{ fontFamily: 'monospace' }}
-                      >
-                        {
-                          escrow.withdrawAmount
-                          ? Number(escrow.withdrawAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          : 0
-                        }
-                      </td>
+
                       <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
                         style={{ fontFamily: 'monospace' }}
                       >
@@ -1555,6 +1233,17 @@ export default function Index({ params }: any) {
                           : 0
                         }
                       </td>
+
+                      <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
+                        style={{ fontFamily: 'monospace' }}
+                      >
+                        {
+                          escrow.withdrawAmount
+                          ? Number(escrow.withdrawAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          : 0
+                        }
+                      </td>
+
                       <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
                         style={{ fontFamily: 'monospace' }}
                       >

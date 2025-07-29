@@ -833,62 +833,68 @@ export default function Index({ params }: any) {
 ]);
 
 
-///console.log('agreementForTrade', agreementForTrade);
 
 
-const [fetchingBuyOrders, setFetchingBuyOrders] = useState(false);
-
-const fetchBuyOrders = async () => {
 
 
-  if (fetchingBuyOrders) {
-    return;
-  }
-  setFetchingBuyOrders(true);
 
-  const response = await fetch('/api/order/getAllBuyOrdersByStorecodeDaily', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(
-      {
-        storecode: params.center,
-        limit: Number(limitValue),
-        page: Number(pageValue),
-        walletAddress: address,
-        searchMyOrders: searchMyOrders,
+  const [escrowBalance, setEscrowBalance] = useState(0);
 
-        searchOrderStatusCompleted: true,
+  useEffect(() => {
 
-        searchBuyer: searchBuyer,
-        searchDepositName: searchDepositName,
-
-        searchStoreBankAccountNumber: searchStoreBankAccountNumber,
-
-
-        fromDate: searchFromDate,
-        toDate: searchToDate,
-
+    const fetchEscrowBalance = async () => {
+      if (!params.center) {
+        return;
       }
 
-    ),
-  });
+      const response = await fetch('/api/store/getEscrowBalance', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(
+            {
+              storecode: params.center,
+            }
+        ),
+      });
 
-  if (!response.ok) {
-    setFetchingBuyOrders(false);
-    toast.error('Failed to fetch buy orders');
-    return;
-  }
-  const data = await response.json();
-  //console.log('data', data);
+      if (!response.ok) {
+        return;
+      }
 
-  setBuyOrders(data.result.orders);
-  setTotalCount(data.result.totalCount);
-  setFetchingBuyOrders(false);
 
-  return data.result.orders;
-}
+
+      const data = await response.json();
+
+      setEscrowBalance(data.result.escrowBalance);
+
+    }
+
+
+    fetchEscrowBalance();
+
+    
+    
+    const interval = setInterval(() => {
+
+      fetchEscrowBalance();
+
+    }, 5000);
+
+    return () => clearInterval(interval);
+
+  } , [
+    params.center,
+  ]);
+
+
+
+
+
+
+
+
 
 
 
@@ -984,52 +990,6 @@ const fetchBuyOrders = async () => {
 
 
 
-
-
-
-  // get escrow history
-  const [escrowHistory, setEscrowHistory] = useState<any[]>([]);
-  const [fetchingEscrowHistory, setFetchingEscrowHistory] = useState(false);
-  useEffect(() => {
-    const fetchEscrowHistory = async () => {
-      if (fetchingEscrowHistory) {
-        return;
-      }
-      setFetchingEscrowHistory(true);
-
-      const response = await fetch('/api/escrow/history', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          storecode: params.center,
-          limit: 100,
-          page: 1, // Assuming page 0 is the first page
-        }),
-      });
-
-      if (!response.ok) {
-        toast.error('Failed to fetch escrow history');
-        return;
-      }
-
-      const data = await response.json();
-
-      setEscrowHistory(data.result.escrows || []);
-      setFetchingEscrowHistory(false);
-
-    };
-
-    fetchEscrowHistory();
-
-  }, [params.center, limitValue, pageValue]);
-
-
-
-
-
-  
 
 
 
@@ -1271,8 +1231,9 @@ const fetchBuyOrders = async () => {
             <div className="w-full flex flex-col items-end justify-end gap-2
             border-b border-zinc-300 pb-2">
 
-              {/* 가맹점 보유 */}
-              <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
+              {/* 가맹점 보유량 */}
+              <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2
+              bg-white/50 backdrop-blur-sm p-2 rounded-lg shadow-md">
                 <div className="flex flex-row gap-2 items-center">
                   <Image
                     src="/icon-escrow.png"
@@ -1282,7 +1243,7 @@ const fetchBuyOrders = async () => {
                     className="w-5 h-5"
                   />
                   <span className="text-lg font-semibold text-zinc-500">
-                    가맹점 보유
+                    보유량
                   </span>
                 </div>
 
@@ -1298,12 +1259,22 @@ const fetchBuyOrders = async () => {
                     style={{ fontFamily: 'monospace' }}
                   >
                     {
-                      store?.escrowAmountUSDT
-                      ? Number(store?.escrowAmountUSDT).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                      : 0
+                      escrowBalance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                     }
                   </span>
                 </div>
+
+                {/* 보유량 내역 */}
+                <button
+                  onClick={() => {
+                    router.push('/' + params.lang + '/' + params.center + '/escrow-history');
+                  }}
+                  className="bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80
+                  flex items-center justify-center gap-2
+                  border border-zinc-300 hover:border-[#3167b4]"
+                >
+                  보유량 내역
+                </button>
 
               </div>
 
@@ -1534,19 +1505,6 @@ const fetchBuyOrders = async () => {
                   </div>
                 </div>
 
-                <button
-                  onClick={() => router.push('/' + params.lang + '/' + params.center + '/escrow-history')}
-                  className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                  hover:bg-[#3167b4]/80
-                  hover:cursor-pointer
-                  hover:scale-105
-                  transition-transform duration-200 ease-in-out
-                  ">
-                    보유량내역
-                </button>
-
-
-
             </div>
 
 
@@ -1695,9 +1653,9 @@ const fetchBuyOrders = async () => {
                       <>
 
                       {/* skip if order.data is today's date */}
-                      
+                      {/*
                       {new Date(order.date).toLocaleDateString('ko-KR') !== new Date().toLocaleDateString('ko-KR') && (
-                      
+                      */}
 
                         <tr key={index} className="border-b border-zinc-300 hover:bg-zinc-100">
                           <td className="px-4 py-2 text-sm text-zinc-700">
@@ -1774,8 +1732,10 @@ const fetchBuyOrders = async () => {
 
                         </tr>
 
-                      
+                      {/*
                       )}
+                      */}
+                      
 
                       </>
                     

@@ -3073,7 +3073,8 @@ const fetchBuyOrders = async () => {
             border-b border-zinc-300 pb-2">
 
               {/* 가맹점 보유량 */}
-              <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
+              <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2
+              bg-white/50 backdrop-blur-sm p-2 rounded-lg shadow-md">
                 <div className="flex flex-row gap-2 items-center">
                   <Image
                     src="/icon-escrow.png"
@@ -3083,7 +3084,7 @@ const fetchBuyOrders = async () => {
                     className="w-5 h-5"
                   />
                   <span className="text-lg font-semibold text-zinc-500">
-                    가맹점 보유
+                    보유량
                   </span>
                 </div>
 
@@ -3105,6 +3106,18 @@ const fetchBuyOrders = async () => {
                     }
                   </span>
                 </div>
+
+                {/* 보유량 내역 */}
+                <button
+                  onClick={() => {
+                    router.push('/' + params.lang + '/' + params.center + '/escrow-history');
+                  }}
+                  className="bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80
+                  flex items-center justify-center gap-2
+                  border border-zinc-300 hover:border-[#3167b4]"
+                >
+                  보유량 내역
+                </button>
 
               </div>
 
@@ -3336,19 +3349,6 @@ const fetchBuyOrders = async () => {
                   ">
                     통계(일별)
                 </button>
-
-                <button
-                  onClick={() => router.push('/' + params.lang + '/' + params.center + '/escrow-history')}
-                  className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
-                  hover:bg-[#3167b4]/80
-                  hover:cursor-pointer
-                  hover:scale-105
-                  transition-transform duration-200 ease-in-out
-                  ">
-                    보유량내역
-                </button>
-
-
 
             </div>
 

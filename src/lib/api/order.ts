@@ -7360,3 +7360,34 @@ export async function getEscrowHistory(
 
 
 
+
+
+// getEscrowBalanceByStorecode
+// Get the escrow balance for a specific storecode
+export async function getEscrowBalanceByStorecode(
+  {
+    storecode,
+  }: {
+    storecode: string;
+  }
+): Promise<any> {
+  const client = await clientPromise;
+  const collection = client.db('ultraman').collection('stores');
+  const store = await collection.findOne<any>(
+    { storecode: storecode },
+    { projection: { escrowAmountUSDT: 1 } }
+  );
+
+  if (!store) {
+    console.log('store not found for storecode: ' + storecode);
+    return {
+      escrowBalance: 0,
+    };
+  }
+
+  
+  return {
+    escrowBalance: store.escrowAmountUSDT || 0,
+  };
+
+}
