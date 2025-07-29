@@ -6916,16 +6916,25 @@ export async function updateBuyOrderSettlement(
                   _id: null,
                   totalSettlementAmount: { $sum: "$settlement.settlementAmount" },
                   totalSettlementAmountKRW: { $sum: { $toDouble: "$settlement.settlementAmountKRW" } },
+
                   totalFeeAmount: { $sum: "$settlement.feeAmount" },
                   totalFeeAmountKRW: { $sum: { $toDouble: "$settlement.feeAmountKRW" } },
+
+                  totalAgentFeeAmount: { $sum: "$settlement.agentFeeAmount" },
+                  totalAgentFeeAmountKRW: { $sum: { $toDouble: "$settlement.agentFeeAmountKRW" } }
+
               }
           }
       ]).toArray();
 
       const totalSettlementAmount = totalSettlementAmountResult[0].totalSettlementAmount;
       const totalSettlementAmountKRW = totalSettlementAmountResult[0].totalSettlementAmountKRW;
+
       const totalFeeAmount = totalSettlementAmountResult[0].totalFeeAmount;
       const totalFeeAmountKRW = totalSettlementAmountResult[0].totalFeeAmountKRW;
+
+      const totalAgentFeeAmount = totalSettlementAmountResult[0].totalAgentFeeAmount;
+      const totalAgentFeeAmountKRW = totalSettlementAmountResult[0].totalAgentFeeAmountKRW;
 
       // update store
       const resultStore = await collectionStore.updateOne(
@@ -6935,8 +6944,12 @@ export async function updateBuyOrderSettlement(
                   totalSettlementCount: totalSettlementCount,
                   totalSettlementAmount: totalSettlementAmount,
                   totalSettlementAmountKRW: totalSettlementAmountKRW,
+
                   totalFeeAmount: totalFeeAmount,
                   totalFeeAmountKRW: totalFeeAmountKRW,
+
+                  totalAgentFeeAmount: totalAgentFeeAmount,
+                  totalAgentFeeAmountKRW: totalAgentFeeAmountKRW,
               },
           }
       );
