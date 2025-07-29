@@ -654,106 +654,6 @@ export default function Index({ params }: any) {
 
 
 
-  // get escrow wallet address and balance
-  
-  const [escrowBalance, setEscrowBalance] = useState(0);
-  const [escrowNativeBalance, setEscrowNativeBalance] = useState(0);
-
-  
-  useEffect(() => {
-
-    const getEscrowBalance = async () => {
-
-      if (!address) {
-        setEscrowBalance(0);
-        return;
-      }
-
-      if (!escrowWalletAddress || escrowWalletAddress === '') return;
-
-
-      
-      const result = await balanceOf({
-        contract,
-        address: escrowWalletAddress,
-      });
-
-      //console.log('escrowWalletAddress balance', result);
-
-  
-      setEscrowBalance( Number(result) / 10 ** 6 );
-            
-
-
-      /*
-      await fetch('/api/user/getUSDTBalanceByWalletAddress', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          chain: params.center,
-          walletAddress: escrowWalletAddress,
-        }),
-      })
-      .then(response => response?.json())
-      .then(data => {
-
-        console.log('getUSDTBalanceByWalletAddress data.result.displayValue', data.result?.displayValue);
-
-        setEscrowBalance(data.result?.displayValue);
-
-      } );
-       */
-
-
-
-
-      await fetch('/api/user/getBalanceByWalletAddress', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          chain: params.center,
-          walletAddress: escrowWalletAddress,
-        }),
-      })
-      .then(response => response?.json())
-      .then(data => {
-
-
-        ///console.log('getBalanceByWalletAddress data', data);
-
-
-        setEscrowNativeBalance(data.result?.displayValue);
-
-      });
-      
-
-
-
-    };
-
-    getEscrowBalance();
-
-    const interval = setInterval(() => {
-      getEscrowBalance();
-    } , 1000);
-
-    return () => clearInterval(interval);
-
-  } , [address, escrowWalletAddress, contract, params.center]);
-  
-
-  //console.log('escrowBalance', escrowBalance);
-
-
-
-
-
-
-
   
 
 
@@ -1538,6 +1438,57 @@ export default function Index({ params }: any) {
 
 
 
+  const [escrowBalance, setEscrowBalance] = useState(0);
+
+  useEffect(() => {
+
+    const fetchEscrowBalance = async () => {
+      if (!params.center) {
+        return;
+      }
+
+      const response = await fetch('/api/store/getEscrowBalance', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(
+            {
+              storecode: params.center,
+            }
+        ),
+      });
+
+      if (!response.ok) {
+        return;
+      }
+
+
+
+      const data = await response.json();
+
+      setEscrowBalance(data.result.escrowBalance);
+
+    }
+
+
+    fetchEscrowBalance();
+
+    
+    
+    const interval = setInterval(() => {
+
+      fetchEscrowBalance();
+
+    }, 5000);
+
+    return () => clearInterval(interval);
+
+  } , [
+    params.center,
+  ]);
+
+
 
 
 
@@ -1930,41 +1881,52 @@ export default function Index({ params }: any) {
           <div className="w-full flex flex-col items-end justify-end gap-2
           border-b border-zinc-300 pb-2">
 
-            {/* 가맹점 보유 */}
-            <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
-              <div className="flex flex-row gap-2 items-center">
-                <Image
-                  src="/icon-escrow.png"
-                  alt="Escrow"
-                  width={20}
-                  height={20}
-                  className="w-5 h-5"
-                />
-                <span className="text-lg font-semibold text-zinc-500">
-                  가맹점 보유
-                </span>
-              </div>
+              {/* 가맹점 보유량 */}
+              <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2
+              bg-white/50 backdrop-blur-sm p-2 rounded-lg shadow-md">
+                <div className="flex flex-row gap-2 items-center">
+                  <Image
+                    src="/icon-escrow.png"
+                    alt="Escrow"
+                    width={20}
+                    height={20}
+                    className="w-5 h-5"
+                  />
+                  <span className="text-lg font-semibold text-zinc-500">
+                    보유량
+                  </span>
+                </div>
 
-              <div className="flex flex-row items-center gap-2">
-                <Image
-                  src="/icon-tether.png"
-                  alt="Tether"
-                  width={20}
-                  height={20}
-                  className="w-5 h-5"
-                />
-                <span className="text-lg text-green-600 font-semibold"
-                  style={{ fontFamily: 'monospace' }}
+                <div className="flex flex-row items-center gap-2">
+                  <Image
+                    src="/icon-tether.png"
+                    alt="Tether"
+                    width={20}
+                    height={20}
+                    className="w-5 h-5"
+                  />
+                  <span className="text-lg text-green-600 font-semibold"
+                    style={{ fontFamily: 'monospace' }}
+                  >
+                    {
+                      escrowBalance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                  </span>
+                </div>
+
+                {/* 보유량 내역 */}
+                <button
+                  onClick={() => {
+                    router.push('/' + params.lang + '/' + params.center + '/escrow-history');
+                  }}
+                  className="bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80
+                  flex items-center justify-center gap-2
+                  border border-zinc-300 hover:border-[#3167b4]"
                 >
-                  {
-                    store?.escrowAmountUSDT
-                    ? Number(store?.escrowAmountUSDT).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    : 0
-                  }
-                </span>
-              </div>
+                  보유량 내역
+                </button>
 
-            </div>
+              </div>
 
 
             {/* 가맹점 거래 */}

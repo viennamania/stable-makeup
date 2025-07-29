@@ -7385,9 +7385,109 @@ export async function getEscrowBalanceByStorecode(
     };
   }
 
-  
-  return {
-    escrowBalance: store.escrowAmountUSDT || 0,
-  };
+
+
+
+  // get latest date from escrows collection with withdrawAmount > 0
+  // if no escrows found, return 0
+ 
+  const escrowCollection = client.db('ultraman').collection('escrows');
+  const buyordersCollection = client.db('ultraman').collection('buyorders');
+
+
+
+
+  const latestEscrow = await escrowCollection.find<any>(
+    { storecode: storecode, withdrawAmount: { $gt: 0 } },
+  ).sort({ date: -1 }).limit(1).toArray();
+
+  //console.log('getEscrowBalanceByStorecode latestEscrow: ' + JSON.stringify(latestEscrow));
+  //  [{"_id":"6888e772edb063fa5cfe9ead","storecode":"dtwuzgst","date":"2025-07-29","withdrawAmount":113.42,"beforeBalance":1579.7389999999996,"afterBalance":1466.3189999999995}]
+
+
+  if (latestEscrow.length === 0) {
+
+    const totalSettlement = await buyordersCollection.aggregate([
+      {
+        $match: {
+          storecode: storecode,
+          settlement: { $exists: true },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalFeeAmount: { $sum: { $ifNull: ['$$ROOT.settlement.feeAmount', 0] } },
+          totalDealerAmount: { $sum: { $ifNull: ['$$ROOT.settlement.dealerAmount', 0] } },
+        },
+      },
+    ]).toArray();
+
+    if (totalSettlement.length === 0) {
+
+      return {
+        escrowBalance: store.escrowAmountUSDT || 0,
+      };
+
+    } else {
+
+      const totalFeeAmount = totalSettlement[0].totalFeeAmount || 0;
+      const totalDealerAmount = totalSettlement[0].totalDealerAmount || 0;
+
+      // calculate escrow balance
+      const escrowBalance = (store.escrowAmountUSDT || 0) - (totalFeeAmount + totalDealerAmount);
+
+      return {
+        escrowBalance: escrowBalance,
+      };
+
+    }
+
+
+
+  } else {
+
+    // get sum of settlement.feeAmount + settlement.dealerAmount from buyorders where storecode is storecode
+    // where settlementUpdatedAt is greater than  latestEscrow[0].date
+    
+    const totalSettlement = await buyordersCollection.aggregate([
+      {
+        $match: {
+          storecode: storecode,
+          settlementUpdatedAt: { $gt: latestEscrow[0].date },
+          settlement: { $exists: true },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalFeeAmount: { $sum: { $ifNull: ['$$ROOT.settlement.feeAmount', 0] } },
+          totalDealerAmount: { $sum: { $ifNull: ['$$ROOT.settlement.dealerAmount', 0] } },
+        },
+      },
+    ]).toArray();
+
+    if (totalSettlement.length === 0) {
+
+      return {
+        escrowBalance: store.escrowAmountUSDT || 0,
+      };
+
+    } else {
+
+      const totalFeeAmount = totalSettlement[0].totalFeeAmount || 0;
+      const totalDealerAmount = totalSettlement[0].totalDealerAmount || 0;
+
+      // calculate escrow balance
+      const escrowBalance = (store.escrowAmountUSDT || 0) - (totalFeeAmount + totalDealerAmount);
+
+      return {
+        escrowBalance: escrowBalance,
+      };
+
+    }
+
+  }
+
 
 }

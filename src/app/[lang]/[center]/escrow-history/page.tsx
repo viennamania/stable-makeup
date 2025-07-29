@@ -926,6 +926,56 @@ export default function Index({ params }: any) {
 
 
 
+  const [escrowBalance, setEscrowBalance] = useState(0);
+
+  useEffect(() => {
+
+    const fetchEscrowBalance = async () => {
+      if (!params.center) {
+        return;
+      }
+
+      const response = await fetch('/api/store/getEscrowBalance', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(
+            {
+              storecode: params.center,
+            }
+        ),
+      });
+
+      if (!response.ok) {
+        return;
+      }
+
+
+
+      const data = await response.json();
+
+      setEscrowBalance(data.result.escrowBalance);
+
+    }
+
+
+    fetchEscrowBalance();
+
+    
+    
+    const interval = setInterval(() => {
+
+      fetchEscrowBalance();
+
+    }, 5000);
+
+    return () => clearInterval(interval);
+
+  } , [
+    params.center,
+  ]);
+
 
 
 
@@ -965,7 +1015,7 @@ export default function Index({ params }: any) {
 
     fetchEscrowHistory();
 
-  }, [params.center, limitValue, pageValue]);
+  }, [params.center]);
 
 
 
@@ -1123,7 +1173,39 @@ export default function Index({ params }: any) {
             border-b border-zinc-300 pb-2">
   
               {/* 가맹점 보유 */}
-              <div className="flex flex-col xl:flex-row items-start xl:items-center gap-2">
+              <div className="flex flex-row items-start xl:items-center gap-2">
+                <div className="flex flex-row gap-2 items-center">
+                  <Image
+                    src="/icon-escrow.png"
+                    alt="Escrow"
+                    width={20}
+                    height={20}
+                    className="w-5 h-5"
+                  />
+                  <span className="text-lg text-zinc-600 font-semibold">
+                    현재 실시간 보유량
+                  </span>
+                </div>
+  
+                <div className="flex flex-row items-center gap-2">
+                  <Image
+                    src="/icon-tether.png"
+                    alt="Tether"
+                    width={20}
+                    height={20}
+                    className="w-5 h-5"
+                  />
+                  <span className="text-xl text-green-600 font-semibold"
+                    style={{ fontFamily: 'monospace' }}
+                  >
+                    {
+                      escrowBalance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                  </span>
+                </div>
+  
+              </div>
+              <div className="flex flex-row items-start xl:items-center gap-2">
                 <div className="flex flex-row gap-2 items-center">
                   <Image
                     src="/icon-escrow.png"
@@ -1157,18 +1239,19 @@ export default function Index({ params }: any) {
                     height={20}
                     className="w-5 h-5"
                   />
-                  <span className="text-lg text-green-600 font-semibold"
+                  <span className="text-xl text-green-600 font-semibold"
                     style={{ fontFamily: 'monospace' }}
                   >
                     {
                       store?.escrowAmountUSDT
-                      ? Number(store?.escrowAmountUSDT).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                      ? store?.escrowAmountUSDT.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                       : 0
                     }
                   </span>
                 </div>
   
               </div>
+
             </div>
 
 
@@ -1182,7 +1265,7 @@ export default function Index({ params }: any) {
                 />
 
                 <div className="text-xl font-semibold">
-                  보유량 내역(USDT)
+                  보유량 변동 내역(USDT)
                 </div>
 
             </div>
@@ -1206,10 +1289,10 @@ export default function Index({ params }: any) {
                       출금량(USDT)
                     </th>
                     <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">
-                      처리전 잔고(USDT)
+                      처리전 보유량(USDT)
                     </th>
                     <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">
-                      처리후 잔고(USDT)
+                      처리후 보유량(USDT)
                     </th>
 
                   </tr>
