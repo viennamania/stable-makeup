@@ -2494,11 +2494,6 @@ export default function Index({ params }: any) {
                         <th className="p-2">
                           <div className="flex flex-col items-center justify-center gap-2">
                             <span className="text-center">
-                              회원<br />
-                              홈페이지
-                            </span>
-                            <span className="text-center">
-                              관리자<br/>
                               홈페이지
                             </span>
                           </div>
@@ -2509,33 +2504,11 @@ export default function Index({ params }: any) {
                           p-2">
                           <div className="flex flex-col items-center justify-center gap-2">
 
-
                             <span className="text-center">
                               판매자 원화통장
                             </span>
                             <span className="text-center">
                               판매자 USDT통장
-                            </span>
-
-                            <span className="text-center">
-                              관리자 USDT통장
-                            </span>
-
-                          </div>
-                        </th>
-
-                        <th className="p-2">
-                          <div className="flex flex-col items-center justify-center gap-2">
-                            <span className="text-center">
-                              PG 수수료율(%)
-                            </span>
-
-                            <span className="text-center">
-                              AG 수수료율(%)
-                            </span>
-
-                            <span className="text-center">
-                              보유금(USDT)
                             </span>
 
                           </div>
@@ -2552,6 +2525,19 @@ export default function Index({ params }: any) {
                             <span className="text-center">
                               수량(USDT)
                             </span>
+                          </div>
+                        </th>
+
+                        <th className="p-2">
+                          <div className="flex flex-col items-center justify-center gap-2">
+                            <span className="text-center">
+                              PG 수수료율(%)
+                            </span>
+
+                            <span className="text-center">
+                              AG 수수료율(%)
+                            </span>
+
                           </div>
                         </th>
 
@@ -2597,11 +2583,6 @@ export default function Index({ params }: any) {
                                 <span>수량(USDT)</span>
                               </div>
 
-                              <div className="flex flex-col items-center justify-center gap-2">
-                                <span>보유금액(원)</span>
-                                <span>보유수량(USDT)</span>
-                              </div>
-
                             </div>
 
                           </div>
@@ -2610,12 +2591,14 @@ export default function Index({ params }: any) {
                         {/* USDT통장 잔고 */}
                         <th className="p-2">
                           <div className="flex flex-col items-center justify-center gap-2">
-
                             <span className="text-center">
-                              USDT통장
+                              익일 보유금(USDT)
                             </span>
                             <span className="text-center">
-                              USDT통장 잔고
+                              관리자 USDT통장
+                            </span>
+                            <span className="text-center">
+                              관리자 USDT통장 잔고
                             </span>
 
                           </div>
@@ -2830,7 +2813,7 @@ export default function Index({ params }: any) {
                                   rel="noopener noreferrer"
                                   className="text-sm text-blue-500 hover:underline"
                                 >
-                                  회원
+                                  회원용 홈페이지
                                 </a>
                                 {/*
                                 <button
@@ -2854,7 +2837,7 @@ export default function Index({ params }: any) {
                                   rel="noopener noreferrer"
                                   className="text-sm text-blue-500 hover:underline"
                                 >
-                                  관리자
+                                  관리자용 홈페이지
                                 </a>
 
                               </div>
@@ -2887,7 +2870,7 @@ export default function Index({ params }: any) {
                                 ) : (
                                   <div className="flex flex-col xl:flex-row items-center gap-2">
                                     <span className="text-sm text-red-500">
-                                      통장정보 없음
+                                      판매자 원화통장 없음
                                     </span>
                                     {/*
                                     <button
@@ -2932,36 +2915,77 @@ export default function Index({ params }: any) {
                                 }
                                 </div>
 
-
-                                <div className="flex flex-col xl:flex-row items-center gap-2">
-                                {
-                                  item?.adminWalletAddress ? (
-                                    <button
-                                      onClick={() => {
-                                        navigator.clipboard.writeText(
-                                          item.adminWalletAddress
-                                        );
-                                        toast.success('복사되었습니다');
-                                      }
-                                    }
-                                    className="text-sm text-blue-500 hover:underline"
-                                    >
-                                      {item.adminWalletAddress.substring(0, 6) + '...' + item.adminWalletAddress.substring(item.adminWalletAddress.length - 4)
-                                      }
-                                    </button>
-                                  ) : (
-                                    <span className="text-sm text-red-500">
-                                      관리자 USDT통장 없음
-                                    </span>
-                                  )
-                                }
-                                </div>
-
-
-
-
                               </div>
 
+                            </div>
+
+                          </td>
+
+
+                          <td className="p-2">
+                            <div className=" h-56
+                              w-36
+                              flex flex-col items-between justify-between gap-2
+                              ">
+
+
+                                <div className="w-full flex flex-col items-center justify-center gap-2">
+
+                                  <div className="w-full flex flex-row items-center justify-center gap-2
+                                  border-b border-gray-300 pb-2">
+                                    <span className="text-sm text-gray-500">
+                                      {
+                                        item.totalPaymentConfirmedCount ? item.totalPaymentConfirmedCount : 0
+                                      }{' '}건
+                                    </span>
+                                  </div>
+
+                                  <div className="flex flex-col items-end gap-2">
+
+                                    <span className="text-sm text-yellow-600"
+                                      style={{ fontFamily: 'monospace' }}
+                                    >
+                                      {
+                                        Number(item.totalKrwAmount ? item.totalKrwAmount.toFixed(0) : 0)
+                                        ?.toLocaleString('ko-KR')
+                                      }{' '}원
+                                    </span>
+                                    <div className="flex flex-row items-center gap-2">
+                                      <Image
+                                        src="/icon-tether.png"
+                                        alt="Tether"
+                                        width={20}
+                                        height={20}
+                                        className="w-5 h-5"
+                                      />
+                                      <span className="text-sm text-green-600"
+                                        style={{ fontFamily: 'monospace' }}
+                                      >
+                                        {
+                                          (item.totalUsdtAmount ? item.totalUsdtAmount : 0)
+                                          .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                        }
+                                      </span>
+                                    </div>
+
+                                  </div>
+
+                                </div>
+
+                                {/* 구매주문관리 버튼 */}
+                                <button
+                                  onClick={() => {
+                                    router.push(
+                                      '/' + params.lang + '/admin/trade-history?storecode=' + item.storecode
+                                    );
+                                  }}
+                                  className="mb-2
+                                  w-full
+                                  bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
+                                  hover:bg-[#3167b4]/80"
+                                >
+                                  구매내역
+                                </button>
 
                             </div>
 
@@ -3043,113 +3067,18 @@ export default function Index({ params }: any) {
                                   </span>
                                 </div>
 
-                                {/* escrowAmountUSDT */}
-                                <div className="w-full flex flex-row items-center justify-center gap-1">
-                                  <Image
-                                    src="/icon-tether.png"
-                                    alt="Tether"
-                                    width={20}
-                                    height={20}
-                                    className="w-5 h-5"
-                                  />
-                                  <span className="text-xl text-green-600"
-                                    style={{ fontFamily: 'monospace' }}
-                                  >
-                                    {item?.escrowAmountUSDT ? item?.escrowAmountUSDT.toFixed(2).toLocaleString('us-US') : 0}
-                                  </span>
-                                </div>
-
-
                               </div>
                  
                             </div>
                           </td>
-
-
-
-
+                          
 
                           <td className="p-2">
                             <div className=" h-56
-                              w-36
-                              flex flex-col items-between justify-between gap-2
-                              ">
-
-
-                                <div className="w-full flex flex-col items-center justify-center gap-2">
-
-                                  <div className="w-full flex flex-row items-center justify-center gap-2
-                                  border-b border-gray-300 pb-2">
-                                    <span className="text-sm text-gray-500">
-                                      {
-                                        item.totalPaymentConfirmedCount ? item.totalPaymentConfirmedCount : 0
-                                      }{' '}건
-                                    </span>
-                                  </div>
-
-                                  <div className="flex flex-col items-end gap-2">
-
-                                    <span className="text-sm text-yellow-600"
-                                      style={{ fontFamily: 'monospace' }}
-                                    >
-                                      {
-                                        Number(item.totalKrwAmount ? item.totalKrwAmount.toFixed(0) : 0)
-                                        ?.toLocaleString('ko-KR')
-                                      }{' '}원
-                                    </span>
-                                    <div className="flex flex-row items-center gap-2">
-                                      <Image
-                                        src="/icon-tether.png"
-                                        alt="Tether"
-                                        width={20}
-                                        height={20}
-                                        className="w-5 h-5"
-                                      />
-                                      <span className="text-sm text-green-600"
-                                        style={{ fontFamily: 'monospace' }}
-                                      >
-                                        {
-                                          (item.totalUsdtAmount ? item.totalUsdtAmount : 0)
-                                          .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                        }
-                                      </span>
-                                    </div>
-
-                                  </div>
-
-                                </div>
-
-                                {/* 구매주문관리 버튼 */}
-                                <button
-                                  onClick={() => {
-                                    router.push(
-                                      '/' + params.lang + '/admin/trade-history?storecode=' + item.storecode
-                                    );
-                                  }}
-                                  className="mb-2
-                                  w-full
-                                  bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
-                                  hover:bg-[#3167b4]/80"
-                                >
-                                  구매내역
-                                </button>
-
-                            </div>
-                             
-
-                          </td>
-
-
-
-
-                          <td className="p-2">
-                            <div className=" h-56
-                              w-64
+                              w-72
                               flex flex-col items-between justify-between gap-2">
 
-
                               <div className="w-full flex flex-col items-center justify-center gap-2">
-
 
                                 <div className="w-full flex flex-row items-center justify-center gap-2
                                 border-b border-gray-300 pb-2">
@@ -3284,7 +3213,7 @@ export default function Index({ params }: any) {
 
                           <td className="p-2">
 
-                            <div className="w-72 h-56
+                            <div className="w-44 h-56
                             flex flex-col items-between justify-between gap-2">
 
 
@@ -3334,57 +3263,6 @@ export default function Index({ params }: any) {
 
                                   </div>
 
-
-                                  <div className="w-full flex flex-col items-end justify-center gap-2">
-
-                                      <span className="text-sm text-yellow-600"
-                                        style={{ fontFamily: 'monospace' }}
-                                      >
-                                        {
-                                          //Number(item.totalKrwAmountClearanceBalance ? item.totalKrwAmountClearanceBalance : 0)
-                                          //  ?.toLocaleString('ko-KR')
-
-                                          //Number(item?.totalSettlementAmountKRW - item?.totalKrwAmountClearance || 0)
-
-                                          // if minus is negative, show 0
-                                          Number(item?.totalKrwAmountClearance - item?.totalSettlementAmountKRW || 0)
-                                          < 0 ? 0 :
-
-                                          Number(item?.totalKrwAmountClearance - item?.totalSettlementAmountKRW || 0)
-                                          .toLocaleString('ko-KR')
-
-
-                                        }{' '}원
-                                      </span>
-                                      <div className="flex flex-row items-center gap-2">
-                                        <Image
-                                          src="/icon-tether.png"
-                                          alt="Tether"
-                                          width={20}
-                                          height={20}
-                                          className="w-5 h-5"
-                                        />
-                                        <span className="text-sm text-green-600"
-                                          style={{ fontFamily: 'monospace' }}
-                                        >
-                                          {
-                                            //////(item.totalUsdtAmountClearanceBalance ? item.totalUsdtAmountClearanceBalance : 0)?.toLocaleString('us-US')
-                                          
-
-                                            //Number(item?.totalSettlementAmount - item?.totalUsdtAmountClearance || 0)
-                                            // if minus is negative, show 0
-                                            Number(item?.totalUsdtAmountClearance - item?.totalSettlementAmount || 0)
-                                            < 0 ? 0 :
-                                            Number(item?.totalUsdtAmountClearance - item?.totalSettlementAmount || 0)
-                                            .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-
-                                          }
-                                        </span>
-                                      </div>
-
-                                  </div>
-
-
                                 </div>
 
                               </div>
@@ -3418,12 +3296,30 @@ export default function Index({ params }: any) {
 
                           {/* USDT 잔액 */}
                           <td className="p-2">
-                            <div className="w-32
+                            <div className="w-44
                               h-56
                               flex flex-col items-between justify-between gap-2">
 
 
                               <div className="w-full flex flex-col items-center justify-center gap-2">
+
+
+                                {/* escrowAmountUSDT */}
+                                <div className="w-full flex flex-row items-center justify-center gap-1">
+                                  <Image
+                                    src="/icon-tether.png"
+                                    alt="Tether"
+                                    width={20}
+                                    height={20}
+                                    className="w-5 h-5"
+                                  />
+                                  <span className="text-xl text-green-600"
+                                    style={{ fontFamily: 'monospace' }}
+                                  >
+                                    {item?.escrowAmountUSDT ? item?.escrowAmountUSDT.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
+                                  </span>
+                                </div>
+
 
                                 {/* settlementWalletAddress */}
                                 <span className="text-sm text-gray-500">
@@ -3442,17 +3338,26 @@ export default function Index({ params }: any) {
                                     </button>
                                   ) : (
                                     <span className="text-sm text-red-500">
-                                      정산 지갑 주소 없음
+                                      관리자 USDT통장 없음
                                     </span>
                                   )}
                                 </span>
 
                                 {/* USDT 잔액 표시 */}
-                                <span className="text-lg text-green-600"
-                                  style={{ fontFamily: 'monospace' }}
-                                >
-                                  {item?.usdtBalance ? item?.usdtBalance.toFixed(2).toLocaleString('us-US') : 0}{' '}USDT
-                                </span>
+                                <div className="w-full flex flex-row items-center justify-center gap-1">
+                                  <Image
+                                    src="/icon-tether.png"
+                                    alt="Tether"
+                                    width={20}
+                                    height={20}
+                                    className="w-5 h-5"
+                                  />
+                                  <span className="text-lg text-green-600"
+                                    style={{ fontFamily: 'monospace' }}
+                                  >
+                                    {item?.usdtBalance ? item?.usdtBalance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
+                                  </span>
+                                </div>
 
                                 <span className="text-lg text-green-600"
                                   style={{ fontFamily: 'monospace' }}
