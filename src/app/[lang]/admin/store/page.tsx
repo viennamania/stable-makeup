@@ -2592,7 +2592,7 @@ export default function Index({ params }: any) {
                         <th className="p-2">
                           <div className="flex flex-col items-center justify-center gap-2">
                             <span className="text-center">
-                              익일 보유금(USDT)
+                              전일 보유금(USDT)
                             </span>
                             <span className="text-center">
                               관리자 USDT통장
