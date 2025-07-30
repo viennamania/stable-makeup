@@ -7418,7 +7418,7 @@ export async function getEscrowBalanceByStorecode(
         $group: {
           _id: null,
           totalFeeAmount: { $sum: { $ifNull: ['$$ROOT.settlement.feeAmount', 0] } },
-          totalDealerAmount: { $sum: { $ifNull: ['$$ROOT.settlement.dealerAmount', 0] } },
+          totalAgentFeeAmount: { $sum: { $ifNull: ['$$ROOT.settlement.agentFeeAmount', 0] } },
         },
       },
     ]).toArray();
@@ -7433,9 +7433,9 @@ export async function getEscrowBalanceByStorecode(
     } else {
 
       const totalFeeAmount = totalSettlement[0].totalFeeAmount || 0;
-      const totalDealerAmount = totalSettlement[0].totalDealerAmount || 0;
+      const totalAgentFeeAmount = totalSettlement[0].totalAgentFeeAmount || 0;
 
-      const todayMinusedEscrowAmount = totalFeeAmount + totalDealerAmount;
+      const todayMinusedEscrowAmount = totalFeeAmount + totalAgentFeeAmount;
 
       // calculate escrow balance
       const escrowBalance = (store.escrowAmountUSDT || 0) - todayMinusedEscrowAmount;
@@ -7482,7 +7482,7 @@ export async function getEscrowBalanceByStorecode(
         $group: {
           _id: null,
           totalFeeAmount: { $sum: { $ifNull: ['$$ROOT.settlement.feeAmount', 0] } },
-          totalDealerAmount: { $sum: { $ifNull: ['$$ROOT.settlement.dealerAmount', 0] } },
+          totalAgentFeeAmount: { $sum: { $ifNull: ['$$ROOT.settlement.agentFeeAmount', 0] } },
         },
       },
     ]).toArray();
@@ -7497,12 +7497,12 @@ export async function getEscrowBalanceByStorecode(
     } else {
 
       const totalFeeAmount = totalSettlement[0].totalFeeAmount || 0;
-      const totalDealerAmount = totalSettlement[0].totalDealerAmount || 0;
+      const totalAgentFeeAmount = totalSettlement[0].totalAgentFeeAmount || 0;
 
       console.log('getEscrowBalanceByStorecode totalFeeAmount: ' + totalFeeAmount);
-      console.log('getEscrowBalanceByStorecode totalDealerAmount: ' + totalDealerAmount);
+      console.log('getEscrowBalanceByStorecode totalAgentFeeAmount: ' + totalAgentFeeAmount);
 
-      const todayMinusedEscrowAmount = totalFeeAmount + totalDealerAmount;
+      const todayMinusedEscrowAmount = totalFeeAmount + totalAgentFeeAmount;
       // calculate escrow balance
       const escrowBalance = (store.escrowAmountUSDT || 0) - todayMinusedEscrowAmount;
 
