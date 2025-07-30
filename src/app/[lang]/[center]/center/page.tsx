@@ -1436,8 +1436,6 @@ export default function Index({ params }: any) {
 
 
 
-
-
   const [escrowBalance, setEscrowBalance] = useState(0);
   const [todayMinusedEscrowAmount, setTodayMinusedEscrowAmount] = useState(0);
 
