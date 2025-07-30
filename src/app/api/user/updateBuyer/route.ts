@@ -20,32 +20,6 @@ export async function POST(request: NextRequest) {
   } = body;
 
 
-  //console.log("walletAddress", walletAddress);
-  //console.log("sellerStatus", sellerStatus);
-
-
-
-
- // https://na.winglobalpay.com/api/v1/vactFcs
-  /*
-  mchtId : 가맹점 ID
-  bankCd : 실명인증 은행코드
-  account : 실명인증 계좌번호
-  payerName : 발급요청자 실명
-  payerTel : 발급요청자 연락처
-  dob : 발급요청자 생년월일
-  gender : 발급요청자 성별, 0:여성, 1:남성
-
-  recvBankCd : 수취은행코드, 비어있을 경우 광주은행으로 발급됩니다.
-  //광주은행:034, 경남은행:039, 제주은행:035
-
-  국민은행: 004, 우리은행: 020, 신한은행: 088, 농협: 011, 기업은행: 003, 하나은행: 081, 외환은행: 002, 부산은행: 032, 대구은행: 031, 전북은행: 037, 경북은행: 071, 부산은행: 032, 광주은행: 034, 우체국: 071, 수협: 007, 씨티은행: 027, 대신은행: 055, 동양종합금융: 054, 롯데카드: 062, 삼성카드: 029, 현대카드: 048, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카
-
-  카카오뱅크: 090, 케이뱅크: 089, 토스뱅크: 092,
-  */
-
-  //const bankCd = '035';
-
   const bankCd =
     buyer?.bankInfo?.bankName === '카카오뱅크' ? '090' :
     buyer?.bankInfo?.bankName === '케이뱅크' ? '089' :
@@ -65,6 +39,7 @@ export async function POST(request: NextRequest) {
     buyer?.bankInfo?.bankName === '광주은행' ? '034' :
     buyer?.bankInfo?.bankName === '우체국' ? '071' :
     buyer?.bankInfo?.bankName === '수협' ? '007' :
+    buyer?.bankInfo?.bankName === '신협' ? '048' :
     buyer?.bankInfo?.bankName === '씨티은행' ? '027' :
     buyer?.bankInfo?.bankName === '대신은행' ? '055' :
     buyer?.bankInfo?.bankName === '동양종합금융' ? '054'
