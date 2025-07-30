@@ -1502,7 +1502,16 @@ export default function Index({ params }: any) {
                 </div>
               </div>
 
-
+              <button
+                  onClick={() => router.push('/' + params.lang + '/admin/escrow-history')}
+                  className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                  hover:bg-[#3167b4]/80
+                  hover:cursor-pointer
+                  hover:scale-105
+                  transition-transform duration-200 ease-in-out
+                  ">
+                  보유량내역
+              </button>
 
           </div>
 

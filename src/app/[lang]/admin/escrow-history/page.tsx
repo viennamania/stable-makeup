@@ -106,6 +106,10 @@ interface BuyOrder {
   totalAgentFeeAmountKRW: number,
   totalFeeAmount: number,
   totalFeeAmountKRW: number,
+
+  totalEscrowCount: number, // Count the number of escrows
+  totalEscrowWithdrawAmount: number, // Total amount withdrawn from escrow
+  totalEscrowDepositAmount: number, // Total amount deposited to escrow
 }
 
 
@@ -734,172 +738,6 @@ export default function Index({ params }: any) {
 
 
 
-  // limit number
-  //const [limit, setLimit] = useState(20);
-
-  // page number
-  //const [page, setPage] = useState(1);
-
-
-  const [totalCount, setTotalCount] = useState(0);
-
-  const [loadingBuyOrders, setLoadingBuyOrders] = useState(false);
-    
-  const [buyOrders, setBuyOrders] = useState<BuyOrder[]>([]);
-
-
-
-   
-
-  useEffect(() => {
-
-
-    const fetchBuyOrders = async () => {
-
-
-      setLoadingBuyOrders(true);
-
-      const response = await fetch('/api/order/getAllBuyOrdersByStorecodeDaily', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(
-
-            {
-              storecode: searchStorecode,
-              limit: Number(limit),
-              page: Number(page),
-              walletAddress: address,
-              searchMyOrders: searchMyOrders,
-
-              fromDate: searchFromDate,
-              toDate: searchToDate,
-
-              searchBuyer: searchBuyer,
-              searchDepositName: searchDepositName,
-              searchStoreBankAccountNumber: searchStoreBankAccountNumber,
-            }
-
-        ),
-      });
-
-      setLoadingBuyOrders(false);
-
-      if (!response.ok) {
-        return;
-      }
-
-
-
-      const data = await response.json();
-
-
-      setBuyOrders(data.result.orders);
-
-      setTotalCount(data.result.totalCount);
-      
-
-
-    }
-
-
-    fetchBuyOrders();
-
-    
-    
-    const interval = setInterval(() => {
-
-      fetchBuyOrders();
-
-
-    }, 5000);
-  
-
-    return () => clearInterval(interval);
-    
-    
-    
-    
-
-
-  } , [
-    limit,
-    page,
-    address,
-    searchMyOrders,
-
-    searchStorecode,
-    searchFromDate,
-    searchToDate,
-    searchBuyer,
-    searchDepositName,
-    searchStoreBankAccountNumber
-]);
-
-
-///console.log('agreementForTrade', agreementForTrade);
-
-
-const [fetchingBuyOrders, setFetchingBuyOrders] = useState(false);
-
-const fetchBuyOrders = async () => {
-
-
-  if (fetchingBuyOrders) {
-    return;
-  }
-  setFetchingBuyOrders(true);
-
-  const response = await fetch('/api/order/getAllBuyOrdersByStorecodeDaily', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(
-      {
-        storecode: searchStorecode,
-        limit: Number(limitValue),
-        page: Number(pageValue),
-        walletAddress: address,
-        searchMyOrders: searchMyOrders,
-
-        searchOrderStatusCompleted: true,
-
-        searchBuyer: searchBuyer,
-        searchDepositName: searchDepositName,
-
-        searchStoreBankAccountNumber: searchStoreBankAccountNumber,
-
-
-        fromDate: searchFromDate,
-        toDate: searchToDate,
-
-      }
-
-    ),
-  });
-
-  if (!response.ok) {
-    setFetchingBuyOrders(false);
-    toast.error('Failed to fetch buy orders');
-    return;
-  }
-  const data = await response.json();
-  //console.log('data', data);
-
-  setBuyOrders(data.result.orders);
-  setTotalCount(data.result.totalCount);
-  setFetchingBuyOrders(false);
-
-  return data.result.orders;
-}
-
-
-
-
-  
-
 
   // check table view or card view
   const [tableView, setTableView] = useState(true);
@@ -983,115 +821,106 @@ const fetchBuyOrders = async () => {
 
   } , [searchStorecode, address]);
 
+  
 
 
 
-  const [tradeSummary, setTradeSummary] = useState({
-    totalCount: 0,
-    totalKrwAmount: 0,
-    totalUsdtAmount: 0,
-    totalSettlementCount: 0,
-    totalSettlementAmount: 0,
-    totalSettlementAmountKRW: 0,
-    totalFeeAmount: 0,
-    totalFeeAmountKRW: 0,
-    totalAgentFeeAmount: 0,
-    totalAgentFeeAmountKRW: 0,
-    orders: [] as BuyOrder[],
-
-    totalClearanceCount: 0,
-    totalClearanceAmount: 0,
-    totalClearanceAmountUSDT: 0,
-  });
-  const [loadingTradeSummary, setLoadingTradeSummary] = useState(false);
 
 
-  const getTradeSummary = async () => {
-    if (!address) {
-      return;
-    }
-
-    setLoadingTradeSummary(true);
-    const response = await fetch('/api/summary/getTradeSummary', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        /*
-        storecode: params.storecode,
-        walletAddress: address,
-        searchMyOrders: searchMyOrders,
-        searchOrderStatusCompleted: true,
-        //searchBuyer: searchBuyer,
-        //searchDepositName: searchDepositName,
-
-        //searchStoreBankAccountNumber: searchStoreBankAccountNumber,
-
-        */
-
-        agentcode: params.agentcode,
-        storecode: searchStorecode,
-        walletAddress: address,
-        searchMyOrders: searchMyOrders,
-        searchOrderStatusCompleted: true,
-        
-        //searchBuyer: searchBuyer,
-        searchBuyer: '',
-        //searchDepositName: searchDepositName,
-        searchDepositName: '',
-        //searchStoreBankAccountNumber: searchStoreBankAccountNumber,
-        searchStoreBankAccountNumber: '',
-
-
-
-        fromDate: searchFromDate,
-        toDate: searchToDate,
-
-
-
-      })
-    });
-    if (!response.ok) {
-      setLoadingTradeSummary(false);
-      toast.error('Failed to fetch trade summary');
-      return;
-    }
-    const data = await response.json();
-    
-    console.log('getTradeSummary data', data);
-
-
-    setTradeSummary(data.result);
-    setLoadingTradeSummary(false);
-    return data.result;
-  }
-
-
-
+  const [escrowBalance, setEscrowBalance] = useState(0);
 
   useEffect(() => {
 
-    if (!address || !searchFromDate || !searchToDate) {
-      return;
+    const fetchEscrowBalance = async () => {
+      if (!searchStorecode) {
+        return;
+      }
+
+      const response = await fetch('/api/store/getEscrowBalance', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(
+            {
+              storecode: searchStorecode,
+            }
+        ),
+      });
+
+      if (!response.ok) {
+        return;
+      }
+
+
+
+      const data = await response.json();
+
+      setEscrowBalance(data.result.escrowBalance);
+
     }
 
-    getTradeSummary();
 
-    // fetch trade summary every 10 seconds
+    fetchEscrowBalance();
+
+    
+    
     const interval = setInterval(() => {
-      getTradeSummary();
-    }, 10000);
+
+      fetchEscrowBalance();
+
+    }, 5000);
+
     return () => clearInterval(interval);
 
-
-  } , [address, searchMyOrders, searchStorecode,
-    searchFromDate, searchToDate,
+  } , [
+    searchStorecode,
   ]);
 
 
 
-  
+
+  // get escrow history
+  const [escrowHistory, setEscrowHistory] = useState<any[]>([]);
+  const [fetchingEscrowHistory, setFetchingEscrowHistory] = useState(false);
+  useEffect(() => {
+    const fetchEscrowHistory = async () => {
+      if (fetchingEscrowHistory) {
+        return;
+      }
+      setFetchingEscrowHistory(true);
+
+      const response = await fetch('/api/escrow/history', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          storecode: searchStorecode,
+          limit: 100,
+          page: 1, // Assuming page 0 is the first page
+        }),
+      });
+
+      if (!response.ok) {
+        toast.error('Failed to fetch escrow history');
+        return;
+      }
+
+      const data = await response.json();
+
+      setEscrowHistory(data.result.escrows || []);
+      setFetchingEscrowHistory(false);
+
+    };
+
+    fetchEscrowHistory();
+
+  }, [searchStorecode, fetchingEscrowHistory]);
+
+
+
+
 
   useEffect(() => {
     // Dynamically load the Binance widget script
@@ -1108,6 +937,58 @@ const fetchBuyOrders = async () => {
 
 
 
+
+
+
+
+
+  // get All stores
+  const [fetchingAllStores, setFetchingAllStores] = useState(false);
+  const [allStores, setAllStores] = useState([] as any[]);
+  const [storeTotalCount, setStoreTotalCount] = useState(0);
+  const fetchAllStores = async () => {
+    if (fetchingAllStores) {
+      return;
+    }
+    setFetchingAllStores(true);
+    const response = await fetch('/api/store/getAllStores', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        {
+          limit: 100,
+          page: 1,
+        }
+      ),
+    });
+
+    if (!response.ok) {
+      setFetchingAllStores(false);
+      toast.error('가맹점 검색에 실패했습니다.');
+      return;
+    }
+
+    const data = await response.json();
+    
+    ///console.log('getAllStores data', data);
+
+
+
+
+    setAllStores(data.result.stores);
+    setStoreTotalCount(data.result.totalCount);
+    setFetchingAllStores(false);
+    return data.result.stores;
+  }
+  useEffect(() => {
+    if (!address) {
+      setAllStores([]);
+      return;
+    }
+    fetchAllStores();
+  }, [address]);
 
 
 
@@ -1210,28 +1091,6 @@ const fetchBuyOrders = async () => {
   }, [totalNumberOfClearanceOrders, loadingTotalNumberOfClearanceOrders]);
 
 
-  // if loadingStore is true, show loading
-  if (fetchingStore) {
-    return (
-      <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-2xl mx-auto">
-        <div className="py-0 w-full">
-          <h1 className="text-2xl font-bold">로딩 중...</h1>
-        </div>
-      </main>
-    );
-  }
-
-  // if searchStorecode is empty, error page
-  if (!fetchingStore && !searchStorecode) {
-    return (
-      <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-2xl mx-auto">
-        <div className="py-0 w-full">
-          <h1 className="text-2xl font-bold text-red-500">잘못된 접근입니다.</h1>
-          <p className="text-gray-500">올바른 상점 코드를 입력해주세요.</p>
-        </div>
-      </main>
-    );
-  }
 
 
 
@@ -1242,146 +1101,148 @@ const fetchBuyOrders = async () => {
 
       <div className="py-0 w-full">
 
-        <div className="w-full flex flex-col xl:flex-row items-center justify-center gap-2 bg-black/10 p-2 rounded-lg mb-4">
-            
-          <div className="w-full flex flex-row items-center justify-start gap-2">
-            <button
-              onClick={() => router.push('/' + params.lang + '/admin')}
-              className="flex items-center justify-center gap-2
-              rounded-lg p-2
-              hover:bg-black/20
-              hover:cursor-pointer
-              hover:scale-105
-              transition-transform duration-200 ease-in-out"
-
-            >
-              <Image
-                src="/logo.png"
-                alt="logo"
-                width={100}
-                height={100}
-                className="h-10 w-10 rounded-full"
-              />
-            </button>
-          </div>
-
-
-          {address && !loadingUser && (
-
-
-            <div className="w-full flex flex-row items-center justify-end gap-2">
-              <button
-                onClick={() => {
-                  router.push('/' + params.lang + '/admin/profile-settings');
-                }}
-                className="flex bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
-              >
-                <div className="flex flex-row items-center justify-center gap-2">
-                  {isAdmin && (
-                    <div className="flex flex-row items-center justify-center gap-2">
-                      <Image
-                        src="/icon-admin.png"
-                        alt="Admin"
-                        width={20}
-                        height={20}
-                        className="rounded-lg w-5 h-5"
-                      />
-                      <span className="text-sm text-yellow-500">
-                        전체 관리자
-                      </span>
-                    </div>
-                  )}
-                  <span className="text-sm text-[#f3f4f6]">
-                    {user?.nickname || "프로필"}
-                  </span>
-
-                </div>
-              </button>
-
-
-              {/* logout button */}
-              <button
-                  onClick={() => {
-                      confirm("로그아웃 하시겠습니까?") && activeWallet?.disconnect()
-                      .then(() => {
-
-                          toast.success('로그아웃 되었습니다');
-
-                          //router.push(
-                          //    "/admin/" + params.center
-                          //);
-                      });
-                  } }
-
-                  className="flex items-center justify-center gap-2
-                    bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
-              >
-                <Image
-                  src="/icon-logout.webp"
-                  alt="Logout"
-                  width={20}
-                  height={20}
-                  className="rounded-lg w-5 h-5"
-                />
-                <span className="text-sm">
-                  로그아웃
-                </span>
-              </button>
-              
-            </div>
-
-
-          )}
-
-
-          {!address && (
-            <ConnectButton
-              client={client}
-              wallets={wallets}
-
-              /*
-              accountAbstraction={{
-                chain: arbitrum,
-                sponsorGas: true
-              }}
-              */
-              
-              theme={"light"}
-
-              // button color is dark skyblue convert (49, 103, 180) to hex
-              connectButton={{
-                style: {
-                  backgroundColor: "#3167b4", // dark skyblue
-
-                  color: "#f3f4f6", // gray-300 
-                  padding: "2px 2px",
-                  borderRadius: "10px",
-                  fontSize: "14px",
-                  //width: "40px",
-                  height: "38px",
-                },
-                label: "원클릭 로그인",
-              }}
-
-              connectModal={{
-                size: "wide", 
-                //size: "compact",
-                titleIcon: "https://www.stable.makeup/logo.png",                           
-                showThirdwebBranding: false,
-              }}
-
-              locale={"ko_KR"}
-              //locale={"en_US"}
-            />
-
-          )}
-
-        </div>
 
 
           <div className="flex flex-col items-start justify-center gap-2">
 
-            
+
+
+            <div className="w-full flex flex-col xl:flex-row items-center justify-center gap-2 bg-black/10 p-2 rounded-lg mb-4">
+                
+              <div className="w-full flex flex-row items-center justify-start gap-2">
+                <button
+                  onClick={() => router.push('/' + params.lang + '/admin')}
+                  className="flex items-center justify-center gap-2
+                  rounded-lg p-2
+                  hover:bg-black/20
+                  hover:cursor-pointer
+                  hover:scale-105
+                  transition-transform duration-200 ease-in-out"
+
+                >
+                  <Image
+                    src="/logo.png"
+                    alt="logo"
+                    width={100}
+                    height={100}
+                    className="h-10 w-10 rounded-full"
+                  />
+                </button>
+              </div>
+
+
+              {address && !loadingUser && (
+
+
+                <div className="w-full flex flex-row items-center justify-end gap-2">
+                  <button
+                    onClick={() => {
+                      router.push('/' + params.lang + '/admin/profile-settings');
+                    }}
+                    className="flex bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
+                  >
+                    <div className="flex flex-row items-center justify-center gap-2">
+                      {isAdmin && (
+                        <div className="flex flex-row items-center justify-center gap-2">
+                          <Image
+                            src="/icon-admin.png"
+                            alt="Admin"
+                            width={20}
+                            height={20}
+                            className="rounded-lg w-5 h-5"
+                          />
+                          <span className="text-sm text-yellow-500">
+                            전체 관리자
+                          </span>
+                        </div>
+                      )}
+                      <span className="text-sm text-[#f3f4f6]">
+                        {user?.nickname || "프로필"}
+                      </span>
+
+                    </div>
+                  </button>
+
+
+                  {/* logout button */}
+                  <button
+                      onClick={() => {
+                          confirm("로그아웃 하시겠습니까?") && activeWallet?.disconnect()
+                          .then(() => {
+
+                              toast.success('로그아웃 되었습니다');
+
+                              //router.push(
+                              //    "/admin/" + params.center
+                              //);
+                          });
+                      } }
+
+                      className="flex items-center justify-center gap-2
+                        bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
+                  >
+                    <Image
+                      src="/icon-logout.webp"
+                      alt="Logout"
+                      width={20}
+                      height={20}
+                      className="rounded-lg w-5 h-5"
+                    />
+                    <span className="text-sm">
+                      로그아웃
+                    </span>
+                  </button>
+                  
+                </div>
+
+
+              )}
+
+
+              {!address && (
+                <ConnectButton
+                  client={client}
+                  wallets={wallets}
+
+                  /*
+                  accountAbstraction={{
+                    chain: arbitrum,
+                    sponsorGas: true
+                  }}
+                  */
+                  
+                  theme={"light"}
+
+                  // button color is dark skyblue convert (49, 103, 180) to hex
+                  connectButton={{
+                    style: {
+                      backgroundColor: "#3167b4", // dark skyblue
+
+                      color: "#f3f4f6", // gray-300 
+                      padding: "2px 2px",
+                      borderRadius: "10px",
+                      fontSize: "14px",
+                      //width: "40px",
+                      height: "38px",
+                    },
+                    label: "원클릭 로그인",
+                  }}
+
+                  connectModal={{
+                    size: "wide", 
+                    //size: "compact",
+                    titleIcon: "https://www.stable.makeup/logo.png",                           
+                    showThirdwebBranding: false,
+                  }}
+
+                  locale={"ko_KR"}
+                  //locale={"en_US"}
+                />
+
+              )}
+
+            </div>
+
 
             {/* USDT 가격 binance market price */}
             <div
@@ -1523,13 +1384,8 @@ const fetchBuyOrders = async () => {
           </div>
 
 
-
-
-
-          {/* 홈 / 가맹점관리 / 회원관리 / 구매주문관리 */}
           {/* memnu buttons same width left side */}
           <div className="grid grid-cols-3 xl:grid-cols-6 gap-2 items-center justify-start mb-4">
-
 
               <button
                   onClick={() => router.push('/' + params.lang + '/admin/store')}
@@ -1576,9 +1432,7 @@ const fetchBuyOrders = async () => {
                   구매주문관리
               </button>
 
-
-
-              <button
+                <button
                   onClick={() => router.push('/' + params.lang + '/admin/trade-history')}
                   className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
                   hover:bg-[#3167b4]/80
@@ -1600,351 +1454,319 @@ const fetchBuyOrders = async () => {
                   청산내역
               </button>
 
+              <button
+                  onClick={() => router.push('/' + params.lang + '/admin/trade-history-daily')}
+                  className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                  hover:bg-[#3167b4]/80
+                  hover:cursor-pointer
+                  hover:scale-105
+                  transition-transform duration-200 ease-in-out
+                  ">
+                  통계(가맹)
+              </button>
+
+              <button
+                  onClick={() => router.push('/' + params.lang + '/admin/trade-history-daily-agent')}
+                  className="flex w-32 bg-[#3167b4] text-[#f3f4f6] text-sm rounded-lg p-2 items-center justify-center
+                  hover:bg-[#3167b4]/80
+                  hover:cursor-pointer
+                  hover:scale-105
+                  transition-transform duration-200 ease-in-out
+                  ">
+                  통계(AG)
+              </button>
 
               <div className='flex w-32 items-center justify-center gap-2
               bg-yellow-500 text-[#3167b4] text-sm rounded-lg p-2'>
                 <Image
-                  src="/icon-statistics.png"
-                  alt="Statistics"
+                  src="/icon-escrow.png"
+                  alt="Escrow"
                   width={35}
                   height={35}
                   className="w-4 h-4"
                 />
                 <div className="text-sm font-semibold">
-                  통계(가맹)
+                  보유량내역
                 </div>
               </div>
-
 
 
           </div>
 
 
-
-
-
-
-
           <div className='flex flex-row items-center space-x-4'>
               <Image
-                src="/icon-statistics.png"
-                alt="Statistics"
+                src="/icon-escrow.png"
+                alt="Escrow"
                 width={35}
                 height={35}
                 className="w-6 h-6"
               />
 
               <div className="text-xl font-semibold">
-                통계(가맹)
+                보유량내역
               </div>
-
-              
-              <Image
-                src="/loading.png"
-                alt="Loading"
-                width={35}
-                height={35}
-                className={`w-6 h-6 ${loadingBuyOrders ? 'animate-spin' : 'hidden'}`}
-              />
 
           </div>
 
 
 
-          {/* trade summary */}
 
-          <div className="flex flex-col xl:flex-row items-center justify-between gap-2
-            w-full
-            bg-zinc-100/50
-            p-4 rounded-lg shadow-md
-            ">
+            {/* select storecode */}
+            <div className="flex flex-row items-center gap-2">
+              {fetchingAllStores ? (
+                <Image
+                  src="/loading.png"
+                  alt="Loading"
+                  width={20}
+                  height={20}
+                  className="animate-spin"
+                />
+              ) : (
+                <div className="flex flex-row items-center gap-2">
 
-            <div className="xl:w-1/4 flex flex-row items-center justify-between gap-2">
-              <div className="flex flex-col gap-2 items-center">
-                <div className="text-sm">총 거래수(건)</div>
-                <div className="text-xl font-semibold text-zinc-500">
-                  {tradeSummary.totalCount?.toLocaleString()} 건
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-2 items-center">
-                <div className="text-sm">총 거래금액(원)</div>
-                <div className="flex flex-row items-center justify-center gap-1">
-                  <span className="text-xl font-semibold text-yellow-600">
-                    {tradeSummary.totalKrwAmount?.toLocaleString()}
-                  </span>
-                  <span className="text-sm text-zinc-500">원</span>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-2 items-center">
-                <div className="text-sm">총 거래량(USDT)</div>
-                <div className="flex flex-row items-center justify-center gap-1">
-                  <Image
-                    src="/icon-tether.png"
-                    alt="Tether"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-xl font-semibold text-green-600">
-                    {tradeSummary.totalUsdtAmount
-                      ? tradeSummary.totalUsdtAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                      : '0.00'}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* divider */}
-            <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
-            <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
-
-            <div className="xl:w-1/2
-              flex flex-row items-center justify-between gap-2">
-              <div className="flex flex-col gap-2 items-center">
-                <div className="text-sm">총 정산수(건)</div>
-                  <span className="text-xl font-semibold text-zinc-500">
-                    {tradeSummary.totalSettlementCount?.toLocaleString()} 건
-                  </span>
-              </div>
-
-              <div className="flex flex-col gap-2 items-center">
-                <div className="text-sm">총 정산금액(원)</div>
-                <div className="flex flex-row items-center justify-center gap-1">
-                  <span className="text-xl font-semibold text-yellow-600">
-                    {tradeSummary.totalSettlementAmountKRW?.toLocaleString()}
-                  </span>
-                  <span className="text-sm text-zinc-500">원</span>
-                </div>
-              </div>
-              <div className="flex flex-col gap-2 items-center">
-                <div className="text-sm">총 정산량(USDT)</div>
-                <div className="flex flex-row items-center justify-center gap-1">
-                  <Image
-                    src="/icon-tether.png"
-                    alt="Tether"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
-                  <span className="text-xl font-semibold text-green-600">
-                    {tradeSummary.totalSettlementAmount
-                      ? tradeSummary.totalSettlementAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                      : '0.00'}
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-2 items-center">
-
-                <div className="flex flex-row gap-2 items-center">
                   
-                  <div className="flex flex-col gap-2 items-center">
-                    <div className="text-sm">총 PG 수수료(원)</div>
-                    <div className="w-full flex flex-row items-center justify-end gap-1">
-                      <span className="text-xl font-semibold text-yellow-600">
-                        {tradeSummary.totalFeeAmountKRW
-                          ? tradeSummary.totalFeeAmountKRW.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          : '0'}
-                      </span>
-                      <span className="text-sm text-zinc-500">원</span>
-                    </div>
-                  </div>
+                  <Image
+                    src="/icon-store.png"
+                    alt="Store"
+                    width={20}
+                    height={20}
+                    className="rounded-lg w-5 h-5"
+                  />
 
-                  <div className="flex flex-col gap-2 items-center">
-                    <div className="text-sm">총 PG 수수료(USDT)</div>
-                    <div className="w-full flex flex-row items-center justify-end gap-1">
-                      <Image
-                        src="/icon-tether.png"
-                        alt="Tether"
-                        width={20}
-                        height={20}
-                        className="w-5 h-5"
-                      />
-                      <span className="text-xl font-semibold text-green-600">
-                        {tradeSummary.totalFeeAmount
-                          ? tradeSummary.totalFeeAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          : '0.00'}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-row gap-2 items-center">
-                  <div className="flex flex-col gap-2 items-center">
-                    <div className="text-sm">총 AG 수수료(원)</div>
-                    <div className="w-full flex flex-row items-cneter justify-end gap-1">
-                      <span className="text-xl font-semibold text-yellow-600">
-                        {tradeSummary.totalAgentFeeAmountKRW
-                          ? tradeSummary.totalAgentFeeAmountKRW.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          : '0'}
-                      </span>
-                      <span className="text-sm text-zinc-500">원</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-2 items-center">
-                    <div className="text-sm">총 AG 수수료(USDT)</div>
-                    <div className="w-full flex flex-row items-center justify-end gap-1">
-                      <Image
-                        src="/icon-tether.png"
-                        alt="Tether"
-                        width={20}
-                        height={20}
-                        className="w-5 h-5"
-                      />
-                      <span className="text-xl font-semibold text-green-600">
-                        {tradeSummary.totalAgentFeeAmount
-                          ? tradeSummary.totalAgentFeeAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          : '0.00'}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-
-            
-            {/* divider */}
-            {/*}
-            <div className="hidden xl:block w-0.5 h-10 bg-zinc-300"></div>
-            <div className="xl:hidden w-full h-0.5 bg-zinc-300"></div>
-
-            <div className="xl:w-1/4 flex flex-row items-center justify-center gap-2">
-              <div className="flex flex-col gap-2 items-center">
-                <div className="text-sm">총 청산수(건)</div>
-                <div className="text-xl font-semibold text-zinc-500">
-                  {tradeSummary.totalClearanceCount?.toLocaleString()} 건
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-2 items-center">
-                <div className="text-sm">총 청산금액(원)</div>
-                <div className="text-xl font-semibold text-zinc-500">
-                  {tradeSummary.totalClearanceAmount?.toLocaleString()} 원
-                </div>
-              </div>
-              <div className="flex flex-col gap-2 items-center">
-                <div className="text-sm">총 청산수량(USDT)</div>
-                <div className="text-xl font-semibold text-zinc-500">
-                  {tradeSummary.totalClearanceAmountUSDT?.toLocaleString()} USDT
-                </div>
-              </div>
-            </div>
-            */}
-            
-          </div>
+                  <span className="
+                    w-32
+                    text-sm font-semibold">
+                    가맹점선택
+                  </span>
 
 
-              <div className="w-full overflow-x-auto">
+                  <select
+                    value={searchStorecode}
+                    
+                    //onChange={(e) => setSearchStorecode(e.target.value)}
 
-                <table className=" w-full table-auto border-collapse border border-zinc-800 rounded-md">
-
-                  <thead className="bg-zinc-200">
-                    <tr>
-                      <th className="px-4 py-2 text-left text-sm font-semibold text-zinc-600">
-                        날짜
-                      </th>
-                      {/* align right */}
-                      <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">거래수(건)</th>
-                      <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">거래량(USDT)</th>
-                      <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">거래금액(원)</th>
-
-                      {/*
-                      <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">정산수(건)/미정산수(건)</th>
-                      */}
-                      
-                      <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">AG수수료량(USDT)</th>
-                      <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">AG수수료금액(원)</th>
-
-                      <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">PG수수료량(USDT)</th>
-                      <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">PG수수료금액(원)</th>
-
-                      <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">정산량(USDT)</th>
-                      <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">정산금액(원)</th>
-
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {buyOrders.map((order, index) => (
-                      <tr key={index} className="border-b border-zinc-300 hover:bg-zinc-100">
-                        <td className="px-4 py-2 text-sm text-zinc-700">
-                          {new Date(order.date).toLocaleDateString('ko-KR')}
-                        </td>
-                        {/* align right */}
-                        <td className="px-4 py-2 text-sm text-zinc-700 text-right">
-                          {order.totalCount ? order.totalCount.toLocaleString() : 0} 건
-                        </td>
+                    // storecode parameter is passed to fetchBuyOrders
+                    onChange={(e) => {
+                      router.push('/' + params.lang + '/admin/escrow-history?storecode=' + e.target.value);
+                    }}
 
 
-                        <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
-                          style={{ fontFamily: 'monospace' }}
-                        >
-                          {Number(order.totalUsdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                        </td>
-                        <td className="px-4 py-2 text-sm text-yellow-600 font-semibold text-right"
-                          style={{ fontFamily: 'monospace' }}
-                        >
-                          {Number(order.totalKrwAmount).toLocaleString('ko-KR')}
-                        </td>
 
-                        {/*
-                        <td className="px-4 py-2 text-sm text-zinc-700 text-right">
-                          {order.totalSettlementCount ? order.totalSettlementCount.toLocaleString() : 0} 건
-                          {' / '}
-                          {(order.totalCount || 0) - (order.totalSettlementCount || 0)} 건
-                        </td>
-                        */}
-
-                        <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
-                          style={{ fontFamily: 'monospace' }}
-                        >
-                          {Number(order.totalAgentFeeAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                        </td>
-                        <td className="px-4 py-2 text-sm text-yellow-600 font-semibold text-right"
-                          style={{ fontFamily: 'monospace' }}
-                        >
-                          {Number(order.totalAgentFeeAmountKRW).toLocaleString('ko-KR')}
-                        </td>
-
-                        <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
-                          style={{ fontFamily: 'monospace' }}
-                        >
-                          {Number(order.totalFeeAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                        </td>
-                        <td className="px-4 py-2 text-sm text-yellow-600 font-semibold text-right"
-                          style={{ fontFamily: 'monospace' }}
-                        >
-                          {Number(order.totalFeeAmountKRW).toLocaleString('ko-KR')}
-                        </td>
-
-                        <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
-                          style={{ fontFamily: 'monospace' }}
-                        >
-                          {Number(order.totalSettlementAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                        </td>
-                        <td className="px-4 py-2 text-sm text-yellow-600 font-semibold text-right"
-                          style={{ fontFamily: 'monospace' }}
-                        >
-                          {Number(order.totalSettlementAmountKRW).toLocaleString('ko-KR')}
-                        </td>
-
-
-                      </tr>
-                    ))}
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <td colSpan={4} className="px-4 py-2 text-sm text-zinc-500">
+                    className="w-full p-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3167b4]"
+                  >
+                    <option value="">
+                      가맹점 선택
+                    </option>
+                    {allStores && allStores.map((item, index) => (
+                      <option key={index} value={item.storecode}
+                        className="flex flex-row items-center justify-start gap-2"
+                      >
                         
-                      </td>
-                    </tr>
-                  </tfoot>
-                </table>
+                        {item.storeName}{' '}({item.storecode})
 
+                      </option>
+                    ))}
+                  </select>
+
+
+                </div>
+
+              )}
+            </div>
+
+
+
+
+
+
+
+            {/* store?.escrowAmountUSDT */}
+            {/* 보유수량(USDT) */}
+            <div className="w-full flex flex-col items-end justify-end gap-2
+            border-b border-zinc-300 pb-2">
+  
+              {/* 가맹점 보유 */}
+              <div className="flex flex-row items-start xl:items-center gap-2">
+                <div className="flex flex-row gap-2 items-center">
+                  <Image
+                    src="/icon-escrow.png"
+                    alt="Escrow"
+                    width={20}
+                    height={20}
+                    className="w-5 h-5"
+                  />
+                  <span className="text-lg text-zinc-600 font-semibold">
+                    현재 보유량
+                  </span>
+                </div>
+  
+                <div className="flex flex-row items-center gap-2">
+                  <Image
+                    src="/icon-tether.png"
+                    alt="Tether"
+                    width={20}
+                    height={20}
+                    className="w-5 h-5"
+                  />
+                  <span className="text-xl text-green-600 font-semibold"
+                    style={{ fontFamily: 'monospace' }}
+                  >
+                    {
+                      escrowBalance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                  </span>
+                </div>
+  
               </div>
+              <div className="flex flex-row items-start xl:items-center gap-2">
+                <div className="flex flex-row gap-2 items-center">
+                  <Image
+                    src="/icon-escrow.png"
+                    alt="Escrow"
+                    width={20}
+                    height={20}
+                    className="w-5 h-5"
+                  />
+                
+                    {escrowHistory && escrowHistory.length > 0
+                      ? (
+                        <span className="text-lg text-zinc-600 font-semibold">
+                        
+
+                        {new Date(escrowHistory[0].date).toLocaleDateString('ko-KR')} 보유량
+                        </span>
+                      ) : (
+                        <span className="text-lg text-zinc-600 font-semibold">
+                          보유량
+                        </span>
+                      )
+                    }
+
+                </div>
+  
+                <div className="flex flex-row items-center gap-2">
+                  <Image
+                    src="/icon-tether.png"
+                    alt="Tether"
+                    width={20}
+                    height={20}
+                    className="w-5 h-5"
+                  />
+                  <span className="text-xl text-green-600 font-semibold"
+                    style={{ fontFamily: 'monospace' }}
+                  >
+                    {
+                      store?.escrowAmountUSDT
+                      ? store?.escrowAmountUSDT.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                      : 0
+                    }
+                  </span>
+                </div>
+  
+              </div>
+
+            </div>
+
+
+            <div className='flex flex-row items-center space-x-4'>
+                <Image
+                  src="/icon-statistics.png"
+                  alt="Statistics"
+                  width={35}
+                  height={35}
+                  className="w-6 h-6"
+                />
+
+                <div className="text-xl font-semibold">
+                  보유량 변동 내역(USDT)
+                </div>
+
+            </div>
+
+
+            {/* escrow history table */}
+            
+            <div className="w-full flex flex-col items-start justify-start gap-2 mt-4">
+
+              <table className="w-full table-auto border-collapse border border-zinc-800 rounded-md">
+
+                <thead className="bg-zinc-200">
+                  <tr>
+                    <th className="px-4 py-2 text-left text-sm font-semibold text-zinc-600">
+                      날짜
+                    </th>
+                    <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">
+                      입금량(USDT)
+                    </th>
+                    <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">
+                      출금량(USDT)
+                    </th>
+                    <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">
+                      처리전 보유량(USDT)
+                    </th>
+                    <th className="px-4 py-2 text-right text-sm font-semibold text-zinc-600">
+                      처리후 보유량(USDT)
+                    </th>
+
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {
+                  escrowHistory && escrowHistory.length > 0 &&
+                  escrowHistory.map((escrow, index) => (
+                    <tr key={index} className="border-b border-zinc-300 hover:bg-zinc-100">
+                      <td className="px-4 py-2 text-sm text-zinc-700">
+                        {new Date(escrow.date).toLocaleDateString('ko-KR')}
+                      </td>
+
+                      <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
+                        style={{ fontFamily: 'monospace' }}
+                      >
+                        {
+                          escrow.depositAmount
+                          ? Number(escrow.depositAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          : 0
+                        }
+                      </td>
+
+                      <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
+                        style={{ fontFamily: 'monospace' }}
+                      >
+                        {
+                          escrow.withdrawAmount
+                          ? Number(escrow.withdrawAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          : 0
+                        }
+                      </td>
+
+                      <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
+                        style={{ fontFamily: 'monospace' }}
+                      >
+                        {
+                          escrow.beforeBalance
+                          ? Number(escrow.beforeBalance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          : 0
+                        }
+                      </td>
+                      <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
+                        style={{ fontFamily: 'monospace' }}
+                      >
+                        {
+                          escrow.afterBalance
+                          ? Number(escrow.afterBalance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          : 0
+                        }
+                      </td>
+                      
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            
 
             </div>
 
