@@ -3034,7 +3034,7 @@ export default function Index({ params }: any) {
 
                   <div className="mt-5 flex flex-row gap-2 justify-center items-center">
                     <span className="text-sm text-zinc-600">
-                      내 USDT 보증금
+                      내 USDT 잔고
                     </span>
                     <div className="text-4xl font-semibold text-zinc-800">
                       {Number(balance).toFixed(2)}
