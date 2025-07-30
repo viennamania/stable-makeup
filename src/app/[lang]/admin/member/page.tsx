@@ -1519,7 +1519,7 @@ export default function Index({ params }: any) {
     
     console.log('getBalanceOfWalletAddress', walletAddress, 'balance', balance);
 
-    toast.success(`잔액이 업데이트되었습니다. 잔액: ${(Number(balance) / 10 ** 6).toFixed(2)} USDT`);
+    toast.success(`잔액이 업데이트되었습니다. 잔액: ${(Number(balance) / 10 ** 6).toFixed(3)} USDT`);
 
     /*
     setAllUsers((prev) => {
@@ -2906,7 +2906,7 @@ export default function Index({ params }: any) {
                                    style={{ fontFamily: 'monospace' }}
                                  >
                                    {usdtBalance[index] ?
-                                     usdtBalance[index].toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'}{' USDT'}
+                                     usdtBalance[index].toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'}{' USDT'}
                                  </span>
           
                                </div>
@@ -2926,7 +2926,7 @@ export default function Index({ params }: any) {
                                    //toast.success('잔액을 가져왔습니다.');
  
                                    // toast usdtBalance[index] is updated
-                                   //toast.success(`잔액을 가져왔습니다. 현재 잔액: ${usdtBalance[index] ? usdtBalance[index].toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'} USDT`);
+                                   //toast.success(`잔액을 가져왔습니다. 현재 잔액: ${usdtBalance[index] ? usdtBalance[index].toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'} USDT`);
  
                                  }}
                                  className={`
@@ -3168,7 +3168,7 @@ const TradeDetail = (
 
     const [amount, setAmount] = useState(1000);
     const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
+    const receiveAmount = (amount / price).toFixed(3);
     const commission = 0.01; // example commission
   
     return (

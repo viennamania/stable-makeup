@@ -2184,7 +2184,7 @@ export default function Index({ params }: any) {
 
                       <div className="flex flex-row items-center justify-end  gap-2">
                           <span className="text-2xl xl:text-4xl font-semibold text-green-600">
-                              {Number(balance).toFixed(2)}
+                              {Number(balance).toFixed(3)}
                           </span>
                           {' '}
                           <span className="text-sm">USDT</span>
@@ -2355,7 +2355,7 @@ export default function Index({ params }: any) {
 
                               <div className="flex flex-row items-center gap-2">
                                 <span className="text-xl font-semibold text-green-600">
-                                  {Number(escrowBalance).toFixed(2)}
+                                  {Number(escrowBalance).toFixed(3)}
                                 </span>
                                 <span className="text-sm">USDT</span>
                               </div>
@@ -2572,8 +2572,8 @@ export default function Index({ params }: any) {
                                 </span>
                                 <span className="text-xs text-zinc-200">
                                   {
-                                    Number(item.rate).toFixed(2)
-                                    //Number(item.krwAmount / item.usdtAmount).toFixed(2)
+                                    Number(item.rate).toFixed(3)
+                                    //Number(item.krwAmount / item.usdtAmount).toFixed(3)
                                   }
                                 </span>
                               </div>
@@ -3436,7 +3436,7 @@ export default function Index({ params }: any) {
                                   </p>
                                   <p className="text-lg font-semibold text-zinc-500">{Rate}: {
 
-                                    Number(item.krwAmount / item.usdtAmount).toFixed(2)
+                                    Number(item.krwAmount / item.usdtAmount).toFixed(3)
 
                                     }</p>
                                 </div>
@@ -4126,7 +4126,7 @@ const TradeDetail = (
 
     const [amount, setAmount] = useState(1000);
     const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
+    const receiveAmount = (amount / price).toFixed(3);
     const commission = 0.01; // example commission
   
     return (

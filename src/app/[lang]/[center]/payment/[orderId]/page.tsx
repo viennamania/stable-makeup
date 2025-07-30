@@ -1836,7 +1836,7 @@ export default function Index({ params }: any) {
 
         // if sell order not found, create buy order
 
-        const usdtAmount =  parseFloat((krwAmount / rate).toFixed(2));
+        const usdtAmount =  parseFloat((krwAmount / rate).toFixed(3));
 
         console.log('usdtAmount', usdtAmount);
 
@@ -2216,7 +2216,7 @@ export default function Index({ params }: any) {
 
                       <div className=" flex flex-col gap-2 items-start">
                         <div className="text-5xl font-semibold text-white">
-                          {Number(balance).toFixed(2)} <span className="text-lg">USDT</span>
+                          {Number(balance).toFixed(3)} <span className="text-lg">USDT</span>
                         </div>
                       </div>
 
@@ -3130,7 +3130,7 @@ export default function Index({ params }: any) {
                                     <p className="text-lg font-semibold text-white">{item.usdtAmount} USDT</p>
                                     <p className="text-lg font-semibold text-white">{Rate}: {
 
-                                      Number(item.krwAmount / item.usdtAmount).toFixed(2)
+                                      Number(item.krwAmount / item.usdtAmount).toFixed(3)
 
                                     }</p>
                                   </div>
@@ -4054,7 +4054,7 @@ const TradeDetail = (
 
     const [amount, setAmount] = useState(1000);
     const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
+    const receiveAmount = (amount / price).toFixed(3);
     const commission = 0.01; // example commission
   
     return (

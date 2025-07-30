@@ -1724,7 +1724,7 @@ export default function Index({ params }: any) {
 
                   <div className="flex flex-row items-center justify-center gap-2">
                     <span className="text-xl font-semibold text-zinc-100">
-                      {Number(balance).toFixed(2)}
+                      {Number(balance).toFixed(3)}
                     </span>
                     {' '}
                     <span className="text-sm text-zinc-100">
@@ -1990,7 +1990,7 @@ export default function Index({ params }: any) {
 
                       <div className=" flex flex-col gap-2 items-start">
                         <div className="text-5xl font-semibold text-zinc-500">
-                          {Number(balance).toFixed(2)} <span className="text-lg">USDT</span>
+                          {Number(balance).toFixed(3)} <span className="text-lg">USDT</span>
                         </div>
                       </div>
 
@@ -2919,7 +2919,7 @@ export default function Index({ params }: any) {
                                     <p className="text-sm text-zinc-500">
                                       환율:{' '}{
 
-                                      Number(item.krwAmount / item.usdtAmount).toFixed(2)
+                                      Number(item.krwAmount / item.usdtAmount).toFixed(3)
 
                                     }</p>
                                   </div>
@@ -3568,7 +3568,7 @@ const TradeDetail = (
 
     const [amount, setAmount] = useState(1000);
     const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
+    const receiveAmount = (amount / price).toFixed(3);
     const commission = 0.01; // example commission
   
     return (

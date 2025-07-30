@@ -1267,7 +1267,7 @@ export default function Index({ params }: any) {
                         style={{ fontFamily: 'monospace' }}
                       >
                         {
-                          escrowBalance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          escrowBalance.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                         }
                       </span>
                     </div>
@@ -1294,7 +1294,7 @@ export default function Index({ params }: any) {
                       >
                         {
                           todayMinusedEscrowAmount && todayMinusedEscrowAmount > 0 ?
-                          todayMinusedEscrowAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') :
+                          todayMinusedEscrowAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',') :
                           '0.00'
                         }
                       </span>
@@ -1347,7 +1347,7 @@ export default function Index({ params }: any) {
                   >
                     {
                       Number(store?.totalUsdtAmount ? store?.totalUsdtAmount : 0)
-                      .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                      .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                     }
                   </span>
                 </div>
@@ -1398,7 +1398,7 @@ export default function Index({ params }: any) {
                   >
                     {
                       Number(store?.totalSettlementAmount ? store?.totalSettlementAmount : 0)
-                      .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                      .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                     }
                   </span>
                 </div>
@@ -1447,7 +1447,7 @@ export default function Index({ params }: any) {
                   >
                     {
                       Number(store?.totalUsdtAmountClearance || 0)
-                      .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                      .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                     }
                   </span>
                 </div>
@@ -1615,7 +1615,7 @@ export default function Index({ params }: any) {
                       >
                         {
                           escrow.withdrawAmount
-                          ? Number(escrow.withdrawAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          ? Number(escrow.withdrawAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                           : 0
                         }
                       </td>
@@ -1624,7 +1624,7 @@ export default function Index({ params }: any) {
                       >
                         {
                           escrow.depositAmount
-                          ? Number(escrow.depositAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          ? Number(escrow.depositAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                           : 0
                         }
                       </td>
@@ -1633,7 +1633,7 @@ export default function Index({ params }: any) {
                       >
                         {
                           escrow.beforeBalance
-                          ? Number(escrow.beforeBalance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          ? Number(escrow.beforeBalance).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                           : 0
                         }
                       </td>
@@ -1642,7 +1642,7 @@ export default function Index({ params }: any) {
                       >
                         {
                           escrow.afterBalance
-                          ? Number(escrow.afterBalance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          ? Number(escrow.afterBalance).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                           : 0
                         }
                       </td>
@@ -1710,7 +1710,7 @@ export default function Index({ params }: any) {
                           <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
                             style={{ fontFamily: 'monospace' }}
                           >
-                            {Number(order.totalUsdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            {Number(order.totalUsdtAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                           </td>
                           <td className="px-4 py-2 text-sm text-yellow-600 font-semibold text-right"
                             style={{ fontFamily: 'monospace' }}
@@ -1731,7 +1731,7 @@ export default function Index({ params }: any) {
                           >
                             {Number(order.totalAgentFeeAmount
                               + order.totalFeeAmount
-                            ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            ).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                           </td>
                           <td className="px-4 py-2 text-sm text-yellow-600 font-semibold text-right"
                             style={{ fontFamily: 'monospace' }}
@@ -1744,7 +1744,7 @@ export default function Index({ params }: any) {
                           <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
                             style={{ fontFamily: 'monospace' }}
                           >
-                            {Number(order.totalSettlementAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            {Number(order.totalSettlementAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                           </td>
                           <td className="px-4 py-2 text-sm text-yellow-600 font-semibold text-right"
                             style={{ fontFamily: 'monospace' }}
@@ -1758,7 +1758,7 @@ export default function Index({ params }: any) {
                               <span className="text-green-600"
                                 style={{ fontFamily: 'monospace' }}
                               >
-                                {Number(order.totalEscrowWithdrawAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} USDT
+                                {Number(order.totalEscrowWithdrawAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} USDT
                                 출금완료
                               </span>
                             ) : (
@@ -1858,7 +1858,7 @@ const TradeDetail = (
 
     const [amount, setAmount] = useState(1000);
     const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
+    const receiveAmount = (amount / price).toFixed(3);
     const commission = 0.01; // example commission
   
     return (

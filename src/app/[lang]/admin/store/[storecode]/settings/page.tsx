@@ -2858,7 +2858,7 @@ export default function SettingsPage({ params }: any) {
                                         />
                                         <span className="text-xl text-green-600 font-semibold">
                                             {store && store.escrowAmountUSDT &&
-                                            store.escrowAmountUSDT.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                            store.escrowAmountUSDT.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                                             || 0.00}
                                         </span>
                                     </div>

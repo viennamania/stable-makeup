@@ -1613,7 +1613,7 @@ export default function Index({ params }: any) {
                     style={{ fontFamily: 'monospace' }}
                   >
                     {
-                      escrowBalance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                      escrowBalance.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                     }
                   </span>
                 </div>
@@ -1658,7 +1658,7 @@ export default function Index({ params }: any) {
                   >
                     {
                       store?.escrowAmountUSDT
-                      ? store?.escrowAmountUSDT.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                      ? store?.escrowAmountUSDT.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                       : 0
                     }
                   </span>
@@ -1726,7 +1726,7 @@ export default function Index({ params }: any) {
                       >
                         {
                           escrow.depositAmount
-                          ? Number(escrow.depositAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          ? Number(escrow.depositAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                           : 0
                         }
                       </td>
@@ -1736,7 +1736,7 @@ export default function Index({ params }: any) {
                       >
                         {
                           escrow.withdrawAmount
-                          ? Number(escrow.withdrawAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          ? Number(escrow.withdrawAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                           : 0
                         }
                       </td>
@@ -1746,7 +1746,7 @@ export default function Index({ params }: any) {
                       >
                         {
                           escrow.beforeBalance
-                          ? Number(escrow.beforeBalance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          ? Number(escrow.beforeBalance).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                           : 0
                         }
                       </td>
@@ -1755,7 +1755,7 @@ export default function Index({ params }: any) {
                       >
                         {
                           escrow.afterBalance
-                          ? Number(escrow.afterBalance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          ? Number(escrow.afterBalance).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                           : 0
                         }
                       </td>
@@ -1832,7 +1832,7 @@ const TradeDetail = (
 
     const [amount, setAmount] = useState(1000);
     const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
+    const receiveAmount = (amount / price).toFixed(3);
     const commission = 0.01; // example commission
   
     return (

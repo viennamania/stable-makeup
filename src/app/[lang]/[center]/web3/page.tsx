@@ -1171,7 +1171,7 @@ export default function SettingsPage({ params }: any) {
                                             </span>
                                             <span className="text-4xl text-green-500 font-bold ">
                                                 {
-                                                    Number(balance).toFixed(2)
+                                                    Number(balance).toFixed(3)
                                                 } USDT
                                             </span>
                                         </div>

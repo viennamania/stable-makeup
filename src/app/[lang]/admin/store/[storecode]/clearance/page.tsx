@@ -948,7 +948,7 @@ export default function Index({ params }: any) {
       let orderUsdtAmount = usdtAmount;
 
       if (checkInputKrwAmount) {
-        orderUsdtAmount = parseFloat(Number(krwAmount / rate).toFixed(2));
+        orderUsdtAmount = parseFloat(Number(krwAmount / rate).toFixed(3));
       }
       
 
@@ -1881,7 +1881,7 @@ export default function Index({ params }: any) {
                       </span>
                       <span className="text-2xl xl:text-4xl font-semibold text-green-600">
                           {
-                            (Number(sellerWalletBalance || 0).toFixed(2))
+                            (Number(sellerWalletBalance || 0).toFixed(3))
                             .toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                           }
                       </span>
@@ -2026,7 +2026,7 @@ export default function Index({ params }: any) {
                                 </span>
                                 <span className="text-xl xl:text-2xl font-semibold text-green-600">
                                     {
-                                      (Number(tradeSummary.totalSettlementAmountKRW - tradeSummary.totalClearanceAmount).toFixed(2))
+                                      (Number(tradeSummary.totalSettlementAmountKRW - tradeSummary.totalClearanceAmount).toFixed(3))
                                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                     }
                                 </span>
@@ -2037,7 +2037,7 @@ export default function Index({ params }: any) {
                                 </span>
                                 <span className="text-xl xl:text-2xl font-semibold text-green-600">
                                     {
-                                      (Number(tradeSummary.totalSettlementAmount - tradeSummary.totalClearanceAmountUSDT).toFixed(2))
+                                      (Number(tradeSummary.totalSettlementAmount - tradeSummary.totalClearanceAmountUSDT).toFixed(3))
                                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                     }
                                 </span>
@@ -2090,7 +2090,7 @@ export default function Index({ params }: any) {
                                         // if minus value, then show 0
                                         (Number(tradeSummary.totalClearanceAmountUSDT - tradeSummary.totalSettlementAmount) < 0
                                           ? 0
-                                          : Number(tradeSummary.totalClearanceAmountUSDT - tradeSummary.totalSettlementAmount).toFixed(2))
+                                          : Number(tradeSummary.totalClearanceAmountUSDT - tradeSummary.totalSettlementAmount).toFixed(3))
 
                                       }
                                   </span>
@@ -2173,7 +2173,7 @@ export default function Index({ params }: any) {
                                 </span>
                                 <span className="text-2xl xl:text-4xl font-semibold text-green-600">
                                     {
-                                      (Number(settlementWalletBalance || 0).toFixed(2))
+                                      (Number(settlementWalletBalance || 0).toFixed(3))
                                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                     }
                                 </span>
@@ -2377,7 +2377,7 @@ export default function Index({ params }: any) {
                                   {Rate}: {
 
                                     // currency format
-                                    Number((krwAmount / usdtAmount).toFixed(2))?.toLocaleString('ko-KR', {
+                                    Number((krwAmount / usdtAmount).toFixed(3))?.toLocaleString('ko-KR', {
                                       style: 'currency',
                                       currency: 'KRW'
                                     })
@@ -2637,7 +2637,7 @@ export default function Index({ params }: any) {
   
                                       parseFloat(e.target.value) > 100000000 ? setKrwAmount(1000) : setKrwAmount(parseFloat(e.target.value));
   
-                                      //setUsdtAmount(Number((krwAmount / rate).toFixed(2)));
+                                      //setUsdtAmount(Number((krwAmount / rate).toFixed(3)));
                                     
                                     
                                     } }
@@ -2660,7 +2660,7 @@ export default function Index({ params }: any) {
                                   = {
                                   krwAmount === 0 ? '0' :
                                   
-                                  (krwAmount / rate).toFixed(2) === 'NaN' ? '0' : (krwAmount / rate).toFixed(2)
+                                  (krwAmount / rate).toFixed(3) === 'NaN' ? '0' : (krwAmount / rate).toFixed(3)
 
                                   }{' '}USDT
                                 </p>
@@ -2804,7 +2804,7 @@ export default function Index({ params }: any) {
                               <div className="flex flex-row items-center justify-center gap-2">
                                 <span className="text-xl xl:text-2xl font-semibold text-green-600">
                                     {
-                                      (Number(tradeSummary.totalClearanceAmountUSDT).toFixed(2))
+                                      (Number(tradeSummary.totalClearanceAmountUSDT).toFixed(3))
                                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                     }
                                 </span>
@@ -2947,7 +2947,7 @@ export default function Index({ params }: any) {
                                         fontFamily: 'monospace',
                                       }}
                                     >
-                                      {item.usdtAmount && item.usdtAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                      {item.usdtAmount && item.usdtAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                     </span>
                                   </div>
 
@@ -3536,7 +3536,7 @@ export default function Index({ params }: any) {
 
                                 <p className="text-lg font-semibold text-white">{Rate}: {
 
-                                  Number(item.krwAmount / item.usdtAmount).toFixed(2)
+                                  Number(item.krwAmount / item.usdtAmount).toFixed(3)
 
                                 }</p>
 
@@ -3914,7 +3914,7 @@ const TradeDetail = (
 
     const [amount, setAmount] = useState(1000);
     const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
+    const receiveAmount = (amount / price).toFixed(3);
     const commission = 0.01; // example commission
   
     return (

@@ -924,7 +924,7 @@ export default function Index({ params }: any) {
                       <div className="text-sm">{My_Balance}</div>
                       <div className="flex flex-row items-end justify-center  gap-2">
                         <span className="text-4xl font-semibold text-white">
-                          {Number(balance).toFixed(2)}
+                          {Number(balance).toFixed(3)}
                         </span>
                         <span className="text-lg">USDT</span>
                       </div>
@@ -1253,7 +1253,7 @@ export default function Index({ params }: any) {
                                 }
                               </div>
                               <div className="text-sm font-semibold text-white">
-                              {Rate}{' '}{Number(item.krwAmount / item.usdtAmount).toFixed(2)}
+                              {Rate}{' '}{Number(item.krwAmount / item.usdtAmount).toFixed(3)}
                               </div>
                             </td>
 
@@ -1773,7 +1773,7 @@ export default function Index({ params }: any) {
                                   </p>
                                   <p className="text-lg font-semibold text-white">{Rate}: {
 
-                                    Number(item.krwAmount / item.usdtAmount).toFixed(2)
+                                    Number(item.krwAmount / item.usdtAmount).toFixed(3)
 
                                     }</p>
                                 </div>
@@ -2331,7 +2331,7 @@ const TradeDetail = (
 
     const [amount, setAmount] = useState(1000);
     const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
+    const receiveAmount = (amount / price).toFixed(3);
     const commission = 0.01; // example commission
   
     return (

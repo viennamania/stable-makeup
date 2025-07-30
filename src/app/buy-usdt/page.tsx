@@ -536,7 +536,7 @@ const P2PTable = () => {
                   {/* my usdt balance */}
                   <div className="flex flex-col gap-2 items-start">
                     <div className="text-5xl font-semibold text-white">
-                      {Number(balance).toFixed(2)} <span className="text-lg">USDT</span>
+                      {Number(balance).toFixed(3)} <span className="text-lg">USDT</span>
                     </div>
                   </div>
 
@@ -837,7 +837,7 @@ const P2PTable = () => {
                               <div className="flex flex-row items-start gap-2">
                                 <p className="text-lg font-semibold text-white">Rate: {
 
-                                  Number(item.krwAmount / item.usdtAmount).toFixed(2)
+                                  Number(item.krwAmount / item.usdtAmount).toFixed(3)
 
                                 }</p>
                               </div>
@@ -1319,7 +1319,7 @@ const TradeDetail = (
 
     const [amount, setAmount] = useState(1000);
     const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
+    const receiveAmount = (amount / price).toFixed(3);
     const commission = 0.01; // example commission
   
     return (

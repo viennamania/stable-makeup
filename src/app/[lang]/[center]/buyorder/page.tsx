@@ -3374,7 +3374,7 @@ const fetchBuyOrders = async () => {
                         style={{ fontFamily: 'monospace' }}
                       >
                         {
-                          escrowBalance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          escrowBalance.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                         }
                       </span>
                     </div>
@@ -3401,7 +3401,7 @@ const fetchBuyOrders = async () => {
                       >
                         {
                           todayMinusedEscrowAmount && todayMinusedEscrowAmount > 0 ?
-                          todayMinusedEscrowAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') :
+                          todayMinusedEscrowAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',') :
                           '0.00'
                         }
                       </span>
@@ -3454,7 +3454,7 @@ const fetchBuyOrders = async () => {
                   >
                     {
                       Number(store?.totalUsdtAmount ? store?.totalUsdtAmount : 0)
-                      .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                      .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                     }
                   </span>
                 </div>
@@ -3505,7 +3505,7 @@ const fetchBuyOrders = async () => {
                   >
                     {
                       Number(store?.totalSettlementAmount ? store?.totalSettlementAmount : 0)
-                      .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                      .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                     }
                   </span>
                 </div>
@@ -3554,7 +3554,7 @@ const fetchBuyOrders = async () => {
                   >
                     {
                       Number(store?.totalUsdtAmountClearance || 0)
-                      .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                      .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                     }
                   </span>
                 </div>
@@ -3711,7 +3711,7 @@ const fetchBuyOrders = async () => {
                         <span className="text-2xl xl:text-4xl font-semibold text-green-600"
                             style={{ fontFamily: 'monospace' }}
                         >
-                            {Number(balance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            {Number(balance).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </span>
                     </div>
 
@@ -4191,7 +4191,7 @@ const fetchBuyOrders = async () => {
                       style={{ fontFamily: 'monospace' }}
                     >
                       {tradeSummary.totalUsdtAmount
-                      && tradeSummary.totalUsdtAmount.toFixed(2)
+                      && tradeSummary.totalUsdtAmount.toFixed(3)
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                     </span>
                   </div>
@@ -4236,7 +4236,7 @@ const fetchBuyOrders = async () => {
                       style={{ fontFamily: 'monospace' }}
                     >
                       {tradeSummary.totalSettlementAmount
-                      && tradeSummary.totalSettlementAmount.toFixed(2)
+                      && tradeSummary.totalSettlementAmount.toFixed(3)
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                     </span>
                   </div>
@@ -4271,7 +4271,7 @@ const fetchBuyOrders = async () => {
                     >
                       {
                         (tradeSummary.totalFeeAmount + tradeSummary.totalAgentFeeAmount)
-                        .toFixed(2)
+                        .toFixed(3)
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                       }
                     </span>
@@ -4314,7 +4314,7 @@ const fetchBuyOrders = async () => {
                     />
                     <span className="text-xl font-semibold text-green-600">
                       {tradeSummary.totalClearanceAmountUSDT
-                      && tradeSummary.totalClearanceAmountUSDT.toFixed(2)
+                      && tradeSummary.totalClearanceAmountUSDT.toFixed(3)
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                     </span>
                   </div>
@@ -4772,7 +4772,7 @@ const fetchBuyOrders = async () => {
                                 }}
                               >
                                 {item.usdtAmount
-                                  && item.usdtAmount.toFixed(2)
+                                  && item.usdtAmount.toFixed(3)
                                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                               </span>
                             </div>
@@ -4784,7 +4784,7 @@ const fetchBuyOrders = async () => {
                             >
                               {
                                 Number(item.rate)
-                                //Number(item.krwAmount / item.usdtAmount).toFixed(2)
+                                //Number(item.krwAmount / item.usdtAmount).toFixed(3)
                               }
                             </span>
                           </div>
@@ -6152,7 +6152,7 @@ const fetchBuyOrders = async () => {
                                       }}>
                                       {Number(
                                         100 - (item.store?.agentFeePercent ? item.store?.agentFeePercent : 0.0) - (item.store.settlementFeePercent ? item.store.settlementFeePercent : 0.3)
-                                      ).toFixed(2)
+                                      ).toFixed(3)
                                       }%
                                     </span>
                                   </div>
@@ -6170,7 +6170,7 @@ const fetchBuyOrders = async () => {
                                       style={{
                                         fontFamily: 'monospace',
                                       }}>
-                                      {Number(item.store?.agentFeePercent ? item.store?.agentFeePercent : 0.0).toFixed(2)}%
+                                      {Number(item.store?.agentFeePercent ? item.store?.agentFeePercent : 0.0).toFixed(3)}%
                                     </span>
                                   </div>
 
@@ -6186,7 +6186,7 @@ const fetchBuyOrders = async () => {
                                       style={{
                                         fontFamily: 'monospace',
                                       }}>
-                                      {Number(item.store.settlementFeePercent ? item.store.settlementFeePercent : 0.3).toFixed(2)}%
+                                      {Number(item.store.settlementFeePercent ? item.store.settlementFeePercent : 0.3).toFixed(3)}%
                                     </span>
                                   </div>
                                   */}
@@ -6734,7 +6734,7 @@ const fetchBuyOrders = async () => {
                               </p>
                               <p className="text-lg font-semibold text-zinc-500">{Rate}: {
 
-                                Number(item.krwAmount / item.usdtAmount).toFixed(2)
+                                Number(item.krwAmount / item.usdtAmount).toFixed(3)
 
                                 }</p>
                             </div>
@@ -7546,7 +7546,7 @@ const TradeDetail = (
 
     const [amount, setAmount] = useState(1000);
     const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
+    const receiveAmount = (amount / price).toFixed(3);
     const commission = 0.01; // example commission
   
     return (

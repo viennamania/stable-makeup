@@ -2258,7 +2258,7 @@ export default function Index({ params }: any) {
                             />
                             <span className="text-sm text-green-600 font-semibold"
                               style={{ fontFamily: 'monospace' }}> 
-                              {store.totalUsdtAmount > 0 ? Number(store.totalUsdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}
+                              {store.totalUsdtAmount > 0 ? Number(store.totalUsdtAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}
                             </span>
                           </div>
                         </td>
@@ -2279,7 +2279,7 @@ export default function Index({ params }: any) {
                             />
                             <span className="text-sm text-green-600 font-semibold"
                               style={{ fontFamily: 'monospace' }}>
-                              {store.totalSettlementAmount > 0 ? Number(store.totalSettlementAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}
+                              {store.totalSettlementAmount > 0 ? Number(store.totalSettlementAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}
                             </span>
                           </div>
                         </td>
@@ -2301,7 +2301,7 @@ export default function Index({ params }: any) {
                             />
                             <span className="text-sm text-green-600 font-semibold"
                               style={{ fontFamily: 'monospace' }}>
-                              {store.totalAgentFeeAmount > 0 ? Number(store.totalAgentFeeAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}
+                              {store.totalAgentFeeAmount > 0 ? Number(store.totalAgentFeeAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}
                             </span>
                           </div>
                         </td>
@@ -3037,7 +3037,7 @@ export default function Index({ params }: any) {
                       내 USDT 잔고
                     </span>
                     <div className="text-4xl font-semibold text-zinc-800">
-                      {Number(balance).toFixed(2)}
+                      {Number(balance).toFixed(3)}
                     </div>
                     <p className="text-sm text-zinc-800">USDT</p>
                   </div>
@@ -3047,7 +3047,7 @@ export default function Index({ params }: any) {
                       가스비용
                     </span>
                     <div className="text-xl font-semibold text-zinc-800">
-                      {Number(nativeBalance).toFixed(2)}
+                      {Number(nativeBalance).toFixed(3)}
                     </div>
                     <p className="text-sm text-zinc-800">ETH</p>
                   </div>

@@ -1917,7 +1917,7 @@ export default function Index({ params }: any) {
                       style={{ fontFamily: 'monospace' }}
                     >
                       {
-                        escrowBalance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                        escrowBalance.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                       }
                     </span>
                   </div>
@@ -1944,7 +1944,7 @@ export default function Index({ params }: any) {
                     >
                       {
                         todayMinusedEscrowAmount && todayMinusedEscrowAmount > 0 ?
-                        todayMinusedEscrowAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') :
+                        todayMinusedEscrowAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',') :
                         '0.00'
                       }
                     </span>
@@ -1997,7 +1997,7 @@ export default function Index({ params }: any) {
                 >
                   {
                     Number(store?.totalUsdtAmount ? store?.totalUsdtAmount : 0)
-                    .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                   }
                 </span>
               </div>
@@ -2048,7 +2048,7 @@ export default function Index({ params }: any) {
                 >
                   {
                     Number(store?.totalSettlementAmount ? store?.totalSettlementAmount : 0)
-                    .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                   }
                 </span>
               </div>
@@ -2097,7 +2097,7 @@ export default function Index({ params }: any) {
                 >
                   {
                     Number(store?.totalUsdtAmountClearance || 0)
-                    .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                   }
                 </span>
               </div>
@@ -2325,7 +2325,7 @@ export default function Index({ params }: any) {
                         style={{ fontFamily: 'monospace' }}>
                         {Number(storeSummary.totalBuyUsdtAmount
                           ? storeSummary.totalBuyUsdtAmount : 0
-                        ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        ).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                       </p>
                     </div>
 
@@ -2374,7 +2374,7 @@ export default function Index({ params }: any) {
                               />
                               <span className="text-lg text-green-600"
                                 style={{ fontFamily: 'monospace' }}>
-                                {Number(order.usdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                {Number(order.usdtAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                               </span>
                             </div>
                           </td>
@@ -2489,7 +2489,7 @@ export default function Index({ params }: any) {
                         />
                         <p className="text-lg text-green-600"
                           style={{ fontFamily: 'monospace' }}>
-                          {Number(storeSummary.totalTradeUsdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          {Number(storeSummary.totalTradeUsdtAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                         </p>
                       </div>
 
@@ -2531,7 +2531,7 @@ export default function Index({ params }: any) {
                         />
                         <p className="text-lg text-green-600"
                           style={{ fontFamily: 'monospace' }}>
-                          {Number(storeSummary.totalSettlementAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          {Number(storeSummary.totalSettlementAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                         </p>
                       </div>
                     </div>
@@ -2598,7 +2598,7 @@ export default function Index({ params }: any) {
                                 />
                                 <span className="text-lg text-green-600"
                                   style={{ fontFamily: 'monospace' }}>
-                                  {Number(trade.usdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                  {Number(trade.usdtAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 </span>
                               </div>
                             </td>
@@ -2700,7 +2700,7 @@ export default function Index({ params }: any) {
                         />
                         <p className="text-lg text-green-600"
                           style={{ fontFamily: 'monospace' }}>
-                          {Number(storeSummary.totalClearanceUsdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          {Number(storeSummary.totalClearanceUsdtAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                         </p>
                       </div>
                     </div>
@@ -2783,7 +2783,7 @@ export default function Index({ params }: any) {
                                 />
                                 <span className="text-lg text-green-600"
                                   style={{ fontFamily: 'monospace' }}>
-                                  {Number(trade.usdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                  {Number(trade.usdtAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 </span>
 
                               </div>
@@ -2946,7 +2946,7 @@ export default function Index({ params }: any) {
                         />
                         <div className="text-4xl font-semibold text-green-600"
                           style={{ fontFamily: 'monospace' }}>
-                          {Number(balance).toFixed(2)}
+                          {Number(balance).toFixed(3)}
                         </div>
                       </div>
 

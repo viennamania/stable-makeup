@@ -1355,7 +1355,7 @@ export default function Index({ params }: any) {
 
                     <div className="flex flex-row items-center justify-end  gap-2">
                         <span className="text-2xl xl:text-4xl font-semibold text-green-600">
-                            {Number(balance).toFixed(2)}
+                            {Number(balance).toFixed(3)}
                         </span>
                         {' '}
                         <span className="text-sm">USDT</span>
@@ -1929,7 +1929,7 @@ const TradeDetail = (
 
     const [amount, setAmount] = useState(1000);
     const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
+    const receiveAmount = (amount / price).toFixed(3);
     const commission = 0.01; // example commission
   
     return (

@@ -945,7 +945,7 @@ export default function Index({ params }: any) {
       let orderUsdtAmount = usdtAmount;
 
       if (checkInputKrwAmount) {
-        orderUsdtAmount = parseFloat(Number(krwAmount / rate).toFixed(2));
+        orderUsdtAmount = parseFloat(Number(krwAmount / rate).toFixed(3));
       }
       
 
@@ -1694,7 +1694,7 @@ export default function Index({ params }: any) {
                                     에스크로 잔액
                                 </span>
                                 <span className="text-2xl xl:text-4xl font-semibold text-green-600">
-                                    {Number(balance).toFixed(2)}
+                                    {Number(balance).toFixed(3)}
                                 </span>
                                 {' '}
                                 <span className="text-sm">USDT</span>
@@ -1988,7 +1988,7 @@ export default function Index({ params }: any) {
                                   {Rate}: {
 
                                     // currency format
-                                    Number((krwAmount / usdtAmount).toFixed(2))?.toLocaleString('ko-KR', {
+                                    Number((krwAmount / usdtAmount).toFixed(3))?.toLocaleString('ko-KR', {
                                       style: 'currency',
                                       currency: 'KRW'
                                     })
@@ -2248,7 +2248,7 @@ export default function Index({ params }: any) {
   
                                       parseFloat(e.target.value) > 100000000 ? setKrwAmount(1000) : setKrwAmount(parseFloat(e.target.value));
   
-                                      //setUsdtAmount(Number((krwAmount / rate).toFixed(2)));
+                                      //setUsdtAmount(Number((krwAmount / rate).toFixed(3)));
                                     
                                     
                                     } }
@@ -2271,7 +2271,7 @@ export default function Index({ params }: any) {
                                   = {
                                   krwAmount === 0 ? '0' :
                                   
-                                  (krwAmount / rate).toFixed(2) === 'NaN' ? '0' : (krwAmount / rate).toFixed(2)
+                                  (krwAmount / rate).toFixed(3) === 'NaN' ? '0' : (krwAmount / rate).toFixed(3)
 
                                   }{' '}USDT
                                 </p>
@@ -2484,7 +2484,7 @@ export default function Index({ params }: any) {
                                   </span>
                                 
                                   <span>{item.usdtAmount}</span>
-                                  <span>{Number(item.krwAmount / item.usdtAmount).toFixed(2)}</span>
+                                  <span>{Number(item.krwAmount / item.usdtAmount).toFixed(3)}</span>
                                 </div>
                               </td>
 
@@ -2964,7 +2964,7 @@ export default function Index({ params }: any) {
 
                                 <p className="text-lg font-semibold text-white">{Rate}: {
 
-                                  Number(item.krwAmount / item.usdtAmount).toFixed(2)
+                                  Number(item.krwAmount / item.usdtAmount).toFixed(3)
 
                                 }</p>
 
@@ -3340,7 +3340,7 @@ const TradeDetail = (
 
     const [amount, setAmount] = useState(1000);
     const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
+    const receiveAmount = (amount / price).toFixed(3);
     const commission = 0.01; // example commission
   
     return (

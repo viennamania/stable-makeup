@@ -2134,7 +2134,7 @@ export default function Index({ params }: any) {
                       className="w-5 h-5"
                     />
                     <div className="text-xl font-semibold text-zinc-500">
-                      {tradeSummary.totalUsdtAmount?.toFixed(2).toLocaleString()}
+                      {tradeSummary.totalUsdtAmount?.toFixed(3).toLocaleString()}
                     </div>
                   </div>
                 </div>
@@ -2174,7 +2174,7 @@ export default function Index({ params }: any) {
                           className="w-5 h-5"
                         />
                         <div className="text-xl font-semibold text-zinc-500">
-                          {tradeSummary.totalSettlementAmount?.toFixed(2).toLocaleString()}
+                          {tradeSummary.totalSettlementAmount?.toFixed(3).toLocaleString()}
                         </div>
                       </div>
                     </div>
@@ -2198,7 +2198,7 @@ export default function Index({ params }: any) {
                           className="w-5 h-5"
                         />
                         <div className="text-xl font-semibold text-zinc-500">
-                          {tradeSummary.totalFeeAmount?.toFixed(2).toLocaleString()}
+                          {tradeSummary.totalFeeAmount?.toFixed(3).toLocaleString()}
                         </div>
                       </div>
                     </div>
@@ -2240,7 +2240,7 @@ export default function Index({ params }: any) {
                       className="w-5 h-5"
                     />
                     <div className="text-xl font-semibold text-zinc-500">
-                      {tradeSummary.totalClearanceAmountUSDT?.toFixed(2).toLocaleString()}
+                      {tradeSummary.totalClearanceAmountUSDT?.toFixed(3).toLocaleString()}
                     </div>
                   </div>
 
@@ -2974,7 +2974,7 @@ export default function Index({ params }: any) {
                                       >
                                         {
                                           (item.totalUsdtAmount ? item.totalUsdtAmount : 0)
-                                          .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                          .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                                         }
                                       </span>
                                     </div>
@@ -3125,7 +3125,7 @@ export default function Index({ params }: any) {
                                       >
                                         {
                                           (item.totalSettlementAmount ? item.totalSettlementAmount : 0)
-                                          .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                          .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                                         }
                                       </span>
                                     </div>
@@ -3155,7 +3155,7 @@ export default function Index({ params }: any) {
                                       >
                                         {
                                           (item.totalFeeAmount ? item.totalFeeAmount : 0)
-                                          .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                          .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                                         }
                                       </span>
                                     </div>
@@ -3181,7 +3181,7 @@ export default function Index({ params }: any) {
                                       >
                                         {
                                           (item.totalAgentFeeAmount ? item.totalAgentFeeAmount : 0)
-                                          .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                          .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                                         }
                                       </span>
                                     </div>
@@ -3270,7 +3270,7 @@ export default function Index({ params }: any) {
                                       >
                                         {
                                           (item.totalUsdtAmountClearance ? item.totalUsdtAmountClearance : 0)
-                                          .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                          .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                                         }
                                       </span>
                                     </div>
@@ -3330,7 +3330,7 @@ export default function Index({ params }: any) {
                                   <span className="text-xl text-green-600"
                                     style={{ fontFamily: 'monospace' }}
                                   >
-                                    {item?.escrowAmountUSDT ? item?.escrowAmountUSDT.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
+                                    {item?.escrowAmountUSDT ? item?.escrowAmountUSDT.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
                                   </span>
                                 </div>
 
@@ -3369,14 +3369,14 @@ export default function Index({ params }: any) {
                                   <span className="text-lg text-green-600"
                                     style={{ fontFamily: 'monospace' }}
                                   >
-                                    {item?.usdtBalance ? item?.usdtBalance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
+                                    {item?.usdtBalance ? item?.usdtBalance.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
                                   </span>
                                 </div>
 
                                 <span className="text-lg text-green-600"
                                   style={{ fontFamily: 'monospace' }}
                                 >
-                                  {item?.nativeBalance ? item?.nativeBalance.toFixed(2).toLocaleString('us-US') : 0}{' '}ETH
+                                  {item?.nativeBalance ? item?.nativeBalance.toFixed(3).toLocaleString('us-US') : 0}{' '}ETH
                                 </span>
                               
                               </div>
@@ -3571,7 +3571,7 @@ const TradeDetail = (
 
     const [amount, setAmount] = useState(1000);
     const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
+    const receiveAmount = (amount / price).toFixed(3);
     const commission = 0.01; // example commission
   
     return (

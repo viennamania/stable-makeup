@@ -3101,7 +3101,7 @@ const [tradeSummary, setTradeSummary] = useState({
                         style={{ fontFamily: 'monospace' }}
                       >
                         {
-                          escrowBalance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          escrowBalance.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                         }
                       </span>
                     </div>
@@ -3128,7 +3128,7 @@ const [tradeSummary, setTradeSummary] = useState({
                       >
                         {
                           todayMinusedEscrowAmount && todayMinusedEscrowAmount > 0 ?
-                          todayMinusedEscrowAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') :
+                          todayMinusedEscrowAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',') :
                           '0.00'
                         }
                       </span>
@@ -3181,7 +3181,7 @@ const [tradeSummary, setTradeSummary] = useState({
                   >
                     {
                       Number(store?.totalUsdtAmount ? store?.totalUsdtAmount : 0)
-                      .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                      .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                     }
                   </span>
                 </div>
@@ -3232,7 +3232,7 @@ const [tradeSummary, setTradeSummary] = useState({
                   >
                     {
                       Number(store?.totalSettlementAmount ? store?.totalSettlementAmount : 0)
-                      .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                      .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                     }
                   </span>
                 </div>
@@ -3281,7 +3281,7 @@ const [tradeSummary, setTradeSummary] = useState({
                   >
                     {
                       Number(store?.totalUsdtAmountClearance || 0)
-                      .toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                      .toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                     }
                   </span>
                 </div>
@@ -3546,7 +3546,7 @@ const [tradeSummary, setTradeSummary] = useState({
                                   style={{ fontFamily: 'monospace' }}
                               >
                                   {
-                                    Number(balance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                    Number(balance).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                                   }
                               </span>
                               {' '}
@@ -4033,14 +4033,14 @@ const [tradeSummary, setTradeSummary] = useState({
                                   <span className="text-xl text-green-600 font-semibold"
                                     style={{ fontFamily: 'monospace' }}
                                   >
-                                    {item.usdtAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                    {item.usdtAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                   </span>
                                 </div>
 
                                 <span className="text-sm text-zinc-500">
                                   {
                                     Number(item.rate)
-                                    //Number(item.krwAmount / item.usdtAmount).toFixed(2)
+                                    //Number(item.krwAmount / item.usdtAmount).toFixed(3)
                                   }
                                 </span>
                               </div>
@@ -4949,7 +4949,7 @@ const [tradeSummary, setTradeSummary] = useState({
                                   </p>
                                   <p className="text-lg font-semibold text-zinc-500">{Rate}: {
 
-                                    Number(item.krwAmount / item.usdtAmount).toFixed(2)
+                                    Number(item.krwAmount / item.usdtAmount).toFixed(3)
 
                                     }</p>
                                 </div>
@@ -5743,7 +5743,7 @@ const TradeDetail = (
 
     const [amount, setAmount] = useState(1000);
     const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
+    const receiveAmount = (amount / price).toFixed(3);
     const commission = 0.01; // example commission
   
     return (

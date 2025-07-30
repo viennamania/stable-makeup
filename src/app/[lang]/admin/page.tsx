@@ -2191,7 +2191,7 @@ export default function Index({ params }: any) {
                       내 USDT 잔고
                     </span>
                     <div className="text-4xl font-semibold text-zinc-800">
-                      {Number(balance).toFixed(2)}
+                      {Number(balance).toFixed(3)}
                     </div>
                     <p className="text-sm text-zinc-800">USDT</p>
                   </div>

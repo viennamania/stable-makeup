@@ -914,7 +914,7 @@ export default function Index({ params }: any) {
 
                       <div className="hidden flex-row items-center justify-end  gap-2">
                           <span className="text-2xl xl:text-4xl font-semibold text-green-600">
-                              {Number(balance).toFixed(2)}
+                              {Number(balance).toFixed(3)}
                           </span>
                           {' '}
                           <span className="text-sm">USDT</span>
@@ -1197,13 +1197,13 @@ export default function Index({ params }: any) {
                         {My_Balance}
                       </span>
                       <div className="text-4xl font-semibold text-zinc-800">
-                        {Number(balance).toFixed(2)}
+                        {Number(balance).toFixed(3)}
                       </div>
                       <p className="text-sm text-zinc-800">USDT</p>
                     </div>
                     <div className="flex flex-row gap-2 justify-center items-center">
                       <div className="text-xl font-semibold text-zinc-800">
-                        {Number(nativeBalance).toFixed(2)}
+                        {Number(nativeBalance).toFixed(3)}
                       </div>
                       <p className="text-sm text-zinc-800">ETH</p>
                     </div>

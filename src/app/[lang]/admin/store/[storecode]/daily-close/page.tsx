@@ -1395,7 +1395,7 @@ const fetchBuyOrders = async () => {
                   >
                     {
                       store?.escrowAmountUSDT
-                      ? Number(store?.escrowAmountUSDT).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                      ? Number(store?.escrowAmountUSDT).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                       : 0
                     }
                   </span>
@@ -1479,7 +1479,7 @@ const fetchBuyOrders = async () => {
                       >
                         {
                           escrow.withdrawAmount
-                          ? Number(escrow.withdrawAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          ? Number(escrow.withdrawAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                           : 0
                         }
                       </td>
@@ -1488,7 +1488,7 @@ const fetchBuyOrders = async () => {
                       >
                         {
                           escrow.depositAmount
-                          ? Number(escrow.depositAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          ? Number(escrow.depositAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                           : 0
                         }
                       </td>
@@ -1498,7 +1498,7 @@ const fetchBuyOrders = async () => {
                       >
                         {
                           escrow.beforeBalance
-                          ? Number(escrow.beforeBalance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          ? Number(escrow.beforeBalance).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                           : 0
                         }
                       </td>
@@ -1508,7 +1508,7 @@ const fetchBuyOrders = async () => {
                       >
                         {
                           escrow.afterBalance
-                          ? Number(escrow.afterBalance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                          ? Number(escrow.afterBalance).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                           : 0
                         }
                       </td>
@@ -1579,7 +1579,7 @@ const fetchBuyOrders = async () => {
                           <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
                             style={{ fontFamily: 'monospace' }}
                           >
-                            {Number(order.totalUsdtAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            {Number(order.totalUsdtAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                           </td>
                           <td className="px-4 py-2 text-sm text-yellow-600 font-semibold text-right"
                             style={{ fontFamily: 'monospace' }}
@@ -1598,7 +1598,7 @@ const fetchBuyOrders = async () => {
                           <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
                             style={{ fontFamily: 'monospace' }}
                           >
-                            {Number(order.totalAgentFeeAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            {Number(order.totalAgentFeeAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                           </td>
                           <td className="px-4 py-2 text-sm text-yellow-600 font-semibold text-right"
                             style={{ fontFamily: 'monospace' }}
@@ -1609,7 +1609,7 @@ const fetchBuyOrders = async () => {
                           <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
                             style={{ fontFamily: 'monospace' }}
                           >
-                            {Number(order.totalFeeAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            {Number(order.totalFeeAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                           </td>
                           <td className="px-4 py-2 text-sm text-yellow-600 font-semibold text-right"
                             style={{ fontFamily: 'monospace' }}
@@ -1620,7 +1620,7 @@ const fetchBuyOrders = async () => {
                           <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
                             style={{ fontFamily: 'monospace' }}
                           >
-                            {Number(order.totalSettlementAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            {Number(order.totalSettlementAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                           </td>
                           <td className="px-4 py-2 text-sm text-yellow-600 font-semibold text-right"
                             style={{ fontFamily: 'monospace' }}
@@ -1632,7 +1632,7 @@ const fetchBuyOrders = async () => {
                           <td className="px-4 py-2 text-sm text-blue-600 font-semibold text-right">
                             {order.totalEscrowCount && order.totalEscrowCount > 0 ? (
                               <span className="text-green-600">
-                                {Number(order.totalEscrowWithdrawAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} USDT
+                                {Number(order.totalEscrowWithdrawAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} USDT
                                 출금완료
                               </span>
                             ) : (
@@ -1645,7 +1645,7 @@ const fetchBuyOrders = async () => {
                                 }}
                                 className="text-blue-600 hover:underline"
                               >
-                                {Number(order.totalAgentFeeAmount + order.totalFeeAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} USDT
+                                {Number(order.totalAgentFeeAmount + order.totalFeeAmount).toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} USDT
                                 출금하기
                               </button>
                             
@@ -1738,7 +1738,7 @@ const TradeDetail = (
 
     const [amount, setAmount] = useState(1000);
     const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
+    const receiveAmount = (amount / price).toFixed(3);
     const commission = 0.01; // example commission
   
     return (

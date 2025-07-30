@@ -469,7 +469,7 @@ const P2PTable = () => {
                 <div className="flex flex-col gap-2 items-start">
                   <div className="text-sm">My Balance</div>
                   <div className="text-5xl font-semibold text-white">
-                    {Number(balance).toFixed(2)} <span className="text-lg">USDT</span>
+                    {Number(balance).toFixed(3)} <span className="text-lg">USDT</span>
                   </div>
                 </div>
 
@@ -484,20 +484,20 @@ const P2PTable = () => {
                       {/* dot */}
                       <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-2"></span>
                       Total: {sellOrders.length} EA ({
-                      Number(sellOrders.reduce((acc, item) => acc + item.usdtAmount, 0)).toFixed(2)
+                      Number(sellOrders.reduce((acc, item) => acc + item.usdtAmount, 0)).toFixed(3)
                       } USDT)</div>
                     <div className="text-sm">
                       {/* dot */}
                       <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-2"></span>
                       Trades: {sellOrders.filter(item => item.status === 'accepted' || item.status === 'paymentRequested').length} EA ({
-                      sellOrders.filter(item => item.status === 'accepted' || item.status === 'paymentRequested').reduce((acc, item) => acc + item.usdtAmount, 0).toFixed(2)
+                      sellOrders.filter(item => item.status === 'accepted' || item.status === 'paymentRequested').reduce((acc, item) => acc + item.usdtAmount, 0).toFixed(3)
                       } USDT)</div>
 
                     <div className="text-sm">
                       {/* dot */}
                       <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-2"></span>
                       Completed: {sellOrders.filter(item => item.status === 'paymentConfirmed').length} EA ({
-                      Number(sellOrders.filter(item => item.status === 'paymentConfirmed').reduce((acc, item) => acc + item.usdtAmount, 0)).toFixed(2)
+                      Number(sellOrders.filter(item => item.status === 'paymentConfirmed').reduce((acc, item) => acc + item.usdtAmount, 0)).toFixed(3)
                       } USDT)</div>
 
                   </div>
@@ -643,7 +643,7 @@ const P2PTable = () => {
                             <div className="flex flex-col items-start">
                               <p className="text-lg font-semibold text-white">Rate: {
 
-                                Number(item.krwAmount / item.usdtAmount).toFixed(2)
+                                Number(item.krwAmount / item.usdtAmount).toFixed(3)
 
                               }</p>
                             </div>
@@ -925,7 +925,7 @@ const TradeDetail = (
 
     const [amount, setAmount] = useState(1000);
     const price = 91.17; // example price
-    const receiveAmount = (amount / price).toFixed(2);
+    const receiveAmount = (amount / price).toFixed(3);
     const commission = 0.01; // example commission
   
     return (
