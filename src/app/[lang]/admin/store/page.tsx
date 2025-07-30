@@ -2517,13 +2517,13 @@ export default function Index({ params }: any) {
                         <th className="p-2">
                           <div className="flex flex-col items-center justify-center gap-2">
                             <span className="text-center">
-                              거래수(건)
+                              판매거래수(건)
                             </span>
                             <span className="text-center">
-                              금액(원)
+                              판매금액(원)
                             </span>
                             <span className="text-center">
-                              수량(USDT)
+                              판매수량(USDT)
                             </span>
                           </div>
                         </th>
@@ -2984,7 +2984,7 @@ export default function Index({ params }: any) {
                                   bg-[#3167b4] text-sm text-white px-2 py-1 rounded-lg
                                   hover:bg-[#3167b4]/80"
                                 >
-                                  구매내역
+                                  거래내역
                                 </button>
 
                             </div>
@@ -3005,7 +3005,7 @@ export default function Index({ params }: any) {
 
                                   {item.settlementFeeWalletAddress ? (
 
-                                    <div className="flex flex-row items-center gap-2">
+                                    <div className="flex flex-col items-center gap-2">
                                       <button
                                         onClick={() => {
                                           navigator.clipboard.writeText(
@@ -3020,7 +3020,7 @@ export default function Index({ params }: any) {
                                         }
                                       </button>
 
-                                      <span className="text-sm text-gray-500 font-semibold">
+                                      <span className="text-xl text-gray-500 font-semibold">
                                         {
                                           item.settlementFeePercent ? item.settlementFeePercent : 0.00
                                         }%
@@ -3036,7 +3036,7 @@ export default function Index({ params }: any) {
                                   )}
                                 </div>
 
-                                <div className="flex flex-row items-center gap-2">
+                                <div className="flex flex-col items-center gap-2">
 
                                   {item.agentFeeWalletAddress ? (
                                     <button
@@ -3060,7 +3060,7 @@ export default function Index({ params }: any) {
                                   )}
 
                                   {' '}
-                                  <span className="text-sm text-gray-500 font-semibold">
+                                  <span className="text-xl text-gray-500 font-semibold">
                                     {
                                       item.agentFeePercent ? item.agentFeePercent : 0.00
                                     }%
@@ -3071,7 +3071,7 @@ export default function Index({ params }: any) {
                  
                             </div>
                           </td>
-                          
+
 
                           <td className="p-2">
                             <div className=" h-56
@@ -3190,7 +3190,10 @@ export default function Index({ params }: any) {
 
                                 <button
                                   onClick={() => {
-                                    alert('준비중입니다.');
+                                    // /ko/admin/trade-history-daily?storecode=ixryqqtw
+                                    router.push(
+                                      '/' + params.lang + '/admin/trade-history-daily?storecode=' + item.storecode
+                                    );
                                   }}
                                   className="mb-2
                                   w-full
