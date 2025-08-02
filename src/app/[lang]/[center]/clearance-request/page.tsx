@@ -1726,20 +1726,19 @@ export default function Index({ params }: any) {
         //const sellerWalletAddress = buyOrders[index].store.sellerWalletAddress;
         //const sellerWalletAddress = "0x3f1e7D26A2704BE994aF84cEbf19BA9683E23666"; // for test
 
-        const sellerWalletAddress = buyOrders[index].store.sellerWalletAddress;
+        //const sellerWalletAddress = buyOrders[index].store.sellerWalletAddress;
 
+        const buyerWalletAddress = buyOrders[index].walletAddress;
 
         //alert('sellerWalletAddress: ' + sellerWalletAddress);
 
-
-        console.log('sellerWalletAddress', sellerWalletAddress);
-
+        console.log('buyerWalletAddress', buyerWalletAddress);
 
         const usdtAmount = buyOrders[index].usdtAmount;
 
         const transaction = transfer({
           contract,
-          to: sellerWalletAddress,
+          to: buyerWalletAddress,
           amount: usdtAmount,
         });
 
@@ -1826,7 +1825,7 @@ export default function Index({ params }: any) {
 
         } catch (error) {
           console.error('Error:', error);
-          toast.error('결제확인이 실패했습니다.' + error);
+          toast.error('결제확인이 실패했습니다.' + JSON.stringify(error));
         }
 
       }
@@ -2555,7 +2554,7 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
 
-
+  const [buyerWalletAddress, setBuyerWalletAddress] = useState('');
   const [buyerNickname, setBuyerNickname] = useState('');
   const [buyerDepositBankName, setBuyerDepositBankName] = useState('');
   const [buyerDepositBankAccountNumber, setBuyerDepositBankAccountNumber] = useState('');
@@ -2620,7 +2619,7 @@ const [tradeSummary, setTradeSummary] = useState({
 
 
 
-        walletAddress: address,
+        walletAddress: buyerWalletAddress,
 
 
 
@@ -3961,8 +3960,10 @@ const [tradeSummary, setTradeSummary] = useState({
                       allBuyer.map((buyer, index) => (
                         <div
                           key={index}
-                          className="flex flex-row items-center justify-between gap-2 p-2 hover:bg-zinc-100 cursor-pointer"
+                          className="flex flex-row items-center justify-between gap-2 p-2 hover:bg-zinc-100 cursor-pointer
+                          border-b border-zinc-200"
                           onClick={() => {
+                            setBuyerWalletAddress(buyer.walletAddress);
                             setBuyerNickname(buyer.nickname);
                             setBuyerDepositName(buyer.buyer.depositName);
                             setBuyerDepositBankName(buyer.buyer.depositBankName);
@@ -3974,6 +3975,18 @@ const [tradeSummary, setTradeSummary] = useState({
                           }}
                         >
                           <div className="flex flex-col">
+                            <div className="flex flex-row items-center gap-2">
+                              <Image
+                                src="/icon-shield.png"
+                                alt="Shield"
+                                width={20}
+                                height={20}
+                                className="w-5 h-5"
+                              />
+                              <span className="text-sm font-semibold text-zinc-800">
+                                {buyer.walletAddress.substring(0, 6) + '...' + buyer.walletAddress.substring(buyer.walletAddress.length - 4)}
+                              </span>
+                            </div>
                             <span className="text-sm text-green-600">
                               {buyer.nickname}
                             </span>
@@ -4013,6 +4026,20 @@ const [tradeSummary, setTradeSummary] = useState({
                         <div className="flex flex-col gap-2 items-start">
 
                           {/* 선택된 회원 정보 */}
+                          {/* USDT 통장 주소 */}
+                          <div className="flex flex-row items-center gap-2">
+                            <Image
+                              src="/icon-shield.png"
+                              alt="Wallet"
+                              width={20}
+                              height={20}
+                              className="w-5 h-5"
+                            />
+                            <span className="text-sm text-zinc-400">
+                              {buyerWalletAddress ? buyerWalletAddress.substring(0, 6) + '...' + buyerWalletAddress.substring(buyerWalletAddress.length - 4) : ''}
+                            </span>
+                          </div>
+
                           <div className="flex flex-row items-center gap-2">
                             <span className="text-lg font-semibold text-zinc-500">
                               {buyerNickname || '출금할 회원을 선택해주세요'}
@@ -4047,12 +4074,21 @@ const [tradeSummary, setTradeSummary] = useState({
                               </span>
 
                               <input 
+                                // disable mouse up down scroll
+                                //onWheel={(e) => e.preventDefault()}
+
+
+
+
                                 type="number"
                                 className="
                                   text-xl text-blue-500 font-bold
                                   w-40 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
                                 placeholder={Price}
-                                value={krwAmount}
+                                value={
+                                  //Number(krwAmount).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                  krwAmount
+                                }
                                 onChange={(e) => {
                                   // check number
                                   e.target.value = e.target.value.replace(/[^0-9.]/g, '');
@@ -4080,7 +4116,9 @@ const [tradeSummary, setTradeSummary] = useState({
                                 
                                 } }
                               />
-
+                              <span className="text-xl text-zinc-400 font-bold">
+                                {krwAmount === 0 ? '0' : Number(krwAmount).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                              </span>
                               <span className="text-xl text-zinc-400 font-bold">
                                 원  
                               </span>
@@ -4547,7 +4585,19 @@ const [tradeSummary, setTradeSummary] = useState({
                                   }}
                                 />
                                 */}
-                                <div className="flex flex-row gap-2 items-center justify-center">
+                                <div className="flex flex-col gap-2 items-center justify-center">
+                                  <div className="flex flex-row items-center gap-2">
+                                    <Image
+                                      src="/icon-shield.png"
+                                      alt="Shield"
+                                      width={20}
+                                      height={20}
+                                      className="w-5 h-5"
+                                    />
+                                    <span className="text-sm font-semibold text-zinc-800">
+                                      {item.walletAddress.slice(0, 6) + '...' + item.walletAddress.slice(-4)}
+                                    </span>
+                                  </div>
 
                                   <div className="text-sm text-zinc-500">
                                     {
@@ -4723,7 +4773,8 @@ const [tradeSummary, setTradeSummary] = useState({
                                     
                                     <div className="text-sm text-zinc-500">
                                       {
-                                        item.store.sellerWalletAddress.slice(0, 6) + '...' + item.store.sellerWalletAddress.slice(-4)
+                                        //item.store.sellerWalletAddress.slice(0, 6) + '...' + item.store.sellerWalletAddress.slice(-4)
+                                        item.seller?.walletAddress.slice(0, 6) + '...' + item.seller?.walletAddress.slice(-4)
                                       }
                                     </div>
                                   
@@ -4761,7 +4812,8 @@ const [tradeSummary, setTradeSummary] = useState({
 
                                     <div className="text-sm text-zinc-500">
                                       {
-                                        item.store.sellerWalletAddress.slice(0, 6) + '...' + item.store.sellerWalletAddress.slice(-4)
+                                        ///item.store.sellerWalletAddress.slice(0, 6) + '...' + item.store.sellerWalletAddress.slice(-4)
+                                        item.seller?.walletAddress.slice(0, 6) + '...' + item.seller?.walletAddress.slice(-4)
                                       }
                                     </div>
 
@@ -5192,22 +5244,25 @@ const [tradeSummary, setTradeSummary] = useState({
                             {/* 출금상태: buyer.depositCompleted */}
                             <td className="p-2">
 
-                              
-                              {item?.buyer?.depositCompleted === false
-                               ? (
-                                <div className="text-sm text-red-600
-                                flex flex-row items-center gap-2
-                                border border-red-600
-                                rounded-md px-2 py-1">
-                                  출금대기중
-                                </div>
-                              ) : (
-                                <div className="text-sm text-green-600
-                                flex flex-row items-center gap-2
-                                border border-green-600
-                                rounded-md px-2 py-1">
-                                  출금완료
-                                </div>
+                              {item.status !== 'cancelled' && (
+                                <>   
+                                  {item?.buyer?.depositCompleted === false
+                                  ? (
+                                    <div className="text-sm text-red-600
+                                    flex flex-row items-center gap-2
+                                    border border-red-600
+                                    rounded-md px-2 py-1">
+                                      출금대기중
+                                    </div>
+                                  ) : (
+                                    <div className="text-sm text-green-600
+                                    flex flex-row items-center gap-2
+                                    border border-green-600
+                                    rounded-md px-2 py-1">
+                                      출금완료
+                                    </div>
+                                  )}
+                                </>
                               )}
                             
                             </td>
