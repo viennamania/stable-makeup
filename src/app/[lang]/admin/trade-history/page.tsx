@@ -3094,7 +3094,7 @@ const fetchBuyOrders = async () => {
                   <span className="text-xl font-semibold text-green-600">
                     {tradeSummary.totalUsdtAmount
                       ? tradeSummary.totalUsdtAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                      : '0.00'}
+                      : '0.000'}
                   </span>
                 </div>
               </div>
@@ -3135,7 +3135,7 @@ const fetchBuyOrders = async () => {
                   <span className="text-xl font-semibold text-green-600">
                     {tradeSummary.totalSettlementAmount
                       ? tradeSummary.totalSettlementAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                      : '0.00'}
+                      : '0.000'}
                   </span>
                 </div>
               </div>
@@ -3169,7 +3169,7 @@ const fetchBuyOrders = async () => {
                       <span className="text-xl font-semibold text-green-600">
                         {tradeSummary.totalFeeAmount
                           ? tradeSummary.totalFeeAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          : '0.00'}
+                          : '0.000'}
                       </span>
                     </div>
                   </div>
@@ -3200,7 +3200,7 @@ const fetchBuyOrders = async () => {
                       <span className="text-xl font-semibold text-green-600">
                         {tradeSummary.totalAgentFeeAmount
                           ? tradeSummary.totalAgentFeeAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          : '0.00'}
+                          : '0.000'}
                       </span>
                     </div>
                   </div>

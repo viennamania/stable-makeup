@@ -3402,7 +3402,7 @@ const fetchBuyOrders = async () => {
                         {
                           todayMinusedEscrowAmount && todayMinusedEscrowAmount > 0 ?
                           todayMinusedEscrowAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',') :
-                          '0.00'
+                          '0.000'
                         }
                       </span>
                     </div>

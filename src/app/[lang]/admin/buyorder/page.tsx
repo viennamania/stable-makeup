@@ -3800,7 +3800,7 @@ const fetchBuyOrders = async () => {
                       style={{ fontFamily: 'monospace' }}>
                       {tradeSummary.totalUsdtAmount
                         ? tradeSummary.totalUsdtAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                        : '0.00'}
+                        : '0.000'}
                     </span>
                   </div>
                 </div>
@@ -3850,7 +3850,7 @@ const fetchBuyOrders = async () => {
                         style={{ fontFamily: 'monospace' }}>
                         {tradeSummary.totalSettlementAmount
                           ? tradeSummary.totalSettlementAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          : '0.00'}
+                          : '0.000'}
                       </span>
                     </div>
                   </div>
@@ -3890,7 +3890,7 @@ const fetchBuyOrders = async () => {
                         style={{ fontFamily: 'monospace' }}>
                         {tradeSummary.totalFeeAmount
                           ? tradeSummary.totalFeeAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          : '0.00'}
+                          : '0.000'}
                       </span>
                     </div>
                   </div>
@@ -3926,7 +3926,7 @@ const fetchBuyOrders = async () => {
                         style={{ fontFamily: 'monospace' }}>
                         {tradeSummary.totalAgentFeeAmount
                           ? tradeSummary.totalAgentFeeAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                          : '0.00'}
+                          : '0.000'}
                       </span>
                     </div>
                   </div>

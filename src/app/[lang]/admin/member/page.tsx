@@ -2906,7 +2906,7 @@ export default function Index({ params }: any) {
                                    style={{ fontFamily: 'monospace' }}
                                  >
                                    {usdtBalance[index] ?
-                                     usdtBalance[index].toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'}{' USDT'}
+                                     usdtBalance[index].toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.000'}{' USDT'}
                                  </span>
           
                                </div>
@@ -2926,7 +2926,7 @@ export default function Index({ params }: any) {
                                    //toast.success('잔액을 가져왔습니다.');
  
                                    // toast usdtBalance[index] is updated
-                                   //toast.success(`잔액을 가져왔습니다. 현재 잔액: ${usdtBalance[index] ? usdtBalance[index].toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'} USDT`);
+                                   //toast.success(`잔액을 가져왔습니다. 현재 잔액: ${usdtBalance[index] ? usdtBalance[index].toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.000'} USDT`);
  
                                  }}
                                  className={`
