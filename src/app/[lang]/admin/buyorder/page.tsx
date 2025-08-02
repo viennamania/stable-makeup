@@ -4472,7 +4472,7 @@ const fetchBuyOrders = async () => {
                                 fontFamily: 'monospace',
                               }}
                             >
-                              {item.usdtAmount}
+                              {item.usdtAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                             </span>
                           </div>
 
@@ -6142,7 +6142,7 @@ const fetchBuyOrders = async () => {
                                     }}>
                                     {Number(
                                       100 - (item.store?.agentFeePercent ? item.store?.agentFeePercent : 0.0) - (item.store.settlementFeePercent ? item.store.settlementFeePercent : 0.3)
-                                    ).toFixed(3)
+                                    ).toFixed(2)
                                     }%
                                   </span>
                                 </div>
@@ -6159,7 +6159,7 @@ const fetchBuyOrders = async () => {
                                     style={{
                                       fontFamily: 'monospace',
                                     }}>
-                                    {Number(item.store?.agentFeePercent ? item.store?.agentFeePercent : 0.0).toFixed(3)}%
+                                    {Number(item.store?.agentFeePercent ? item.store?.agentFeePercent : 0.0).toFixed(2)}%
                                   </span>
                                 </div>
 
@@ -6175,7 +6175,7 @@ const fetchBuyOrders = async () => {
                                     style={{
                                       fontFamily: 'monospace',
                                     }}>
-                                    {Number(item.store.settlementFeePercent ? item.store.settlementFeePercent : 0.3).toFixed(3)}%
+                                    {Number(item.store.settlementFeePercent ? item.store.settlementFeePercent : 0.3).toFixed(2)}%
                                   </span>
                                 </div>
 
