@@ -1667,7 +1667,7 @@ export default function Index({ params }: any) {
                         <td className="px-4 py-2 text-sm text-yellow-600 font-semibold text-right"
                           style={{ fontFamily: 'monospace' }}
                         >
-                          {Number(order.totalKrwAmount).toLocaleString('ko-KR')}
+                          {Number(order.totalKrwAmount).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </td>
 
                         {/*
@@ -1686,7 +1686,7 @@ export default function Index({ params }: any) {
                         <td className="px-4 py-2 text-sm text-yellow-600 font-semibold text-right"
                           style={{ fontFamily: 'monospace' }}
                         >
-                          {Number(order.totalAgentFeeAmountKRW).toLocaleString('ko-KR')}
+                          {Number(order.totalAgentFeeAmountKRW).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </td>
 
 
@@ -1700,7 +1700,7 @@ export default function Index({ params }: any) {
                         <td className="px-4 py-2 text-sm text-yellow-600 font-semibold text-right"
                           style={{ fontFamily: 'monospace' }}
                         >
-                          {Number(order.totalFeeAmountKRW).toLocaleString('ko-KR')}
+                          {Number(order.totalFeeAmountKRW).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </td>
 
                         <td className="px-4 py-2 text-sm text-green-600 font-semibold text-right"
@@ -1711,7 +1711,7 @@ export default function Index({ params }: any) {
                         <td className="px-4 py-2 text-sm text-yellow-600 font-semibold text-right"
                           style={{ fontFamily: 'monospace' }}
                         >
-                          {Number(order.totalSettlementAmountKRW).toLocaleString('ko-KR')}
+                          {Number(order.totalSettlementAmountKRW).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </td>
                         */}
 
