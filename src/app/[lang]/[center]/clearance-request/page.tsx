@@ -4822,23 +4822,6 @@ const [tradeSummary, setTradeSummary] = useState({
                                       {Completed}
                                     </span>
 
-                                    {/* noew window open */}
-                                    {/* polyscan explorer */}
-                                    {/*
-                                    <a
-                                      href={`https://arbiscan.io/tx/${item.transactionHash}`}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-sm text-blue-500 underline"
-                                    >
-                                      스캔에서 거래내역 보기
-                                    </a>
-                                    */}
-
-
-
-
-
                                     <button
                                       className="text-sm text-blue-600 font-semibold
                                         border border-blue-600 rounded-lg p-2
@@ -4867,17 +4850,53 @@ const [tradeSummary, setTradeSummary] = useState({
                                           className="w-5 h-5"
                                         />
                                         <span className="text-sm">
-                                          USDT 전송내역
+                                          USDT 전송내역(가맹점)
                                         </span>
                                       </div>
                                     </button>
+
+
+                                    {item?.settlement
+                                    && item?.settlement?.txid
+                                    && item?.settlement?.txid !== '0x'
+                                    && (
+                                      <button
+                                        className="text-sm text-blue-600 font-semibold
+                                          border border-blue-600 rounded-lg p-2
+                                          bg-blue-100
+                                          w-full text-center
+                                          hover:bg-blue-200
+                                          cursor-pointer
+                                          transition-all duration-200 ease-in-out
+                                          hover:scale-105
+                                          hover:shadow-lg
+                                          hover:shadow-blue-500/50
+                                        "
+                                        onClick={() => {
+                                          window.open(
+                                            `https://arbiscan.io/tx/${item.settlement.txid}`,
+                                            '_blank'
+                                          );
+                                        }}
+                                      >
+                                        <div className="flex flex-row gap-2 items-center justify-center">
+                                          <Image
+                                            src="/logo-arbitrum.png"
+                                            alt="Polygon"
+                                            width={20}
+                                            height={20}
+                                            className="w-5 h-5"
+                                          />
+                                          <span className="text-sm">
+                                            USDT 전송내역(회원)
+                                          </span>
+                                        </div>
+                                      </button>
+                                    )}
                       
 
                                   </div>
                                 )}
-
-
-
 
 
                                 {item.status === 'completed' && (

@@ -3867,8 +3867,16 @@ const [tradeSummary, setTradeSummary] = useState({
                         }}
                       >
                         <tr>
-                          <th className="p-2">{TID}</th>
-                          <th className="p-2">{Buy_Order_Opened}</th>
+                          <th className="p-2">
+                            <div className="flex flex-col items-center">
+                              <span className="text-sm">
+                                #{TID}
+                              </span>
+                              <span className="text-sm">
+                                신청시간
+                              </span>
+                            </div>
+                          </th>
 
                           <th className="p-2">{Buyer}</th>
 
@@ -3893,6 +3901,7 @@ const [tradeSummary, setTradeSummary] = useState({
                           <th className="p-2">{Seller} / {Status}</th>
                           <th className="p-2">거래취소</th>
                           <th className="p-2">거래완료</th>
+                          <th className="p-2">출금상태</th>
                         </tr>
                       </thead>
 
@@ -3914,55 +3923,53 @@ const [tradeSummary, setTradeSummary] = useState({
                           `}>
                           
 
-
-                            <td className="text-zinc-500 p-2">
-                              {
-                                "#" + item.tradeId
-                              }
-                            </td>
-
-
                             <td className="p-2">
                               <div className="flex flex-col items-center gap-2">
+                                <span className="text-sm text-zinc-500">
+                                  #{item.tradeId}
+                                </span>
+                                <div className="flex flex-col items-center gap-2">
 
-                                {
-                                  new Date(item.createdAt).toLocaleDateString(params.lang, {
-                                    year: 'numeric',
-                                    month: '2-digit',
-                                    day: '2-digit',
-                                  }) + ' ' +
-                                  new Date(item.createdAt).toLocaleTimeString(params.lang, {
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                    second: '2-digit',
-                                  })
-                                }
+                                  {
+                                    new Date(item.createdAt).toLocaleDateString(params.lang, {
+                                      year: 'numeric',
+                                      month: '2-digit',
+                                      day: '2-digit',
+                                    }) + ' ' +
+                                    new Date(item.createdAt).toLocaleTimeString(params.lang, {
+                                      hour: '2-digit',
+                                      minute: '2-digit',
+                                      second: '2-digit',
+                                    })
+                                  }
 
-                                <div className="text-sm text-zinc-500">
-                                  {params.lang === 'ko' ? (
-                                    <p>{
-                                      new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 ? (
-                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000) + ' ' + seconds_ago
-                                      ) :
-                                      new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 * 60 ? (
-                                      ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
-                                      ) : (
-                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
-                                      )
-                                    }</p>
-                                  ) : (
-                                    <p>{
-                                      new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 ? (
-                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000) + ' ' + seconds_ago
-                                      ) :
-                                      new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 * 60 ? (
-                                      ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
-                                      ) : (
-                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
-                                      )
-                                    }</p>
-                                  )}
+                                  <div className="text-sm text-zinc-500">
+                                    {params.lang === 'ko' ? (
+                                      <p>{
+                                        new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 ? (
+                                          ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000) + ' ' + seconds_ago
+                                        ) :
+                                        new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 * 60 ? (
+                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
+                                        ) : (
+                                          ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
+                                        )
+                                      }</p>
+                                    ) : (
+                                      <p>{
+                                        new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 ? (
+                                          ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000) + ' ' + seconds_ago
+                                        ) :
+                                        new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 * 60 ? (
+                                        ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
+                                        ) : (
+                                          ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
+                                        )
+                                      }</p>
+                                    )}
+                                  </div>
                                 </div>
+
                               </div>
                             </td>
                             
@@ -3983,7 +3990,19 @@ const [tradeSummary, setTradeSummary] = useState({
                                   }}
                                 />
                                 */}
-                                <div className="flex flex-row gap-2 items-center justify-center">
+                                <div className="flex flex-col gap-2 items-center justify-center">
+                                  <div className="flex flex-row items-center gap-2">
+                                    <Image
+                                      src="/icon-shield.png"
+                                      alt="Shield"
+                                      width={20}
+                                      height={20}
+                                      className="w-5 h-5"
+                                    />
+                                    <span className="text-sm font-semibold text-zinc-800">
+                                      {item.walletAddress.slice(0, 6) + '...' + item.walletAddress.slice(-4)}
+                                    </span>
+                                  </div>
 
                                   <div className="text-sm text-zinc-500">
                                     {
@@ -4194,38 +4213,95 @@ const [tradeSummary, setTradeSummary] = useState({
 
                                 {/* if status is accepted, show payment request button */}
                                 {item.status === 'paymentConfirmed' && (
-                                  <div className="flex flex-row gap-2 items-center justify-center">
+                                  <div className="flex flex-col gap-2 items-center justify-center">
+
+                                    <div className="text-sm text-zinc-500">
+                                      {
+                                        ///item.store.sellerWalletAddress.slice(0, 6) + '...' + item.store.sellerWalletAddress.slice(-4)
+                                        item.seller?.walletAddress.slice(0, 6) + '...' + item.seller?.walletAddress.slice(-4)
+                                      }
+                                    </div>
 
 
-                                    <span className="text-sm font-semibold text-yellow-500">
+                                    <span className="text-lg font-semibold text-yellow-600">
                                       {Completed}
                                     </span>
 
                                     <button
+                                      className="text-sm text-blue-600 font-semibold
+                                        border border-blue-600 rounded-lg p-2
+                                        bg-blue-100
+                                        w-full text-center
+                                        hover:bg-blue-200
+                                        cursor-pointer
+                                        transition-all duration-200 ease-in-out
+                                        hover:scale-105
+                                        hover:shadow-lg
+                                        hover:shadow-blue-500/50
+                                      "
                                       onClick={() => {
-                                        window.open(`https://arbiscan.io/tx/${item.transactionHash}`, '_blank');
+                                        window.open(
+                                          `https://arbiscan.io/tx/${item.transactionHash}`,
+                                          '_blank'
+                                        );
                                       }}
-                                      className="flex flex-row gap-1 items-center justify-center
-                                      text-sm text-blue-500
-                                      border border-blue-500
-                                      bg-blue-100 hover:bg-blue-200
-                                      rounded-md px-2 py-1"
                                     >
-                                      <Image
-                                        src="/logo-arbitrum.png"
-                                        alt="Arbitrum"
-                                        width={20}
-                                        height={20}
-                                        className="w-4 h-4"
-                                      />
-                                      USDT 전송내역
+                                      <div className="flex flex-row gap-2 items-center justify-center">
+                                        <Image
+                                          src="/logo-arbitrum.png"
+                                          alt="Polygon"
+                                          width={20}
+                                          height={20}
+                                          className="w-5 h-5"
+                                        />
+                                        <span className="text-sm">
+                                          USDT 전송내역(가맹점)
+                                        </span>
+                                      </div>
                                     </button>
+
+
+                                    {item?.settlement
+                                    && item?.settlement?.txid
+                                    && item?.settlement?.txid !== '0x'
+                                    && (
+                                      <button
+                                        className="text-sm text-blue-600 font-semibold
+                                          border border-blue-600 rounded-lg p-2
+                                          bg-blue-100
+                                          w-full text-center
+                                          hover:bg-blue-200
+                                          cursor-pointer
+                                          transition-all duration-200 ease-in-out
+                                          hover:scale-105
+                                          hover:shadow-lg
+                                          hover:shadow-blue-500/50
+                                        "
+                                        onClick={() => {
+                                          window.open(
+                                            `https://arbiscan.io/tx/${item.settlement.txid}`,
+                                            '_blank'
+                                          );
+                                        }}
+                                      >
+                                        <div className="flex flex-row gap-2 items-center justify-center">
+                                          <Image
+                                            src="/logo-arbitrum.png"
+                                            alt="Polygon"
+                                            width={20}
+                                            height={20}
+                                            className="w-5 h-5"
+                                          />
+                                          <span className="text-sm">
+                                            USDT 전송내역(회원)
+                                          </span>
+                                        </div>
+                                      </button>
+                                    )}
+                      
 
                                   </div>
                                 )}
-
-
-
 
 
                                 {item.status === 'completed' && (
@@ -4583,6 +4659,33 @@ const [tradeSummary, setTradeSummary] = useState({
                               </div>
 
 
+                            </td>
+
+
+                            {/* 출금상태: buyer.depositCompleted */}
+                            <td className="p-2">
+
+                              {item.status !== 'cancelled' && (
+                                <>   
+                                  {item?.buyer?.depositCompleted === false
+                                  ? (
+                                    <div className="text-sm text-red-600
+                                    flex flex-row items-center gap-2
+                                    border border-red-600
+                                    rounded-md px-2 py-1">
+                                      출금대기중
+                                    </div>
+                                  ) : (
+                                    <div className="text-sm text-green-600
+                                    flex flex-row items-center gap-2
+                                    border border-green-600
+                                    rounded-md px-2 py-1">
+                                      출금완료
+                                    </div>
+                                  )}
+                                </>
+                              )}
+                            
                             </td>
 
 
