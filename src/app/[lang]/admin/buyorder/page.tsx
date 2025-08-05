@@ -4658,11 +4658,15 @@ const fetchBuyOrders = async () => {
                               </button>
 
 
-                              {/*
-                              <div className="text-sm text-white">
-                                {item.seller?.nickname}
-                              </div>
-                              */}
+                              {/* new window */}
+                              <a
+                                href={`${paymentUrl}/ko/${item?.storecode}/pay-usdt-reverse/${item?._id}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-sm text-blue-600 font-semibold underline"
+                              >
+                                새창
+                              </a>
                               
                               <div className="text-sm text-zinc-500">
 
@@ -7536,7 +7540,7 @@ const UserPaymentPage = (
         
         // clipboard copy does not work in iframe
 
-        
+
           
         width="400px"
         height="500px"
