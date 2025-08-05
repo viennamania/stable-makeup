@@ -7504,7 +7504,7 @@ const UserPaymentPage = (
       
       {/* iframe */}
       <iframe
-        src={`${paymentUrl}/kr/${selectedItem?.storecode}/pay-usdt-reverse/${selectedItem?._id}`}
+        src={`${paymentUrl}/ko/${selectedItem?.storecode}/pay-usdt-reverse/${selectedItem?._id}`}
 
         
           

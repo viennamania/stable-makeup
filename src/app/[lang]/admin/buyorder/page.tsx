@@ -4736,11 +4736,15 @@ const fetchBuyOrders = async () => {
                               </button>
 
 
-                              {/*
-                              <div className="text-sm text-white">
-                                {item.seller?.nickname}
-                              </div>
-                              */}
+                              {/* new window */}
+                              <a
+                                href={`${paymentUrl}/ko/${item?.storecode}/pay-usdt-reverse/${item?._id}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-sm text-blue-600 font-semibold underline"
+                              >
+                                새창
+                              </a>
 
                               <div className="text-sm text-zinc-500">
                                 {/* from now */}
@@ -4795,11 +4799,15 @@ const fetchBuyOrders = async () => {
 
 
 
-                                {/*
-                                <span className="text-sm text-white">
-                                  {item.seller?.nickname}
-                                </span>
-                                */}
+                                {/* new window */}
+                                <a
+                                  href={`${paymentUrl}/ko/${item?.storecode}/pay-usdt-reverse/${item?._id}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-sm text-blue-600 font-semibold underline"
+                                >
+                                  새창
+                                </a>
 
                                 <div className="text-sm text-zinc-500">
                                   {
@@ -7521,8 +7529,12 @@ const UserPaymentPage = (
       <h1 className="text-2xl font-semibold">거래정보</h1>
       
       {/* iframe */}
+
       <iframe
-        src={`${paymentUrl}/kr/${selectedItem?.storecode}/pay-usdt-reverse/${selectedItem?._id}`}
+        src={`${paymentUrl}/ko/${selectedItem?.storecode}/pay-usdt-reverse/${selectedItem?._id}`}
+
+        
+        // clipboard copy does not work in iframe
 
         
           

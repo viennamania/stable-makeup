@@ -3331,7 +3331,7 @@ const UserHomePage = (
       
       {/* iframe */}
       <iframe
-        src={`${paymentUrl}/kr/${selectedItem?.storecode}/payment?`
+        src={`${paymentUrl}/ko/${selectedItem?.storecode}/payment?`
           + 'storeUser=' + selectedItem?.nickname
           + '&depositBankName=' + selectedItem?.buyer?.depositBankName
           + '&depositBankAccountNumber=' + selectedItem?.buyer?.depositBankAccountNumber
