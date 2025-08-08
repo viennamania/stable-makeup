@@ -7418,7 +7418,7 @@ export async function getEscrowBalanceByStorecode(
         $group: {
           _id: null,
           totalFeeAmount: { $sum: { $ifNull: ['$$ROOT.settlement.feeAmount', 0] } },
-          totalAgentFeeAmount: { $sum: { $ifNull: ['$$ROOT.settlement.agentFeeAmount', 0] } },
+          totalAgentFeeAmount: { $sum: { $ifNull: ['$$ROOT.settlement.dealerAmount', 0] } },
         },
       },
     ]).toArray();
@@ -7482,7 +7482,7 @@ export async function getEscrowBalanceByStorecode(
         $group: {
           _id: null,
           totalFeeAmount: { $sum: { $ifNull: ['$$ROOT.settlement.feeAmount', 0] } },
-          totalAgentFeeAmount: { $sum: { $ifNull: ['$$ROOT.settlement.agentFeeAmount', 0] } },
+          totalAgentFeeAmount: { $sum: { $ifNull: ['$$ROOT.settlement.dealerAmount', 0] } },
         },
       },
     ]).toArray();
