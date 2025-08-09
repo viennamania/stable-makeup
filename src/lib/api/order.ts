@@ -6901,14 +6901,16 @@ export async function updateBuyOrderSettlement(
       // totalSettlementCount is count of all buyorders with settlement and storecode
       const totalSettlementCount = await collectionBuyorders.countDocuments({
           storecode: storecode,
-          settlement: {$exists: true}
+          settlement: {$exists: true},
+          privateSale: { $ne: true }, // exclude privateSale orders
       });
       console.log("totalSettlementCount", totalSettlementCount);
       const totalSettlementAmountResult = await collectionBuyorders.aggregate([
           {
               $match: {
                   storecode: storecode,
-                  settlement: {$exists: true}
+                  settlement: {$exists: true},
+                  privateSale: { $ne: true }, // exclude privateSale orders
               }
           },
           {
@@ -6987,14 +6989,16 @@ export async function updateBuyOrderSettlement(
       // totalSettlementCount is count of all buyorders with settlement and agentcode
       const totalSettlementCount = await collectionBuyorders.countDocuments({
         agentcode: agentcode,
-        settlement: { $exists: true }
+        settlement: { $exists: true },
+        privateSale: { $ne: true }, // exclude privateSale orders
       });
       console.log("updateBuyOrderSettlement totalSettlementCount", totalSettlementCount);
       const totalSettlementAmountResult = await collectionBuyorders.aggregate([
         {
           $match: {
             agentcode: agentcode,
-            settlement: { $exists: true }
+            settlement: { $exists: true },
+            privateSale: { $ne: true }, // exclude privateSale orders
           }
         },
         {
