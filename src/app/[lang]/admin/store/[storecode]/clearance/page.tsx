@@ -3171,7 +3171,7 @@ export default function Index({ params }: any) {
 
                                 {item.status === 'paymentRequested' && (
 
-                                  <div className="flex flex-row gap-1">
+                                  <div className="flex flex-row gap-2 items-center">
 
                                     <span className="text-lg font-semibold text-yellow-600">
                                       결제요청
