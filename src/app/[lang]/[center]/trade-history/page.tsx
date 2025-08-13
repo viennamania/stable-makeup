@@ -3566,7 +3566,10 @@ const fetchBuyOrders = async () => {
                         style={{ fontFamily: 'monospace' }}
                       >
                       
-                        {tradeSummary.totalKrwAmount?.toLocaleString()}
+                        {
+                          Number(tradeSummary.totalKrwAmount)
+                          .toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        }
                       </span>
                       <span className="text-sm text-zinc-500">
                         원
