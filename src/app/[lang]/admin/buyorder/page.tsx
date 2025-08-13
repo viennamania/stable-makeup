@@ -82,7 +82,10 @@ import { getAllUsersForSettlementOfStore } from "@/lib/api/user";
 
 
 import { paymentUrl } from "../../../config/payment";
-import { send } from "process";
+
+
+
+
 
 
 interface BuyOrder {
@@ -4004,11 +4007,11 @@ const fetchBuyOrders = async () => {
                       {TID}
                     </th>
 
-                    <th className="p-2">
+                    <th className="p-2 text-left">
                       구매자 아이디<br/>입금자<br/>USDT통장
                     </th>
                     
-                    <th className="p-2">
+                    <th className="p-2 text-right">
                       구매금액(원)<br/>{Buy_Amount}(USDT)<br/>단가(환율)
                     </th>
                     {/*
@@ -4016,9 +4019,9 @@ const fetchBuyOrders = async () => {
                     */}
 
                     <th className="p-2">
-                      <div className="flex flex-col items-center justify-center gap-2">
+                      <div className="flex flex-col items-start justify-start gap-2">
 
-                        <div className="flex flex-row items-center justify-center gap-2">
+                        <div className="w-full flex flex-row items-start justify-start gap-2">
                           <span>자동매칭</span>
                           <Image
                             src="/icon-matching.png"
@@ -4051,7 +4054,7 @@ const fetchBuyOrders = async () => {
 
                         </div>
 
-                        <div className="w-full flex flex-row items-center justify-center gap-2">
+                        <div className="w-full flex flex-row items-start justify-start gap-2">
                             <span className="text-sm text-zinc-50 font-semibold">
                               판매자
                             </span>
@@ -4497,8 +4500,8 @@ const fetchBuyOrders = async () => {
                       <td className="p-2">
 
                         <div className="
-                          w-52
-                          flex flex-row items-center justify-center gap-2">
+                          w-48
+                          flex flex-row items-start justify-start gap-2">
                           {/* status */}
                           {item.status === 'ordered' && (
                             <div className="flex flex-col gap-2 items-center justify-center">
@@ -4566,7 +4569,7 @@ const fetchBuyOrders = async () => {
                             </span>
                           ) : (
 
-                            <div className="flex flex-col gap-2 items-center justify-center">
+                            <div className="flex flex-col gap-2 items-start justify-start">
 
                               <div className="flex flex-row items-center justify-center gap-2">
                                 <Image
@@ -4601,7 +4604,7 @@ const fetchBuyOrders = async () => {
                               </div>
 
                               {/* wallet address */}
-                              <div className="flex flex-row items-center justify-center gap-2">
+                              <div className="flex flex-row items-start justify-start gap-2">
                                 <button
                                   className="text-sm text-blue-600 font-semibold underline
                                   "
@@ -4921,7 +4924,7 @@ const fetchBuyOrders = async () => {
                         {item?.status === 'paymentConfirmed' && (
                           <div className="
                             w-32
-                            flex flex-col gap-2 items-center justify-center">
+                            flex flex-col gap-2 items-end justify-center">
                             
                             {item?.autoConfirmPayment === true ? (
                             
@@ -5870,38 +5873,103 @@ const fetchBuyOrders = async () => {
                         {item?.transactionHash
                         && item?.transactionHash !== '0x'
                         && (
-                          <button
-                            className="text-sm text-blue-600 font-semibold
-                              border border-blue-600 rounded-lg p-2
-                              bg-blue-100
-                              w-full text-center
-                              hover:bg-blue-200
-                              cursor-pointer
-                              transition-all duration-200 ease-in-out
-                              hover:scale-105
-                              hover:shadow-lg
-                              hover:shadow-blue-500/50
-                            "
-                            onClick={() => {
-                              window.open(
-                                `https://arbiscan.io/tx/${item.transactionHash}`,
-                                '_blank'
-                              );
-                            }}
-                          >
-                            <div className="flex flex-row gap-2 items-center justify-center">
+                          <>
+                          {/*
+                            <button
+                              className="
+                                w-40 
+                                text-sm text-blue-600 font-semibold
+                                border border-blue-600 rounded-lg p-2
+                                bg-blue-100
+                                text-center
+                                hover:bg-blue-200
+                                cursor-pointer
+                                transition-all duration-200 ease-in-out
+                                hover:scale-105
+                                hover:shadow-lg
+                                hover:shadow-blue-500/50
+                              "
+                              onClick={() => {
+                                window.open(
+                                  `https://arbiscan.io/tx/${item.transactionHash}`,
+                                  '_blank'
+                                );
+                              }}
+                            >
+                              <div className="flex flex-row gap-2 items-center justify-center">
+                                <Image
+                                  src="/logo-arbitrum.png"
+                                  alt="Polygon"
+                                  width={20}
+                                  height={20}
+                                  className="w-5 h-5"
+                                />
+                                <span className="text-sm">
+                                  USDT 전송내역
+                                </span>
+                              </div>
+                            </button>
+                            */}
+
+
+
+                            <button
+                              className="
+                                flex flex-row gap-2 items-center justify-between
+                                text-sm text-blue-600 font-semibold
+                                border border-blue-600 rounded-lg p-2
+                                bg-blue-100
+                                w-full text-center
+                                hover:bg-blue-200
+                                cursor-pointer
+                                transition-all duration-200 ease-in-out
+                                hover:scale-105
+                                hover:shadow-lg
+                                hover:shadow-blue-500/50
+                              "
+                              onClick={() => {
+                                let url = '';
+                                  url = `https://arbiscan.io/tx/${item.transactionHash}`;              
+                                window.open(url, '_blank');
+                              }}
+                            >
+                              <div className="flex flex-col gap-2 items-start justify-start ml-2">
+                                <div className="flex flex-col gap-1 items-start justify-start">
+                                  <span className="text-sm">
+                                    판매코인(USDT)
+                                  </span>
+                                  <div className="flex flex-row gap-1 items-center justify-start">
+                                    <Image
+                                      src={`/icon-tether.png`}
+                                      alt="Tether Logo"
+                                      width={20}
+                                      height={20}
+                                      className="w-5 h-5"
+                                    />
+                                    <span className="text-sm text-green-600 font-semibold"
+                                      style={{
+                                        fontFamily: 'monospace',
+                                      }}>
+                                      {item?.usdtAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    </span>
+                                  </div>
+                                  <span className="text-sm text-zinc-500">
+                                    전송내역
+                                  </span>
+                                </div>
+                              </div>
+                              {/* chain logo */}
                               <Image
-                                src="/logo-arbitrum.png"
-                                alt="Polygon"
+                                src={`/logo-chain-arbitrum.png`}
+                                alt="Arbitrum Logo"
                                 width={20}
                                 height={20}
                                 className="w-5 h-5"
                               />
-                              <span className="text-sm">
-                                USDT 전송내역
-                              </span>
-                            </div>
-                          </button>
+                            </button>
+
+
+                          </>
                         )}
 
 
@@ -6135,19 +6203,20 @@ const fetchBuyOrders = async () => {
 
 
 
-                          <div className="flex flex-row gap-2 items-between justify-center">
+                          <div className="w-full flex flex-row gap-2 items-between justify-center">
 
                             {item?.settlement && item?.settlement?.settlementAmount && (
-                              <div className="flex flex-col gap-2 items-end justify-center">
+                              <div className="w-full flex flex-col gap-2 items-end justify-center">
 
-                                <div className="w-full flex flex-row gap-2 items-center justify-center">
+                                <div className="flex flex-row gap-2 items-center justify-center">
                                   <span className="
-                                  w-7   
-                                  text-sm text-zinc-500">
-                                    가맹
+                                  w-20 
+                                  text-sm text-zinc-500 text-right">
+                                    가맹점 결제
                                   </span>
                                   <span className="
-                                  w-12 text-end
+                                  w-12 
+                                  text-end
                                   text-sm text-zinc-500"
                                     style={{
                                       fontFamily: 'monospace',
@@ -6159,14 +6228,15 @@ const fetchBuyOrders = async () => {
                                   </span>
                                 </div>
 
-                                <div className="w-full flex flex-row gap-2 items-center justify-center">
+                                <div className="flex flex-row gap-2 items-center justify-center">
                                   <span className="
-                                  w-7
-                                  text-sm text-zinc-500">
-                                    AG
+                                  w-20
+                                  text-sm text-zinc-500 text-right">
+                                    AG 정산
                                   </span>
                                   <span className="
-                                  w-12 text-end
+                                  w-12
+                                  text-end
                                   text-sm text-zinc-500"
                                     style={{
                                       fontFamily: 'monospace',
@@ -6175,15 +6245,16 @@ const fetchBuyOrders = async () => {
                                   </span>
                                 </div>
 
-                                <div className="w-full flex flex-row gap-2 items-center justify-center">
+                                <div className="flex flex-row gap-2 items-center justify-center">
                                   <span className="
-                                  w-7
-                                  text-sm text-zinc-500">
-                                    PG
+                                  w-20
+                                  text-sm text-zinc-500 text-right">
+                                    PG 정산
                                   </span>
                                   <span className="
-                                  w-12  text-end
-                                  text-sm text-zinc-500"
+                                    w-12
+                                    text-end
+                                    text-sm text-zinc-500"
                                     style={{
                                       fontFamily: 'monospace',
                                     }}>
@@ -6198,73 +6269,113 @@ const fetchBuyOrders = async () => {
 
                             {item?.settlement && item?.settlement?.settlementAmount ? (
 
+                              <div className="flex flex-row gap-2 items-center justify-center">
 
-                              <button
-                                className="
-                                w-48
-                                flex flex-col gap-2 items-center justify-center
-                                bg-purple-500 text-white px-2 py-1 rounded-md hover:bg-purple-600
-                                text-sm
-                                transition duration-300 ease-in-out
-                                transform hover:scale-105
-                                hover:shadow-lg
-                                hover:shadow-purple-500/50
-                                hover:cursor-pointer
-                                hover:transition-transform
-                                hover:duration-300
-                                hover:ease-in-out
+                                <button
+                                  className="
+                                  w-40      
+                                  flex flex-col gap-2 items-center justify-center
+                                  bg-purple-500 text-white px-2 py-1 rounded-md hover:bg-purple-600
+                                  text-sm
+                                  transition duration-300 ease-in-out
+                                  transform hover:scale-105
+                                  hover:shadow-lg
+                                  hover:shadow-purple-500/50
+                                  hover:cursor-pointer
+                                  hover:transition-transform
+                                  hover:duration-300
+                                  hover:ease-in-out
 
-                                "
+                                  "
 
-                                onClick={() => {
-                                  if (item.settlement.txid === "0x" || !item.settlement.txid) {
-                                    alert("트랙젝션 해시가 없습니다.");
-                                    return;
-                                  } else {
-                                    window.open(
-                                      `https://arbiscan.io/tx/${item.settlement.txid}`,
-                                      '_blank'
-                                    );
-                                  }
-                                }}
-                              >
-
-
-                                <div className="flex flex-col gap-2 items-end justify-center"
-                                  style={{
-                                    fontFamily: 'monospace',
+                                  onClick={() => {
+                                    if (item.settlement.txid === "0x" || !item.settlement.txid) {
+                                      alert("트랙젝션 해시가 없습니다.");
+                                      return;
+                                    } else {
+                                      window.open(
+                                        `https://arbiscan.io/tx/${item.settlement.txid}`,
+                                        '_blank'
+                                      );
+                                    }
                                   }}
                                 >
-            
-                                  <span>
-                                    {item?.settlement?.settlementAmount?.toLocaleString()}
-                                    {' '}
-                                    {
-                                      item?.settlement?.settlementWalletAddress &&
-                                    item?.settlement?.settlementWalletAddress?.slice(0, 5) + '...'}
-                                  </span>
-                                  <span>
-                                    {
-                                      item?.settlement?.agentFeeAmount ?
-                                      item?.settlement?.agentFeeAmount?.toLocaleString()
-                                      : '0'
-                                    }
-                                    {' '}
-                                    {
-                                      item?.settlement?.agentFeeWalletAddress &&
-                                    item?.settlement?.agentFeeWalletAddress?.slice(0, 5) + '...'}
-                                  </span>
-                                  <span>
-                                    {item?.settlement?.feeAmount?.toLocaleString()}
-                                    {' '}
-                                    {
-                                      item?.settlement?.feeWalletAddress &&
-                                    item?.settlement?.feeWalletAddress?.slice(0, 5) + '...'}
-                                  </span>
 
-                                </div>
 
-                              </button>
+                                  <div className="flex flex-col gap-2 items-end justify-center"
+                                    style={{
+                                      fontFamily: 'monospace',
+                                    }}
+                                  >
+              
+                                    <span>
+                                      {item?.settlement?.settlementAmount?.toLocaleString()}
+                                      {' '}
+                                      {
+                                        item?.settlement?.settlementWalletAddress &&
+                                      item?.settlement?.settlementWalletAddress?.slice(0, 5) + '...'}
+                                    </span>
+                                    <span>
+                                      {
+                                        item?.settlement?.agentFeeAmount ?
+                                        item?.settlement?.agentFeeAmount?.toLocaleString()
+                                        : '0'
+                                      }
+                                      {' '}
+                                      {
+                                        item?.settlement?.agentFeeWalletAddress &&
+                                      item?.settlement?.agentFeeWalletAddress?.slice(0, 5) + '...'}
+                                    </span>
+                                    <span>
+                                      {item?.settlement?.feeAmount?.toLocaleString()}
+                                      {' '}
+                                      {
+                                        item?.settlement?.feeWalletAddress &&
+                                      item?.settlement?.feeWalletAddress?.slice(0, 5) + '...'}
+                                    </span>
+
+                                  </div>
+
+                                </button>
+
+
+
+                                  
+                                  <div className="
+                                  w-24 
+                                  flex flex-col gap-2 items-end justify-center"
+                                  >
+                                    <div className="flex flex-col gap-1 items-center justify-center">
+                                      <Image
+                                        src="/icon-user.png"
+                                        alt="User Icon"
+                                        width={20}
+                                        height={20}
+                                        className="w-5 h-5"
+                                      />
+                                      <span className="text-lg font-semibold text-blue-600">
+                                        {item.nickname.slice(0, 6)}...
+                                      </span>
+                                    </div>
+                                    <span className="text-sm text-zinc-500">
+                                      충전금액(원)
+                                    </span>
+                                    <span className="text-sm text-blue-600 font-semibold"
+                                      style={{
+                                        fontFamily: 'monospace',
+                                      }}
+                                    >
+                                      {Number(item.krwAmount).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    </span>
+                                  </div>
+                                  
+
+
+
+
+
+
+                              </div>
 
                             ) : (
                               <>
