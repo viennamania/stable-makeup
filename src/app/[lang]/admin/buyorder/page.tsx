@@ -4002,9 +4002,17 @@ const fetchBuyOrders = async () => {
                   <tr>
 
                     <th className="p-2">
-                      가맹점
-                      <br/>
-                      {TID}
+                      <div className="flex flex-col items-start justify-start gap-1">
+                        <span className="text-sm text-zinc-50 font-semibold">
+                          가맹점
+                        </span>
+                        <span className="text-sm text-zinc-50 font-semibold">
+                          {TID}
+                        </span>
+                        <span className="text-sm text-zinc-50 font-semibold">
+                          시간
+                        </span>
+                      </div>
                     </th>
 
                     <th className="p-2">
@@ -4013,10 +4021,10 @@ const fetchBuyOrders = async () => {
                           구매자 아이디
                         </span>
                         <span className="text-sm text-zinc-50 font-semibold">
-                          입금자
+                          USDT통장
                         </span>
                         <span className="text-sm text-zinc-50 font-semibold">
-                          USDT통장
+                          입금자
                         </span>
                       </div>
                     </th>
@@ -4088,7 +4096,7 @@ const fetchBuyOrders = async () => {
 
 
                     <th className="p-2">
-                      <div className="flex flex-col items-center justify-center gap-2">
+                      <div className="flex flex-col items-end justify-center gap-2">
 
                         <div className="flex flex-row items-center justify-center gap-2">
                           <span>
@@ -4114,7 +4122,7 @@ const fetchBuyOrders = async () => {
 
                         </div>
 
-                        <div className="w-full flex flex-row items-center justify-center gap-2">
+                        <div className="flex flex-col items-center justify-center gap-1">
                           <span className="text-sm text-zinc-50 font-semibold">
                             입금통장
                           </span>
@@ -4385,6 +4393,20 @@ const fetchBuyOrders = async () => {
                               </span>
                             </div>
 
+                            {/* wallet address */}
+                            <div className="flex flex-row items-center gap-2">
+                              <button
+                                className="text-sm text-blue-600 font-semibold underline
+                                "
+                                onClick={() => {
+                                  navigator.clipboard.writeText(item.walletAddress);
+                                  toast.success(Copied_Wallet_Address);
+                                }}
+                              >
+                                {item.walletAddress.substring(0, 6)}...{item.walletAddress.substring(item.walletAddress.length - 4)}
+                              </button>
+                            </div>
+
                             <div className="flex flex-row items-center gap-2">
                               <span className="text-lg text-yellow-600 font-bold">
                                 {
@@ -4410,22 +4432,8 @@ const fetchBuyOrders = async () => {
                               </span>
                             </div>
 
-
                           </div>
 
-                          {/* wallet address */}
-                          <div className="flex flex-row items-center gap-2">
-                            <button
-                              className="text-sm text-blue-600 font-semibold underline
-                              "
-                              onClick={() => {
-                                navigator.clipboard.writeText(item.walletAddress);
-                                toast.success(Copied_Wallet_Address);
-                              }}
-                            >
-                              {item.walletAddress.substring(0, 6)}...{item.walletAddress.substring(item.walletAddress.length - 4)}
-                            </button>
-                          </div>
                           
                           {/* userStats */}
                           {/* userStats.totalPaymentConfirmedCount */}
@@ -4629,7 +4637,8 @@ const fetchBuyOrders = async () => {
                               </span>
                               */}
 
-                              <div className="flex flex-row items-center justify-center gap-2">
+                              <div className="h-14 
+                              flex flex-row items-center justify-center gap-2">
                                 <Image
                                   src="/icon-matching-completed.png"
                                   alt="Matching Completed"
@@ -4641,8 +4650,6 @@ const fetchBuyOrders = async () => {
                                   자동매칭
                                 </span>
                               </div>
-
-
 
                             </div>
                           )}
@@ -4991,6 +4998,37 @@ const fetchBuyOrders = async () => {
                               </span>
                             </div>
 
+
+
+                            <span className="text-sm text-purple-600 font-semibold">
+                              {params.lang === 'ko' ? (
+                                <p>{
+                                  new Date(item.paymentConfirmedAt).getTime() - new Date(item.paymentRequestedAt).getTime() < 1000 * 60 ? (
+                                    ' ' + Math.floor((new Date(item.paymentConfirmedAt).getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000) + ' ' + '초 경과'
+                                  ) :
+                                  new Date(item.paymentConfirmedAt).getTime() - new Date(item.paymentRequestedAt).getTime() < 1000 * 60 * 60 ? (
+                                  ' ' + Math.floor((new Date(item.paymentConfirmedAt).getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000 / 60) + ' ' + '분 경과'
+                                  ) : (
+                                    ' ' + Math.floor((new Date(item.paymentConfirmedAt).getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000 / 60 / 60) + ' ' + '시간 경과'
+                                  )
+                                }</p>
+                              ) : (
+                                <p>{
+                                  new Date(item.paymentConfirmedAt).getTime() - new Date(item.paymentRequestedAt).getTime() < 1000 * 60 ? (
+                                    ' ' + Math.floor((new Date(item.paymentConfirmedAt).getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000) + ' ' + '초 경과'
+                                  ) :
+                                  new Date(item.paymentConfirmedAt).getTime() - new Date(item.paymentRequestedAt).getTime() < 1000 * 60 * 60 ? (
+                                  ' ' + Math.floor((new Date(item.paymentConfirmedAt).getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000 / 60) + ' ' + '분 경과'
+                                  ) : (
+                                    ' ' + Math.floor((new Date(item.paymentConfirmedAt).getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000 / 60 / 60) + ' ' + '시간 경과'
+                                  )
+                                }</p>
+                              )}
+                            </span>
+
+
+
+
                           </div>
                         )}
 
@@ -5032,6 +5070,35 @@ const fetchBuyOrders = async () => {
                             </div>
 
 
+                            <span className="text-sm text-purple-600 font-semibold">
+                              {params.lang === 'ko' ? (
+                                <p>{
+                                  new Date().getTime() - new Date(item.paymentRequestedAt).getTime() < 1000 * 60 ? (
+                                    ' ' + Math.floor((new Date().getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000) + ' ' + '초 경과'
+                                  ) :
+                                  new Date().getTime() - new Date(item.paymentRequestedAt).getTime() < 1000 * 60 * 60 ? (
+                                  ' ' + Math.floor((new Date().getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000 / 60) + ' ' + '분 경과'
+                                  ) : (
+                                    ' ' + Math.floor((new Date().getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000 / 60 / 60) + ' ' + '시간 경과'
+                                  )
+                                }</p>
+                              ) : (
+                                <p>{
+                                  new Date().getTime() - new Date(item.paymentRequestedAt).getTime() < 1000 * 60 ? (
+                                    ' ' + Math.floor((new Date().getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000) + ' ' + '초 경과'
+                                  ) :
+                                  new Date().getTime() - new Date(item.paymentRequestedAt).getTime() < 1000 * 60 * 60 ? (
+                                  ' ' + Math.floor((new Date().getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000 / 60) + ' ' + '분 경과'
+                                  ) : (
+                                    ' ' + Math.floor((new Date().getTime() - new Date(item.paymentRequestedAt).getTime()) / 1000 / 60 / 60) + ' ' + '시간 경과'
+                                  )
+                                }</p>
+                              )}
+                            </span>
+
+
+
+
                           </div>
 
                         )}
@@ -5040,7 +5107,7 @@ const fetchBuyOrders = async () => {
 
 
                       <td className="p-2">
-                        <div className="w-full
+                        <div className="w-64 
                           flex flex-col gap-2 items-center justify-center">
 
 
@@ -5176,31 +5243,25 @@ const fetchBuyOrders = async () => {
 
                           <div className="flex flex-col gap-2 items-center justify-center">
 
-                            {/*
-                            <div className="flex flex-col xl:flex-row gap-2 items-center justify-center">
-                              <span className="text-sm text-zinc-500 font-semibold">
-                                {item.store?.bankInfo?.bankName}
-                              </span>
-                              <span className="text-sm text-zinc-500 font-semibold">
 
-                                {item.store?.bankInfo?.accountNumber &&
-                                  item.store?.bankInfo?.accountNumber.substring(0, 3) + '...'
-                                }
-                              </span>
-                              <span className="text-sm text-zinc-500 font-semibold">
-                                {item.store?.bankInfo?.accountHolder}
-                              </span>
-                            </div>
+                              {item.status === 'paymentConfirmed' &&
+                              !item?.settlement &&
+                              (!item?.transactionHash || item?.transactionHash === '0x') && (
+                                <div className="flex flex-row gap-2 items-center justify-center">
+                                  <Image
+                                    src="/loading.png"
+                                    alt="Loading Icon"
+                                    width={20}
+                                    height={20}
+                                    className="w-5 h-5 animate-spin"
+                                  />
+                                  <span className="text-sm text-zinc-500">
+                                    판매자가 판매한코인(USDT)을 구매자에게 보내는 중...
+                                  </span>
+                                </div>
+                              )}
 
-                            {item.status === 'cancelled' && (
-                              <div className="text-sm text-red-600">
-                                {item.cancelTradeReason ? item.cancelTradeReason :
-                                  "거래취소사유 없음"
-                                }
-                                
-                              </div>
-                            )}
-                            */}
+                            
                           </div>
 
                         ) : (
@@ -5686,34 +5747,7 @@ const fetchBuyOrders = async () => {
 
                                 </div>
 
-
                               )}
-
-
-
-
-                              {item.seller.walletAddress !== address &&
-                              item.status === 'paymentConfirmed' &&
-                              !item?.settlement &&
-                              (!item?.transactionHash || item?.transactionHash === '0x') && (
-                                <div className="flex flex-row gap-2 items-center justify-center">
-                                  <Image
-                                    src="/loading.png"
-                                    alt="Loading Icon"
-                                    width={20}
-                                    height={20}
-                                    className="w-5 h-5 animate-spin"
-                                  />
-                                  <span className="text-sm text-zinc-500">
-                                    판매자가 판매한코인(USDT)을 구매자에게 보내는 중...
-                                  </span>
-                                </div>
-                              )}
-
-
-
-
-
 
 
                               {/* paymentConfirmed */}
