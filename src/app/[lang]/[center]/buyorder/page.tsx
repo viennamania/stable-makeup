@@ -4171,7 +4171,10 @@ const fetchBuyOrders = async () => {
                     <span className="text-xl font-semibold text-yellow-600"
                       style={{ fontFamily: 'monospace' }}
                     >
-                      {tradeSummary.totalKrwAmount?.toLocaleString()}
+                      {
+                      Number(tradeSummary.totalKrwAmount)
+                      .toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                      }
                     </span>
                     <span className="text-sm text-zinc-500">원</span>
                   </div>
@@ -4217,7 +4220,10 @@ const fetchBuyOrders = async () => {
                     <span className="text-xl font-semibold text-yellow-600"
                       style={{ fontFamily: 'monospace' }}
                     >
-                      {tradeSummary.totalSettlementAmountKRW?.toLocaleString()}
+                      {
+                      Number(tradeSummary.totalSettlementAmountKRW)
+                      .toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                      }
                     </span>
                     <span className="text-sm text-zinc-500">원</span>
                   </div>
@@ -4249,8 +4255,8 @@ const fetchBuyOrders = async () => {
                       style={{ fontFamily: 'monospace' }}
                     >
                       {
-                        (tradeSummary.totalFeeAmountKRW + tradeSummary.totalAgentFeeAmountKRW)
-                        .toLocaleString()
+                        Number(tradeSummary.totalFeeAmountKRW + tradeSummary.totalAgentFeeAmountKRW)
+                        .toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                       }
                     </span>
                     <span className="text-sm text-zinc-500">원</span>
