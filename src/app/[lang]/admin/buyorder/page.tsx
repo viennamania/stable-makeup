@@ -6233,8 +6233,8 @@ const fetchBuyOrders = async () => {
                               />
                               <span className="text-sm font-semibold text-zinc-500">
                                 {item?.settlementUpdatedBy === 'system'
-                                  ? '자동정산'
-                                  : '수동정산'}
+                                  ? '자동결제'
+                                  : '수동결제'}
                               </span>
 
                               {/* updater */}
