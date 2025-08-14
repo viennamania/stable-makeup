@@ -3211,115 +3211,6 @@ const fetchBuyOrders = async () => {
           ></div>
 
 
-          <div className="w-full flex flex-row items-center justify-end gap-2">
-
-            <div className="flex flex-row items-center justify-center gap-2
-            bg-white/80
-            p-2 rounded-lg shadow-md
-            backdrop-blur-md
-            ">
-              {loadingTotalNumberOfBuyOrders ? (
-                <Image
-                  src="/loading.png"
-                  alt="Loading"
-                  width={20}
-                  height={20}
-                  className="w-6 h-6 animate-spin"
-                />
-              ) : (
-                <Image
-                  src="/icon-buyorder.png"
-                  alt="Buy Order"
-                  width={35}
-                  height={35}
-                  className="w-6 h-6"
-                />
-              )}
-
-
-              <p className="text-lg text-red-500 font-semibold">
-                {
-                totalNumberOfBuyOrders
-                } 건
-              </p>
-
-              {totalNumberOfBuyOrders > 0 && (
-                <div className="flex flex-row items-center justify-center gap-2">
-                  <Image
-                    src="/icon-notification.gif"
-                    alt="Notification"
-                    width={50}
-                    height={50}
-                    className="w-15 h-15 object-cover"
-                    
-                  />
-                </div>
-              )}
-            </div>
-
-
-            {/* Clearance Orders */}
-            <div className="flex flex-row items-center justify-center gap-2
-            bg-white/80
-            p-2 rounded-lg shadow-md
-            backdrop-blur-md
-            ">
-
-              {loadingTotalNumberOfClearanceOrders ? (
-                <Image
-                  src="/loading.png"
-                  alt="Loading"
-                  width={20}
-                  height={20}
-                  className="w-6 h-6 animate-spin"
-                />
-              ) : (
-                <Image
-                  src="/icon-clearance.png"
-                  alt="Clearance"
-                  width={35}
-                  height={35}
-                  className="w-6 h-6"
-                />
-              )}
-
-              <p className="text-lg text-yellow-500 font-semibold">
-                {
-                totalNumberOfClearanceOrders
-                } 건
-              </p>
-
-              {totalNumberOfClearanceOrders > 0 && (
-                <div className="flex flex-row items-center justify-center gap-2">
-                  <Image
-                    src="/icon-notification.gif"
-                    alt="Notification"
-                    width={50}
-                    height={50}
-                    className="w-15 h-15 object-cover"
-                    
-                  />
-                  <button
-                    onClick={() => {
-                      router.push('/' + params.lang + '/admin/clearance-history');
-                    }}
-                    className="flex items-center justify-center gap-2
-                    bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
-                  >
-                    <span className="text-sm">
-                      청산내역관리
-                    </span>
-                  </button>
-                </div>
-              )}
-            </div>
-
-        
-          </div>
-
-
-
-
           {/* 홈 / 가맹점관리 / 회원관리 / 구매주문관리 */}
           {/* memnu buttons same width left side */}
             <div className="grid grid-cols-3 xl:grid-cols-6 gap-2 items-center justify-start mb-4">
@@ -3785,7 +3676,6 @@ const fetchBuyOrders = async () => {
                       style={{ fontFamily: 'monospace' }}>
                       {tradeSummary.totalKrwAmount?.toLocaleString()}
                     </span>
-                    <span className="text-sm text-zinc-500">원</span>
                   </div>
                 </div>
 
@@ -3835,7 +3725,6 @@ const fetchBuyOrders = async () => {
                         style={{ fontFamily: 'monospace' }}>
                         {tradeSummary.totalSettlementAmountKRW?.toLocaleString()}
                       </span>
-                      <span className="text-sm text-zinc-500">원</span>
                     </div>
                   </div>
 
@@ -3875,7 +3764,6 @@ const fetchBuyOrders = async () => {
                           ? tradeSummary.totalFeeAmountKRW.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                           : '0'}
                       </span>
-                      <span className="text-sm text-zinc-500">원</span>
                     </div>
                   </div>
 
@@ -3912,7 +3800,6 @@ const fetchBuyOrders = async () => {
                           ? tradeSummary.totalAgentFeeAmountKRW.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                           : '0'}
                       </span>
-                      <span className="text-sm text-zinc-500">원</span>
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 items-center">
@@ -3972,12 +3859,119 @@ const fetchBuyOrders = async () => {
           </div>
 
 
+
+          <div className="w-full flex flex-row items-center justify-end gap-2">
+
+            <div className="flex flex-row items-center justify-center gap-2
+            bg-white/80
+            p-2 rounded-lg shadow-md
+            backdrop-blur-md
+            ">
+              {loadingTotalNumberOfBuyOrders ? (
+                <Image
+                  src="/loading.png"
+                  alt="Loading"
+                  width={20}
+                  height={20}
+                  className="w-6 h-6 animate-spin"
+                />
+              ) : (
+                <Image
+                  src="/icon-buyorder.png"
+                  alt="Buy Order"
+                  width={35}
+                  height={35}
+                  className="w-6 h-6"
+                />
+              )}
+
+
+              <p className="text-lg text-red-500 font-semibold">
+                {
+                totalNumberOfBuyOrders
+                } 건
+              </p>
+
+              {totalNumberOfBuyOrders > 0 && (
+                <div className="flex flex-row items-center justify-center gap-2">
+                  <Image
+                    src="/icon-notification.gif"
+                    alt="Notification"
+                    width={50}
+                    height={50}
+                    className="w-15 h-15 object-cover"
+                    
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Clearance Orders */}
+            <div className="flex flex-row items-center justify-center gap-2
+            bg-white/80
+            p-2 rounded-lg shadow-md
+            backdrop-blur-md
+            ">
+
+              {loadingTotalNumberOfClearanceOrders ? (
+                <Image
+                  src="/loading.png"
+                  alt="Loading"
+                  width={20}
+                  height={20}
+                  className="w-6 h-6 animate-spin"
+                />
+              ) : (
+                <Image
+                  src="/icon-clearance.png"
+                  alt="Clearance"
+                  width={35}
+                  height={35}
+                  className="w-6 h-6"
+                />
+              )}
+
+              <p className="text-lg text-yellow-500 font-semibold">
+                {
+                totalNumberOfClearanceOrders
+                } 건
+              </p>
+
+              {totalNumberOfClearanceOrders > 0 && (
+                <div className="flex flex-row items-center justify-center gap-2">
+                  <Image
+                    src="/icon-notification.gif"
+                    alt="Notification"
+                    width={50}
+                    height={50}
+                    className="w-15 h-15 object-cover"
+                    
+                  />
+                  <button
+                    onClick={() => {
+                      router.push('/' + params.lang + '/admin/clearance-history');
+                    }}
+                    className="flex items-center justify-center gap-2
+                    bg-[#3167b4] text-sm text-[#f3f4f6] px-4 py-2 rounded-lg hover:bg-[#3167b4]/80"
+                  >
+                    <span className="text-sm">
+                      청산내역관리
+                    </span>
+                  </button>
+                </div>
+              )}
+            </div>
+        
+          </div>
+
+
+
           {/* totalCount */}
           <div className="w-full flex flex-row items-center justify-end gap-2 mt-4">
             
             <div className="flex flex-col items-start">
               <span className="text-sm text-zinc-500">
-                결색결과: {totalCount || 0} 건
+                검색결과: {totalCount || 0} 건
               </span>
             </div>
 
@@ -4032,13 +4026,13 @@ const fetchBuyOrders = async () => {
                     <th className="p-2">
                       <div className="flex flex-col items-end justify-end gap-1">
                         <span className="text-sm text-zinc-50 font-semibold">
-                          구매금액(원)
-                        </span>
-                        <span className="text-sm text-zinc-50 font-semibold">
                           {Buy_Amount}(USDT)
                         </span>
                         <span className="text-sm text-zinc-50 font-semibold">
-                          단가(환율)
+                          구매금액(원)
+                        </span>
+                        <span className="text-sm text-zinc-50 font-semibold">
+                          단가(원)
                         </span>
                       </div>
                     </th>
@@ -4408,7 +4402,7 @@ const fetchBuyOrders = async () => {
                             </div>
 
                             <div className="flex flex-row items-center gap-2">
-                              <span className="text-lg text-yellow-600 font-bold">
+                              <span className="text-lg text-gray-800 font-bold">
                                 {
                                   //item.walletAddress === address ? 'Me' : item.tradeId ? item.tradeId : ''
 
@@ -4474,18 +4468,6 @@ const fetchBuyOrders = async () => {
                           w-28
                           flex flex-col gap-2 items-end justify-start">
 
-                          <div className="flex flex-row items-center justify-end gap-1">
-                            <span className="text-xl text-yellow-600 font-semibold"
-                              style={{
-                                fontFamily: 'monospace',
-                              }}
-                            >
-                              {
-                                item.krwAmount?.toLocaleString()
-                              }
-                            </span>
-                          </div>
-
                           <div className="flex flex-row items-center justify-end gap-2">
                             <Image
                               src="/icon-tether.png"
@@ -4503,7 +4485,20 @@ const fetchBuyOrders = async () => {
                             </span>
                           </div>
 
-                          <span className="text-sm text-zinc-500"
+                          <div className="flex flex-row items-center justify-end gap-1">
+                            <span className="text-xl text-yellow-600 font-semibold"
+                              style={{
+                                fontFamily: 'monospace',
+                              }}
+                            >
+                              {
+                                item.krwAmount?.toLocaleString()
+                              }
+                            </span>
+                          </div>
+
+                          <span className="h-10 
+                            text-sm text-zinc-500"
                             style={{
                               fontFamily: 'monospace',
                             }}
@@ -4513,6 +4508,7 @@ const fetchBuyOrders = async () => {
                               //Number(item.krwAmount / item.usdtAmount).toFixed(3)
                             }
                           </span>
+
                         </div>
                       </td>
 
@@ -5053,11 +5049,11 @@ const fetchBuyOrders = async () => {
 
                             <div className="flex flex-col gap-2 items-center justify-center">
                               <div className="flex flex-row items-center gap-2">
-                                <div className="text-lg text-yellow-600 font-bold">
+                                <div className="text-sm text-zinc-500">
                                   {/*item.seller?.bankInfo?.bankName*/}
                                   {item.store?.bankInfo?.bankName}
                                 </div>
-                                <div className="text-lg text-yellow-600 font-bold">
+                                <div className="text-lg text-gray-800 font-bold">
                                   {/*item.seller?.bankInfo?.accountHolder*/}
                                   {item.store?.bankInfo?.accountHolder}
                                 </div>
