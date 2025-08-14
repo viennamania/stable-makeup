@@ -4001,10 +4001,10 @@ const fetchBuyOrders = async () => {
                           가맹점
                         </span>
                         <span className="text-sm text-zinc-50 font-semibold">
-                          {TID}
+                          #P2P거래번호
                         </span>
                         <span className="text-sm text-zinc-50 font-semibold">
-                          시간
+                          거래시작시간
                         </span>
                       </div>
                     </th>
