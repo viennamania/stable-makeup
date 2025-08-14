@@ -4974,13 +4974,13 @@ const fetchBuyOrders = async () => {
 
                             {/* seller bank info */}
                             <div className="flex flex-row gap-2 items-center justify-center">
+                              <span className="text-sm text-gray-800 font-bold">
+                                {/*item.seller?.bankInfo?.accountHolder*/}
+                                {item.store?.bankInfo?.accountHolder}
+                              </span>
                               <span className="text-sm text-zinc-500">
                                 {/*item.seller?.bankInfo?.bankName*/}
                                 {item.store?.bankInfo?.bankName}
-                              </span>
-                              <span className="text-sm text-zinc-500">
-                                {/*item.seller?.bankInfo?.accountHolder*/}
-                                {item.store?.bankInfo?.accountHolder}
                               </span>
                             </div>
 
@@ -5049,13 +5049,13 @@ const fetchBuyOrders = async () => {
 
                             <div className="flex flex-col gap-2 items-center justify-center">
                               <div className="flex flex-row items-center gap-2">
-                                <div className="text-sm text-zinc-500">
-                                  {/*item.seller?.bankInfo?.bankName*/}
-                                  {item.store?.bankInfo?.bankName}
-                                </div>
                                 <div className="text-lg text-gray-800 font-bold">
                                   {/*item.seller?.bankInfo?.accountHolder*/}
                                   {item.store?.bankInfo?.accountHolder}
+                                </div>
+                                <div className="text-sm text-zinc-500">
+                                  {/*item.seller?.bankInfo?.bankName*/}
+                                  {item.store?.bankInfo?.bankName}
                                 </div>
                               </div>
                               <div className="text-sm text-zinc-500">
