@@ -2769,7 +2769,7 @@ const fetchBuyOrders = async () => {
             height={200}
           />
 
-          <div className="text-lg text-gray-500">가맹점 정보를 불러오는 중...</div>
+          <div className="text-lg text-gray-500">가맹점 정보를 불러오는 중</div>
         </div>
       </main>
     );
@@ -4867,7 +4867,7 @@ const fetchBuyOrders = async () => {
                                     className="w-5 h-5 animate-spin"
                                   />
                                   <span className="text-sm text-zinc-500 font-semibold">
-                                    판매자 매칭중...
+                                    판매자 매칭중
                                   </span>
                                 </div>
 
@@ -5331,7 +5331,7 @@ const fetchBuyOrders = async () => {
                                   className="animate-spin"
                                 />
                                 <span className="text-sm font-semibold text-zinc-500">
-                                  입금 확인중...
+                                  입금 확인중
                                 </span>
                               </div>
 
@@ -6304,7 +6304,7 @@ const fetchBuyOrders = async () => {
                                               className="animate-spin"
                                             />
                                             <span className="text-sm font-semibold text-zinc-500">
-                                              가맹점 결제 및 정산중...
+                                              가맹점 결제 및 정산중
                                             </span>
                                           </div>
 
