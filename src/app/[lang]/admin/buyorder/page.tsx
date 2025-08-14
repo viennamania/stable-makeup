@@ -4603,8 +4603,8 @@ const fetchBuyOrders = async () => {
                                 <span className="text-lg font-semibold text-zinc-500">
                                   {
                                     item.seller?.nickname &&
-                                    item.seller.nickname.length > 8 ?
-                                    item.seller.nickname.slice(0, 8) + '...' :
+                                    item.seller.nickname.length > 6 ?
+                                    item.seller.nickname.slice(0, 6) + '...' :
                                     item.seller?.nickname
                                   }
                                 </span>
