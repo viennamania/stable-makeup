@@ -5999,7 +5999,7 @@ const fetchBuyOrders = async () => {
                               <div className="flex flex-col gap-2 items-start justify-start ml-2">
                                 <div className="flex flex-col gap-1 items-start justify-start">
                                   <span className="text-sm">
-                                    판매코인(USDT)
+                                    판매한 테더(USDT)
                                   </span>
                                   <div className="flex flex-row gap-1 items-center justify-start">
                                     <Image
@@ -6017,7 +6017,7 @@ const fetchBuyOrders = async () => {
                                     </span>
                                   </div>
                                   <span className="text-sm text-zinc-500">
-                                    전송내역
+                                    구매회원에게 테더(USDT) 전송내역
                                   </span>
                                 </div>
                               </div>
